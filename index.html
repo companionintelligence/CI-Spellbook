@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Companion Intelligence Spellbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CDN for demo; for production, use your own build -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-200 font-sans antialiased min-h-screen">
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="py-6 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <img src="logo/2024_CI__LogoMark_light.png" alt="Companion Intelligence Logo" class="h-36 w-auto" />
+      </div>
+      <!-- Search Bar -->
+      <form class="w-2/5">
+        <div class="relative flex items-center">
+          <span class="absolute left-3 text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+            </svg>
+          </span>
+          <input type="text" placeholder="Search the Spellbook..." class="w-full h-12 pl-12 pr-12 rounded-lg bg-slate-800 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 transition shadow-md" />
+          <button type="button" class="absolute right-3 text-slate-400 hover:text-sky-400 focus:outline-none" aria-label="Clear search">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </header>
+  </div>
+
+  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+      <!-- Card 1: Top Spellbook Sections -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#3784ff] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3784ff]/80" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Top Spellbook Sections</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#071533]/90" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Top Spellbook Sections</h2>
+              <ol class="list-decimal ml-6 space-y-1 text-sm">
+                <li>Learn ML Basics</li>
+                <li>Make Agents</li>
+                <li>Code an App</li>
+                <li>Productivity Tools</li>
+                <li>IOT Tools</li>
+                <li>XR Tools</li>
+                <li>JIC</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Foundations of Local AI & Agents -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#34d399] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#34d399]/80" style="background-image: url('background/background2.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Foundations of Local AI &amp; Agents</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0f2f26]/90" style="background-image: url('background/background2.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Foundations of Local AI &amp; Agents</h2>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li><a href="#" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline">Sometimes A Notion: Local AI Models</a></li>
+                <li><a href="#" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline">Gemini Nano Web – Built-in AI in Chrome</a></li>
+                <li><a href="#" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline">Running Gemini Nano Locally in Your Browser</a></li>
+                <li>
+                  <a href="http://transformers.js" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">
+                    In-Browser Semantic AI Search with PGlite and Transformers.js
+                  </a>
+                </li>
+                <li><a href="#" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline">Moondream: Tiny Vision-Language Model</a></li>
+                <li><a href="#" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline">Moondream: How Does a Tiny Vision Model Slap So Hard?</a></li>
+                <li class="font-bold text-white">In-Browser Semantic AI Search – Free and Open Source!</li>
+                <li class="font-bold text-white">Few-Shot Learning with LangChain</li>
+                <li class="font-bold text-white">Llama 3.2 Vision: Meta's Multimodal AI Model</li>
+                <li class="font-bold text-white">OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks</li>
+                <li class="font-bold text-white">Fetch.ai (Autonomous AI agents & orchestration)</li>
+                <li class="font-bold text-white">Atomic Agents (Modular AI pipeline development)</li>
+                <li class="font-bold text-white">OpenAI Swarm (Experimental multi-agent research)</li>
+                <li class="font-bold text-white">L3.2 Rogue Creative Instruct Uncensored Abliterated 7B GGUF</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: AI Development & Interfaces -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#6366f1] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#6366f1]/80" style="background-image: url('background/background3.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">AI Development &amp; Interfaces</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e1b4b]/90" style="background-image: url('background/background3.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI Development &amp; Interfaces</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Assisted Code Development &amp; Productivity Tools</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>PocketPal AI</li>
+                <li>Supermaven – AI-powered code completion tool for enhanced developer workflow</li>
+                <li>Aider Composer – VSCode extension for AI-assisted development</li>
+                <li>Stellar: AI-Powered Code Assistant for Xcode (Alexcodes.app)</li>
+                <li>TailAdmin – Free Next.js and Tailwind CSS admin dashboard template</li>
+                <li>shadcn/ui Blocks – Pre-designed UI components for modern web applications</li>
+                <li>Cursor: AI-Powered Code Editor</li>
+                <li>Aider: AI-Powered Code Collaboration</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Search &amp; Data Retrieval</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Tutorial: Build Search UI with OpenSearch and ReactiveSearch</li>
+                <li>Searchkit: React and Vue Search UI for Elasticsearch and OpenSearch</li>
+                <li>OpenSearch UI (OUI)</li>
+                <li>dejavu: Web UI for Elasticsearch and OpenSearch</li>
+                <li>Exploring Vector Databases: Combining Lexical and AI-Powered Search</li>
+                <li>Efficient Vector Search with Amazon OpenSearch</li>
+                <li>Introducing Byte Vector Support for Faiss in the OpenSearch Vector Engine</li>
+                <li>Exploring Vector Databases: Enhancing Lexical and AI-Powered Search with Elastic</li>
+                <li>The Evolution of Search: How Multi-Modal LLMs Transcend Vector Databases</li>
+                <li>AI-Enhanced Query Rewriting with OpenSearch</li>
+                <li>Charmed OpenSearch's Vector Database</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Bindings & Interfaces -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#a855f7] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#a855f7]/80" style="background-image: url('background/background4.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Bindings &amp; Interfaces</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b0764]/90" style="background-image: url('background/background4.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Bindings &amp; Interfaces</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">Structured Text Generation &amp; AI-Powered Data Processing</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>OUTLINES: Structured Text Generation</li>
+                <li>Using an LLM to Process Data with Pydantic + Outlines</li>
+                <li>ODSC Outlines Tutorial</li>
+                <li>Serving Outlines with vLLM for Structured Text Generation</li>
+                <li>Outlines Docker Image</li>
+                <li>Forget LangChain, Use Griptape AI Instead</li>
+                <li>LightRAG: Lightweight Retrieval-Augmented Generation</li>
+                <li>ComfyUI-Griptape: AI Workflow & RAG Integration</li>
+                <li>LLMWare: Enterprise AI-Powered Data Processing</li>
+                <li>Haystack: Open-Source AI-Powered Search Framework</li>
+                <li>Letta AI</li>
+                <li>Letta AI Documentation</li>
+                <li>deepset AI: Open-Source AI Search & NLP</li>
+                <li>A Brief Introduction to Retrieval-Augmented Generation (RAG)</li>
+                <li>What is Retrieval-Augmented Generation (RAG)</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Workflow Automation &amp; Chatbot Optimization</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Pegasus Reranker Workshop: Enhancing Chatbot Responses with N8N Automation</li>
+                <li>Agent Recipes: Enhancing LLM Applications with Structured Workflows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: AI Agent Frameworks & Automation -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#ec4899] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#ec4899]/80" style="background-image: url('background/background5.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">AI Agent Frameworks &amp; Automation</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background5.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI Agent Frameworks &amp; Automation</h2>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>LangGraph: Multi-Agent Supervisor Tutorial</li>
+                <li>Plurai</li>
+                <li>The Cloud Reef Sim</li>
+                <li>Assistant</li>
+                <li>Web LLM Avatar</li>
+                <li>Griptape: Modular Python Framework for AI Applications</li>
+                <li>LlamaIndex.TS: TypeScript Framework for Generative AI Applications</li>
+                <li>LlamaIndex Integrations (Connecting AI to data sources)</li>
+                <li>GeneSphere (YAML-based AI workflow framework)</li>
+                <li>PydanticAI: Tools & Dependency Injection Example</li>
+                <li>Model Context Protocol: Standardizing AI Data Integration</li>
+                <li>Model Context Protocol: Enhancing AI Integration</li>
+                <li>Model Context Protocol Server Quickstart</li>
+                <li>Model Context Protocol Servers</li>
+                <li>Awesome MCP Servers</li>
+                <li>Elasticsearch MCP Server</li>
+                <li>Model Context Protocol TypeScript SDK</li>
+                <li>MCP Hub</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Hosting & Infrastructure -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#f43f5e] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#f43f5e]/80" style="background-image: url('background/background6.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Hosting &amp; Infrastructure: Deploying AI Systems</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background6.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Hosting &amp; Infrastructure: Deploying AI Systems</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">Self-Hosting AI Agents &amp; Local LLM Deployment</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>Self-Hosting Supabase with Docker</li>
+                <li>Open WebUI: User-Friendly AI Interface</li>
+                <li>Open WebUI Documentation</li>
+                <li>Open WebUI Whitepaper</li>
+                <li>OpenRouter: Unified Interface for Large Language Models</li>
+                <li>OpenRouter Runner: Inference Engine for Open-Source Models</li>
+                <li>OpenCharacter: Open-Source AI Interaction Platform</li>
+                <li>LLM Stats: AI Model Benchmarking Platform</li>
+                <li>Google Cloud Skills Boost - RAG Training Catalog</li>
+                <li>Google Cloud Vertex AI - RAG Quickstart Guide</li>
+                <li>How to Use RAG in BigQuery to Bolster LLMs</li>
+                <li>Google Cloud RAG Use Cases & Further Reading</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Desktop Automation</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>OmniParser: Transforming UI Screenshots into Structured Data</li>
+                <li>OmniTool: AI-Powered UI Automation</li>
+                <li>Computer-Agent: AI-Powered Desktop Automation</li>
+                <li>UI-TARS Desktop: Natural Language Control of Computers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7: Networking, VPN, and Infrastructure Security -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#14b8a6]/80" style="background-image: url('background/background7.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Networking, VPN, and Infrastructure Security</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0f2f26]/90" style="background-image: url('background/background7.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Networking, VPN, and Infrastructure Security</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">Dynamic DNS &amp; Networking</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>Dynu Dynamic DNS Service</li>
+                <li>WireGuard VPN Installation Guide</li>
+                <li>Internet Ports Blocked or Restricted by Cox ISP</li>
+                <li>NativeWebKit - AI-Powered Web Engine</li>
+                <li>Head-Tracking with NativeWebKit.js</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">Self-Hosted VPN &amp; Private Networks</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Netmaker Tenant Account Management</li>
+                <li>Netmaker UI</li>
+                <li>Netmaker CoreDNS Plugin</li>
+                <li>Netmaker Overview & Installation Guide (YouTube Video)</li>
+                <li>Netmaker HA Installation on Kubernetes</li>
+                <li>Self-Hosted VPN with Netmaker</li>
+                <li>Site-to-Site Networking with Netmaker</li>
+                <li>Nebula: Scalable Peer-to-Peer Overlay Network</li>
+                <li>Introducing Innernet: Private WireGuard-Based Networking</li>
+                <li>Innernet: Private Network Management for WireGuard</li>
+                <li>Tailscale Tailnet: Secure Networking for Private Infrastructure</li>
+                <li>Headscale: Self-Hosted Alternative to Tailscale for Secure AI Networking</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8: AI in Real-World Applications -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#06b6d4] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#06b6d4]/80" style="background-image: url('background/background8.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">AI in Real-World Applications</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0c4a6e]/90" style="background-image: url('background/background8.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI in Real-World Applications</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI &amp; Mental Health Models</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>Mental Health Assistant Model</li>
+                <li>AI in Mental Health Support: Opportunities and Considerations</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI for Image &amp; Vision Processing</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>Tesseract.js – Client-side OCR for web browsers and Node.js</li>
+                <li>Stable Diffusion WebUI Forge – Optimized AI image generation</li>
+                <li>Aguvis: Augmented Visual Instruction Set for AI Agents</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">In-App AI Communication &amp; Chat Systems</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Feathers Chat: Real-Time Chat Application</li>
+                <li>Showcase Chat: Minimal Chat Platform Template</li>
+                <li>Deno WebSockets Tutorial (A learning-based approach)</li>
+                <li>Sendbird – Developer API for chat & voice</li>
+                <li>GetStream – Scalable API for chat & activity feeds</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9: The Future of AI & Automation -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#3b82f6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b82f6]/80" style="background-image: url('background/background9.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">The Future of AI &amp; Automation</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e3a8a]/90" style="background-image: url('background/background9.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">The Future of AI &amp; Automation</h2>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">Advanced AI Agent Research &amp; Multi-Agent Collaboration</h3>
+              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
+                <li>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks</li>
+                <li>GeneSphere (YAML-based AI workflow framework)</li>
+                <li>Bolt.new: LLM-Powered Full-Stack Web Application Development</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI Model Performance &amp; Optimization</h3>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>CompactGUI – Transparent compression for games and applications</li>
+                <li>CAST AI – AI-driven Kubernetes automation & cost optimization</li>
+                <li>k0smotron – Declarative management of k0s control planes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10: AI in Video Games & Virtual Beings -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#8b5cf6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#8b5cf6]/80" style="background-image: url('background/background10.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">AI in Video Games &amp; Virtual Beings</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4c1d95]/90" style="background-image: url('background/background10.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI in Video Games &amp; Virtual Beings</h2>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Former DeepMind Researchers Secure $17 Million CAD to Bring Generative AI to Video Games with Artificial Agency</li>
+                <li>Inworld AI</li>
+                <li>Charisma AI</li>
+                <li>Virtual Beings</li>
+                <li>Soul Machines</li>
+                <li>Virbe AI</li>
+                <li>Replika</li>
+                <li>Hunyuan3D-2 Introduction Video (YouTube)</li>
+                <li>Hunyuan3D-2</li>
+                <li>Hunyuan3D-2 Model on Hugging Face</li>
+                <li>Hunyuan3D-2 Docker Implementation</li>
+                <li>The Rise Of AI Girlfriends</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 11: Home Automation & Security -->
+      <div class="group w-full h-[28rem] [perspective:1000px]">
+        <div class="relative h-full w-full rounded-xl border-4 border-[#d946ef] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          <!-- Front -->
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#d946ef]/80" style="background-image: url('background/background11.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-2xl font-bold text-white">Home Automation &amp; Security</h2>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#701a75]/90" style="background-image: url('background/background11.png'); background-size: cover; background-position: center;">
+            <div class="relative z-10">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Home Automation &amp; Security</h2>
+              <ul class="list-disc ml-8 space-y-1 text-sm">
+                <li>Neon AI Definitions and Overview</li>
+                <li>Open Voice OS (OVOS) Home Page</li>
+                <li>OVOS Community Projects Discussion</li>
+                <li>Neon AI Introduction Video (YouTube)</li>
+                <li>How to Transition from Mycroft to Neon AI (Community Post)</li>
+                <li>Neon AI Setup Guide (YouTube)</li>
+                <li>NetworkChuck Academy: Local AI Voice Assistant</li>
+                <li>Rhasspy Wyoming Satellite</li>
+                <li>OwnAI: AI Voice Assistant Platform</li>
+                <li>OwnAI GitHub Repository</li>
+                <li>Rigged South American Female 3D Model in Business Attire</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end grid -->
+  </div> <!-- end container -->
+
+</body>
+</html>
