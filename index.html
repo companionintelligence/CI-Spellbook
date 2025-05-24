@@ -328,7 +328,7 @@
         </div>
       </div>
 
-      <!-- Card 3: Cutting edge databases -->
+      <!-- Card 3: Cutting Edge Databases -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -341,7 +341,7 @@
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#6366f1]/80" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">Cutting edge databases</h2>
+              <h2 class="text-2xl font-bold text-white">Cutting Edge Databases</h2>
             </div>
           </div>
           <!-- Back -->
@@ -349,30 +349,50 @@
             <div class="relative z-10">
               <h2 class="text-xl font-bold text-white mb-3 pt-2">Cutting Edge Databases</h2>
               <div class="overflow-x-auto mb-4">
-                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
-                  <thead class="bg-[#3b0764]/80">
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Top AI Vector Databases</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#1e1b4b]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
                     </tr>
                   </thead>
                   <tbody>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Milvus</li><li><span class="icon">🔗</span> <a href="https://milvus.io" class="text-sky-300 hover:underline" target="_blank">milvus.io</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Highly scalable, distributed vector database for AI, supporting billions of embeddings and fast similarity search. Integrates with major ML frameworks and deploys on Kubernetes, Docker, or cloud.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Weaviate</li><li><span class="icon">🔗</span> <a href="https://github.com/weaviate/weaviate" class="text-sky-300 hover:underline" target="_blank">weaviate/weaviate</a></li><li><span class="icon">🪪</span> BSD 3-Clause</li></ul></td><td>Cloud-native vector DB with hybrid search (vector + structured), auto-vectorization modules, multi-tenancy, and strong security. Scales to billions of objects and integrates with OpenAI, Cohere, and more.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Qdrant</li><li><span class="icon">🔗</span> <a href="https://qdrant.tech" class="text-sky-300 hover:underline" target="_blank">qdrant.tech</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Rust-based, high-performance vector search engine with fast approximate nearest neighbor queries, metadata filtering, and distributed, cloud-native scaling. OpenAPI and multi-language clients.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Chroma</li><li><span class="icon">🔗</span> <a href="https://github.com/chroma-core/chroma" class="text-sky-300 hover:underline" target="_blank">chroma-core/chroma</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Lightweight, developer-friendly embedding DB for LLM apps. Runs locally or at scale, integrates with LangChain/LlamaIndex, and supports text/image embeddings for RAG and semantic search.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Faiss</li><li><span class="icon">🔗</span> <a href="https://github.com/facebookresearch/faiss" class="text-sky-300 hover:underline" target="_blank">facebookresearch/faiss</a></li><li><span class="icon">🪪</span> MIT</li></ul></td><td>Efficient C++/Python library for vector similarity search and clustering. Supports huge datasets, GPU acceleration, and many indexing methods. Widely used as a backend for custom vector search.</td></tr>
+                  </tbody>
+                </table>
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Top GPU-Based & High Performance Databases</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#1e1b4b]/80">
                     <tr>
-                      <td><ul class="table-bullets">
-                        <li><span class="icon">🔤</span> OpenAI API</li>
-                        <li><span class="icon">🔗</span> <a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></li>
-                        <li><span class="icon">🪪</span> Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</li>
-                      </ul></td>
-                      <td>Access to GPT-4, GPT-3.5, DALL·E, Whisper, embeddings, and more. High adoption, extensive docs, client libraries, free tier available.</td>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> ClickHouse</li><li><span class="icon">🔗</span> <a href="https://clickhouse.com" class="text-sky-300 hover:underline" target="_blank">clickhouse.com</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Ultra-fast, columnar OLAP DB for real-time analytics on massive datasets. Distributed, horizontally scalable, and supports advanced SQL. Used for petabyte-scale analytics and dashboards.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> DuckDB</li><li><span class="icon">🔗</span> <a href="https://github.com/duckdb/duckdb" class="text-sky-300 hover:underline" target="_blank">duckdb/duckdb</a></li><li><span class="icon">🪪</span> MIT</li></ul></td><td>Embedded, in-process analytics DB ("SQLite for analytics"). Vectorized, columnar engine for fast OLAP queries on local files (CSV, Parquet). No server needed, ideal for data science and ETL.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> HeavyDB</li><li><span class="icon">🔗</span> <a href="https://github.com/heavyai/heavydb" class="text-sky-300 hover:underline" target="_blank">heavyai/heavydb</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>GPU-accelerated SQL DB for interactive analytics on large datasets. Excels at geospatial queries and real-time rendering. Caches hot data in GPU memory for sub-second response times.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> QuestDB</li><li><span class="icon">🔗</span> <a href="https://questdb.io" class="text-sky-300 hover:underline" target="_blank">questdb.io</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>High-performance, open-source time-series DB. Columnar, memory-mapped storage, SIMD, and JIT SQL for millions of records/sec. Ideal for financial, IoT, and real-time analytics workloads.</td></tr>
+                  </tbody>
+                </table>
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Top Multi-Model Databases</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#1e1b4b]/80">
                     <tr>
-                      <td><ul class="table-bullets">
-                        <li><span class="icon">🔤</span> Hugging Face APIs & Hub</li>
-                        <li><span class="icon">🔗</span> <a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></li>
-                        <li><span class="icon">🪪</span> Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</li>
-                      </ul></td>
-                      <td>Thousands of pre-trained models for NLP, vision, audio, and more. Inference API, datasets, strong open-source focus, free and paid tiers.</td>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> OrientDB</li><li><span class="icon">🔗</span> <a href="https://www.orientdb.org" class="text-sky-300 hover:underline" target="_blank">orientdb.org</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Multi-model DB: graph, document, and key-value in one. Fast graph traversals, ACID, SQL+Gremlin, and horizontal scaling. Used for social, fraud, and knowledge graph use cases.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Apache Ignite</li><li><span class="icon">🔗</span> <a href="https://ignite.apache.org" class="text-sky-300 hover:underline" target="_blank">ignite.apache.org</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Distributed, in-memory multi-model DB and compute platform. Key-value, SQL, and ACID support. RAM-first for ultra-low latency, with optional disk persistence and strong clustering.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> FoundationDB</li><li><span class="icon">🔗</span> <a href="https://www.foundationdb.org" class="text-sky-300 hover:underline" target="_blank">foundationdb.org</a></li><li><span class="icon">🪪</span> Apache 2.0</li></ul></td><td>Distributed, ACID, ordered key-value store with multi-model layers (documents, graphs, SQL). Strong fault tolerance, serializability, and proven reliability at scale (used by Apple).</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> ArangoDB</li><li><span class="icon">🔗</span> <a href="https://www.arangodb.com" class="text-sky-300 hover:underline" target="_blank">arangodb.com</a></li><li><span class="icon">🪪</span> BSL 1.1 (Apache 2.0 after 4 yrs)</li></ul></td><td>Native multi-model DB: graph, document, and key-value. Unified AQL query language, smart joins, sharding, and built-in microservices. Community edition is BSL 1.1 (converts to Apache 2.0 after 4 years).</td></tr>
                   </tbody>
                 </table>
               </div>
