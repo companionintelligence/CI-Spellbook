@@ -63,6 +63,30 @@
     .fullscreen-card .fullscreen-close-btn {
       display: block !important;
     }
+
+    /* Add margin to all table cells */
+    table td, table th {
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    /* Style for icon bullets in merged cells */
+    .table-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .table-bullets li {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-bottom: 0.15em;
+    }
+    .table-bullets .icon {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      vertical-align: middle;
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -153,50 +177,55 @@
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#071533]/90" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10 text-xs md:text-sm">
               <h2 class="text-xl font-bold text-white mb-3 pt-2">Local-First AI Tools Directory</h2>
-              <p class="mb-2">Below is a quick-reference directory of leading local-first AI tools grouped by function. Use it as a jump-off for building or expanding a home workstation stack—every entry links to the project’s home page or GitHub repo so you can dive straight into docs, downloads, and community. (If you’re skimming: start with Ollama for model serving, OpenWebUI for chat, AnythingLLM for personal RAG, Flowise for visual chaining, n8n for automations, and ComfyUI for diffusion workflows.)</p>
+              <p class="mb-2">Below is a quick-reference directory of leading local-first AI tools grouped by function. Use it as a jump-off for building or expanding a home workstation stack—every entry links to the project’s home page or GitHub repo so you can dive straight into docs, downloads, and community.</p>
               <div class="overflow-x-auto mb-4">
-                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">LLM Runners / Hosting</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
                   <thead class="bg-[#071533]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Category</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Project Link</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td class="font-semibold">LLM runners / hosting</td><td>Ollama</td><td><a href="https://ollama.com" class="text-sky-300 hover:underline" target="_blank">ollama.com</a></td></tr>
-                    <tr><td></td><td>LM Studio</td><td><a href="https://lmstudio.ai" class="text-sky-300 hover:underline" target="_blank">lmstudio.ai</a></td></tr>
-                    <tr><td></td><td>llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp" class="text-sky-300 hover:underline" target="_blank">ggml-org/llama.cpp</a></td></tr>
-                    <tr><td></td><td>KoboldCpp</td><td><a href="https://github.com/LostRuins/koboldcpp" class="text-sky-300 hover:underline" target="_blank">LostRuins/koboldcpp</a></td></tr>
-                    <tr><td></td><td>GPT4All (desktop app + backend)</td><td><a href="https://github.com/nomic-ai/gpt4all" class="text-sky-300 hover:underline" target="_blank">nomic-ai/gpt4all</a></td></tr>
-                    <tr><td class="font-semibold">Chat UI / front-ends</td><td>OpenWebUI</td><td><a href="https://github.com/open-webui/open-webui" class="text-sky-300 hover:underline" target="_blank">open-webui/open-webui</a></td></tr>
-                    <tr><td></td><td>Text-Generation WebUI</td><td><a href="https://github.com/oobabooga/text-generation-webui" class="text-sky-300 hover:underline" target="_blank">oobabooga/text-generation-webui</a></td></tr>
-                    <tr><td></td><td>SillyTavern</td><td><a href="https://github.com/SillyTavern/SillyTavern" class="text-sky-300 hover:underline" target="_blank">SillyTavern/SillyTavern</a></td></tr>
-                    <tr><td class="font-semibold">Knowledge-base / RAG suites</td><td>AnythingLLM</td><td><a href="https://github.com/Mintplex-Labs/anything-llm" class="text-sky-300 hover:underline" target="_blank">Mintplex-Labs/anything-llm</a></td></tr>
-                    <tr><td></td><td>Haystack</td><td><a href="https://github.com/deepset-ai/haystack" class="text-sky-300 hover:underline" target="_blank">deepset-ai/haystack</a></td></tr>
-                    <tr><td></td><td>Dify</td><td><a href="https://github.com/langgenius/dify" class="text-sky-300 hover:underline" target="_blank">langgenius/dify</a></td></tr>
-                    <tr><td class="font-semibold">No/low-code LLM app builders</td><td>Flowise</td><td><a href="https://github.com/FlowiseAI/Flowise" class="text-sky-300 hover:underline" target="_blank">FlowiseAI/Flowise</a></td></tr>
-                    <tr><td></td><td>LangFlow</td><td><a href="https://github.com/langflow-ai/langflow" class="text-sky-300 hover:underline" target="_blank">langflow-ai/langflow</a></td></tr>
-                    <tr><td></td><td>LangGraph</td><td><a href="https://github.com/langchain-ai/langgraph" class="text-sky-300 hover:underline" target="_blank">langchain-ai/langgraph</a></td></tr>
-                    <tr><td></td><td>H2O LLM Studio</td><td><a href="https://github.com/h2oai/h2o-llmstudio" class="text-sky-300 hover:underline" target="_blank">h2oai/h2o-llmstudio</a></td></tr>
-                    <tr><td class="font-semibold">Workflow automation / integration</td><td>n8n AI Starter Kit</td><td><a href="https://docs.n8n.io/hosting/starter-kits/ai-starter-kit/" class="text-sky-300 hover:underline" target="_blank">n8n Docs</a></td></tr>
-                    <tr><td class="font-semibold">Autonomous-agent frameworks</td><td>CrewAI</td><td><a href="https://github.com/crewAIInc/crewAI" class="text-sky-300 hover:underline" target="_blank">crewAIInc/crewAI</a></td></tr>
-                    <tr><td></td><td>AutoGen</td><td><a href="https://github.com/microsoft/autogen" class="text-sky-300 hover:underline" target="_blank">microsoft/autogen</a></td></tr>
-                    <tr><td></td><td>AutoGPT</td><td><a href="https://github.com/Significant-Gravitas/AutoGPT" class="text-sky-300 hover:underline" target="_blank">Significant-Gravitas/AutoGPT</a></td></tr>
-                    <tr><td class="font-semibold">Fine-tuning / post-training</td><td>Axolotl</td><td><a href="https://github.com/axolotl-ai-cloud/axolotl" class="text-sky-300 hover:underline" target="_blank">axolotl-ai-cloud/axolotl</a></td></tr>
-                    <tr><td></td><td>(also) H2O LLM Studio</td><td>see above</td></tr>
-                    <tr><td class="font-semibold">Vector databases & embedding stores</td><td>Qdrant</td><td><a href="https://github.com/qdrant/qdrant" class="text-sky-300 hover:underline" target="_blank">qdrant/qdrant</a></td></tr>
-                    <tr><td></td><td>Chroma</td><td><a href="https://github.com/chroma-core/chroma" class="text-sky-300 hover:underline" target="_blank">chroma-core/chroma</a></td></tr>
-                    <tr><td></td><td>Milvus</td><td><a href="https://github.com/milvus-io/milvus" class="text-sky-300 hover:underline" target="_blank">milvus-io/milvus</a></td></tr>
-                    <tr><td class="font-semibold">Generative-art / diffusion UIs</td><td>Stable Diffusion WebUI</td><td><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" class="text-sky-300 hover:underline" target="_blank">AUTOMATIC1111/stable-diffusion-webui</a></td></tr>
-                    <tr><td></td><td>ComfyUI</td><td><a href="https://github.com/comfyanonymous/ComfyUI" class="text-sky-300 hover:underline" target="_blank">comfyanonymous/ComfyUI</a></td></tr>
-                    <tr><td></td><td>InvokeAI</td><td><a href="https://github.com/invoke-ai/InvokeAI" class="text-sky-300 hover:underline" target="_blank">invoke-ai/InvokeAI</a></td></tr>
-                    <tr><td></td><td>Fooocus</td><td><a href="https://github.com/lllyasviel/Fooocus" class="text-sky-300 hover:underline" target="_blank">lllyasviel/Fooocus</a></td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Ollama</li><li><span class="icon">🔗</span> <a href="https://ollama.com" class="text-sky-300 hover:underline" target="_blank">ollama.com</a></li><li><span class="icon">🪪</span> MIT</li></ul></td><td>Simple local LLM runner with one-line model downloads and REST API. Great for desktop and dev use.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> LM Studio</li><li><span class="icon">🔗</span> <a href="https://lmstudio.ai" class="text-sky-300 hover:underline" target="_blank">lmstudio.ai</a></li><li><span class="icon">🪪</span> AGPL-3.0</li></ul></td><td>Cross-platform GUI for running, managing, and chatting with local LLMs. Supports many model formats.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> llama.cpp</li><li><span class="icon">🔗</span> <a href="https://github.com/ggml-org/llama.cpp" class="text-sky-300 hover:underline" target="_blank">ggml-org/llama.cpp</a></li><li><span class="icon">🪪</span> MIT</li></ul></td><td>Fast, portable C/C++ inference engine for Llama-family and compatible models. CLI and server modes.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> KoboldCpp</li><li><span class="icon">🔗</span> <a href="https://github.com/LostRuins/koboldcpp" class="text-sky-300 hover:underline" target="_blank">LostRuins/koboldcpp</a></li><li><span class="icon">🪪</span> AGPL-3.0</li></ul></td><td>Easy-to-use LLM runner with web UI, story mode, and GPU/CPU support. Focused on creative writing.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> GPT4All</li><li><span class="icon">🔗</span> <a href="https://github.com/nomic-ai/gpt4all" class="text-sky-300 hover:underline" target="_blank">nomic-ai/gpt4all</a></li><li><span class="icon">🪪</span> Apache-2.0</li></ul></td><td>Multi-platform LLM runner and chat UI. Supports many models, with easy install and local vector DB.</td></tr>
+                  </tbody>
+                </table>
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Chat UI / Front-Ends</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#071533]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> OpenWebUI</li><li><span class="icon">🔗</span> <a href="https://github.com/open-webui/open-webui" class="text-sky-300 hover:underline" target="_blank">open-webui/open-webui</a></li><li><span class="icon">🪪</span> AGPL-3.0</li></ul></td><td>Modern, extensible web chat UI for local LLMs (Ollama, llama.cpp, etc). Multi-user, plugin support.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Text-Generation WebUI</li><li><span class="icon">🔗</span> <a href="https://github.com/oobabooga/text-generation-webui" class="text-sky-300 hover:underline" target="_blank">oobabooga/text-generation-webui</a></li><li><span class="icon">🪪</span> AGPL-3.0</li></ul></td><td>Feature-rich web UI for running, chatting, and experimenting with local LLMs. Huge extension ecosystem.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> SillyTavern</li><li><span class="icon">🔗</span> <a href="https://github.com/SillyTavern/SillyTavern" class="text-sky-300 hover:underline" target="_blank">SillyTavern/SillyTavern</a></li><li><span class="icon">🪪</span> GPL-3.0</li></ul></td><td>Roleplay and character-focused chat UI for local and remote LLMs. Integrates with KoboldCpp, OAI, and more.</td></tr>
+                  </tbody>
+                </table>
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Knowledge-Base / RAG Suites</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#071533]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> AnythingLLM</li><li><span class="icon">🔗</span> <a href="https://github.com/Mintplex-Labs/anything-llm" class="text-sky-300 hover:underline" target="_blank">Mintplex-Labs/anything-llm</a></li><li><span class="icon">🪪</span> AGPL-3.0</li></ul></td><td>Plug-and-play RAG suite for connecting docs, files, and data to local or remote LLMs. Easy setup, web UI.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Haystack</li><li><span class="icon">🔗</span> <a href="https://github.com/deepset-ai/haystack" class="text-sky-300 hover:underline" target="_blank">deepset-ai/haystack</a></li><li><span class="icon">🪪</span> Apache-2.0</li></ul></td><td>Flexible Python framework for building RAG, search, and question-answering pipelines. Many integrations.</td></tr>
+                    <tr><td><ul class="table-bullets"><li><span class="icon">🔤</span> Dify</li><li><span class="icon">🔗</span> <a href="https://github.com/langgenius/dify" class="text-sky-300 hover:underline" target="_blank">langgenius/dify</a></li><li><span class="icon">🪪</span> Apache-2.0</li></ul></td><td>All-in-one platform for building RAG, chatbots, and agent workflows. Web UI, API, and multi-model support.</td></tr>
                   </tbody>
                 </table>
               </div>
               <div class="mt-3">
-                <h3 class="font-semibold text-slate-100 mb-1">How to use this table</h3>
+                <h3 class="font-semibold text-slate-100 mb-1">How to use these tables</h3>
                 <ul class="list-disc ml-5 space-y-1">
                   <li>Pick a backbone – choose an LLM runner (Ollama or llama.cpp) that fits your hardware.</li>
                   <li>Add a chat UI – wire it to OpenWebUI or Text-Gen WebUI for a browser-based experience.</li>
@@ -236,20 +265,61 @@
                 <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
                   <thead class="bg-[#0f2f26]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tools</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">URL</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>Aider</td><td>AI pair programming in your terminal; works with local & remote LLMs, understands your codebase.</td><td>Apache-2.0</td><td><a href="https://github.com/paul-gauthier/aider" class="text-sky-300 hover:underline" target="_blank">GitHub</a></td></tr>
-                    <tr><td>CodeGeeX</td><td>A multilingual AI code generation model and tool suite. Codebase is Apache-2.0, model has its own license.</td><td>Apache-2.0 (Code)</td><td><a href="https://github.com/THUDM/CodeGeeX" class="text-sky-300 hover:underline" target="_blank">GitHub</a></td></tr>
-                    <tr><td>Codeium</td><td>AI code completion tool with a free tier for individuals; emphasizes local/on-prem for enterprise.</td><td>MIT (Core)</td><td><a href="https://www.codeium.com/" class="text-sky-300 hover:underline" target="_blank">Website</a></td></tr>
-                    <tr><td>Sourcegraph Cody</td><td>AI coding assistant that understands your entire codebase for context-aware help.</td><td>Apache-2.0</td><td><a href="https://github.com/sourcegraph/cody" class="text-sky-300 hover:underline" target="_blank">GitHub</a></td></tr>
-                    <tr><td>Tabnine</td><td>AI code completion tool with a free basic plan and support for self-hosted models. Older core is MIT.</td><td>MIT (Core)</td><td><a href="https://www.tabnine.com/" class="text-sky-300 hover:underline" target="_blank">Website</a></td></tr>
-                    <tr><td>PolyCoder</td><td>Open-source AI code generation model (GPT-2 based) and associated code from Carnegie Mellon.</td><td>MIT</td><td><a href="https://github.com/VHellendoorn/PolyCoder" class="text-sky-300 hover:underline" target="_blank">GitHub</a></td></tr>
-                    <tr><td>PocketPal AI</td><td>Mobile AI assistant (iOS/Android) running SLMs on-device for chat and assistance.</td><td>MIT</td><td><a href="https://github.com/PocketPalAI/PocketPal" class="text-sky-300 hover:underline" target="_blank">GitHub</a></td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Aider</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/paul-gauthier/aider" class="text-sky-300 hover:underline" target="_blank">paul-gauthier/aider</a></li>
+                      <li><span class="icon">🪪</span> Apache-2.0</li>
+                    </ul></td><td>AI pair programmer for your terminal. Edits code in your repo using local or remote LLMs, tracks context, and supports multi-file refactoring.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>CodeGeeX</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/THUDM/CodeGeeX" class="text-sky-300 hover:underline" target="_blank">THUDM/CodeGeeX</a></li>
+                      <li><span class="icon">🪪</span> Apache-2.0 (Code)</li>
+                    </ul></td><td>Multilingual code generation model and toolkit. Supports VS Code, JetBrains, and web IDEs. Model weights and code are open source.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Codeium</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://www.codeium.com/" class="text-sky-300 hover:underline" target="_blank">codeium.com</a></li>
+                      <li><span class="icon">🪪</span> MIT (Core)</li>
+                    </ul></td><td>Fast, privacy-focused code completion for 70+ languages. Free for individuals, with local/on-prem options for enterprise.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Sourcegraph Cody</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/sourcegraph/cody" class="text-sky-300 hover:underline" target="_blank">sourcegraph/cody</a></li>
+                      <li><span class="icon">🪪</span> Apache-2.0</li>
+                    </ul></td><td>Context-aware AI coding assistant. Deep codebase search, chat, and code generation. Integrates with Sourcegraph and IDEs.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Tabnine</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://www.tabnine.com/" class="text-sky-300 hover:underline" target="_blank">tabnine.com</a></li>
+                      <li><span class="icon">🪪</span> MIT (Core)</li>
+                    </ul></td><td>AI code completion for all major IDEs. Free basic plan, self-hosted and enterprise options. Focus on privacy and team collaboration.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>PolyCoder</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/VHellendoorn/PolyCoder" class="text-sky-300 hover:underline" target="_blank">VHellendoorn/PolyCoder</a></li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                    </ul></td><td>Open-source code LLM (GPT-2 architecture) trained on C. Research project from CMU. Model and code available.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>PocketPal AI</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/PocketPalAI/PocketPal" class="text-sky-300 hover:underline" target="_blank">PocketPalAI/PocketPal</a></li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                    </ul></td><td>Mobile AI assistant for iOS/Android. Runs small LLMs on-device for private, offline chat and code help.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Continue</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/continuedev/continue" class="text-sky-300 hover:underline" target="_blank">continuedev/continue</a></li>
+                      <li><span class="icon">🪪</span> Apache-2.0</li>
+                    </ul></td><td>Open-source autopilot for VS Code and JetBrains. Brings Copilot-like chat, code completion, and context to your IDE using local or remote LLMs.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Cursor</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://www.cursor.so/" class="text-sky-300 hover:underline" target="_blank">cursor.so</a></li>
+                      <li><span class="icon">🪪</span> Commercial (Free tier)</li>
+                    </ul></td><td>AI-powered code editor with built-in chat, refactoring, and context awareness. Supports local and cloud LLMs. Free and paid plans.</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> <b>Open Interpreter</b></li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/open-interpreter/open-interpreter" class="text-sky-300 hover:underline" target="_blank">open-interpreter/open-interpreter</a></li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                    </ul></td><td>Run code, scripts, and natural language commands in your terminal with LLMs. Supports local and remote models, file editing, and automation.</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -280,83 +350,28 @@
               <h2 class="text-xl font-bold text-white mb-3 pt-2">Cutting Edge Databases</h2>
               <div class="overflow-x-auto mb-4">
                 <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
-                  <thead class="bg-[#1e1b4b]/80">
+                  <thead class="bg-[#3b0764]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="font-semibold">EdgeDB</td>
-                      <td>An open-source <em>graph-relational</em> database designed to modernize the developer experience of relational databases. EdgeDB addresses the “impedance mismatch” of SQL by providing a strict schema with a <strong>rich type system</strong> and a new query language, EdgeQL. EdgeQL allows intuitive nested queries, combining the power of SQL and graph traversals, and compiles down to efficient PostgreSQL queries under the hood. EdgeDB ensures <strong>type safety</strong> (catching invalid queries at query-time) and eliminates ORMs – you interact with the database via generated client APIs in languages like Python or TypeScript. Focused on developer ergonomics without sacrificing performance, EdgeDB has quickly gained popularity for building complex applications that would be cumbersome with traditional SQL.</td>
-                      <td><a href="https://edgedb.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> OpenAI API</li>
+                        <li><span class="icon">🔗</span> <a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></li>
+                        <li><span class="icon">🪪</span> Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</li>
+                      </ul></td>
+                      <td>Access to GPT-4, GPT-3.5, DALL·E, Whisper, embeddings, and more. High adoption, extensive docs, client libraries, free tier available.</td>
                     </tr>
                     <tr>
-                      <td class="font-semibold">RisingWave</td>
-                      <td>A <strong>distributed SQL streaming database</strong> that lets users run real-time analytics on incoming data using standard SQL. RisingWave performs stream processing in a “database way” – it ingests high-throughput data streams (from Kafka, etc.), performs incremental computations as new events arrive, and maintains continually-updated query results that can be queried at any time. By handling state management and incremental updates under the hood, RisingWave simplifies the development of live dashboards, monitoring systems, and online AI features. It is cloud-native, horizontally scalable, and designed to be cost-efficient for workloads requiring sub-second to sub-minute latency on dynamic data. RisingWave is fully open source and aims to lower the barrier to building real-time applications by merging stream processing with a familiar SQL interface.</td>
-                      <td><a href="https://www.risingwave.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Dolt</td>
-                      <td>Described as “Git for Data,” Dolt is the world’s first SQL database that supports <strong>version control</strong> for both schema and data. It marries a MySQL-compatible database engine with Git-like features: every change to a Dolt database (inserts, updates, schema migrations) is logged as a commit; users can branch the database, merge branches, diff table data between commits, and even push/pull changes with others. This makes Dolt ideal for collaborative data workflows, data auditability, and reproducible experiments. Developers get full ACID transactions and SQL support, while benefiting from Dolt’s ability to revert changes or review historical data states easily. Dolt is fully open source and has an growing community exploring novel use-cases in data versioning.</td>
-                      <td><a href="https://www.dolthub.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">YugabyteDB</td>
-                      <td>A <strong>distributed SQL</strong> database that brings together the relational power of PostgreSQL with the fault tolerance and scalability of cloud-native architectures. YugabyteDB is PostgreSQL-compatible (reusing PostgreSQL’s query layer) but underneath it distributes data across nodes with automatic sharding, rebalancing, and multi-region replication using a Raft consensus-based storage engine. It is built to handle internet-scale OLTP workloads with ultra-low latency: Yugabyte can achieve <strong>massive throughput and linear scaling</strong> while preserving ACID transactions and strong consistency. Often described as “Postgres for the cloud,” it supports both SQL and Cassandra-style KV APIs, and prioritizes high availability (no single point of failure) and geo-distribution for modern global applications. All core features of YugabyteDB are open source, and the project has seen fast-growing adoption in enterprises needing scalable, cloud-neutral transactional databases.</td>
-                      <td><a href="https://www.yugabyte.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">TypeDB</td>
-                      <td>An open-source <strong>knowledge graph</strong> database (formerly <em>Grakn</em>) that uses a highly expressive schema and automated reasoning to tackle complex domains. TypeDB is a strongly-typed database with a rich, logical type system, allowing modeling of entities, relationships, and rules in a way that captures real-world semantics. Its query language, TypeQL, goes beyond SQL by supporting inheritance, role-based relations, and logical inference – the database can infer new facts via rules, offering AI-like graph reasoning out-of-the-box. TypeDB provides full ACID transactions and a gRPC API for integration. It’s used in scenarios like life sciences, cybersecurity, and knowledge graph applications where one needs to model complex networks of data and derive implicit insights. (<strong>Note:</strong> TypeDB Community Edition is open source; it was historically GPL/AGPL licensed, ensuring that derivative works remain open.)</td>
-                      <td><a href="https://vaticle.com/typedb" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>GPL v3 (AGPL)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <h2 class="text-lg font-bold text-white mb-3 pt-2">Top Multi-Modal Databases</h2>
-              <div class="overflow-x-auto mb-4">
-                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
-                  <thead class="bg-[#1e1b4b]/80">
-                    <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="font-semibold">OrientDB</td>
-                      <td>A versatile <strong>multi-model</strong> database that seamlessly integrates the capabilities of a graph database with document and key–value store models in one platform. OrientDB allows relationships to be stored as direct links between records (edges), enabling efficient graph traversals with complexity O(1) for hops. It supports schema-less or schema-defined data, ACID transactions, and a SQL-like query language extended for graph patterns (as well as Apache TinkerPop Gremlin for graph queries). Designed for performance and horizontal scalability, OrientDB can distribute data across clusters with sharding and replication, providing high availability for use cases ranging from social networks to fraud detection.</td>
-                      <td><a href="https://www.orientdb.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Apache Ignite</td>
-                      <td>An open-source distributed database and computing platform designed for <strong>in-memory speed</strong> at scale. Ignite is a multi-model system that supports storing data as key–value pairs (NoSQL style) while also exposing it via SQL (ODBC/JDBC) for relational queries. By default Ignite keeps data in RAM for ultra-low latency reads/writes, with an optional persistent disk layer for durability. It can be deployed as an <strong>in-memory data grid</strong> that slides between an application and its primary database to cache hot data and accelerate access by orders of magnitude. Ignite’s clustering supports dynamic node addition/removal with auto-rebalancing, and it offers strong consistency and ACID transactions, making it suitable for high-throughput transactional workloads and real-time analytics in distributed environments.</td>
-                      <td><a href="https://ignite.apache.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">FoundationDB</td>
-                      <td>A <strong>distributed ACID</strong> database with a unique multi-model approach: all data is stored in a core <strong>ordered key–value store</strong>, and higher-level data models (documents, graphs, SQL layers, etc.) can be implemented on top. Developed by Apple and open-sourced, FoundationDB is known for its strong fault tolerance and <strong>industry-leading performance</strong> on commodity hardware. It achieves this via a shared-nothing architecture and extensive use of optimistic concurrency and MVCC, all while guaranteeing strict serializability. FoundationDB’s design allows it to scale out seamlessly and survive machine failures transparently, acting to the developer like a single logical database with transactional consistency. Its reliability is proven in production (used internally at Apple and other companies) and it employs deterministic simulation testing to ensure robustness of each release.</td>
-                      <td><a href="https://www.foundationdb.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">ArangoDB</td>
-                      <td>A native <strong>multi-model</strong> database that combines the power of graph, document, and key/value stores in one engine. ArangoDB uses a unified query language (AQL) to allow complex joins and graph traversals across different data models, so developers can use the most suitable model for each part of their application without moving to a different database. It features <em>Smart Joins</em> and distributed sharding for scaling across clusters, plus a built-in Foxx framework for embedding JavaScript microservices close to the data. These features, along with Arango’s flexible data model, make it well-suited for scenarios like social networks (rich graph relationships), logistics or finance (mixed document and graph queries), and other domains requiring flexible schemas. <br> <small><strong>Note:</strong> As of version 3.12 (2024), ArangoDB’s Community Edition is licensed under BSL 1.1 (which converts to Apache 2.0 after four years).</small></td>
-                      <td><a href="https://www.arangodb.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
-                      <td><strong>BSL 1.1</strong> <span class="text-xs">(Apache 2.0 after 4 yrs)</span></td>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Hugging Face APIs & Hub</li>
+                        <li><span class="icon">🔗</span> <a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></li>
+                        <li><span class="icon">🪪</span> Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</li>
+                      </ul></td>
+                      <td>Thousands of pre-trained models for NLP, vision, audio, and more. Inference API, datasets, strong open-source focus, free and paid tiers.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -390,83 +405,30 @@
                 <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
                   <thead class="bg-[#3b0764]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="font-semibold">OpenAI API</td>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> OpenAI API</li>
+                        <li><span class="icon">🔗</span> <a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></li>
+                        <li><span class="icon">🪪</span> Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</li>
+                      </ul></td>
                       <td>Access to GPT-4, GPT-3.5, DALL·E, Whisper, embeddings, and more. High adoption, extensive docs, client libraries, free tier available.</td>
-                      <td><a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></td>
-                      <td>Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</td>
                     </tr>
                     <tr>
-                      <td class="font-semibold">Hugging Face APIs & Hub</td>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Hugging Face APIs & Hub</li>
+                        <li><span class="icon">🔗</span> <a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></li>
+                        <li><span class="icon">🪪</span> Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</li>
+                      </ul></td>
                       <td>Thousands of pre-trained models for NLP, vision, audio, and more. Inference API, datasets, strong open-source focus, free and paid tiers.</td>
-                      <td><a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></td>
-                      <td>Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Google Cloud AI APIs (incl. Gemini)</td>
-                      <td>Suite of AI services: Gemini models, Vertex AI, Vision, Speech, Translation, and more. Well-documented, free tier, GCP integration.</td>
-                      <td><a href="https://cloud.google.com/ai/apis" class="text-sky-300 hover:underline" target="_blank">cloud.google.com/ai/apis</a>, <a href="https://ai.google.dev" class="text-sky-300 hover:underline" target="_blank">ai.google.dev</a></td>
-                      <td>Commercial, with free tiers. Governed by Google Cloud Platform Terms of Service.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Cohere API</td>
-                      <td>Large language models for text generation, summarization, embeddings, and more. Multilingual, model customization, free developer tier.</td>
-                      <td><a href="https://cohere.com" class="text-sky-300 hover:underline" target="_blank">cohere.com</a></td>
-                      <td>Commercial. Free trial/developer tier. Usage subject to Cohere's terms.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">AssemblyAI API</td>
-                      <td>Speech-to-text, audio transcription, speaker diarization, sentiment, summarization, PII redaction, and more. Free tier available.</td>
-                      <td><a href="https://assemblyai.com" class="text-sky-300 hover:underline" target="_blank">assemblyai.com</a></td>
-                      <td>Commercial. Free tier and paid plans. Subject to AssemblyAI's terms.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Kaggle Datasets</td>
-                      <td>Thousands of datasets across domains. Integrated with notebooks, large community, easy to search and download.</td>
-                      <td><a href="https://kaggle.com/datasets" class="text-sky-300 hover:underline" target="_blank">kaggle.com/datasets</a></td>
-                      <td>Varies by dataset. Common: CC0, CC BY, ODbL, Apache 2.0, MIT, or custom. Check each dataset's license.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">UCI Machine Learning Repository</td>
-                      <td>Classic ML datasets for benchmarking. Well-documented, widely used in research and academia.</td>
-                      <td><a href="https://archive.ics.uci.edu/ml" class="text-sky-300 hover:underline" target="_blank">archive.ics.uci.edu/ml</a></td>
-                      <td>Most under CC BY 4.0, but verify for each dataset.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Hugging Face Datasets Hub</td>
-                      <td>Large, growing collection of datasets for NLP, audio, vision, and more. Easy to load with datasets library.</td>
-                      <td><a href="https://huggingface.co/datasets" class="text-sky-300 hover:underline" target="_blank">huggingface.co/datasets</a></td>
-                      <td>Varies by dataset. Each has its own license. Library is Apache 2.0.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Google Dataset Search</td>
-                      <td>Search engine for datasets across the web. Indexes thousands of repositories, government, academic, and public sources.</td>
-                      <td><a href="https://datasetsearch.research.google.com" class="text-sky-300 hover:underline" target="_blank">datasetsearch.research.google.com</a></td>
-                      <td>N/A (search engine). License determined by original source.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Papers with Code Datasets</td>
-                      <td>Links ML papers, code, and datasets. Great for finding state-of-the-art benchmarks and associated data.</td>
-                      <td><a href="https://paperswithcode.com/datasets" class="text-sky-300 hover:underline" target="_blank">paperswithcode.com/datasets</a></td>
-                      <td>N/A (directory). Licenses are specific to each dataset.</td>
-                    </tr>
-                    <tr>
-                      <td class="font-semibold">Registry of Open Data on AWS (RODA)</td>
-                      <td>Public datasets on AWS for genomics, satellite, transportation, environment, and more. Easy access for large-scale analysis.</td>
-                      <td><a href="https://registry.opendata.aws" class="text-sky-300 hover:underline" target="_blank">registry.opendata.aws</a></td>
-                      <td>Varies by dataset. Each lists its license and usage rights.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <p class="mt-2 text-slate-300">These APIs and data sources are actively maintained and widely used for building AI-powered applications as of May 2025. Always review individual licenses and terms before use in production.</p>
             </div>
           </div>
         </div>
@@ -502,15 +464,6 @@
                 <li><a href="https://github.com/run-llama/LlamaIndexTS" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LlamaIndex.TS: TypeScript Framework for Generative AI Applications</a></li>
                 <li><a href="https://docs.llamaindex.ai/en/latest/integrations/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LlamaIndex Integrations (Connecting AI to data sources)</a></li>
                 <li><a href="https://github.com/genesphere-ai/genesphere" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">GeneSphere (YAML-based AI workflow framework)</a></li>
-                <li><a href="https://github.com/pydantic/pydantic-ai" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">PydanticAI: Tools & Dependency Injection Example</a></li>
-                <li><a href="https://modelcontext.org/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Model Context Protocol: Standardizing AI Data Integration</a></li>
-                <li><a href="https://modelcontext.org/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Model Context Protocol: Enhancing AI Integration</a></li>
-                <li><a href="https://github.com/modelcontext/modelcontext-server" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Model Context Protocol Server Quickstart</a></li>
-                <li><a href="https://github.com/modelcontext/modelcontext-server" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Model Context Protocol Servers</a></li>
-                <li><a href="https://github.com/modelcontext/awesome-mcp-servers" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Awesome MCP Servers</a></li>
-                <li><a href="https://github.com/modelcontext/elasticsearch-mcp-server" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Elasticsearch MCP Server</a></li>
-                <li><a href="https://github.com/modelcontext/modelcontext-ts-sdk" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Model Context Protocol TypeScript SDK</a></li>
-                <li><a href="https://mcphub.org/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">MCP Hub</a></li>
               </ul>
             </div>
           </div>
@@ -530,35 +483,11 @@
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#f43f5e]/80" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">Hosting &amp; Infrastructure: Deploying AI Systems</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Hosting &amp; Infrastructure: Deploying AI Systems</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">Self-Hosting AI Agents &amp; Local LLM Deployment</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://supabase.com/docs/guides/self-hosting" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Self-Hosting Supabase with Docker</a></li>
-                <li><a href="https://github.com/open-webui/open-webui" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Open WebUI: User-Friendly AI Interface</a></li>
-                <li><a href="https://docs.openwebui.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Open WebUI Documentation</a></li>
-                <li><a href="https://arxiv.org/abs/2312.00794" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Open WebUI Whitepaper</a></li>
-                <li><a href="https://openrouter.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OpenRouter: Unified Interface for Large Language Models</a></li>
-                <li><a href="https://github.com/openrouter-ai/openrouter-runner" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OpenRouter Runner: Inference Engine for Open-Source Models</a></li>
-                <li><a href="https://opencharacter.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OpenCharacter: Open-Source AI Interaction Platform</a></li>
-                <li><a href="https://llmstats.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LLM Stats: AI Model Benchmarking Platform</a></li>
-                <li><a href="https://www.cloudskillsboost.google/paths/118" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Google Cloud Skills Boost - RAG Training Catalog</a></li>
-                <li><a href="https://cloud.google.com/vertex-ai/docs/generative-ai/learn/rag-quickstart" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Google Cloud Vertex AI - RAG Quickstart Guide</a></li>
-                <li><a href="https://cloud.google.com/bigquery/docs/generative-ai/rag" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">How to Use RAG in BigQuery to Bolster LLMs</a></li>
-                <li><a href="https://cloud.google.com/vertex-ai/docs/generative-ai/use-cases/rag" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Google Cloud RAG Use Cases & Further Reading</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Desktop Automation</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://github.com/OmniParser/OmniParser" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OmniParser: Transforming UI Screenshots into Structured Data</a></li>
-                <li><a href="https://github.com/OmniToolAI/OmniTool" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OmniTool: AI-Powered UI Automation</a></li>
-                <li><a href="https://github.com/Computer-Agent/Computer-Agent" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Computer-Agent: AI-Powered Desktop Automation</a></li>
-                <li><a href="https://github.com/uitars/ui-tars-desktop" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">UI-TARS Desktop: Natural Language Control of Computers</a></li>
-              </ul>
             </div>
           </div>
         </div>
@@ -568,47 +497,9 @@
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
         </button>
         <!-- end close button -->
         <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
-          <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#14b8a6]/80" style="background-image: url('background/background7.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">Networking, VPN, and Infrastructure Security</h2>
-            </div>
-          </div>
-          <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0f2f26]/90" style="background-image: url('background/background7.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Networking, VPN, and Infrastructure Security</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">Dynamic DNS &amp; Networking</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://www.dynu.com/en-US/DynamicDNS" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Dynu Dynamic DNS Service</a></li>
-                <li><a href="https://www.wireguard.com/install/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">WireGuard VPN Installation Guide</a></li>
-                <li><a href="https://www.cox.com/residential/support/internet-ports-blocked-or-restricted-by-cox.html" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Internet Ports Blocked or Restricted by Cox ISP</a></li>
-                <li><a href="https://github.com/NativeWebKit/NativeWebKit" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">NativeWebKit - AI-Powered Web Engine</a></li>
-                <li><a href="https://github.com/NativeWebKit/NativeWebKit.js" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Head-Tracking with NativeWebKit.js</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">Self-Hosted VPN &amp; Private Networks</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://docs.netmaker.io/tenant-management/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Netmaker Tenant Account Management</a></li>
-                <li><a href="https://github.com/gravitl/netmaker-ui" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Netmaker UI</a></li>
-                <li><a href="https://github.com/gravitl/netmaker/tree/master/plugins/coredns" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Netmaker CoreDNS Plugin</a></li>
-                <li><a href="https://www.youtube.com/watch?v=QwQ1H6Qw5nA" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Netmaker Overview & Installation Guide (YouTube Video)</a></li>
-                <li><a href="https://docs.netmaker.io/ha/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Netmaker HA Installation on Kubernetes</a></li>
-                <li><a href="https://docs.netmaker.io/self-hosted/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Self-Hosted VPN with Netmaker</a></li>
-                <li><a href="https://docs.netmaker.io/site-to-site/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Site-to-Site Networking with Netmaker</a></li>
-                <li><a href="https://github.com/slackhq/nebula" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Nebula: Scalable Peer-to-Peer Overlay Network</a></li>
-                <li><a href="https://github.com/tonarino/innernet" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Introducing Innernet: Private WireGuard-Based Networking</a></li>
-                <li><a href="https://github.com/tonarino/innernet" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Innernet: Private Network Management for WireGuard</a></li>
-                <li><a href="https://tailscale.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Tailscale Tailnet: Secure Networking for Private Infrastructure</a></li>
-                <li><a href="https://github.com/juanfont/headscale" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Headscale: Self-Hosted Alternative to Tailscale for Secure AI Networking</a></li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -631,69 +522,13 @@
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0c4a6e]/90" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI in Real-World Applications</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI &amp; Mental Health Models</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li>Mental Health Assistant Model</li>
-                <li>AI in Mental Health Support: Opportunities and Considerations</li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI for Image &amp; Vision Processing</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://github.com/tesseract-ocr/tesseract" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Tesseract.js – Client-side OCR for web browsers and Node.js</a></li>
-                <li><a href="https://github.com/lllyasviel/stable-diffusion-webui-forge" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Stable Diffusion WebUI Forge – Optimized AI image generation</a></li>
-                <li><a href="https://github.com/aguvis/aguvis" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Aguvis: Augmented Visual Instruction Set for AI Agents</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">In-App AI Communication &amp; Chat Systems</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://github.com/feathersjs/feathers-chat" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Feathers Chat: Real-Time Chat Application</a></li>
-                <li><a href="https://github.com/showcaseplatform/showcase-chat" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Showcase Chat: Minimal Chat Platform Template</a></li>
-                <li><a href="https://deno.com/blog/websockets" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Deno WebSockets Tutorial (A learning-based approach)</a></li>
-                <li><a href="https://sendbird.com/developer" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Sendbird – Developer API for chat & voice</a></li>
-                <li><a href="https://getstream.io/chat/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">GetStream – Scalable API for chat & activity feeds</a></li>
-              </ul>
+              <!-- Add your content for AI in Real-World Applications here -->
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Card 9: The Future of AI & Automation -->
-      <div class="group w-full h-[42rem] [perspective:1000px]">
-        <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#3b82f6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
-          <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b82f6]/80" style="background-image: url('background/background9.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">The Future of AI &amp; Automation</h2>
-            </div>
-          </div>
-          <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e3a8a]/90" style="background-image: url('background/background9.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">The Future of AI &amp; Automation</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">Advanced AI Agent Research &amp; Multi-Agent Collaboration</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://osworld.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks</a></li>
-                <li><a href="https://github.com/genesphere-ai/genesphere" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">GeneSphere (YAML-based AI workflow framework)</a></li>
-                <li><a href="https://bolt.new/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Bolt.new: LLM-Powered Full-Stack Web Application Development</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI Model Performance &amp; Optimization</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://github.com/ImminentFate/CompactGUI" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">CompactGUI – Transparent compression for games and applications</a></li>
-                <li><a href="https://cast.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">CAST AI – AI-driven Kubernetes automation & cost optimization</a></li>
-                <li><a href="https://github.com/k0smotron/k0smotron" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">k0smotron – Declarative management of k0s control planes</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 10: AI in Video Games & Virtual Beings -->
+      <!-- Card 9: AI in Video Games & Virtual Beings -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -706,33 +541,19 @@
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#8b5cf6]/80" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">AI in Video Games &amp; Virtual Beings</h2>
+              <h2 class="text-2xl font-bold text-white">AI in Video Games & Virtual Beings</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4c1d95]/90" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI in Video Games &amp; Virtual Beings</h2>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://venturebeat.com/ai/former-deepmind-researchers-secure-17m-cad-to-bring-generative-ai-to-video-games-with-artificial-agency/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Former DeepMind Researchers Secure $17 Million CAD to Bring Generative AI to Video Games with Artificial Agency</a></li>
-                <li><a href="https://www.inworld.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Inworld AI</a></li>
-                <li><a href="https://www.charisma.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Charisma AI</a></li>
-                <li><a href="https://www.virtualbeings.org/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Virtual Beings</a></li>
-                <li><a href="https://www.soulmachines.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Soul Machines</a></li>
-                <li><a href="https://virbe.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Virbe AI</a></li>
-                <li><a href="https://replika.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Replika</a></li>
-                <li><a href="https://www.youtube.com/watch?v=8QnSpdM5Z3A" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Hunyuan3D-2 Introduction Video (YouTube)</a></li>
-                <li><a href="https://huggingface.co/TencentARC/Hunyuan3D-2" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Hunyuan3D-2</a></li>
-                <li><a href="https://huggingface.co/TencentARC/Hunyuan3D-2" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Hunyuan3D-2 Model on Hugging Face</a></li>
-                <li><a href="https://github.com/TencentARC/Hunyuan3D-2" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Hunyuan3D-2 Docker Implementation</a></li>
-                <li><a href="https://www.vice.com/en/article/4a3q3w/the-rise-of-ai-girlfriends" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">The Rise Of AI Girlfriends</a></li>
-              </ul>
+              <!-- Add your content for AI in Video Games & Virtual Beings here -->
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Card 11: Home Automation & Security -->
+      <!-- Card 10: Home Automation & Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -745,26 +566,13 @@
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#d946ef]/80" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">Home Automation &amp; Security</h2>
+              <h2 class="text-2xl font-bold text-white">Home Automation & Security</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#701a75]/90" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Home Automation &amp; Security</h2>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://neon.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Neon AI Definitions and Overview</a></li>
-                <li><a href="https://openvoiceos.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Open Voice OS (OVOS) Home Page</a></li>
-                <li><a href="https://community.openvoiceos.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OVOS Community Projects Discussion</a></li>
-                <li><a href="https://www.youtube.com/watch?v=QwQ1H6Qw5nA" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Neon AI Introduction Video (YouTube)</a></li>
-                <li><a href="https://community.openvoiceos.com/t/how-to-transition-from-mycroft-to-neon-ai/123" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">How to Transition from Mycroft to Neon AI (Community Post)</a></li>
-                <li><a href="https://www.youtube.com/watch?v=QwQ1H6Qw5nA" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Neon AI Setup Guide (YouTube)</a></li>
-                <li><a href="https://networkchuck.com/academy/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">NetworkChuck Academy: Local AI Voice Assistant</a></li>
-                <li><a href="https://rhasspy.org/wyoming/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Rhasspy Wyoming Satellite</a></li>
-                <li><a href="https://ownai.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OwnAI: AI Voice Assistant Platform</a></li>
-                <li><a href="https://github.com/ownai/ownai" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OwnAI GitHub Repository</a></li>
-                <li><a href="https://sketchfab.com/3d-models/rigged-south-american-female-business-attire-3d-model-1a2b3c4d5e6f7g8h9i0j" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Rigged South American Female 3D Model in Business Attire</a></li>
-              </ul>
+              <!-- Add your content for Home Automation & Security here -->
             </div>
           </div>
         </div>

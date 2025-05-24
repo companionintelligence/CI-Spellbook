@@ -32,3 +32,9 @@ Colors
 #85c3b4
 #abd4d8
 #d2f6ff
+
+Fonts
+
+
+Miriam Mono CLM
+Lekton
