@@ -6,6 +6,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Tailwind CDN for demo; for production, use your own build -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* For programmatically flipping the card */
+    .group.expanded .card-inner {
+      transform: rotateY(180deg) !important;
+    }
+    .card-inner {
+      transition: transform 0.7s;
+    }
+    .group:hover .card-inner {
+      /* Disable hover flip, only allow click/tap */
+      transform: none !important;
+    }
+    /* Remove hover flip if expanded */
+    .group.expanded:hover .card-inner {
+      transform: rotateY(180deg) !important;
+    }
+    /* Basic scrollbar styling for modal content if needed */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 4px;
+    }
+    .modal-content::-webkit-scrollbar-track {
+      background-color: rgba(0,0,0,0.1);
+    }
+    /* Fullscreen card style */
+    .fullscreen-card {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 50 !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: 0 0 0 9999px rgba(0,0,0,0.7);
+      transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .fullscreen-card .card-inner {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      border-radius: 0 !important;
+    }
+    .fullscreen-card .card-inner > div {
+      border-radius: 0 !important;
+    }
+    /* Show close button only in fullscreen */
+    .fullscreen-card .fullscreen-close-btn {
+      display: block !important;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Select all card groups
+      const cardGroups = document.querySelectorAll('.group');
+      cardGroups.forEach(group => {
+        // Card click/tap to expand fullscreen
+        group.addEventListener('click', function (e) {
+          // Prevent toggling if clicking a link
+          if (e.target.closest('a')) return;
+          // Only toggle if not selecting text
+          if (window.getSelection().toString()) return;
+          // Remove expanded/fullscreen from all other cards (accordion behavior)
+          cardGroups.forEach(g => {
+            if (g !== group) {
+              g.classList.remove('expanded', 'fullscreen-card');
+            }
+          });
+          group.classList.toggle('expanded');
+          group.classList.toggle('fullscreen-card');
+        });
+        // Touch support
+        group.addEventListener('touchstart', function (e) {
+          if (e.target.closest('a')) return;
+          if (window.getSelection().toString()) return;
+          cardGroups.forEach(g => {
+            if (g !== group) {
+              g.classList.remove('expanded', 'fullscreen-card');
+            }
+          });
+          group.classList.toggle('expanded');
+          group.classList.toggle('fullscreen-card');
+        });
+        // Close button support
+        const closeBtn = group.querySelector('.fullscreen-close-btn');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            group.classList.remove('expanded', 'fullscreen-card');
+          });
+        }
+      });
+    });
+  </script>
 </head>
 <body class="bg-slate-900 text-slate-200 font-sans antialiased min-h-screen">
 
@@ -16,14 +112,9 @@
         <img src="logo/2024_CI__LogoMark_light.png" alt="Companion Intelligence Logo" class="h-36 w-auto" />
       </div>
       <!-- Search Bar -->
-      <form class="w-2/5">
+      <form class="flex-grow ml-8">
         <div class="relative flex items-center">
-          <span class="absolute left-3 text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-            </svg>
-          </span>
-          <input type="text" placeholder="Search the Spellbook..." class="w-full h-12 pl-12 pr-12 rounded-lg bg-slate-800 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 transition shadow-md" />
+          <input type="text" placeholder="Search the Spellbook..." class="w-full h-12 pl-4 pr-12 rounded-lg bg-slate-800 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 transition shadow-md" />
           <button type="button" class="absolute right-3 text-slate-400 hover:text-sky-400 focus:outline-none" aria-label="Clear search">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
@@ -37,9 +128,16 @@
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-      <!-- Card 1: Top Spellbook Sections -->
+      <!-- Card 1: Local-First AI Tools -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#3784ff] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#3784ff] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3784ff]/80" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -109,9 +207,16 @@
         </div>
       </div>
 
-      <!-- Card 2: Foundations of Local AI & Agents -->
+      <!-- Card 2: AI-Assisted Code Development -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#34d399] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#34d399] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#34d399]/80" style="background-image: url('background/background2.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -148,19 +253,26 @@
         </div>
       </div>
 
-      <!-- Card 3: AI Development & Interfaces -->
+      <!-- Card 3: Cutting edge databases -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#6366f1] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#6366f1] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#6366f1]/80" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">AI Development &amp; Interfaces</h2>
+              <h2 class="text-2xl font-bold text-white">Cutting edge databases</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e1b4b]/90" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI Development &amp; Interfaces</h2>
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Cutting edge databases</h2>
               <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Assisted Code Development &amp; Productivity Tools</h3>
               <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
                 <li><a href="https://pocketpal.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">PocketPal AI</a></li>
@@ -191,42 +303,107 @@
         </div>
       </div>
 
-      <!-- Card 4: Bindings & Interfaces -->
+      <!-- Card 4: Top APIs and public Data Sources -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#a855f7] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#a855f7] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#a855f7]/80" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">Bindings &amp; Interfaces</h2>
+              <h2 class="text-2xl font-bold text-white">Top APIs and Public Data Sources</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b0764]/90" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Bindings &amp; Interfaces</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">Structured Text Generation &amp; AI-Powered Data Processing</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://github.com/outlines-dev/outlines" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OUTLINES: Structured Text Generation</a></li>
-                <li><a href="https://pydantic.dev/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Using an LLM to Process Data with Pydantic + Outlines</a></li>
-                <li><a href="https://odsc.com/blog/outlines-structured-text-generation/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">ODSC Outlines Tutorial</a></li>
-                <li><a href="https://github.com/outlines-dev/outlines-vllm" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Serving Outlines with vLLM for Structured Text Generation</a></li>
-                <li><a href="https://hub.docker.com/r/outlinesdev/outlines" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Outlines Docker Image</a></li>
-                <li><a href="https://www.griptape.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Forget LangChain, Use Griptape AI Instead</a></li>
-                <li><a href="https://github.com/jetnew/LightRAG" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LightRAG: Lightweight Retrieval-Augmented Generation</a></li>
-                <li><a href="https://github.com/comfyanonymous/ComfyUI-Griptape" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">ComfyUI-Griptape: AI Workflow & RAG Integration</a></li>
-                <li><a href="https://llmware.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LLMWare: Enterprise AI-Powered Data Processing</a></li>
-                <li><a href="https://haystack.deepset.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Haystack: Open-Source AI-Powered Search Framework</a></li>
-                <li><a href="https://letta.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Letta AI</a></li>
-                <li><a href="https://docs.letta.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Letta AI Documentation</a></li>
-                <li><a href="https://www.deepset.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">deepset AI: Open-Source AI Search & NLP</a></li>
-                <li><a href="https://haystack.deepset.ai/tutorials/rag_intro" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">A Brief Introduction to Retrieval-Augmented Generation (RAG)</a></li>
-                <li><a href="https://www.pinecone.io/learn/retrieval-augmented-generation/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">What is Retrieval-Augmented Generation (RAG)</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Workflow Automation &amp; Chatbot Optimization</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://n8n.io/blog/pegasus-reranker-workshop/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Pegasus Reranker Workshop: Enhancing Chatbot Responses with N8N Automation</a></li>
-                <li><a href="https://github.com/griptape-ai/agent-recipes" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Agent Recipes: Enhancing LLM Applications with Structured Workflows</a></li>
-              </ul>
+            <div class="relative z-10 text-xs md:text-sm">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Top APIs and Public Data Sources</h2>
+              <div class="overflow-x-auto mb-4">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                  <thead class="bg-[#3b0764]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-semibold">OpenAI API</td>
+                      <td>Access to GPT-4, GPT-3.5, DALL·E, Whisper, embeddings, and more. High adoption, extensive docs, client libraries, free tier available.</td>
+                      <td><a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></td>
+                      <td>Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Hugging Face APIs & Hub</td>
+                      <td>Thousands of pre-trained models for NLP, vision, audio, and more. Inference API, datasets, strong open-source focus, free and paid tiers.</td>
+                      <td><a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></td>
+                      <td>Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Google Cloud AI APIs (incl. Gemini)</td>
+                      <td>Suite of AI services: Gemini models, Vertex AI, Vision, Speech, Translation, and more. Well-documented, free tier, GCP integration.</td>
+                      <td><a href="https://cloud.google.com/ai/apis" class="text-sky-300 hover:underline" target="_blank">cloud.google.com/ai/apis</a>, <a href="https://ai.google.dev" class="text-sky-300 hover:underline" target="_blank">ai.google.dev</a></td>
+                      <td>Commercial, with free tiers. Governed by Google Cloud Platform Terms of Service.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Cohere API</td>
+                      <td>Large language models for text generation, summarization, embeddings, and more. Multilingual, model customization, free developer tier.</td>
+                      <td><a href="https://cohere.com" class="text-sky-300 hover:underline" target="_blank">cohere.com</a></td>
+                      <td>Commercial. Free trial/developer tier. Usage subject to Cohere's terms.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">AssemblyAI API</td>
+                      <td>Speech-to-text, audio transcription, speaker diarization, sentiment, summarization, PII redaction, and more. Free tier available.</td>
+                      <td><a href="https://assemblyai.com" class="text-sky-300 hover:underline" target="_blank">assemblyai.com</a></td>
+                      <td>Commercial. Free tier and paid plans. Subject to AssemblyAI's terms.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Kaggle Datasets</td>
+                      <td>Thousands of datasets across domains. Integrated with notebooks, large community, easy to search and download.</td>
+                      <td><a href="https://kaggle.com/datasets" class="text-sky-300 hover:underline" target="_blank">kaggle.com/datasets</a></td>
+                      <td>Varies by dataset. Common: CC0, CC BY, ODbL, Apache 2.0, MIT, or custom. Check each dataset's license.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">UCI Machine Learning Repository</td>
+                      <td>Classic ML datasets for benchmarking. Well-documented, widely used in research and academia.</td>
+                      <td><a href="https://archive.ics.uci.edu/ml" class="text-sky-300 hover:underline" target="_blank">archive.ics.uci.edu/ml</a></td>
+                      <td>Most under CC BY 4.0, but verify for each dataset.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Hugging Face Datasets Hub</td>
+                      <td>Large, growing collection of datasets for NLP, audio, vision, and more. Easy to load with datasets library.</td>
+                      <td><a href="https://huggingface.co/datasets" class="text-sky-300 hover:underline" target="_blank">huggingface.co/datasets</a></td>
+                      <td>Varies by dataset. Each has its own license. Library is Apache 2.0.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Google Dataset Search</td>
+                      <td>Search engine for datasets across the web. Indexes thousands of repositories, government, academic, and public sources.</td>
+                      <td><a href="https://datasetsearch.research.google.com" class="text-sky-300 hover:underline" target="_blank">datasetsearch.research.google.com</a></td>
+                      <td>N/A (search engine). License determined by original source.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Papers with Code Datasets</td>
+                      <td>Links ML papers, code, and datasets. Great for finding state-of-the-art benchmarks and associated data.</td>
+                      <td><a href="https://paperswithcode.com/datasets" class="text-sky-300 hover:underline" target="_blank">paperswithcode.com/datasets</a></td>
+                      <td>N/A (directory). Licenses are specific to each dataset.</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Registry of Open Data on AWS (RODA)</td>
+                      <td>Public datasets on AWS for genomics, satellite, transportation, environment, and more. Easy access for large-scale analysis.</td>
+                      <td><a href="https://registry.opendata.aws" class="text-sky-300 hover:underline" target="_blank">registry.opendata.aws</a></td>
+                      <td>Varies by dataset. Each lists its license and usage rights.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-2 text-slate-300">These APIs and data sources are actively maintained and widely used for building AI-powered applications as of May 2025. Always review individual licenses and terms before use in production.</p>
             </div>
           </div>
         </div>
@@ -234,7 +411,14 @@
 
       <!-- Card 5: AI Agent Frameworks & Automation -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#ec4899] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#ec4899] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#ec4899]/80" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -272,7 +456,14 @@
 
       <!-- Card 6: Hosting & Infrastructure -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#f43f5e] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#f43f5e] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#f43f5e]/80" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -312,7 +503,14 @@
 
       <!-- Card 7: Networking, VPN, and Infrastructure Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#14b8a6]/80" style="background-image: url('background/background7.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -353,7 +551,14 @@
 
       <!-- Card 8: AI in Real-World Applications -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#06b6d4] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#06b6d4] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#06b6d4]/80" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -390,7 +595,14 @@
 
       <!-- Card 9: The Future of AI & Automation -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#3b82f6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#3b82f6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b82f6]/80" style="background-image: url('background/background9.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -420,7 +632,14 @@
 
       <!-- Card 10: AI in Video Games & Virtual Beings -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#8b5cf6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#8b5cf6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#8b5cf6]/80" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
@@ -452,7 +671,14 @@
 
       <!-- Card 11: Home Automation & Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
-        <div class="relative h-full w-full rounded-xl border-4 border-[#d946ef] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <!-- Close button for fullscreen cards -->
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <!-- end close button -->
+        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#d946ef] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#d946ef]/80" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
