@@ -401,7 +401,7 @@
         </div>
       </div>
 
-      <!-- Card 4: Top APIs and public Data Sources -->
+      <!-- Card 4: Top Public Data Sources -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -420,31 +420,93 @@
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b0764]/90" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10 text-xs md:text-sm">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Top APIs and Public Data Sources</h2>
+             
               <div class="overflow-x-auto mb-4">
-                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                <h2 class="font-semibold text-slate-100 mb-1 mt-2">Top Public Data Sources (2025)</h2>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
                   <thead class="bg-[#3b0764]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Overview</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Data Types</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Access</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Format</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">AI Relevance</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td><ul class="table-bullets">
-                        <li><span class="icon">🔤</span> OpenAI API</li>
-                        <li><span class="icon">🔗</span> <a href="https://platform.openai.com" class="text-sky-300 hover:underline" target="_blank">platform.openai.com</a></li>
-                        <li><span class="icon">🪪</span> Primarily Commercial. Usage subject to OpenAI's terms. Data may be used to improve models unless opted out.</li>
+                        <li><span class="icon">🔤</span> <b>Data.gov (US)</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://data.gov" class="text-sky-300 hover:underline" target="_blank">data.gov</a></li>
                       </ul></td>
-                      <td>Access to GPT-4, GPT-3.5, DALL·E, Whisper, embeddings, and more. High adoption, extensive docs, client libraries, free tier available.</td>
+                      <td>Central US government open data portal. 300k+ datasets, updated regularly.</td>
+                      <td>Gov, climate, health, geospatial, economy, more</td>
+                      <td>Portal, API (CKAN, metadata)</td>
+                      <td>CSV, JSON, XML, GIS</td>
+                      <td>Public domain (federal)</td>
+                      <td>Authoritative US data for civic, enviro, and analytics AI</td>
                     </tr>
                     <tr>
                       <td><ul class="table-bullets">
-                        <li><span class="icon">🔤</span> Hugging Face APIs & Hub</li>
-                        <li><span class="icon">🔗</span> <a href="https://huggingface.co" class="text-sky-300 hover:underline" target="_blank">huggingface.co</a></li>
-                        <li><span class="icon">🪪</span> Varies by model/dataset. Many core libraries Apache 2.0. API usage under Hugging Face terms.</li>
+                        <li><span class="icon">🔤</span> <b>Data.europa.eu (EU)</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://data.europa.eu" class="text-sky-300 hover:underline" target="_blank">data.europa.eu</a></li>
                       </ul></td>
-                      <td>Thousands of pre-trained models for NLP, vision, audio, and more. Inference API, datasets, strong open-source focus, free and paid tiers.</td>
+                      <td>EU-wide open data portal. 1.6M+ datasets, multilingual, active.</td>
+                      <td>Stats, geospatial, legal, research</td>
+                      <td>Portal, API, SPARQL</td>
+                      <td>RDF, CSV, JSON, machine-readable</td>
+                      <td>CC BY 4.0/editorial, dataset-specific</td>
+                      <td>EU data for economic, social, regulatory AI</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> <b>Wikidata</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://wikidata.org" class="text-sky-300 hover:underline" target="_blank">wikidata.org</a></li>
+                      </ul></td>
+                      <td>Structured, multilingual knowledge base. Public domain, real-time updates.</td>
+                      <td>Entities, properties, relationships</td>
+                      <td>SPARQL, API, dumps</td>
+                      <td>JSON, RDF</td>
+                      <td>CC0 (public domain)</td>
+                      <td>Knowledge graphs, NER, semantic AI</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> <b>OpenWeatherMap</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://openweathermap.org" class="text-sky-300 hover:underline" target="_blank">openweathermap.org</a></li>
+                      </ul></td>
+                      <td>Global weather, forecast, and climate data. Free & paid API, active.</td>
+                      <td>Weather, air quality, UV, solar, historical</td>
+                      <td>API (key), bulk download</td>
+                      <td>JSON, XML, CSV</td>
+                      <td>Free & paid, commercial on paid</td>
+                      <td>Weather, travel, smart home, enviro AI</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> <b>Open Food Facts</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://openfoodfacts.org" class="text-sky-300 hover:underline" target="_blank">openfoodfacts.org</a></li>
+                      </ul></td>
+                      <td>Crowdsourced food product database. Free, open, nightly updates.</td>
+                      <td>Ingredients, nutrition, allergens</td>
+                      <td>API, dumps (CSV, Parquet, MongoDB)</td>
+                      <td>JSON, CSV, Parquet</td>
+                      <td>ODbL, CC BY-SA (images)</td>
+                      <td>Nutrition, food tracking, health AI</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> <b>Kaggle Datasets</b></li>
+                        <li><span class="icon">🔗</span> <a href="https://kaggle.com/datasets" class="text-sky-300 hover:underline" target="_blank">kaggle.com/datasets</a></li>
+                      </ul></td>
+                      <td>482k+ datasets for ML/AI. Community, API, and direct download.</td>
+                      <td>Tabular, text, image, audio, video</td>
+                      <td>API, download, Kernels</td>
+                      <td>CSV, JSON, SQLite, images</td>
+                      <td>Varies (CC, ODbL, Apache, MIT, etc.)</td>
+                      <td>Model training, experimentation, learning</td>
                     </tr>
                   </tbody>
                 </table>
@@ -454,7 +516,7 @@
         </div>
       </div>
 
-      <!-- Card 5: AI Agent Frameworks & Automation -->
+      <!-- Card 5:  AI Art Generation: Images, 3D, and Video -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -467,24 +529,307 @@
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#ec4899]/80" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-2xl font-bold text-white">AI Agent Frameworks &amp; Automation</h2>
+              <h2 class="text-2xl font-bold text-white">AI Art Generation: Images, 3D, and Video</h2>
             </div>
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI Agent Frameworks &amp; Automation</h2>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://github.com/langchain-ai/langgraph" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LangGraph: Multi-Agent Supervisor Tutorial</a></li>
-                <li><a href="https://plurai.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Plurai</a></li>
-                <li><a href="https://github.com/CloudReefSim/CloudReefSim" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">The Cloud Reef Sim</a></li>
-                <li><a href="https://assistant.google.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Assistant</a></li>
-                <li><a href="https://github.com/mlc-ai/web-llm" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Web LLM Avatar</a></li>
-                <li><a href="https://www.griptape.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Griptape: Modular Python Framework for AI Applications</a></li>
-                <li><a href="https://github.com/run-llama/LlamaIndexTS" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LlamaIndex.TS: TypeScript Framework for Generative AI Applications</a></li>
-                <li><a href="https://docs.llamaindex.ai/en/latest/integrations/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">LlamaIndex Integrations (Connecting AI to data sources)</a></li>
-                <li><a href="https://github.com/genesphere-ai/genesphere" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">GeneSphere (YAML-based AI workflow framework)</a></li>
-              </ul>
+            <div class="relative z-10 text-xs md:text-sm">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">AI Image Generation Tools</h2>
+              <div class="overflow-x-auto mb-4">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#4a041e]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Primary Focus/Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Underlying AI Model(s) Supported</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Key Features</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Output Quality & Style Versatility</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Ease of Use & Community Perception</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">System Requirements</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> AUTOMATIC1111 Stable Diffusion WebUI (A1111)</li>
+                        <li><span class="icon">🪪</span> AGPL-3.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki" class="text-sky-300 hover:underline" target="_blank">GitHub Wiki</a></li>
+                      </ul></td>
+                      <td>Feature-rich web UI for Stable Diffusion, extensive community support.</td>
+                      <td>SD1.x, SD2.x, SDXL, custom checkpoints/LoRAs.</td>
+                      <td>GUI, Txt2img, Img2img, Inpainting, Outpainting, ControlNet, LoRAs, Upscaling, Face Restore, API.</td>
+                      <td>High, very versatile due to model/LoRA support.</td>
+                      <td>Feature-rich but can be complex for beginners. Large community, many extensions. Some find it slower than alternatives.</td>
+                      <td>Win/Lin/Mac; Python 3.10.6; NVidia (2GB+ VRAM, 4GB+ rec.), AMD; 16GB RAM; 10GB+ disk.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> ComfyUI</li>
+                        <li><span class="icon">🪪</span> GPL-3.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/comfyanonymous/ComfyUI" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://comfyui.github.io/documentation/" class="text-sky-300 hover:underline" target="_blank">Documentation</a></li>
+                      </ul></td>
+                      <td>Powerful and modular graph/node-based interface for Stable Diffusion pipelines.</td>
+                      <td>SD1.x, SD2.x, SDXL, SDXL Turbo, SD3, SD3.5, Stable Cascade, PixArt, many others including video/audio models.</td>
+                      <td>Node-based UI, extreme flexibility, efficient (re-executes changes only), smart VRAM management, ControlNet, LoRAs, Model Merging, API.</td>
+                      <td>Very High, extremely versatile due to pipeline control and broad model support.</td>
+                      <td>Steep learning curve due to nodes; highly valued by power users for control and cutting-edge features.</td>
+                      <td>Win/Lin/Mac; Python 3.12 rec.; NVidia, AMD, Intel, Apple Silicon (1GB+ VRAM), CPU.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> InvokeAI</li>
+                        <li><span class="icon">🪪</span> Apache-2.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/invoke-ai/InvokeAI" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://invoke.ai/" class="text-sky-300 hover:underline" target="_blank">Documentation</a></li>
+                      </ul></td>
+                      <td>Creative engine for Stable Diffusion with a polished WebUI, Unified Canvas, and node system.</td>
+                      <td>SD1.5, SD2.0, SDXL, FLUX; .ckpt & diffusers models.</td>
+                      <td>GUI + Nodes, Unified Canvas (in/outpaint), Model/Embedding Manager, Upscaling, Workflow Editor.</td>
+                      <td>High, good versatility, strong for interactive editing.</td>
+                      <td>Polished UI, easier for inpainting than A1111 for some. Good balance of features/usability.</td>
+                      <td>Win10+/Mac14+/Lin; Python 3.10-3.12; NVidia (4GB+ VRAM for SD1.5, 8GB+ for SDXL), AMD (Linux); 8-32GB+ RAM.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Fooocus</li>
+                        <li><span class="icon">🪪</span> GPL-3.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/lllyasviel/Fooocus" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/lllyasviel/Fooocus" class="text-sky-300 hover:underline" target="_blank">Documentation</a></li>
+                      </ul></td>
+                      <td>User-friendly SDXL-focused GUI, emphasizing prompts over parameters (Midjourney-like).</td>
+                      <td>Primarily SDXL, supports Civitai SDXL models.</td>
+                      <td>Simplified UI, offline GPT-2 prompt processing, automated quality improvements, Inpaint/Outpaint, Upscale, FaceSwap, Image Prompt (ControlNet-like).</td>
+                      <td>High quality for SDXL with minimal effort. Less versatile for non-SDXL.</td>
+                      <td>Very easy to use, excellent for quick, high-quality SDXL results. LTS status (bug fixes only).</td>
+                      <td>Win/Lin/Mac; Python; NVidia (4GB+ VRAM), AMD (8GB+ VRAM), CPU (32GB RAM).</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Krita AI Diffusion Plugin</li>
+                        <li><span class="icon">🪪</span> GPL-3.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/lnyanzi/krita-ai-diffusion" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://kritaaidiffusion.com" class="text-sky-300 hover:underline" target="_blank">kritaaidiffusion.com</a></li>
+                      </ul></td>
+                      <td>Integrates Stable Diffusion (SD1.5, SDXL, partial SD3/Flux) into Krita painting software.</td>
+                      <td>SD1.5, SDXL, partial Flux/SD3.</td>
+                      <td>Krita Plugin, Inpaint, Outpaint, Generate, Refine, Live Painting, ControlNet, IP-Adapter, Upscaling. Uses ComfyUI backend.</td>
+                      <td>Good, leverages Krita's tools for artistic control.</td>
+                      <td>Intuitive for Krita users, excellent for artist-led AI generation and editing.</td>
+                      <td>Krita 5.2.0+; Win/Lin/Mac; Python; GPU rec. (6GB+ VRAM).</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> GIMP AI Plugins with OpenVINO (Intel)</li>
+                        <li><span class="icon">🪪</span> Apache-2.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/GIMP-AI/GIMP-AI" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/GIMP-AI/GIMP-AI/wiki" class="text-sky-300 hover:underline" target="_blank">User Guides</a></li>
+                      </ul></td>
+                      <td>AI plugins for GIMP 3 using OpenVINO for Intel hardware. Includes SD functionality.</td>
+                      <td>SD 1.5, SDXL, SD3 (Medium, Turbo), ControlNets.</td>
+                      <td>GIMP Plugin, Super-Res, Seg., SD (Txt2img, Img2img, Inpaint, ControlNet).</td>
+                      <td>Dependent on specific SD models used via OpenVINO.</td>
+                      <td>Aims to integrate AI into GIMP workflows. Focused on Intel hardware.</td>
+                      <td>GIMP 3; Python 3; OpenVINO; Win/Lin; Intel Hardware (CPU, iGPU, NPU).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="overflow-x-auto mb-4">
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">3D Model Generation Tools</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#4a041e]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Primary Focus/Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Generation Method(s)</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Underlying AI Technology</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Key Features</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Supported Output Formats</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Ease of Use & Community Perception</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">System Requirements</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Hunyuan3D-2 (Tencent)</li>
+                        <li><span class="icon">🪪</span> Custom License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/Tencent/Hunyuan3D-2" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://comfyui-wiki.com/en/tutorial/advanced/3d/huanyuan3d-2" class="text-sky-300 hover:underline" target="_blank">ComfyUI Wiki</a></li>
+                      </ul></td>
+                      <td>Image/Text to High-Res Textured 3D Assets.</td>
+                      <td>Image-to-3D, Text-to-3D (via extension).</td>
+                      <td>Diffusion Transformer (shape), Diffusion (texture).</td>
+                      <td>High-res shape & texture, Blender addon, ComfyUI support, Turbo/Mini/MV models.</td>
+                      <td>GLB, OBJ, other via Trimesh.</td>
+                      <td>High quality, but complex setup for some. Mesh topology can be an issue. Active community.</td>
+                      <td>Lin/Win/Mac; PyTorch; 6GB+ VRAM (shape), 16-24.5GB+ (shape+texture).</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Point-E (OpenAI)</li>
+                        <li><span class="icon">🪪</span> MIT License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/openai/point-e" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://arxiv.org/abs/2212.08751" class="text-sky-300 hover:underline" target="_blank">Paper</a></li>
+                      </ul></td>
+                      <td>Text/Image to 3D Point Cloud, then Mesh.</td>
+                      <td>Text-to-Point Cloud, Image-to-Point Cloud, Point Cloud-to-Mesh.</td>
+                      <td>Diffusion (point cloud), SDF Regression (mesh).</td>
+                      <td>Fast generation, converts point clouds to meshes.</td>
+                      <td>Point Cloud (.ply), Mesh (.ply, .obj via WebUI).</td>
+                      <td>Fast but output quality is lower-res, noisy. Text model limited.</td>
+                      <td>Python, PyTorch. Single GPU (1-2 min/sample). ~6.5GB VRAM (img2pc), ~1.7GB (pc2mesh) on 3090.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> point-e-webui (tonymacx86PRO)</li>
+                        <li><span class="icon">🪪</span> MIT License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/tonymacx86PRO/point-e-webui" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                      </ul></td>
+                      <td>Local WebUI for Point-E.</td>
+                      <td>(Utilizes Point-E)</td>
+                      <td>(Utilizes Point-E)</td>
+                      <td>Simplifies Point-E usage, provides OBJ output.</td>
+                      <td>.ply (point cloud & mesh), .obj (mesh).</td>
+                      <td>Makes Point-E more accessible. Limited community feedback in snippets.</td>
+                      <td>Python 3.10.6, Git, PyTorch.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> A3D Editor (n0neye)</li>
+                        <li><span class="icon">🪪</span> AGPL-3.0 (Editor), MIT (ComfyUI node)</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/n0neye/A3D" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                      </ul></td>
+                      <td>Hybrid 3D editor with AI asset generation and rendering.</td>
+                      <td>Image-to-3D (via Fal.ai), Scene Composition, Depth-guided rendering.</td>
+                      <td>External APIs (Fal.ai for 3D gen), ComfyUI integration.</td>
+                      <td>Pose control, scene building, 2D/3D asset import, AI rendering.</td>
+                      <td>Input: common 3D models. Output: Color/depth to ComfyUI. Specific 3D export not detailed.</td>
+                      <td>Early beta, aims for lightweight prototyping. Windows only.</td>
+                      <td>Windows. Fal.ai API key / ComfyUI setup for AI features.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> 302.AI 3D Modeling (Open-Source Version)</li>
+                        <li><span class="icon">🪪</span> MIT License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/302ai/302_ai_3d_modeling" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                      </ul></td>
+                      <td>Image-to-3D and Text-to-Image-to-3D conversion.</td>
+                      <td>Image-to-3D, Text-to-Image then Image-to-3D.</td>
+                      <td>"Advanced AI technology" (specific model not detailed, likely API-based).</td>
+                      <td>Multi-angle preview, multi-language UI, dark mode.</td>
+                      <td>Specific formats not detailed; "more formats planned".</td>
+                      <td>Easy to use online. Small OS community. Frontend for larger platform.</td>
+                      <td>Node.js, pnpm. (Web application).</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Neuralangelo (NVIDIA)</li>
+                        <li><span class="icon">🪪</span> NVIDIA Source Code License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/NVlabs/Neuralangelo" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://research.nvidia.com/labs/nvlabs/Neuralangelo/" class="text-sky-300 hover:underline" target="_blank">Project Page</a></li>
+                      </ul></td>
+                      <td>High-fidelity 3D surface reconstruction from video.</td>
+                      <td>Video-to-3D (Reconstruction).</td>
+                      <td>Neural Surface Rendering, Multi-res Hash Grids, SDFs.</td>
+                      <td>Textured mesh extraction, COLMAP integration, very high detail.</td>
+                      <td>.ply (mesh), can be textured.</td>
+                      <td>Produces highly detailed reconstructions. Complex setup, high VRAM. Reconstruction, not direct generation.</td>
+                      <td>Linux (Docker/conda); PyTorch; CUDA; >=24GB VRAM (can be lowered).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="overflow-x-auto mb-4">
+                <h3 class="font-semibold text-slate-100 mb-1 mt-2">Video Generation Tools</h3>
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#4a041e]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name & Info</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Primary Focus/Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Generation Type(s)</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Underlying AI Model(s)/Tech</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Key Features</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Ease of Use & Community Perception</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">System Requirements</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Stable Video Diffusion (SVD) (Stability AI)</li>
+                        <li><span class="icon">🪪</span> Stability AI Community License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/Stability-AI/generative-models" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://huggingface.co/stabilityai/stable-video-diffusion-img2vid" class="text-sky-300 hover:underline" target="_blank">HuggingFace</a></li>
+                      </ul></td>
+                      <td>Image-to-video diffusion model for short clips.</td>
+                      <td>Image-to-Video.</td>
+                      <td>Latent Diffusion.</td>
+                      <td>14/25 frames, 576x1024, temporal consistency focus.</td>
+                      <td>Accessible via ComfyUI on lower VRAM. Quality preferred in some evals. No text control.</td>
+                      <td>High VRAM (A100 80GB) for fast gen; &lt;10GB VRAM possible in ComfyUI.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> AnimateDiff</li>
+                        <li><span class="icon">🪪</span> Apache-2.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/guoyww/AnimateDiff" class="text-sky-300 hover:underline" target="_blank">Official</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/guoyww/AnimateDiff#readme" class="text-sky-300 hover:underline" target="_blank">Project Page</a></li>
+                      </ul></td>
+                      <td>Plug-and-play module to animate existing T2I models (SD1.5, SDXL).</td>
+                      <td>Image-to-Video (animating T2I outputs), Text-to-Animation (via T2I model), Video-to-Video (with ControlNet).</td>
+                      <td>Motion Modules, MotionLoRA.</td>
+                      <td>Integrates with SD models, MotionLoRA camera control, SparseCtrl, ComfyUI/A1111 extensions.</td>
+                      <td>Popular for animating personalized T2I models. Extensions ease use. Generic motion if not guided.</td>
+                      <td>NVidia GPU (8GB+ VRAM for T2V, 10GB+ for V2V), PyTorch &gt;=2.0 (Forge). ~13GB VRAM for SDXL.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> VideoCrafter (AILab-CVC)</li>
+                        <li><span class="icon">🪪</span> Apache-2.0 (non-commercial)</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/AILab-CVC/VideoCrafter" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/AILab-CVC/VideoCrafter#readme" class="text-sky-300 hover:underline" target="_blank">Project Page</a></li>
+                      </ul></td>
+                      <td>Toolbox for T2V and I2V generation, research-focused.</td>
+                      <td>Text-to-Video, Image-to-Video.</td>
+                      <td>Diffusion Models.</td>
+                      <td>LongerCrafter/FreeNoise for longer videos, VideoCrafter2 (improved motion).</td>
+                      <td>Research tool. Non-commercial license limits broad use.</td>
+                      <td>Python 3.8.5. GPU (A100 40GB mentioned for specific outputs).</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> Open-Sora (hpcaitech)</li>
+                        <li><span class="icon">🪪</span> Apache-2.0</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/hpcaitech/Open-Sora" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                        <li><span class="icon">📄</span> <a href="https://github.com/hpcaitech/Open-Sora#reports" class="text-sky-300 hover:underline" target="_blank">Reports</a></li>
+                      </ul></td>
+                      <td>Initiative to reproduce Sora-like video generation efficiently.</td>
+                      <td>Text-to-Video, Image-to-Video, Video-to-Video.</td>
+                      <td>Diffusion Transformers (DiT), Custom VAEs (e.g., Video DC-AE).</td>
+                      <td>Various resolutions/lengths (up to 720p/768px, ~16s), aspect ratios, motion score control, prompt refinement.</td>
+                      <td>Actively developed, user-friendly aim. Good performance, cost-effective training. Setup can be involved.</td>
+                      <td>Python 3.10, PyTorch &gt;=2.4.0. High-end GPUs for best results (H100); consumer GPUs (RTX 3090 24GB) for lower-res/shorter.</td>
+                    </tr>
+                    <tr>
+                      <td><ul class="table-bullets">
+                        <li><span class="icon">🔤</span> HunyuanVideo (Tencent)</li>
+                        <li><span class="icon">🪪</span> Custom License</li>
+                        <li><span class="icon">🔗</span> <a href="https://github.com/Tencent/HunyuanVideo" class="text-sky-300 hover:underline" target="_blank">GitHub</a></li>
+                      </ul></td>
+                      <td>Large (13B+ params) video foundation model for T2V and I2V.</td>
+                      <td>Text-to-Video, Image-to-Video.</td>
+                      <td>Transformer, MLLM Text Encoder, 3D VAE.</td>
+                      <td>High-res (up to 720p, 129 frames), prompt rewrite, ComfyUI support (native & wrapper).</td>
+                      <td>High quality output. High VRAM needs are a barrier. Active community.</td>
+                      <td>Linux; Python 3.10.9; CUDA 11.8/12.4; GPU (45-60GB+ VRAM, 80GB rec.).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
