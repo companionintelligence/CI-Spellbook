@@ -984,7 +984,7 @@
         </div>
       </div>
 
-      <!-- Card 6: Hosting & Infrastructure -->
+      <!-- Card 6: Speech-to-Text & Text-to-Speech -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
         <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
@@ -1005,63 +1005,135 @@
             <div class="relative z-10">
               <h2 class="text-xl font-bold text-white mb-3 pt-2">Speech-to-Text & Text-to-Speech</h2>
               <div class="overflow-x-auto mb-6">
-                <h3 class="font-semibold text-slate-100 mb-2 mt-2">Speech-to-Text Technologies</h3>
+                <h3 class="font-semibold text-slate-100 mb-2 mt-2">Speech-to-Text Tools</h3>
                 <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
                   <thead class="bg-[#0f2f26]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Technology</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Core Architecture(s)</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Key Features</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Performance</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Performance & Real-Time</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Multilingual</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Real-time</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Customization</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Strengths</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Limitations</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>OpenAI Whisper</td><td>Transformer (Encoder-Decoder)</td><td>Multilingual transcription & translation, noise resilience, various model sizes</td><td>Large: 2.73% / 7.94% (WER)</td><td>>50 languages</td><td>Not real-time by default; community variants improve</td><td>Limited without fine-tuning; possible</td><td>MIT</td><td>High accuracy, robust, multilingual, translation</td><td>High compute, not real-time, limited domain adaptation</td></tr>
-                    <tr><td>Whisper Variants (Faster Whisper, whisper.cpp, WhisperX)</td><td>Optimized Whisper (CTranslate2, C++, VAD)</td><td>Speed/memory improvements, word-level timestamps, diarization</td><td>Similar to Whisper, faster/more efficient</td><td>Same as Whisper</td><td>Improved real-time</td><td>Same as Whisper, plus variant features</td><td>MIT, BSD-2-Clause (WhisperX)</td><td>Addresses Whisper's speed/memory/real-time</td><td>Depends on Whisper, more complex</td></tr>
-                    <tr><td>Wav2Vec 2.0 (Meta AI)</td><td>Transformer, Self-supervised</td><td>Self-supervised pre-training, high customizability</td><td>1.8% / 3.3% (LibriSpeech)</td><td>Primarily English, fine-tunable</td><td>Yes</td><td>Highly customizable, easy to fine-tune</td><td>MIT</td><td>Excellent with fine-tuning, low-resource support</td><td>Complex setup, needs fine-tuning for best results</td></tr>
-                    <tr><td>SpeechBrain</td><td>PyTorch toolkit (Transformers, Conformer, etc.)</td><td>Holistic toolkit, supports Whisper/Wav2Vec2, diarization, enhancement</td><td>2.01% / 4.52% (Conformer)</td><td>Many datasets/languages via fine-tuning</td><td>Real-time focus evolving</td><td>Highly customizable, YAML configs</td><td>Apache 2.0</td><td>Comprehensive, SOTA, Hugging Face integration</td><td>Complex for beginners, real-time still evolving</td></tr>
-                    <tr><td>sherpa-onnx (k2-fsa)</td><td>Next-gen Kaldi, ONNX, Zipformer, Whisper</td><td>Offline, embedded, real-time streaming/non-streaming, TTS, VAD, diarization</td><td>2.21% / 4.79% (Zipformer)</td><td>Chinese, English, Korean, French, etc.</td><td>Yes</td><td>Supports many pre-trained models, ONNX deploy</td><td>Apache 2.0</td><td>Great for offline/embedded, broad support</td><td>Benchmarks often refer to icefall recipes</td></tr>
-                    <tr><td>Vosk API</td><td>Kaldi-based</td><td>Offline, lightweight, real-time, reconfigurable vocab, speaker ID</td><td>5.69% (large), 9.85% (small)</td><td>>20 languages</td><td>Yes, zero-latency streaming</td><td>Custom language models possible</td><td>Apache 2.0</td><td>Lightweight, offline, easy integration</td><td>Small models less accurate, large models less lightweight</td></tr>
-                    <tr><td>Kaldi</td><td>GMM-HMM, DNN-HMM, End-to-End</td><td>Highly flexible, research-focused, cross-compile</td><td>Depends on recipe</td><td>Many via recipes</td><td>Possible, depends on model</td><td>Extremely flexible, customizable</td><td>Apache 2.0</td><td>Ultimate flexibility, research toolkit</td><td>Very complex, steep learning curve</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> OpenAI Whisper</li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/openai/whisper" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://platform.openai.com/docs/guides/speech-to-text" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Transformer (Encoder-Decoder)</td><td>Multilingual transcription & translation, noise resilience, model sizes</td><td>Large: 2.73%/7.94% WER, not real-time by default; community variants improve</td><td>>50 languages</td><td>Limited without fine-tuning; possible</td><td>High accuracy, robust, multilingual, translation</td><td>High compute, not real-time, limited domain adaptation</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Faster Whisper / whisper.cpp / WhisperX</li>
+                      <li><span class="icon">🪪</span> MIT, BSD-2-Clause</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/guillaumekln/faster-whisper" class="text-sky-300 hover:underline" target="_blank">Faster Whisper</a> | <a href="https://github.com/ggerganov/whisper.cpp" class="text-sky-300 hover:underline" target="_blank">whisper.cpp</a> | <a href="https://github.com/m-bain/whisperX" class="text-sky-300 hover:underline" target="_blank">WhisperX</a></li>
+                    </ul></td><td>Optimized Whisper (CTranslate2, C++, VAD)</td><td>Speed/memory improvements, word-level timestamps, diarization</td><td>Similar accuracy, much faster, real-time possible</td><td>Same as Whisper</td><td>Same as Whisper, plus variant features</td><td>Addresses Whisper's speed/memory/real-time</td><td>Depends on Whisper, more complex</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Wav2Vec 2.0 (Meta AI)</li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/pytorch/fairseq/tree/main/examples/wav2vec" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://ai.facebook.com/blog/wav2vec-20-state-of-the-art-speech-recognition-for-everyone/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Transformer, Self-supervised</td><td>Self-supervised pre-training, high customizability</td><td>1.8%/3.3% WER, real-time possible</td><td>Primarily English, fine-tunable</td><td>Highly customizable, easy to fine-tune</td><td>Excellent with fine-tuning, low-resource support</td><td>Complex setup, needs fine-tuning for best results</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> SpeechBrain</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/speechbrain/speechbrain" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://speechbrain.readthedocs.io/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>PyTorch toolkit (Transformers, Conformer, etc.)</td><td>Holistic toolkit, supports Whisper/Wav2Vec2, diarization, enhancement</td><td>2.01%/4.52% WER, real-time evolving</td><td>Many datasets/languages via fine-tuning</td><td>Highly customizable, YAML configs</td><td>Comprehensive, SOTA, Hugging Face integration</td><td>Complex for beginners, real-time still evolving</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> sherpa-onnx (k2-fsa)</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/k2-fsa/sherpa-onnx" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://k2-fsa.github.io/sherpa/onnx/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Next-gen Kaldi, ONNX, Zipformer, Whisper</td><td>Offline, embedded, real-time streaming/non-streaming, TTS, VAD, diarization</td><td>2.21%/4.79% WER, real-time, embedded</td><td>Chinese, English, Korean, French, etc.</td><td>Supports many pre-trained models, ONNX deploy</td><td>Great for offline/embedded, broad support</td><td>Benchmarks often refer to icefall recipes</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Vosk API</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/alphacep/vosk-api" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://alphacephei.com/vosk/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Kaldi-based</td><td>Offline, lightweight, real-time, reconfigurable vocab, speaker ID</td><td>5.69%/9.85% WER, real-time, zero-latency</td><td>>20 languages</td><td>Custom language models possible</td><td>Lightweight, offline, easy integration</td><td>Small models less accurate, large models less lightweight</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Kaldi</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/kaldi-asr/kaldi" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://kaldi-asr.org/doc/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>GMM-HMM, DNN-HMM, End-to-End</td><td>Highly flexible, research-focused, cross-compile</td><td>Depends on recipe, real-time possible</td><td>Many via recipes</td><td>Extremely flexible, customizable</td><td>Ultimate flexibility, research toolkit</td><td>Very complex, steep learning curve</td></tr>
                   </tbody>
                 </table>
               </div>
               <div class="overflow-x-auto mb-4">
-                <h3 class="font-semibold text-slate-100 mb-2 mt-2">Text-to-Speech Technologies</h3>
+                <h3 class="font-semibold text-slate-100 mb-2 mt-2">Text-to-Speech Tools</h3>
                 <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
                   <thead class="bg-[#0f2f26]/80">
                     <tr>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Technology</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Synthesis Method</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Key Features</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Speech Quality</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Quality & Compute</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Languages</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Compute</th>
-                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Strengths</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Limitations</th>
                       <th class="px-2 py-1 border-b border-slate-700 font-bold">Use Cases</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>Coqui XTTS v2</td><td>Autoregressive, VQ-VAE + GPT2-like</td><td>6s voice cloning, emotion/style transfer, cross-language cloning, 24kHz</td><td>High quality, expressive. MOS 3.19-3.61</td><td>17 languages</td><td>GPU recommended (&lt;150ms latency)</td><td>CPML (Non-commercial)</td><td>Excellent voice cloning, multilingual, expressive</td><td>Non-commercial, Coqui.ai shut down</td><td>Voice cloning, multilingual content (non-commercial)</td></tr>
-                    <tr><td>VITS</td><td>VAE, Adversarial, Normalizing Flows</td><td>End-to-end, natural rhythm/intonation</td><td>High quality, MOS ~human</td><td>Multilingual adaptations, En, Ko, etc.</td><td>GPU for training, CPU-efficient inference</td><td>MIT, Apache 2.0 (forks)</td><td>High quality, on-device, base for others</td><td>Resource-intensive training</td><td>On-device, research, base for Piper</td></tr>
-                    <tr><td>MeloTTS (MyShell.ai)</td><td>Neural (likely)</td><td>CPU real-time, multiple accents, mixed Chinese/English</td><td>High quality, easy to use</td><td>En (US, UK, IN, AU), Es, Fr, Zh, Ja, Ko</td><td>CPU real-time</td><td>MIT</td><td>CPU efficient, good quality, multilingual</td><td>No voice cloning</td><td>Real-time, chatbots, narration</td></tr>
-                    <tr><td>OpenVoice v2 (MyShell.ai)</td><td>Based on MeloTTS</td><td>Instant voice cloning, style control, cross-lingual cloning</td><td>Better than v1, less natural than MeloTTS</td><td>En, Es, Fr, Ch, Ja, Ko</td><td>CPU/GPU, efficient cloning</td><td>MIT (Apr 2024)</td><td>Powerful cloning, style control, commercial-friendly</td><td>Less natural than MeloTTS</td><td>Personalized voice, dynamic content</td></tr>
-                    <tr><td>StyleTTS 2</td><td>Style Diffusion, Adversarial, SLMs</td><td>Human-level, no reference needed, zero-shot adaptation</td><td>Surpasses human (CMOS +0.28), matches on VCTK</td><td>En, Ja, Ch, 14 langs (PL-BERT)</td><td>Complex training, inference module</td><td>MIT (code), conditional for models</td><td>SOTA naturalness, zero-shot adaptation</td><td>Complex, nuanced license</td><td>High-fidelity, research</td></tr>
-                    <tr><td>Piper (Rhasspy)</td><td>VITS + ONNX</td><td>Local, fast, many voices/languages</td><td>"Sounds great", varies by voice</td><td>ar, ca, cs, de, en, es, fr, it, nl, pl, pt, ru, zh, etc.</td><td>Efficient (ONNX), runs on Pi</td><td>MIT (engine), voices vary</td><td>Wide selection, offline, Home Assistant</td><td>Voice quality varies, complex licensing</td><td>Smart home, offline TTS, alerts</td></tr>
-                    <tr><td>ESPnet-TTS</td><td>Tacotron 2, FastSpeech, VITS, etc.</td><td>Unified toolkit, multi-task, G2P</td><td>High quality, customizable, MOS prediction</td><td>En, Ch, Ja, extensible</td><td>Varies by model</td><td>Apache 2.0</td><td>Flexible, SOTA, research</td><td>Not plug-and-play</td><td>TTS research/dev</td></tr>
-                    <tr><td>eSpeak NG</td><td>Formant Synthesis</td><td>Compact, fast, >100 languages/accents</td><td>Clear but robotic</td><td>>100 languages/accents</td><td>Very lightweight, CPU</td><td>GPL-3.0+</td><td>Efficient, vast language support</td><td>Robotic quality</td><td>Accessibility, embedded, alerts</td></tr>
-                    <tr><td>MaryTTS</td><td>Java, Unit Selection/HMM</td><td>Modular, voice building tools</td><td>Natural for class, older tech</td><td>>20 languages</td><td>Java-based, moderate</td><td>LGPL</td><td>Good multilingual, customizable</td><td>Lower quality, Java dep</td><td>E-learning, screen readers, research</td></tr>
-                    <tr><td>Spark-TTS</td><td>LLM-based (Qwen2.5), BiCodec</td><td>Customizable voice, zero-shot cloning</td><td>Not specified (new)</td><td>Chinese, English</td><td>500M params</td><td>Not specified</td><td>Novel, customizable</td><td>New, limited languages</td><td>Research, custom voice</td></tr>
-                    <tr><td>Kokoro</td><td>Neural (not specified)</td><td>Small (82M), real-time CPU</td><td>High quality, "Siri-like"</td><td>English only</td><td>Very lightweight, CPU/GPU</td><td>Apache 2.0</td><td>Efficient, fast, commercial-friendly</td><td>English only, less expressive</td><td>Real-time CPU apps</td></tr>
-                    <tr><td>Fish Speech v1.5</td><td>Neural (not specified)</td><td>Zero/few-shot cloning, low CER/WER, <150ms latency</td><td>Low CER/WER (~2% for 5min En)</td><td>En, Ja, Ko, Ch, Fr, De, Ar, Es</td><td>Fast inference</td><td>BY-CC-NC-SA-4.0</td><td>Good cloning, multilingual, fast</td><td>Non-commercial</td><td>Multilingual cloning (non-commercial)</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Coqui XTTS v2</li>
+                      <li><span class="icon">🪪</span> CPML (Non-commercial)</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/coqui-ai/XTTS" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://coqui.ai/docs/xtts/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Autoregressive, VQ-VAE + GPT2-like</td><td>6s voice cloning, emotion/style transfer, cross-language cloning, 24kHz</td><td>High quality, expressive, GPU recommended (&lt;150ms latency)</td><td>17 languages</td><td>Excellent voice cloning, multilingual, expressive</td><td>Non-commercial, Coqui.ai shut down</td><td>Voice cloning, multilingual content (non-commercial)</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> VITS</li>
+                      <li><span class="icon">🪪</span> MIT, Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/jaywalnut310/vits" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://github.com/Plachtaa/VITS-fast-fine-tuning" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>VAE, Adversarial, Normalizing Flows</td><td>End-to-end, natural rhythm/intonation</td><td>High quality, MOS ~human, GPU for training, CPU-efficient inference</td><td>Multilingual adaptations, En, Ko, etc.</td><td>High quality, on-device, base for others</td><td>Resource-intensive training</td><td>On-device, research, base for Piper</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> MeloTTS (MyShell.ai)</li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/myshell-ai/MeloTTS" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://docs.myshell.ai/docs/melotts" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Neural (likely)</td><td>CPU real-time, multiple accents, mixed Chinese/English</td><td>High quality, easy to use, CPU real-time</td><td>En (US, UK, IN, AU), Es, Fr, Zh, Ja, Ko</td><td>CPU efficient, good quality, multilingual</td><td>No voice cloning</td><td>Real-time, chatbots, narration</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> OpenVoice v2 (MyShell.ai)</li>
+                      <li><span class="icon">🪪</span> MIT</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/myshell-ai/OpenVoice" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://docs.myshell.ai/docs/openvoice" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Based on MeloTTS</td><td>Instant voice cloning, style control, cross-lingual cloning</td><td>Better than v1, less natural than MeloTTS, CPU/GPU, efficient cloning</td><td>En, Es, Fr, Ch, Ja, Ko</td><td>Powerful cloning, style control, commercial-friendly</td><td>Less natural than MeloTTS</td><td>Personalized voice, dynamic content</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> StyleTTS 2</li>
+                      <li><span class="icon">🪪</span> MIT (code), conditional for models</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/yl4579/StyleTTS2" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://styletts2.github.io/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Style Diffusion, Adversarial, SLMs</td><td>Human-level, no reference needed, zero-shot adaptation</td><td>Surpasses human (CMOS +0.28), matches on VCTK, complex training</td><td>En, Ja, Ch, 14 langs (PL-BERT)</td><td>SOTA naturalness, zero-shot adaptation</td><td>Complex, nuanced license</td><td>High-fidelity, research</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Piper (Rhasspy)</li>
+                      <li><span class="icon">🪪</span> MIT (engine), voices vary</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/rhasspy/piper" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://rhasspy.github.io/piper/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>VITS + ONNX</td><td>Local, fast, many voices/languages</td><td>"Sounds great", varies by voice, efficient (ONNX), runs on Pi</td><td>ar, ca, cs, de, en, es, fr, it, nl, pl, pt, ru, zh, etc.</td><td>Wide selection, offline, Home Assistant</td><td>Voice quality varies, complex licensing</td><td>Smart home, offline TTS, alerts</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> ESPnet-TTS</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/espnet/espnet" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://espnet.github.io/espnet/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Tacotron 2, FastSpeech, VITS, etc.</td><td>Unified toolkit, multi-task, G2P</td><td>High quality, customizable, MOS prediction, varies by model</td><td>En, Ch, Ja, extensible</td><td>Flexible, SOTA, research</td><td>Not plug-and-play</td><td>TTS research/dev</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> eSpeak NG</li>
+                      <li><span class="icon">🪪</span> GPL-3.0+</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/espeak-ng/espeak-ng" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://espeak-ng.org/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Formant Synthesis</td><td>Compact, fast, >100 languages/accents</td><td>Clear but robotic, very lightweight, CPU</td><td>>100 languages/accents</td><td>Efficient, vast language support</td><td>Robotic quality</td><td>Accessibility, embedded, alerts</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> MaryTTS</li>
+                      <li><span class="icon">🪪</span> LGPL</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/marytts/marytts" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://marytts.github.io/" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Java, Unit Selection/HMM</td><td>Modular, voice building tools</td><td>Natural for class, older tech, Java-based, moderate</td><td>>20 languages</td><td>Good multilingual, customizable</td><td>Lower quality, Java dep</td><td>E-learning, screen readers, research</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Spark-TTS</li>
+                      <li><span class="icon">🪪</span> Not specified</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/QwenLM/Spark-TTS" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://github.com/QwenLM/Spark-TTS" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>LLM-based (Qwen2.5), BiCodec</td><td>Customizable voice, zero-shot cloning</td><td>Not specified (new), 500M params</td><td>Chinese, English</td><td>Novel, customizable</td><td>New, limited languages</td><td>Research, custom voice</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Kokoro</li>
+                      <li><span class="icon">🪪</span> Apache 2.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/1rgs/kokoro" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://github.com/1rgs/kokoro" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Neural (not specified)</td><td>Small (82M), real-time CPU</td><td>High quality, "Siri-like", very lightweight, CPU/GPU</td><td>English only</td><td>Efficient, fast, commercial-friendly</td><td>English only, less expressive</td><td>Real-time CPU apps</td></tr>
+                    <tr><td><ul class="table-bullets">
+                      <li><span class="icon">🔤</span> Fish Speech v1.5</li>
+                      <li><span class="icon">🪪</span> BY-CC-NC-SA-4.0</li>
+                      <li><span class="icon">🔗</span> <a href="https://github.com/fishaudio/fish-speech" class="text-sky-300 hover:underline" target="_blank">Code</a> | <a href="https://github.com/fishaudio/fish-speech" class="text-sky-300 hover:underline" target="_blank">Docs</a></li>
+                    </ul></td><td>Neural (not specified)</td><td>Zero/few-shot cloning, low CER/WER, <150ms latency</td><td>Low CER/WER (~2% for 5min En), fast inference</td><td>En, Ja, Ko, Ch, Fr, De, Ar, Es</td><td>Good cloning, multilingual, fast</td><td>Non-commercial</td><td>Multilingual cloning (non-commercial)</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1123,8 +1195,163 @@
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4c1d95]/90" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
-            <div class="relative z-10">
-              <!-- Add your content for AI in Video Games & Virtual Beings here -->
+            <div class="relative z-10 text-xs md:text-sm">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">3D Avatar Embodied AI Agent Frameworks</h2>
+              <h3 class="font-semibold text-slate-100 mb-2 mt-2">Open-Source Platforms</h3>
+              <div class="overflow-x-auto mb-6">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#4c1d95]/80">
+                    <tr>
+                      <th class="px-2 py-1 font-bold">Tools</th>
+                      <th class="px-2 py-1 font-bold">Description & Features</th>
+                      <th class="px-2 py-1 font-bold">Supported AI Models</th>
+                      <th class="px-2 py-1 font-bold">Supported Avatar Formats</th>
+                      <th class="px-2 py-1 font-bold">Integrations (SDKs/APIs)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Amica (semperAI)</b></li>
+                          <li>📄 MIT</li>
+                          <li>🔗 <a href="https://github.com/semperai/amica" target="_blank" class="underline text-violet-300">GitHub</a></li>
+                          <li>📚 <a href="https://docs.heyamica.com" target="_blank" class="underline text-violet-300">Docs</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Open-source interface for conversing with customizable 3D characters via voice/vision. Features: STT, TTS, emotion engine, computer vision, plugin system, REST API, local/cloud LLMs.</td>
+                      <td class="px-2 py-1">Pluggable LLM backend (OpenAI, OpenRouter, local LLaMA, Oobabooga, etc.)</td>
+                      <td class="px-2 py-1">VRM (VRoid Studio avatars), custom 3D models (convertible to .vrm)</td>
+                      <td class="px-2 py-1">Cross-platform app (desktop/web), plugin system, REST API for agent control</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Talking Head (3D)</b></li>
+                          <li>📄 MIT</li>
+                          <li>🔗 <a href="https://github.com/met4citizen/TalkingHead" target="_blank" class="underline text-violet-300">GitHub</a></li>
+                          <li>📦 <a href="https://www.npmjs.com/package/@met4citizen/talkinghead" target="_blank" class="underline text-violet-300">NPM</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">JS lib for real-time lip-sync/speech animation on 3D avatars. Uses Three.js/WebGL, supports Ready Player Me avatars, Mixamo FBX, built-in TTS, multi-language lip-sync, emoji-to-expression mapping.</td>
+                      <td class="px-2 py-1">No built-in AI; designed to pair with any chatbot backend (GPT-4, etc.)</td>
+                      <td class="px-2 py-1">GLB (Ready Player Me), FBX (Mixamo), custom avatars (RPM skeleton)</td>
+                      <td class="px-2 py-1">Web (Three.js), ES module, NPM, can be wrapped in Electron</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Awesome Talking-Head Synthesis</b></li>
+                          <li>📄 MIT</li>
+                          <li>🔗 <a href="https://github.com/Kedreamix/Awesome-Talking-Head-Synthesis" target="_blank" class="underline text-violet-300">GitHub</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Curated list of papers, code, datasets for talking head generation (GAN/NeRF-based, 2D/3D). Resource for research and project discovery.</td>
+                      <td class="px-2 py-1">N/A (aggregates many projects: GANs, NeRF, etc.)</td>
+                      <td class="px-2 py-1">N/A (resource list; formats depend on project)</td>
+                      <td class="px-2 py-1">N/A (knowledge repository)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h3 class="font-semibold text-slate-100 mb-2 mt-2">Commercial Platforms</h3>
+              <div class="overflow-x-auto mb-4">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm mb-4">
+                  <thead class="bg-[#4c1d95]/80">
+                    <tr>
+                      <th class="px-2 py-1 font-bold">Tools</th>
+                      <th class="px-2 py-1 font-bold">Description & Capabilities</th>
+                      <th class="px-2 py-1 font-bold">Supported AI Models</th>
+                      <th class="px-2 py-1 font-bold">Supported Avatar Formats</th>
+                      <th class="px-2 py-1 font-bold">Integrations (SDKs/APIs)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Artificial Agency</b></li>
+                          <li>🔒 Proprietary</li>
+                          <li>🌐 <a href="https://artificial.agency" target="_blank" class="underline text-violet-300">Website</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">AI-driven NPC behavior engine for games. NPCs have goals, memory, adaptive behaviors, and respond to live game events. Focus on unscripted, lifelike interactions.</td>
+                      <td class="px-2 py-1">Proprietary LLM-powered engine (dialogue, decision-making, behavior trees, RL planners)</td>
+                      <td class="px-2 py-1">Agnostic (works with any 3D character in supported engines)</td>
+                      <td class="px-2 py-1">Game Engine SDKs (Unity, Unreal planned), API for runtime integration</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Inworld AI</b></li>
+                          <li>🔒 Proprietary SaaS</li>
+                          <li>🌐 <a href="https://inworld.ai" target="_blank" class="underline text-violet-300">Website</a></li>
+                          <li>📚 <a href="https://docs.inworld.ai" target="_blank" class="underline text-violet-300">Docs</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Interactive AI characters/NPCs with multimodal AI. Studio for character creation, memory, emotion, safety, TTS/STT, and 20+ ML models for realistic interaction.</td>
+                      <td class="px-2 py-1">Multiple LLMs: Inworld Llama 3.1 70B, OpenAI GPT-4o, GPT-3.5, extensible to others</td>
+                      <td class="px-2 py-1">Engine-agnostic; supports Ready Player Me, MetaHumans, custom rigged 3D models</td>
+                      <td class="px-2 py-1">Unity SDK, Unreal Plugin, REST API/WebSocket, web/mobile support</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Charisma.ai</b></li>
+                          <li>🔒 Proprietary SaaS</li>
+                          <li>🌐 <a href="https://charisma.ai" target="_blank" class="underline text-violet-300">Website</a></li>
+                          <li>📚 <a href="https://docs.charisma.ai" target="_blank" class="underline text-violet-300">Docs</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Interactive storytelling and digital actors. Visual story editor, AI-augmented dialogue, 3D avatars, lip-sync, 1000+ AI voices, real-time player conversations, Unity/Unreal/Web SDKs.</td>
+                      <td class="px-2 py-1">Multiple LLMs: OpenAI GPT-4/3.5, Anthropic Claude, Meta LLaMA, script-based blending</td>
+                      <td class="px-2 py-1">3D avatars via Unity/Unreal; sample avatars (Reallusion), custom FBX/GLTF, MetaHumans</td>
+                      <td class="px-2 py-1">Unity/Unreal SDKs, Web SDK, REST API</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Soul Machines</b></li>
+                          <li>🔒 Proprietary</li>
+                          <li>🌐 <a href="https://soulmachines.com" target="_blank" class="underline text-violet-300">Website</a></li>
+                          <li>📚 <a href="https://docs.soulmachines.com" target="_blank" class="underline text-violet-300">Docs</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Photorealistic “Digital People” with real-time emotion, facial animation, and conversation. LLM-agnostic, cloud-based, advanced facial rig, empathy, and affective computing.</td>
+                      <td class="px-2 py-1">LLM-agnostic; default NLP or connect GPT-4, IBM Watson, Azure, etc.; custom emotion/voice modules</td>
+                      <td class="px-2 py-1">Proprietary avatars (Digital DNA), no external model import, advanced facial rig</td>
+                      <td class="px-2 py-1">Web embedding, REST APIs, cloud/on-premise deployment, SDKs for scenarios</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Virbe</b></li>
+                          <li>🔒 Proprietary (Freemium)</li>
+                          <li>🌐 <a href="https://virbe.ai" target="_blank" class="underline text-violet-300">Website</a></li>
+                          <li>📚 <a href="https://docs.virbe.ai" target="_blank" class="underline text-violet-300">Docs</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Framework for deploying AI-powered 3D virtual beings. Avatar/AI/deployment connectors, real-time rendering, AI Behavior Editor, analytics, “create once – deploy anywhere.”</td>
+                      <td class="px-2 py-1">AI-model agnostic: Rasa, Dialogflow, GPT-3/4, custom NLP, TTS/STT, hybrid</td>
+                      <td class="px-2 py-1">Ready Player Me, MetaHumans, Reallusion, Daz3D, Virbe templates, custom rigged models</td>
+                      <td class="px-2 py-1">SDKs: JavaScript, Unity, Unreal, web/mobile/kiosk, REST API, cloud dashboard</td>
+                    </tr>
+                    <tr class="align-top">
+                      <td class="px-2 py-1">
+                        <ul class="list-none space-y-1">
+                          <li>🛠️ <b>Virtual Beings (KuteEngine)</b></li>
+                          <li>🔒 Proprietary</li>
+                          <li>🌐 <a href="https://virtualbeings.co" target="_blank" class="underline text-violet-300">Website</a></li>
+                        </ul>
+                      </td>
+                      <td class="px-2 py-1">Behavioral AI engine for lifelike 3D characters. Realistic emotions, memory, full-body procedural animation, Unity plugin, focus on emergent behavior and VR/AR.</td>
+                      <td class="px-2 py-1">Custom behavior AI (not LLM-based); RL, procedural animation, emotional states</td>
+                      <td class="px-2 py-1">Unity humanoid rigs (FBX/GLB), MetaHumans (Unreal, in progress), quadrupeds</td>
+                      <td class="px-2 py-1">Unity SDK, Unreal plugin (coming), on-device runtime, developer community</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
