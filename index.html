@@ -35,10 +35,10 @@
   </div>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
       <!-- Card 1: Top Spellbook Sections -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#3784ff] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3784ff]/80" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center;">
@@ -48,24 +48,69 @@
           </div>
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#071533]/90" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center;">
-            <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Top Spellbook Sections</h2>
-              <ol class="list-decimal ml-6 space-y-1 text-sm">
-                <li>Learn ML Basics</li>
-                <li>Make Agents</li>
-                <li>Code an App</li>
-                <li>Productivity Tools</li>
-                <li>IOT Tools</li>
-                <li>XR Tools</li>
-                <li>JIC</li>
-              </ol>
+            <div class="relative z-10 text-xs md:text-sm">
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Local-First AI Tools Directory</h2>
+              <p class="mb-2">Below is a quick-reference directory of leading local-first AI tools grouped by function. Use it as a jump-off for building or expanding a home workstation stack—every entry links to the project’s home page or GitHub repo so you can dive straight into docs, downloads, and community. (If you’re skimming: start with Ollama for model serving, OpenWebUI for chat, AnythingLLM for personal RAG, Flowise for visual chaining, n8n for automations, and ComfyUI for diffusion workflows.)</p>
+              <div class="overflow-x-auto">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                  <thead class="bg-[#071533]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Category</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Tool</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Project Link</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="font-semibold">LLM runners / hosting</td><td>Ollama</td><td><a href="https://ollama.com" class="text-sky-300 hover:underline" target="_blank">ollama.com</a></td></tr>
+                    <tr><td></td><td>LM Studio</td><td><a href="https://lmstudio.ai" class="text-sky-300 hover:underline" target="_blank">lmstudio.ai</a></td></tr>
+                    <tr><td></td><td>llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp" class="text-sky-300 hover:underline" target="_blank">ggml-org/llama.cpp</a></td></tr>
+                    <tr><td></td><td>KoboldCpp</td><td><a href="https://github.com/LostRuins/koboldcpp" class="text-sky-300 hover:underline" target="_blank">LostRuins/koboldcpp</a></td></tr>
+                    <tr><td></td><td>GPT4All (desktop app + backend)</td><td><a href="https://github.com/nomic-ai/gpt4all" class="text-sky-300 hover:underline" target="_blank">nomic-ai/gpt4all</a></td></tr>
+                    <tr><td class="font-semibold">Chat UI / front-ends</td><td>OpenWebUI</td><td><a href="https://github.com/open-webui/open-webui" class="text-sky-300 hover:underline" target="_blank">open-webui/open-webui</a></td></tr>
+                    <tr><td></td><td>Text-Generation WebUI</td><td><a href="https://github.com/oobabooga/text-generation-webui" class="text-sky-300 hover:underline" target="_blank">oobabooga/text-generation-webui</a></td></tr>
+                    <tr><td></td><td>SillyTavern</td><td><a href="https://github.com/SillyTavern/SillyTavern" class="text-sky-300 hover:underline" target="_blank">SillyTavern/SillyTavern</a></td></tr>
+                    <tr><td class="font-semibold">Knowledge-base / RAG suites</td><td>AnythingLLM</td><td><a href="https://github.com/Mintplex-Labs/anything-llm" class="text-sky-300 hover:underline" target="_blank">Mintplex-Labs/anything-llm</a></td></tr>
+                    <tr><td></td><td>Haystack</td><td><a href="https://github.com/deepset-ai/haystack" class="text-sky-300 hover:underline" target="_blank">deepset-ai/haystack</a></td></tr>
+                    <tr><td></td><td>Dify</td><td><a href="https://github.com/langgenius/dify" class="text-sky-300 hover:underline" target="_blank">langgenius/dify</a></td></tr>
+                    <tr><td class="font-semibold">No/low-code LLM app builders</td><td>Flowise</td><td><a href="https://github.com/FlowiseAI/Flowise" class="text-sky-300 hover:underline" target="_blank">FlowiseAI/Flowise</a></td></tr>
+                    <tr><td></td><td>LangFlow</td><td><a href="https://github.com/langflow-ai/langflow" class="text-sky-300 hover:underline" target="_blank">langflow-ai/langflow</a></td></tr>
+                    <tr><td></td><td>LangGraph</td><td><a href="https://github.com/langchain-ai/langgraph" class="text-sky-300 hover:underline" target="_blank">langchain-ai/langgraph</a></td></tr>
+                    <tr><td></td><td>H2O LLM Studio</td><td><a href="https://github.com/h2oai/h2o-llmstudio" class="text-sky-300 hover:underline" target="_blank">h2oai/h2o-llmstudio</a></td></tr>
+                    <tr><td class="font-semibold">Workflow automation / integration</td><td>n8n AI Starter Kit</td><td><a href="https://docs.n8n.io/hosting/starter-kits/ai-starter-kit/" class="text-sky-300 hover:underline" target="_blank">n8n Docs</a></td></tr>
+                    <tr><td class="font-semibold">Autonomous-agent frameworks</td><td>CrewAI</td><td><a href="https://github.com/crewAIInc/crewAI" class="text-sky-300 hover:underline" target="_blank">crewAIInc/crewAI</a></td></tr>
+                    <tr><td></td><td>AutoGen</td><td><a href="https://github.com/microsoft/autogen" class="text-sky-300 hover:underline" target="_blank">microsoft/autogen</a></td></tr>
+                    <tr><td></td><td>AutoGPT</td><td><a href="https://github.com/Significant-Gravitas/AutoGPT" class="text-sky-300 hover:underline" target="_blank">Significant-Gravitas/AutoGPT</a></td></tr>
+                    <tr><td class="font-semibold">Fine-tuning / post-training</td><td>Axolotl</td><td><a href="https://github.com/axolotl-ai-cloud/axolotl" class="text-sky-300 hover:underline" target="_blank">axolotl-ai-cloud/axolotl</a></td></tr>
+                    <tr><td></td><td>(also) H2O LLM Studio</td><td>see above</td></tr>
+                    <tr><td class="font-semibold">Vector databases & embedding stores</td><td>Qdrant</td><td><a href="https://github.com/qdrant/qdrant" class="text-sky-300 hover:underline" target="_blank">qdrant/qdrant</a></td></tr>
+                    <tr><td></td><td>Chroma</td><td><a href="https://github.com/chroma-core/chroma" class="text-sky-300 hover:underline" target="_blank">chroma-core/chroma</a></td></tr>
+                    <tr><td></td><td>Milvus</td><td><a href="https://github.com/milvus-io/milvus" class="text-sky-300 hover:underline" target="_blank">milvus-io/milvus</a></td></tr>
+                    <tr><td class="font-semibold">Generative-art / diffusion UIs</td><td>Stable Diffusion WebUI</td><td><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" class="text-sky-300 hover:underline" target="_blank">AUTOMATIC1111/stable-diffusion-webui</a></td></tr>
+                    <tr><td></td><td>ComfyUI</td><td><a href="https://github.com/comfyanonymous/ComfyUI" class="text-sky-300 hover:underline" target="_blank">comfyanonymous/ComfyUI</a></td></tr>
+                    <tr><td></td><td>InvokeAI</td><td><a href="https://github.com/invoke-ai/InvokeAI" class="text-sky-300 hover:underline" target="_blank">invoke-ai/InvokeAI</a></td></tr>
+                    <tr><td></td><td>Fooocus</td><td><a href="https://github.com/lllyasviel/Fooocus" class="text-sky-300 hover:underline" target="_blank">lllyasviel/Fooocus</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-3">
+                <h3 class="font-semibold text-slate-100 mb-1">How to use this table</h3>
+                <ul class="list-disc ml-5 space-y-1">
+                  <li>Pick a backbone – choose an LLM runner (Ollama or llama.cpp) that fits your hardware.</li>
+                  <li>Add a chat UI – wire it to OpenWebUI or Text-Gen WebUI for a browser-based experience.</li>
+                  <li>Attach data or workflows – AnythingLLM or Haystack for RAG; Flowise or n8n for orchestration.</li>
+                  <li>Layer on agents and automations – CrewAI / AutoGen for multi-step tasks; n8n triggers to integrate email, Slack, or IoT.</li>
+                  <li>Spin up creative tools – ComfyUI or Stable-Diffusion WebUI for image pipelines.</li>
+                  <li>Persist vectors & fine-tune – drop Qdrant/Chroma alongside Axolotl or H2O LLM Studio when you’re ready to train or store embeddings.</li>
+                </ul>
+                <p class="mt-2 text-slate-300">Mix-and-match to suit your goals—everything here is open-source and self-hostable, letting you craft a private, powerful AI workstation without relying on cloud APIs.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Card 2: Foundations of Local AI & Agents -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#34d399] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#34d399]/80" style="background-image: url('background/background2.png'); background-size: cover; background-position: center;">
@@ -99,7 +144,7 @@
       </div>
 
       <!-- Card 3: AI Development & Interfaces -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#6366f1] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#6366f1]/80" style="background-image: url('background/background3.png'); background-size: cover; background-position: center;">
@@ -142,7 +187,7 @@
       </div>
 
       <!-- Card 4: Bindings & Interfaces -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#a855f7] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#a855f7]/80" style="background-image: url('background/background4.png'); background-size: cover; background-position: center;">
@@ -183,7 +228,7 @@
       </div>
 
       <!-- Card 5: AI Agent Frameworks & Automation -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#ec4899] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#ec4899]/80" style="background-image: url('background/background5.png'); background-size: cover; background-position: center;">
@@ -221,7 +266,7 @@
       </div>
 
       <!-- Card 6: Hosting & Infrastructure -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#f43f5e] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#f43f5e]/80" style="background-image: url('background/background6.png'); background-size: cover; background-position: center;">
@@ -261,7 +306,7 @@
       </div>
 
       <!-- Card 7: Networking, VPN, and Infrastructure Security -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#14b8a6]/80" style="background-image: url('background/background7.png'); background-size: cover; background-position: center;">
@@ -302,7 +347,7 @@
       </div>
 
       <!-- Card 8: AI in Real-World Applications -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#06b6d4] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#06b6d4]/80" style="background-image: url('background/background8.png'); background-size: cover; background-position: center;">
@@ -339,7 +384,7 @@
       </div>
 
       <!-- Card 9: The Future of AI & Automation -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#3b82f6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e3a8a]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b82f6]/80" style="background-image: url('background/background9.png'); background-size: cover; background-position: center;">
@@ -369,7 +414,7 @@
       </div>
 
       <!-- Card 10: AI in Video Games & Virtual Beings -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#8b5cf6] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#8b5cf6]/80" style="background-image: url('background/background10.png'); background-size: cover; background-position: center;">
@@ -401,7 +446,7 @@
       </div>
 
       <!-- Card 11: Home Automation & Security -->
-      <div class="group w-full h-[28rem] [perspective:1000px]">
+      <div class="group w-full h-[42rem] [perspective:1000px]">
         <div class="relative h-full w-full rounded-xl border-4 border-[#d946ef] shadow-xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
           <!-- Front -->
           <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#d946ef]/80" style="background-image: url('background/background11.png'); background-size: cover; background-position: center;">
