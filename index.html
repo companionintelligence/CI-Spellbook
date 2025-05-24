@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Tailwind CDN for demo; for production, use your own build -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lekton:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Miriam+Mono+CLM:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* For programmatically flipping the card */
     .group.expanded .card-inner {
@@ -86,6 +88,33 @@
       height: 1em;
       display: inline-block;
       vertical-align: middle;
+    }
+
+    body, .font-sans {
+      font-family: 'Miriam Mono CLM', 'Miriam Mono', 'Lekton', monospace, sans-serif;
+    }
+    h1, h2, h3, .card-title, .font-bold {
+      font-family: 'Lekton', 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
+    }
+    /* Card title font size overrides */
+    h2.text-2xl.font-bold {
+      font-size: 2.5rem !important;
+      line-height: 1.1;
+    }
+    h2.text-xl.font-bold {
+      font-size: 2rem !important;
+      line-height: 1.15;
+    }
+    @media (min-width: 768px) {
+      h2.text-2xl.font-bold {
+        font-size: 3rem !important;
+      }
+      h2.text-xl.font-bold {
+        font-size: 2.25rem !important;
+      }
+    }
+    p, td, li, .text-sm, .text-xs {
+      font-family: 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
     }
   </style>
   <script>
