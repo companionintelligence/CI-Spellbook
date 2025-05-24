@@ -277,32 +277,90 @@
           <!-- Back -->
           <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e1b4b]/90" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
             <div class="relative z-10">
-              <h2 class="text-xl font-bold text-white mb-3 pt-2">Cutting edge databases</h2>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Assisted Code Development &amp; Productivity Tools</h3>
-              <ul class="list-disc ml-8 space-y-1 mb-3 text-sm">
-                <li><a href="https://pocketpal.ai/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">PocketPal AI</a></li>
-                <li><a href="https://supermaven.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Supermaven – AI-powered code completion tool for enhanced developer workflow</a></li>
-                <li><a href="https://github.com/paul-gauthier/aider" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Aider Composer – VSCode extension for AI-assisted development</a></li>
-                <li><a href="https://alexcodes.app/stellar" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Stellar: AI-Powered Code Assistant for Xcode (Alexcodes.app)</a></li>
-                <li><a href="https://tailadmin.com/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">TailAdmin – Free Next.js and Tailwind CSS admin dashboard template</a></li>
-                <li><a href="https://ui.shadcn.com/blocks" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">shadcn/ui Blocks – Pre-designed UI components for modern web applications</a></li>
-                <li><a href="https://www.cursor.so/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Cursor: AI-Powered Code Editor</a></li>
-                <li><a href="https://github.com/paul-gauthier/aider" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Aider: AI-Powered Code Collaboration</a></li>
-              </ul>
-              <h3 class="text-lg font-semibold mb-1 text-slate-200">AI-Powered Search &amp; Data Retrieval</h3>
-              <ul class="list-disc ml-8 space-y-1 text-sm">
-                <li><a href="https://opensource.appbase.io/reactivesearch/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Tutorial: Build Search UI with OpenSearch and ReactiveSearch</a></li>
-                <li><a href="https://searchkit.co/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Searchkit: React and Vue Search UI for Elasticsearch and OpenSearch</a></li>
-                <li><a href="https://opensearch.org/docs/latest/clients/oui/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">OpenSearch UI (OUI)</a></li>
-                <li><a href="https://dejavu.appbase.io/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">dejavu: Web UI for Elasticsearch and OpenSearch</a></li>
-                <li><a href="https://opensearch.org/blog/vector-databases/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Exploring Vector Databases: Combining Lexical and AI-Powered Search</a></li>
-                <li><a href="https://aws.amazon.com/opensearch-service/the-open-source-vector-engine/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Efficient Vector Search with Amazon OpenSearch</a></li>
-                <li><a href="https://opensearch.org/blog/byte-vector-support/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Introducing Byte Vector Support for Faiss in the OpenSearch Vector Engine</a></li>
-                <li><a href="https://www.elastic.co/blog/lexical-and-ai-powered-search" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Exploring Vector Databases: Enhancing Lexical and AI-Powered Search with Elastic</a></li>
-                <li><a href="https://opensearch.org/blog/multimodal-llms/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">The Evolution of Search: How Multi-Modal LLMs Transcend Vector Databases</a></li>
-                <li><a href="https://opensearch.org/blog/ai-enhanced-query-rewriting/" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">AI-Enhanced Query Rewriting with OpenSearch</a></li>
-                <li><a href="https://github.com/charmed-cms/charmed-opensearch" class="text-sky-300 font-semibold hover:text-sky-200 hover:underline" target="_blank">Charmed OpenSearch's Vector Database</a></li>
-              </ul>
+              <h2 class="text-xl font-bold text-white mb-3 pt-2">Cutting Edge Databases</h2>
+              <div class="overflow-x-auto mb-4">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                  <thead class="bg-[#1e1b4b]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-semibold">EdgeDB</td>
+                      <td>An open-source <em>graph-relational</em> database designed to modernize the developer experience of relational databases. EdgeDB addresses the “impedance mismatch” of SQL by providing a strict schema with a <strong>rich type system</strong> and a new query language, EdgeQL. EdgeQL allows intuitive nested queries, combining the power of SQL and graph traversals, and compiles down to efficient PostgreSQL queries under the hood. EdgeDB ensures <strong>type safety</strong> (catching invalid queries at query-time) and eliminates ORMs – you interact with the database via generated client APIs in languages like Python or TypeScript. Focused on developer ergonomics without sacrificing performance, EdgeDB has quickly gained popularity for building complex applications that would be cumbersome with traditional SQL.</td>
+                      <td><a href="https://edgedb.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">RisingWave</td>
+                      <td>A <strong>distributed SQL streaming database</strong> that lets users run real-time analytics on incoming data using standard SQL. RisingWave performs stream processing in a “database way” – it ingests high-throughput data streams (from Kafka, etc.), performs incremental computations as new events arrive, and maintains continually-updated query results that can be queried at any time. By handling state management and incremental updates under the hood, RisingWave simplifies the development of live dashboards, monitoring systems, and online AI features. It is cloud-native, horizontally scalable, and designed to be cost-efficient for workloads requiring sub-second to sub-minute latency on dynamic data. RisingWave is fully open source and aims to lower the barrier to building real-time applications by merging stream processing with a familiar SQL interface.</td>
+                      <td><a href="https://www.risingwave.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Dolt</td>
+                      <td>Described as “Git for Data,” Dolt is the world’s first SQL database that supports <strong>version control</strong> for both schema and data. It marries a MySQL-compatible database engine with Git-like features: every change to a Dolt database (inserts, updates, schema migrations) is logged as a commit; users can branch the database, merge branches, diff table data between commits, and even push/pull changes with others. This makes Dolt ideal for collaborative data workflows, data auditability, and reproducible experiments. Developers get full ACID transactions and SQL support, while benefiting from Dolt’s ability to revert changes or review historical data states easily. Dolt is fully open source and has an growing community exploring novel use-cases in data versioning.</td>
+                      <td><a href="https://www.dolthub.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">YugabyteDB</td>
+                      <td>A <strong>distributed SQL</strong> database that brings together the relational power of PostgreSQL with the fault tolerance and scalability of cloud-native architectures. YugabyteDB is PostgreSQL-compatible (reusing PostgreSQL’s query layer) but underneath it distributes data across nodes with automatic sharding, rebalancing, and multi-region replication using a Raft consensus-based storage engine. It is built to handle internet-scale OLTP workloads with ultra-low latency: Yugabyte can achieve <strong>massive throughput and linear scaling</strong> while preserving ACID transactions and strong consistency. Often described as “Postgres for the cloud,” it supports both SQL and Cassandra-style KV APIs, and prioritizes high availability (no single point of failure) and geo-distribution for modern global applications. All core features of YugabyteDB are open source, and the project has seen fast-growing adoption in enterprises needing scalable, cloud-neutral transactional databases.</td>
+                      <td><a href="https://www.yugabyte.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">TypeDB</td>
+                      <td>An open-source <strong>knowledge graph</strong> database (formerly <em>Grakn</em>) that uses a highly expressive schema and automated reasoning to tackle complex domains. TypeDB is a strongly-typed database with a rich, logical type system, allowing modeling of entities, relationships, and rules in a way that captures real-world semantics. Its query language, TypeQL, goes beyond SQL by supporting inheritance, role-based relations, and logical inference – the database can infer new facts via rules, offering AI-like graph reasoning out-of-the-box. TypeDB provides full ACID transactions and a gRPC API for integration. It’s used in scenarios like life sciences, cybersecurity, and knowledge graph applications where one needs to model complex networks of data and derive implicit insights. (<strong>Note:</strong> TypeDB Community Edition is open source; it was historically GPL/AGPL licensed, ensuring that derivative works remain open.)</td>
+                      <td><a href="https://vaticle.com/typedb" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>GPL v3 (AGPL)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h2 class="text-lg font-bold text-white mb-3 pt-2">Top Multi-Modal Databases</h2>
+              <div class="overflow-x-auto mb-4">
+                <table class="min-w-full border border-slate-700 text-left text-slate-200 text-xs md:text-sm">
+                  <thead class="bg-[#1e1b4b]/80">
+                    <tr>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Name</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Description</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">Link</th>
+                      <th class="px-2 py-1 border-b border-slate-700 font-bold">License</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-semibold">OrientDB</td>
+                      <td>A versatile <strong>multi-model</strong> database that seamlessly integrates the capabilities of a graph database with document and key–value store models in one platform. OrientDB allows relationships to be stored as direct links between records (edges), enabling efficient graph traversals with complexity O(1) for hops. It supports schema-less or schema-defined data, ACID transactions, and a SQL-like query language extended for graph patterns (as well as Apache TinkerPop Gremlin for graph queries). Designed for performance and horizontal scalability, OrientDB can distribute data across clusters with sharding and replication, providing high availability for use cases ranging from social networks to fraud detection.</td>
+                      <td><a href="https://www.orientdb.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">Apache Ignite</td>
+                      <td>An open-source distributed database and computing platform designed for <strong>in-memory speed</strong> at scale. Ignite is a multi-model system that supports storing data as key–value pairs (NoSQL style) while also exposing it via SQL (ODBC/JDBC) for relational queries. By default Ignite keeps data in RAM for ultra-low latency reads/writes, with an optional persistent disk layer for durability. It can be deployed as an <strong>in-memory data grid</strong> that slides between an application and its primary database to cache hot data and accelerate access by orders of magnitude. Ignite’s clustering supports dynamic node addition/removal with auto-rebalancing, and it offers strong consistency and ACID transactions, making it suitable for high-throughput transactional workloads and real-time analytics in distributed environments.</td>
+                      <td><a href="https://ignite.apache.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">FoundationDB</td>
+                      <td>A <strong>distributed ACID</strong> database with a unique multi-model approach: all data is stored in a core <strong>ordered key–value store</strong>, and higher-level data models (documents, graphs, SQL layers, etc.) can be implemented on top. Developed by Apple and open-sourced, FoundationDB is known for its strong fault tolerance and <strong>industry-leading performance</strong> on commodity hardware. It achieves this via a shared-nothing architecture and extensive use of optimistic concurrency and MVCC, all while guaranteeing strict serializability. FoundationDB’s design allows it to scale out seamlessly and survive machine failures transparently, acting to the developer like a single logical database with transactional consistency. Its reliability is proven in production (used internally at Apple and other companies) and it employs deterministic simulation testing to ensure robustness of each release.</td>
+                      <td><a href="https://www.foundationdb.org" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">ArangoDB</td>
+                      <td>A native <strong>multi-model</strong> database that combines the power of graph, document, and key/value stores in one engine. ArangoDB uses a unified query language (AQL) to allow complex joins and graph traversals across different data models, so developers can use the most suitable model for each part of their application without moving to a different database. It features <em>Smart Joins</em> and distributed sharding for scaling across clusters, plus a built-in Foxx framework for embedding JavaScript microservices close to the data. These features, along with Arango’s flexible data model, make it well-suited for scenarios like social networks (rich graph relationships), logistics or finance (mixed document and graph queries), and other domains requiring flexible schemas. <br> <small><strong>Note:</strong> As of version 3.12 (2024), ArangoDB’s Community Edition is licensed under BSL 1.1 (which converts to Apache 2.0 after four years).</small></td>
+                      <td><a href="https://www.arangodb.com" class="text-sky-300 hover:underline" target="_blank">Official Site</a></td>
+                      <td><strong>BSL 1.1</strong> <span class="text-xs">(Apache 2.0 after 4 yrs)</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
