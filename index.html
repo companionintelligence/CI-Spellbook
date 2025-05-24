@@ -12,7 +12,7 @@
       transform: rotateY(180deg) !important;
     }
     .card-inner {
-      transition: transform 0.7s;
+      transition: transform 0.7s, height 0.7s, min-height 0.7s;
     }
     .group:hover .card-inner {
       /* Disable hover flip, only allow click/tap */
@@ -44,12 +44,17 @@
       margin: 0 !important;
       border-radius: 0 !important;
       box-shadow: 0 0 0 9999px rgba(0,0,0,0.7);
-      transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+      transition: all 0.7s cubic-bezier(0.4,0,0.2,1); /* Match card-inner transition */
+      padding: 2.5rem !important; /* Add padding when maximized */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .fullscreen-card .card-inner {
-      height: 100vh !important;
-      min-height: 100vh !important;
+      height: 100%;
+      min-height: 100%;
       border-radius: 0 !important;
+      transition: transform 0.7s, height 0.7s, min-height 0.7s; /* Smooth height change */
     }
     .fullscreen-card .card-inner > div {
       border-radius: 0 !important;
