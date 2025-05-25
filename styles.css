@@ -76,14 +76,15 @@
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Stage 2: Expand height - prepare for flip */
+/* Stage 2: Expand height - prepare for flip, use dynamic content height */
 .group.expanding-height {
   position: absolute !important;
   top: 0 !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 80vw !important;
-  height: 80vh !important;
+  height: var(--card-content-height, 80vh) !important;
+  max-height: 90vh !important;
   max-width: 1200px !important;
   z-index: 50 !important;
   transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -95,7 +96,7 @@
   transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Stage 4: Expand to larger size after flip - stay in container */
+/* Stage 4: Expand to optimal size after flip - use content height */
 .group.flipped.full-expanded,
 .group.full-expanded.flipped {
   position: absolute !important;
@@ -103,7 +104,8 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: 85vh !important;
+  height: var(--card-content-height, 85vh) !important;
+  max-height: 95vh !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
@@ -119,20 +121,21 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: 85vh !important;
+  height: var(--card-content-height, 85vh) !important;
+  max-height: 95vh !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* When a card is expanded, add space for other cards to flow around it */
+/* When a card is expanded, add space for other cards to flow around it - use dynamic heights */
 #cards-container:has(.group.full-expanded) {
-  padding-top: calc(85vh + 2rem);
+  padding-top: calc(var(--card-content-height, 85vh) + 2rem);
 }
 
 #cards-container:has(.group.expanding-height) {
-  padding-top: calc(80vh + 2rem);
+  padding-top: calc(var(--card-content-height, 80vh) + 2rem);
 }
 
 #cards-container:has(.group.expanding-width) {
@@ -183,6 +186,100 @@
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
 }
 
+/* Enhanced content styling for dynamic card heights */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Tables in expanded cards with dynamic height */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+  width: 100% !important;
+  table-layout: auto !important;
+  border-collapse: collapse !important;
+  margin: 1rem 0 !important;
+  font-size: 0.9rem !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] table th,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] table td {
+  padding: 0.75rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  text-align: left !important;
+  vertical-align: top !important;
+  word-wrap: break-word !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] table th {
+  background: rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+
+/* Code blocks in expanded cards */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] pre {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  margin: 1rem 0 !important;
+  padding: 1rem !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 8px !important;
+  border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+  font-size: 0.85rem !important;
+  line-height: 1.4 !important;
+}
+
+/* Images in expanded cards */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  margin: 1rem 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Lists in expanded cards */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] ul,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] ol {
+  margin: 1rem 0 !important;
+  padding-left: 2rem !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] li {
+  margin: 0.5rem 0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Responsive content adjustments */
+@media (max-width: 768px) {
+  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+    font-size: 0.8rem !important;
+  }
+  
+  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table th,
+  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table td {
+    padding: 0.5rem !important;
+  }
+  
+  .group.flipped .card-inner > div[style*="rotateY(180deg)"] pre {
+    padding: 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+}
+
 /* Custom scrollbar for webkit browsers */
 .group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
 .group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
@@ -229,17 +326,40 @@
   box-sizing: border-box !important;
 }
 
-/* Card back content scrollable area */
+/* Card back content scrollable area - optimized for dynamic height */
 .group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative,
 .group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
   width: 100% !important;
   height: 100% !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   padding: 1rem !important;
   box-sizing: border-box !important;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease-out;
+  /* Custom scrollbar for better UX with dynamic content */
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
+}
+
+/* Webkit scrollbar styling for dynamic content */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Stage 5: Text content fade-in animations */
@@ -435,8 +555,18 @@
 }
 
 /* Closing animations - mirror the opening sequence */
+/* Stage 1: Fade out content */
 .group.closing-content {
-  animation: fadeOutContent 0.4s ease-in forwards;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90vw !important;
+  height: var(--card-content-height, 85vh) !important;
+  max-height: 95vh !important;
+  max-width: 1400px !important;
+  z-index: 50 !important;
+  transition: all 0.4s ease-in !important;
 }
 
 .group.closing-content .card-inner > div[style*="rotateY(180deg)"] > .relative {
@@ -445,23 +575,27 @@
   transition: all 0.4s ease-in !important;
 }
 
+/* Stage 2: Shrink from full width - reverse of stage 4 */
 .group.closing-shrink {
   position: absolute !important;
   top: 0 !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 80vw !important;
-  height: 80vh !important;
+  height: var(--card-content-height, 80vh) !important;
+  max-height: 90vh !important;
   max-width: 1200px !important;
   z-index: 50 !important;
-  transition: all 0.6s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
+/* Stage 3: Unflip card - reverse of stage 3 */
 .group.closing-unflip .card-inner {
   transform: rotateY(0deg) !important;
-  transition: transform 0.8s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
+/* Stage 4: Collapse height - reverse of stage 2 */
 .group.closing-collapse {
   position: absolute !important;
   top: 0 !important;
@@ -471,20 +605,21 @@
   height: var(--card-original-height) !important;
   max-width: 1200px !important;
   z-index: 50 !important;
-  transition: all 0.8s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
+/* Stage 5: Return to original position - reverse of stage 1 */
 .group.closing-return {
   position: relative !important;
   top: auto !important;
   left: auto !important;
   transform: none !important;
   width: calc(50% - 1rem) !important;
-  height: 42rem !important;
+  height: var(--card-original-height) !important;
   max-width: 600px !important;
   min-width: 300px !important;
   z-index: 1 !important;
-  transition: all 0.6s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
 @media (max-width: 768px) {
@@ -500,46 +635,6 @@
   }
 }
 
-.group.closing-shrink {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 70vw !important;
-  height: 80vh !important;
-  z-index: 10 !important;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-.group.closing-unflip .card-inner {
-  transform: rotateY(0deg) !important;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-.group.closing-collapse {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) scale(0.8) !important;
-  width: var(--card-original-width) !important;
-  height: var(--card-original-height) !important;
-  opacity: 0.8 !important;
-  z-index: 10 !important;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-.group.closing-return {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  transform: none !important;
-  width: var(--card-original-width) !important;
-  height: var(--card-original-height) !important;
-  opacity: 1 !important;
-  z-index: auto !important;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
-}
-
 /* Backdrop fade out during closing */
 .group.closing-content::before,
 .group.closing-shrink::before,
@@ -549,11 +644,6 @@
 }
 
 @keyframes backdropFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes fadeOutContent {
   from { opacity: 1; }
   to { opacity: 0; }
 }

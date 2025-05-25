@@ -62,10 +62,41 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       clearAllTimeouts(state.closeTimeouts);
       clearAllTimeouts(state.expandTimeouts);
-      // Store original dimensions for animation
+      
+      // Store original dimensions and position for animation
       const rect = group.getBoundingClientRect();
       group.style.setProperty('--card-original-height', rect.height + 'px');
       group.style.setProperty('--card-original-width', rect.width + 'px');
+      group.style.setProperty('--card-original-top', rect.top + 'px');
+      group.style.setProperty('--card-original-left', rect.left + 'px');
+      
+      // Calculate content height for dynamic sizing
+      const backContent = group.querySelector('.card-inner > div[style*="rotateY(180deg)"]');
+      if (backContent) {
+        // Temporarily make content visible to measure it
+        const tempDiv = backContent.cloneNode(true);
+        tempDiv.style.cssText = `
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+          width: 90vw;
+          max-width: 1400px;
+          visibility: hidden;
+          transform: none;
+          opacity: 1;
+        `;
+        document.body.appendChild(tempDiv);
+        
+        const contentHeight = tempDiv.scrollHeight + 120; // Add padding
+        const maxHeight = window.innerHeight * 0.95; // 95vh max
+        const finalHeight = Math.min(contentHeight, maxHeight);
+        
+        group.style.setProperty('--card-content-height', finalHeight + 'px');
+        document.body.removeChild(tempDiv);
+      }
+      
+      // Set position fixed for animation
+      group.classList.add('card-animating');
       group.classList.add('expanding-width');
       state.isExpanded = true;
       updateDebug('1 - Width Expansion', state.isExpanded, state.isFlipped, group);
@@ -89,6 +120,18 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDebug('4 - Full Screen (Starting)', state.isExpanded, state.isFlipped, group);
         group.classList.remove('expanding-height');
         group.classList.add('full-expanded');
+        // Make content scrollable with full height
+        const content = group.querySelector('.card-content');
+        const backContent = group.querySelector('.card-inner > div[style*="rotateY(180deg)"] > .relative');
+        if (content) {
+          content.style.maxHeight = '100%';
+          content.style.overflowY = 'auto';
+        }
+        if (backContent) {
+          backContent.style.maxHeight = '100%';
+          backContent.style.overflowY = 'auto';
+          backContent.style.height = '100%';
+        }
         updateDebug('4 - Full Screen (Animating)', state.isExpanded, state.isFlipped, group);
         state.expandTimeouts.push(setTimeout(() => {
           if (!state.isExpanded || !state.isFlipped) return;
@@ -150,9 +193,24 @@ document.addEventListener('DOMContentLoaded', function () {
       // Stage 6: Final cleanup
       state.closeTimeouts.push(setTimeout(() => {
         updateDebug('Close 6 - Cleanup', false, false, group);
-        group.classList.remove('closing-return');
+        group.classList.remove('closing-return', 'card-animating');
         group.style.removeProperty('--card-original-height');
         group.style.removeProperty('--card-original-width');
+        group.style.removeProperty('--card-original-top');
+        group.style.removeProperty('--card-original-left');
+        group.style.removeProperty('--card-content-height');
+        // Remove scrollable style from content
+        const content = group.querySelector('.card-content');
+        const backContent = group.querySelector('.card-inner > div[style*="rotateY(180deg)"] > .relative');
+        if (content) {
+          content.style.maxHeight = '';
+          content.style.overflowY = '';
+        }
+        if (backContent) {
+          backContent.style.maxHeight = '';
+          backContent.style.overflowY = '';
+          backContent.style.height = '';
+        }
         state.isExpanded = false;
         state.isFlipped = false;
         updateDebug('Closed - Initial State', false, false, group);
@@ -169,6 +227,9 @@ document.addEventListener('DOMContentLoaded', function () {
       );
       group.style.removeProperty('--card-original-height');
       group.style.removeProperty('--card-original-width');
+      group.style.removeProperty('--card-original-top');
+      group.style.removeProperty('--card-original-left');
+      group.style.removeProperty('--card-content-height');
       state.isExpanded = false;
       state.isFlipped = false;
       updateDebug('Quick Closed', false, false, group);
