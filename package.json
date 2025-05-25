@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Companion Intelligence Spellbook - React Version",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "classnames": "^2.3.2",
