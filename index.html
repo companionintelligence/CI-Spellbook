@@ -9,22 +9,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Miriam+Mono+CLM:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
   <style>
-    /* Card animation system */
+    /* Hide all scrollbars globally */
+    * {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* Internet Explorer 10+ */
+    }
+    *::-webkit-scrollbar {
+      display: none; /* WebKit */
+    }
+    /* Hide all scrollbars globally */
+    * {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* Internet Explorer 10+ */
+    }
+    *::-webkit-scrollbar {
+      display: none; /* WebKit */
+    }
+    
+    /* Card animation system - store original position */
+    .group {
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    
     .card-inner {
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d;
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
     
-    /* Expanded card container */
+    /* Expanded card container - animates from original position */
     .group.expanded {
       position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
+      top: 2rem !important;
+      left: 2rem !important;
+      right: 2rem !important;
+      bottom: 2rem !important;
       width: calc(100vw - 4rem) !important;
       height: calc(100vh - 4rem) !important;
       z-index: 50 !important;
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 0 !important;
       margin: 0 !important;
     }
@@ -32,13 +57,6 @@
     /* Flipped card */
     .group.expanded.flipped .card-inner {
       transform: rotateY(180deg);
-    }
-    
-    /* Adjust card inner for expanded state */
-    .group.expanded .card-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 1rem !important;
     }
     
     /* Backdrop for expanded cards */
@@ -49,31 +67,33 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(7, 21, 51, 0.9);
       z-index: -1;
       opacity: 1;
       transition: opacity 0.8s ease-in-out;
     }
     
-    /* Disable hover effects during expansion */
-    .group:not(.expanded):hover .card-inner {
-      /* Disable hover flip for normal cards */
-      transform: none !important;
-    }
-    /* Basic scrollbar styling for modal content if needed */
-    .modal-content::-webkit-scrollbar {
-      width: 8px;
-    }
-    .modal-content::-webkit-scrollbar-thumb {
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 4px;
-    }
-    .modal-content::-webkit-scrollbar-track {
-      background-color: rgba(0,0,0,0.1);
-    }
     /* Show close button for expanded cards */
     .group.expanded .fullscreen-close-btn {
       display: block !important;
+    }
+    
+    /* Ensure background images persist during all states */
+    .card-inner > div {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+    }
+    
+    /* Search bar placeholder styling */
+    input[type="text"]::placeholder {
+      color: #abd4d8;
+      opacity: 0.7;
+    }
+    input[type="text"]:focus {
+      border-color: #4290e3;
+      box-shadow: 0 0 0 2px rgba(66, 144, 227, 0.3);
     }
 
     /* Add margin to all table cells */
@@ -102,6 +122,7 @@
 
     body, .font-sans {
       font-family: 'Miriam Mono CLM', 'Miriam Mono', 'Lekton', monospace, sans-serif;
+      background: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);
     }
     h1, h2, h3, .card-title, .font-bold {
       font-family: 'Lekton', 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
@@ -130,20 +151,20 @@
     /* Markdown content enhancements */
     .card-inner .markdown-body {
       font-size: 1rem;
-      color: #e5e7eb;
+      color: #d2f6ff;
       line-height: 1.6;
     }
     .card-inner .markdown-body h1,
     .card-inner .markdown-body h2,
     .card-inner .markdown-body h3 {
-      color: #fff;
+      color: #82ffff;
       margin-top: 1.5em;
       margin-bottom: 0.5em;
       font-weight: 700;
     }
-    .card-inner .markdown-body h1 { font-size: 1.5rem; border-bottom: 2px solid #6366f1; padding-bottom: 0.25em; }
-    .card-inner .markdown-body h2 { font-size: 1.25rem; border-bottom: 1px solid #6366f1; padding-bottom: 0.15em; }
-    .card-inner .markdown-body h3 { font-size: 1.1rem; }
+    .card-inner .markdown-body h1 { font-size: 1.5rem; padding-bottom: 0.25em; }
+    .card-inner .markdown-body h2 { font-size: 1.25rem; padding-bottom: 0.15em; }
+    .card-inner .markdown-body h3 { font-size: 1.1rem; color: #60d9ff; }
     .card-inner .markdown-body p {
       margin-bottom: 1em;
     }
@@ -154,9 +175,10 @@
     .card-inner .markdown-body li {
       margin-bottom: 0.3em;
     }
+    
+    /* Base table styling */
     .card-inner .markdown-body table {
       width: 100%;
-      background: rgba(30, 41, 59, 0.95);
       border-radius: 0.5em;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,0.15);
       border-collapse: separate;
@@ -165,37 +187,112 @@
       overflow: hidden;
     }
     .card-inner .markdown-body th, .card-inner .markdown-body td {
-      border: 1px solid #6366f1;
       padding: 0.75em 1em;
       text-align: left;
-      background: rgba(51, 65, 85, 0.95);
     }
     .card-inner .markdown-body th {
-      background: #6366f1;
       color: #fff;
       font-weight: 700;
     }
-    .card-inner .markdown-body tr:nth-child(even) td {
-      background: rgba(71, 85, 105, 0.95);
-    }
+    
+    /* Card-specific table colors */
+    /* Card 1 - Blue theme */
+    #card-local-first-ai-tools .markdown-body table { background: rgba(7, 21, 51, 0.95); }
+    #card-local-first-ai-tools .markdown-body th { background: #3784ff; }
+    #card-local-first-ai-tools .markdown-body th, #card-local-first-ai-tools .markdown-body td { border: 1px solid #3784ff; background: rgba(7, 21, 51, 0.95); }
+    #card-local-first-ai-tools .markdown-body tr:nth-child(even) td { background: rgba(52, 52, 78, 0.95); }
+    #card-local-first-ai-tools .markdown-body h1 { border-bottom: 2px solid #3784ff; }
+    #card-local-first-ai-tools .markdown-body h2 { border-bottom: 1px solid #3784ff; }
+    
+    /* Card 2 - Teal theme */
+    #card-ai-assisted-code-dev .markdown-body table { background: rgba(36, 72, 89, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body th { background: #58ebbf; }
+    #card-ai-assisted-code-dev .markdown-body th, #card-ai-assisted-code-dev .markdown-body td { border: 1px solid #58ebbf; background: rgba(36, 72, 89, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body tr:nth-child(even) td { background: rgba(44, 103, 109, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body h1 { border-bottom: 2px solid #58ebbf; }
+    #card-ai-assisted-code-dev .markdown-body h2 { border-bottom: 1px solid #58ebbf; }
+    
+    /* Card 3 - Blue theme */
+    #card-cutting-edge-databases .markdown-body table { background: rgba(52, 52, 78, 0.95); }
+    #card-cutting-edge-databases .markdown-body th { background: #4290e3; }
+    #card-cutting-edge-databases .markdown-body th, #card-cutting-edge-databases .markdown-body td { border: 1px solid #4290e3; background: rgba(52, 52, 78, 0.95); }
+    #card-cutting-edge-databases .markdown-body tr:nth-child(even) td { background: rgba(58, 63, 108, 0.95); }
+    #card-cutting-edge-databases .markdown-body h1 { border-bottom: 2px solid #4290e3; }
+    #card-cutting-edge-databases .markdown-body h2 { border-bottom: 1px solid #4290e3; }
+    
+    /* Card 4 - Purple theme */
+    #card-top-public-data-sources .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+    #card-top-public-data-sources .markdown-body th { background: #bea9ff; }
+    #card-top-public-data-sources .markdown-body th, #card-top-public-data-sources .markdown-body td { border: 1px solid #bea9ff; background: rgba(67, 60, 89, 0.95); }
+    #card-top-public-data-sources .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+    #card-top-public-data-sources .markdown-body h1 { border-bottom: 2px solid #bea9ff; }
+    #card-top-public-data-sources .markdown-body h2 { border-bottom: 1px solid #bea9ff; }
+    
+    /* Card 5 - Purple/Pink theme */
+    #card-ai-art-gen .markdown-body table { background: rgba(89, 60, 82, 0.95); }
+    #card-ai-art-gen .markdown-body th { background: #6d456b; }
+    #card-ai-art-gen .markdown-body th, #card-ai-art-gen .markdown-body td { border: 1px solid #6d456b; background: rgba(89, 60, 82, 0.95); }
+    #card-ai-art-gen .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+    #card-ai-art-gen .markdown-body h1 { border-bottom: 2px solid #6d456b; }
+    #card-ai-art-gen .markdown-body h2 { border-bottom: 1px solid #6d456b; }
+    
+    /* Card 6 - Cyan theme */
+    #card-speech-tts-stt .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+    #card-speech-tts-stt .markdown-body th { background: #60d9ff; }
+    #card-speech-tts-stt .markdown-body th, #card-speech-tts-stt .markdown-body td { border: 1px solid #60d9ff; background: rgba(9, 67, 109, 0.95); }
+    #card-speech-tts-stt .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+    #card-speech-tts-stt .markdown-body h1 { border-bottom: 2px solid #60d9ff; }
+    #card-speech-tts-stt .markdown-body h2 { border-bottom: 1px solid #60d9ff; }
+    
+    /* Card 7 - Teal theme */
+    #card-networking-vpn .markdown-body table { background: rgba(29, 95, 110, 0.95); }
+    #card-networking-vpn .markdown-body th { background: #079d99; }
+    #card-networking-vpn .markdown-body th, #card-networking-vpn .markdown-body td { border: 1px solid #079d99; background: rgba(29, 95, 110, 0.95); }
+    #card-networking-vpn .markdown-body tr:nth-child(even) td { background: rgba(15, 113, 122, 0.95); }
+    #card-networking-vpn .markdown-body h1 { border-bottom: 2px solid #079d99; }
+    #card-networking-vpn .markdown-body h2 { border-bottom: 1px solid #079d99; }
+    
+    /* Card 8 - Blue theme */
+    #card-vm-browser-automation .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+    #card-vm-browser-automation .markdown-body th { background: #117ba0; }
+    #card-vm-browser-automation .markdown-body th, #card-vm-browser-automation .markdown-body td { border: 1px solid #117ba0; background: rgba(9, 67, 109, 0.95); }
+    #card-vm-browser-automation .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+    #card-vm-browser-automation .markdown-body h1 { border-bottom: 2px solid #117ba0; }
+    #card-vm-browser-automation .markdown-body h2 { border-bottom: 1px solid #117ba0; }
+    
+    /* Card 9 - Purple theme */
+    #card-ai-video-games .markdown-body table { background: rgba(58, 63, 108, 0.95); }
+    #card-ai-video-games .markdown-body th { background: #3351ab; }
+    #card-ai-video-games .markdown-body th, #card-ai-video-games .markdown-body td { border: 1px solid #3351ab; background: rgba(58, 63, 108, 0.95); }
+    #card-ai-video-games .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+    #card-ai-video-games .markdown-body h1 { border-bottom: 2px solid #3351ab; }
+    #card-ai-video-games .markdown-body h2 { border-bottom: 1px solid #3351ab; }
+    
+    /* Card 10 - Purple theme */
+    #card-home-automation .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+    #card-home-automation .markdown-body th { background: #624b6d; }
+    #card-home-automation .markdown-body th, #card-home-automation .markdown-body td { border: 1px solid #624b6d; background: rgba(67, 60, 89, 0.95); }
+    #card-home-automation .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+    #card-home-automation .markdown-body h1 { border-bottom: 2px solid #624b6d; }
+    #card-home-automation .markdown-body h2 { border-bottom: 1px solid #624b6d; }
     .card-inner .markdown-body a {
-      color: #38bdf8;
+      color: #60d9ff;
       text-decoration: underline;
       transition: color 0.2s;
     }
     .card-inner .markdown-body a:hover {
-      color: #f472b6;
+      color: #82ffff;
     }
     .card-inner .markdown-body code {
-      background: #1e293b;
-      color: #fbbf24;
+      background: #071533;
+      color: #bea9ff;
       padding: 0.2em 0.4em;
       border-radius: 0.3em;
       font-size: 0.95em;
     }
     .card-inner .markdown-body pre code {
-      background: #0f172a;
-      color: #fbbf24;
+      background: #071533;
+      color: #bea9ff;
       padding: 1em;
       border-radius: 0.5em;
       font-size: 0.95em;
@@ -203,13 +300,94 @@
       overflow-x: auto;
     }
     .card-inner .markdown-body blockquote {
-      border-left: 4px solid #6366f1;
-      background: rgba(51, 65, 85, 0.7);
+      border-left: 4px solid #3784ff;
+      background: rgba(52, 52, 78, 0.7);
       padding: 0.5em 1em;
       margin: 1em 0;
-      color: #a5b4fc;
+      color: #abd4d8;
       border-radius: 0.3em;
     }
+    
+    /* Card-specific table colors */
+    /* Card 1 - Blue theme */
+    #card-local-first-ai-tools .markdown-body table { background: rgba(7, 21, 51, 0.95); }
+    #card-local-first-ai-tools .markdown-body th { background: #3784ff; }
+    #card-local-first-ai-tools .markdown-body th, #card-local-first-ai-tools .markdown-body td { border: 1px solid #3784ff; background: rgba(7, 21, 51, 0.95); }
+    #card-local-first-ai-tools .markdown-body tr:nth-child(even) td { background: rgba(52, 52, 78, 0.95); }
+    #card-local-first-ai-tools .markdown-body h1 { border-bottom: 2px solid #3784ff; }
+    #card-local-first-ai-tools .markdown-body h2 { border-bottom: 1px solid #3784ff; }
+    
+    /* Card 2 - Teal theme */
+    #card-ai-assisted-code-dev .markdown-body table { background: rgba(36, 72, 89, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body th { background: #58ebbf; }
+    #card-ai-assisted-code-dev .markdown-body th, #card-ai-assisted-code-dev .markdown-body td { border: 1px solid #58ebbf; background: rgba(36, 72, 89, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body tr:nth-child(even) td { background: rgba(44, 103, 109, 0.95); }
+    #card-ai-assisted-code-dev .markdown-body h1 { border-bottom: 2px solid #58ebbf; }
+    #card-ai-assisted-code-dev .markdown-body h2 { border-bottom: 1px solid #58ebbf; }
+    
+    /* Card 3 - Blue theme */
+    #card-cutting-edge-databases .markdown-body table { background: rgba(52, 52, 78, 0.95); }
+    #card-cutting-edge-databases .markdown-body th { background: #4290e3; }
+    #card-cutting-edge-databases .markdown-body th, #card-cutting-edge-databases .markdown-body td { border: 1px solid #4290e3; background: rgba(52, 52, 78, 0.95); }
+    #card-cutting-edge-databases .markdown-body tr:nth-child(even) td { background: rgba(58, 63, 108, 0.95); }
+    #card-cutting-edge-databases .markdown-body h1 { border-bottom: 2px solid #4290e3; }
+    #card-cutting-edge-databases .markdown-body h2 { border-bottom: 1px solid #4290e3; }
+    
+    /* Card 4 - Purple theme */
+    #card-top-public-data-sources .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+    #card-top-public-data-sources .markdown-body th { background: #bea9ff; }
+    #card-top-public-data-sources .markdown-body th, #card-top-public-data-sources .markdown-body td { border: 1px solid #bea9ff; background: rgba(67, 60, 89, 0.95); }
+    #card-top-public-data-sources .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+    #card-top-public-data-sources .markdown-body h1 { border-bottom: 2px solid #bea9ff; }
+    #card-top-public-data-sources .markdown-body h2 { border-bottom: 1px solid #bea9ff; }
+    
+    /* Card 5 - Purple/Pink theme */
+    #card-ai-art-gen .markdown-body table { background: rgba(89, 60, 82, 0.95); }
+    #card-ai-art-gen .markdown-body th { background: #6d456b; }
+    #card-ai-art-gen .markdown-body th, #card-ai-art-gen .markdown-body td { border: 1px solid #6d456b; background: rgba(89, 60, 82, 0.95); }
+    #card-ai-art-gen .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+    #card-ai-art-gen .markdown-body h1 { border-bottom: 2px solid #6d456b; }
+    #card-ai-art-gen .markdown-body h2 { border-bottom: 1px solid #6d456b; }
+    
+    /* Card 6 - Cyan theme */
+    #card-speech-tts-stt .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+    #card-speech-tts-stt .markdown-body th { background: #60d9ff; }
+    #card-speech-tts-stt .markdown-body th, #card-speech-tts-stt .markdown-body td { border: 1px solid #60d9ff; background: rgba(9, 67, 109, 0.95); }
+    #card-speech-tts-stt .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+    #card-speech-tts-stt .markdown-body h1 { border-bottom: 2px solid #60d9ff; }
+    #card-speech-tts-stt .markdown-body h2 { border-bottom: 1px solid #60d9ff; }
+    
+    /* Card 7 - Teal theme */
+    #card-networking-vpn .markdown-body table { background: rgba(29, 95, 110, 0.95); }
+    #card-networking-vpn .markdown-body th { background: #079d99; }
+    #card-networking-vpn .markdown-body th, #card-networking-vpn .markdown-body td { border: 1px solid #079d99; background: rgba(29, 95, 110, 0.95); }
+    #card-networking-vpn .markdown-body tr:nth-child(even) td { background: rgba(15, 113, 122, 0.95); }
+    #card-networking-vpn .markdown-body h1 { border-bottom: 2px solid #079d99; }
+    #card-networking-vpn .markdown-body h2 { border-bottom: 1px solid #079d99; }
+    
+    /* Card 8 - Blue theme */
+    #card-vm-browser-automation .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+    #card-vm-browser-automation .markdown-body th { background: #117ba0; }
+    #card-vm-browser-automation .markdown-body th, #card-vm-browser-automation .markdown-body td { border: 1px solid #117ba0; background: rgba(9, 67, 109, 0.95); }
+    #card-vm-browser-automation .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+    #card-vm-browser-automation .markdown-body h1 { border-bottom: 2px solid #117ba0; }
+    #card-vm-browser-automation .markdown-body h2 { border-bottom: 1px solid #117ba0; }
+    
+    /* Card 9 - Purple theme */
+    #card-ai-video-games .markdown-body table { background: rgba(58, 63, 108, 0.95); }
+    #card-ai-video-games .markdown-body th { background: #3351ab; }
+    #card-ai-video-games .markdown-body th, #card-ai-video-games .markdown-body td { border: 1px solid #3351ab; background: rgba(58, 63, 108, 0.95); }
+    #card-ai-video-games .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+    #card-ai-video-games .markdown-body h1 { border-bottom: 2px solid #3351ab; }
+    #card-ai-video-games .markdown-body h2 { border-bottom: 1px solid #3351ab; }
+    
+    /* Card 10 - Purple theme */
+    #card-home-automation .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+    #card-home-automation .markdown-body th { background: #624b6d; }
+    #card-home-automation .markdown-body th, #card-home-automation .markdown-body td { border: 1px solid #624b6d; background: rgba(67, 60, 89, 0.95); }
+    #card-home-automation .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+    #card-home-automation .markdown-body h1 { border-bottom: 2px solid #624b6d; }
+    #card-home-automation .markdown-body h2 { border-bottom: 1px solid #624b6d; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
@@ -324,7 +502,7 @@
     });
   </script>
 </head>
-<body class="bg-slate-900 text-slate-200 font-sans antialiased min-h-screen">
+<body class="text-white font-sans antialiased min-h-screen" style="background: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);">
 
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <header class="py-6 flex justify-between items-center">
@@ -335,8 +513,8 @@
       <!-- Search Bar -->
       <form class="flex-grow ml-8">
         <div class="relative flex items-center">
-          <input type="text" placeholder="Search the Spellbook..." class="w-full h-12 pl-4 pr-12 rounded-lg bg-slate-800 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 transition shadow-md" />
-          <button type="button" class="absolute right-3 text-slate-400 hover:text-sky-400 focus:outline-none" aria-label="Clear search">
+          <input type="text" placeholder="Search the Spellbook..." class="w-full h-12 pl-4 pr-12 rounded-lg text-white focus:outline-none focus:ring-2 transition shadow-md" style="background: rgba(52, 52, 78, 0.8); border: 1px solid #3784ff; color: #d2f6ff;" />
+          <button type="button" class="absolute right-3 hover:text-blue-300 focus:outline-none transition" style="color: #abd4d8;" aria-label="Clear search">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
             </svg>
@@ -358,15 +536,18 @@
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#3784ff] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #3784ff;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3784ff]/80" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:rounded-xl before:transition-all before:duration-500" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(7, 21, 51, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(55, 132, 255, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Local-First AI Tools</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#071533]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#071533]/90" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background1.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(7, 21, 51, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-local-first-ai-tools"></div>
           </div>
         </div>
@@ -381,15 +562,18 @@
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#34d399] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #58ebbf;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#34d399]/80" style="background-image: url('background/background2.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background2.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(36, 72, 89, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(88, 235, 191, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">AI-Assisted Code Development</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0f2f26]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0f2f26]/90" style="background-image: url('background/background2.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background2.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(36, 72, 89, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-ai-assisted-code-dev"></div>
           </div>
         </div>
@@ -404,15 +588,18 @@
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#6366f1] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #4290e3;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#6366f1]/80" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(52, 52, 78, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(66, 144, 227, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Cutting Edge Databases</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#1e1b4b]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#1e1b4b]/90" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background3.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(52, 52, 78, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-cutting-edge-databases"></div>
           </div>
         </div>
@@ -427,15 +614,18 @@
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#a855f7] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #bea9ff;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#a855f7]/80" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(67, 60, 89, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(190, 169, 255, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Top APIs and Public Data Sources</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#3b0764]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#3b0764]/90" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background4.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(67, 60, 89, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-top-public-data-sources"></div>
           </div>
         </div>
@@ -450,15 +640,18 @@
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#ec4899] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #6d456b;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#ec4899]/80" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(89, 60, 82, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(109, 69, 107, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">AI Art Generation: Images, 3D, and Video</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background5.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(89, 60, 82, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-ai-art-gen"></div>
           </div>
         </div>
@@ -467,21 +660,24 @@
       <!-- Card 6: Speech-to-Text & Text-to-Speech -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#f43f5e] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #60d9ff;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#f43f5e]/80" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(9, 67, 109, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(96, 217, 255, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Speech-to-Text & Text-to-Speech</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4a041e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4a041e]/90" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background6.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(9, 67, 109, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-speech-tts-stt"></div>
           </div>
         </div>
@@ -490,21 +686,24 @@
       <!-- Card 7: Networking, VPN, & Infrastructure Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#14b8a6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #079d99;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#164e63]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#14b8a6]/80" style="background-image: url('background/background7.png'); background-size: cover; background-position: center;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background7.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(29, 95, 110, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(7, 157, 153, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Networking, VPN, & Infrastructure Security</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#164e63]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#164e63]/90" style="background-image: url('background/background7.png'); background-size: cover; background-position: center;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background7.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(29, 95, 110, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-networking-vpn"></div>
           </div>
         </div>
@@ -513,21 +712,24 @@
       <!-- Card 8: Virtual Machine and Browser Automation and Scrapers -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#06b6d4] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #117ba0;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#06b6d4]/80" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(9, 67, 109, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(17, 123, 160, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Virtual Machine and Browser Automation and Scrapers</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#0c4a6e]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#0c4a6e]/90" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background8.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(9, 67, 109, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-vm-browser-automation"></div>
           </div>
         </div>
@@ -536,21 +738,24 @@
       <!-- Card 9: AI in Video Games & Virtual Beings -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#8b5cf6] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #3351ab;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#8b5cf6]/80" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(58, 63, 108, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(51, 81, 171, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">AI in Video Games & Virtual Beings</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#4c1d95]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#4c1d95]/90" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background10.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(58, 63, 108, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-ai-video-games"></div>
           </div>
         </div>
@@ -559,21 +764,24 @@
       <!-- Card 10: Home Automation & Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- end close button -->
-        <div class="card-inner relative h-full w-full rounded-xl border-2 border-[#d946ef] shadow-xl transition-all duration-700 [transform-style:preserve-3d]">
+        <div class="card-inner relative h-full w-full rounded-xl border-2 shadow-xl transition-all duration-700 [transform-style:preserve-3d]" style="border-color: #624b6d;">
           <!-- Front -->
-          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/80 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#d946ef]/80" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl transition-all duration-500" style="background: rgba(67, 60, 89, 0.8);"></div>
+            <div class="absolute inset-0 rounded-xl transition-all duration-500 opacity-0 hover:opacity-100" style="background: rgba(98, 75, 109, 0.8);"></div>
             <div class="relative z-10">
               <h2 class="text-2xl font-bold text-white">Home Automation & Security</h2>
             </div>
           </div>
           <!-- Back -->
-          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:bg-[#701a75]/90 before:rounded-xl before:transition-all before:duration-500 group-hover:before:bg-[#701a75]/90" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+          <div class="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500" style="background-image: url('background/background11.png'); background-size: cover; background-position: center; background-attachment: scroll;">
+            <div class="absolute inset-0 rounded-xl" style="background: rgba(67, 60, 89, 0.9);"></div>
             <div class="relative z-10 text-xs md:text-sm" id="card-home-automation"></div>
           </div>
         </div>
