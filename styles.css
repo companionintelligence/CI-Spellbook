@@ -7,7 +7,7 @@
   display: none; /* WebKit */
 }
 
-/* Enhanced Card Animation System - 5-stage animation with text fade-in */
+/* Enhanced Card Animation System - 5-stage animation with inline expansion */
 #cards-container {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -16,6 +16,7 @@
   gap: 2rem !important;
   min-height: 100vh;
   padding: 1rem;
+  position: relative;
 }
 
 .group {
@@ -25,6 +26,15 @@
   width: calc(50% - 1rem);
   max-width: 600px;
   min-width: 300px;
+  z-index: 1;
+}
+
+/* Expanded card gets higher z-index but stays in flow */
+.group.expanding-width,
+.group.expanding-height,
+.group.flipped,
+.group.full-expanded {
+  z-index: 50;
 }
 
 @media (max-width: 768px) {
@@ -53,27 +63,29 @@
   height: 100%;
 }
 
-/* Stage 1: Expand width - smooth and quick */
+/* Stage 1: Expand width - stay in container but grow */
 .group.expanding-width {
-  position: fixed !important;
-  top: 50% !important;
+  position: absolute !important;
+  top: 0 !important;
   left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 70vw !important;
+  transform: translateX(-50%) !important;
+  width: 80vw !important;
   height: var(--card-original-height) !important;
-  z-index: 10 !important;
+  max-width: 1200px !important;
+  z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Stage 2: Expand height - prepare for flip */
 .group.expanding-height {
-  position: fixed !important;
-  top: 50% !important;
+  position: absolute !important;
+  top: 0 !important;
   left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 70vw !important;
+  transform: translateX(-50%) !important;
+  width: 80vw !important;
   height: 80vh !important;
-  z-index: 10 !important;
+  max-width: 1200px !important;
+  z-index: 50 !important;
   transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -83,108 +95,71 @@
   transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Stage 4: Expand to full window width after flip - maximum specificity */
+/* Stage 4: Expand to larger size after flip - stay in container */
 .group.flipped.full-expanded,
 .group.full-expanded.flipped {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90vw !important;
+  height: 85vh !important;
+  max-width: 1400px !important;
   margin: 0 !important;
-  transform: none !important;
-  z-index: 15 !important;
+  z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* Ultra-high specificity full-expanded rules using element IDs */
+/* Ultra-high specificity full-expanded rules for inline expansion */
 #cards-container .group.full-expanded,
 #cards-container .group.flipped.full-expanded,
 #cards-container .group.full-expanded.flipped {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90vw !important;
+  height: 85vh !important;
+  max-width: 1400px !important;
   margin: 0 !important;
-  transform: none !important;
-  z-index: 15 !important;
+  z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* Override expanding-height styles when full-expanded is applied - ultra high specificity */
-.group.expanding-height.full-expanded,
-.group.expanding-height.flipped.full-expanded,
-.group.flipped.expanding-height.full-expanded,
-.group.expanding-height.full-expanded.flipped {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
-  margin: 0 !important;
-  transform: none !important;
-  z-index: 15 !important;
-  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+/* When a card is expanded, add space for other cards to flow around it */
+#cards-container:has(.group.full-expanded) {
+  padding-top: calc(85vh + 2rem);
 }
 
-/* Ensure the full-expanded state takes priority over other positioning - MAXIMUM PRIORITY */
+#cards-container:has(.group.expanding-height) {
+  padding-top: calc(80vh + 2rem);
+}
+
+#cards-container:has(.group.expanding-width) {
+  padding-top: calc(42rem + 2rem);
+}
+
+/* Hide other cards temporarily during expansion to avoid layout jumps */
+#cards-container:has(.group.expanding-width) .group:not(.expanding-width):not(.expanding-height):not(.flipped):not(.full-expanded),
+#cards-container:has(.group.expanding-height) .group:not(.expanding-width):not(.expanding-height):not(.flipped):not(.full-expanded),
+#cards-container:has(.group.flipped) .group:not(.expanding-width):not(.expanding-height):not(.flipped):not(.full-expanded) {
+  opacity: 0.3;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+/* Ensure the full-expanded state takes priority over other positioning */
 .group.full-expanded {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90vw !important;
+  height: 85vh !important;
+  max-width: 1400px !important;
   margin: 0 !important;
-  transform: none !important;
-  z-index: 15 !important;
+  z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-}
-
-/* Nuclear option - override any possible conflicting styles */
-.group.full-expanded[style] {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
-  max-width: none !important;
-  min-width: none !important;
-  max-height: none !important;
-  min-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  transform: none !important;
-  z-index: 9999 !important;
-  display: block !important;
-  flex: none !important;
-  grid-column: unset !important;
-  grid-row: unset !important;
-  float: none !important;
-  clear: both !important;
-}
-
-/* Ensure parent container doesn't constrain the full-expanded card */
-#cards-container:has(.group.full-expanded) .group.full-expanded {
-  position: fixed !important;
-  top: 1rem !important;
-  left: 1rem !important;
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: calc(100vw - 2rem) !important;
-  height: calc(100vh - 2rem) !important;
-  transform: none !important;
-  z-index: 9999 !important;
 }
 
 /* Ensure card-inner fills the full-expanded card completely */

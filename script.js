@@ -79,61 +79,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }, 1400);
       
-      // Stage 4: Expand to full window width with smooth animation (0.8s)
+      // Stage 4: Expand to larger size with smooth animation (0.8s)
       setTimeout(() => {
         if (isExpanded && isFlipped) {
           updateDebug('4 - Full Screen (Starting)', isExpanded, isFlipped, group);
           
-          // Store current position and parent for smooth transition
-          const currentRect = group.getBoundingClientRect();
-          const parent = group.parentElement;
-          const nextSibling = group.nextElementSibling;
-          
-          // Remove classes that might interfere
+          // Remove intermediate classes
           group.classList.remove('expanding-width', 'expanding-height');
           
-          // Move to document body and position exactly where it currently is
-          document.body.appendChild(group);
-          group.style.cssText = `
-            position: fixed !important;
-            top: ${currentRect.top}px !important;
-            left: ${currentRect.left}px !important;
-            width: ${currentRect.width}px !important;
-            height: ${currentRect.height}px !important;
-            max-width: none !important;
-            margin: 0 !important;
-            z-index: 9999 !important;
-            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-          `;
-          
-          // Force reflow
-          group.offsetHeight;
-          
-          // Add the full-expanded class for any additional styling
+          // Add the full-expanded class for final size
           group.classList.add('full-expanded');
           
-          // Animate to full screen after a brief delay
-          requestAnimationFrame(() => {
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            
-            group.style.top = '16px';
-            group.style.left = '16px';
-            group.style.width = `${vw - 32}px`;
-            group.style.height = `${vh - 32}px`;
-            
-            updateDebug('4 - Full Screen (Animating)', isExpanded, isFlipped, group);
-          });
+          updateDebug('4 - Full Screen (Animating)', isExpanded, isFlipped, group);
           
           // Update debug when animation completes
           setTimeout(() => {
             updateDebug('4 - Full Screen (Complete)', isExpanded, isFlipped, group);
-            
-            // Store references for cleanup
-            group._originalParent = parent;
-            group._originalNextSibling = nextSibling;
           }, 800);
         }
       }, 2200);
@@ -185,32 +146,9 @@ document.addEventListener('DOMContentLoaded', function () {
           updateDebug('Close 5 - Final Return', false, false, cardElement);
           cardElement.classList.remove('closing-return');
           
-          // Restore element to original parent if it was moved
-          if (cardElement._originalParent) {
-            if (cardElement._originalNextSibling) {
-              cardElement._originalParent.insertBefore(cardElement, cardElement._originalNextSibling);
-            } else {
-              cardElement._originalParent.appendChild(cardElement);
-            }
-            delete cardElement._originalParent;
-            delete cardElement._originalNextSibling;
-          }
-          
           // Clear all stored CSS properties including inline styles
           cardElement.style.removeProperty('--card-original-height');
           cardElement.style.removeProperty('--card-original-width');
-          cardElement.style.removeProperty('position');
-          cardElement.style.removeProperty('top');
-          cardElement.style.removeProperty('left');
-          cardElement.style.removeProperty('right');
-          cardElement.style.removeProperty('bottom');
-          cardElement.style.removeProperty('transform');
-          cardElement.style.removeProperty('width');
-          cardElement.style.removeProperty('height');
-          cardElement.style.removeProperty('margin');
-          cardElement.style.removeProperty('z-index');
-          cardElement.style.removeProperty('opacity');
-          cardElement.style.removeProperty('transition');
           
           if (isTargetCard) {
             isExpanded = false;
@@ -222,31 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Quick close for other cards
         cardElement.classList.remove('expanding-width', 'expanding-height', 'flipped', 'full-expanded', 'content-visible');
         
-        // Restore element to original parent if it was moved
-        if (cardElement._originalParent) {
-          if (cardElement._originalNextSibling) {
-            cardElement._originalParent.insertBefore(cardElement, cardElement._originalNextSibling);
-          } else {
-            cardElement._originalParent.appendChild(cardElement);
-          }
-          delete cardElement._originalParent;
-          delete cardElement._originalNextSibling;
-        }
-        
         cardElement.style.removeProperty('--card-original-height');
         cardElement.style.removeProperty('--card-original-width');
-        cardElement.style.removeProperty('position');
-        cardElement.style.removeProperty('top');
-        cardElement.style.removeProperty('left');
-        cardElement.style.removeProperty('right');
-        cardElement.style.removeProperty('bottom');
-        cardElement.style.removeProperty('transform');
-        cardElement.style.removeProperty('width');
-        cardElement.style.removeProperty('height');
-        cardElement.style.removeProperty('margin');
-        cardElement.style.removeProperty('z-index');
-        cardElement.style.removeProperty('opacity');
-        cardElement.style.removeProperty('transition');
       }
     }
     
