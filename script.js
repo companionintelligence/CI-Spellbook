@@ -1,251 +1,211 @@
-// Original renderMarkdownCard function - replaced by enhanced version below
 document.addEventListener('DOMContentLoaded', function () {
   // Select all card groups
   const cardGroups = document.querySelectorAll('.group');
-  
+  const cardStates = new Map(); // Store state and methods for each card
+
+  // Debug panel updater (define once)
+  function updateDebug(stage, expanded, flipped, element) {
+    const debugPanel = document.getElementById('debug-panel');
+    if (debugPanel && !debugPanel.classList.contains('hidden')) {
+      const rect = element ? element.getBoundingClientRect() : null;
+      const timestamp = new Date().toLocaleTimeString();
+      const updateValue = (id, value) => {
+        const elem = document.getElementById(id);
+        if (elem) {
+          elem.textContent = value;
+          elem.classList.add('updated');
+          setTimeout(() => elem.classList.remove('updated'), 300);
+        }
+      };
+      updateValue('debug-stage', stage);
+      updateValue('debug-expanded', expanded);
+      updateValue('debug-value-flipped', flipped);
+      updateValue('debug-size', rect ? `${Math.round(rect.width)}×${Math.round(rect.height)}` : '-');
+      updateValue('debug-position', rect ? `${Math.round(rect.left)},${Math.round(rect.top)}` : '-');
+      updateValue('debug-parent', element ? (element.parentElement ? element.parentElement.tagName : 'none') : '-');
+      updateValue('debug-classes', element ? element.className.split(' ').slice(-3).join(' ') : '-');
+      updateValue('debug-time', timestamp);
+      debugPanel.style.borderColor = '#00ff88';
+      setTimeout(() => debugPanel.style.borderColor = '#3784ff', 150);
+    }
+  }
+
   cardGroups.forEach(group => {
-    let isExpanded = false;
-    let isFlipped = false;
-    
-    // Enhanced function to update debug panel with comprehensive tracking
-    function updateDebug(stage, expanded, flipped, element) {
-      const debugPanel = document.getElementById('debug-panel');
-      if (debugPanel && !debugPanel.classList.contains('hidden')) {
-        const rect = element ? element.getBoundingClientRect() : null;
-        const styles = element ? window.getComputedStyle(element) : null;
-        const timestamp = new Date().toLocaleTimeString();
-        
-        // Update animation debug values with flash effect
-        const updateValue = (id, value) => {
-          const elem = document.getElementById(id);
-          if (elem) {
-            elem.textContent = value;
-            elem.classList.add('updated');
-            setTimeout(() => elem.classList.remove('updated'), 300);
-          }
-        };
-        
-        updateValue('debug-stage', stage);
-        updateValue('debug-expanded', expanded);
-        updateValue('debug-value-flipped', flipped);
-        updateValue('debug-size', rect ? `${Math.round(rect.width)}×${Math.round(rect.height)}` : '-');
-        updateValue('debug-position', rect ? `${Math.round(rect.left)},${Math.round(rect.top)}` : '-');
-        updateValue('debug-parent', element ? (element.parentElement ? element.parentElement.tagName : 'none') : '-');
-        updateValue('debug-classes', element ? element.className.split(' ').slice(-3).join(' ') : '-');
-        updateValue('debug-time', timestamp);
-        
-        // Flash the debug panel to indicate updates
-        debugPanel.style.borderColor = '#00ff88';
-        setTimeout(() => debugPanel.style.borderColor = '#3784ff', 150);
-      }
+    // Per-card state
+    const state = {
+      isExpanded: false,
+      isFlipped: false,
+      expandTimeouts: [],
+      closeTimeouts: [],
+      expandCard: null,
+      closeCardAnimated: null,
+      closeCardQuick: null
+    };
+    cardStates.set(group, state);
+
+    // Helper to clear all timeouts for this card
+    function clearAllTimeouts(arr) {
+      arr.forEach(t => clearTimeout(t));
+      arr.length = 0;
     }
 
-    // Function to expand card with 5-stage animation
-    function expandCard() {
+    // EXPAND CARD
+    state.expandCard = function() {
       // Close all other cards first
       cardGroups.forEach(g => {
         if (g !== group) {
-          closeCard(g);
+          const otherState = cardStates.get(g);
+          if (otherState && (otherState.isExpanded || otherState.isFlipped)) {
+            otherState.closeCardQuick();
+          }
         }
       });
-      
+      clearAllTimeouts(state.closeTimeouts);
+      clearAllTimeouts(state.expandTimeouts);
       // Store original dimensions for animation
       const rect = group.getBoundingClientRect();
       group.style.setProperty('--card-original-height', rect.height + 'px');
       group.style.setProperty('--card-original-width', rect.width + 'px');
-      
-      // Stage 1: Expand width (0.8s)
       group.classList.add('expanding-width');
-      isExpanded = true;
-      updateDebug('1 - Width Expansion', isExpanded, isFlipped, group);
-      // addBackdropListener(); // Disabled - only close with X button
-      
+      state.isExpanded = true;
+      updateDebug('1 - Width Expansion', state.isExpanded, state.isFlipped, group);
       // Stage 2: Expand height (0.6s)
-      setTimeout(() => {
-        if (isExpanded) {
-          group.classList.remove('expanding-width');
-          group.classList.add('expanding-height');
-          updateDebug('2 - Height Expansion', isExpanded, isFlipped, group);
-        }
-      }, 800);
-      
+      state.expandTimeouts.push(setTimeout(() => {
+        if (!state.isExpanded) return;
+        group.classList.remove('expanding-width');
+        group.classList.add('expanding-height');
+        updateDebug('2 - Height Expansion', state.isExpanded, state.isFlipped, group);
+      }, 800));
       // Stage 3: Flip card (0.8s)
-      setTimeout(() => {
-        if (isExpanded) {
-          // Keep expanding-height class and add flipped
-          group.classList.add('flipped');
-          isFlipped = true;
-          updateDebug('3 - Card Flip', isExpanded, isFlipped, group);
-        }
-      }, 1400);
-      
-      // Stage 4: Expand to larger size with smooth animation (0.8s)
-      setTimeout(() => {
-        if (isExpanded && isFlipped) {
-          updateDebug('4 - Full Screen (Starting)', isExpanded, isFlipped, group);
-          
-          // Remove intermediate classes
-          group.classList.remove('expanding-width', 'expanding-height');
-          
-          // Add the full-expanded class for final size
-          group.classList.add('full-expanded');
-          
-          updateDebug('4 - Full Screen (Animating)', isExpanded, isFlipped, group);
-          
-          // Update debug when animation completes
-          setTimeout(() => {
-            updateDebug('4 - Full Screen (Complete)', isExpanded, isFlipped, group);
-          }, 800);
-        }
-      }, 2200);
-      
-      // Stage 5: Fade in content with staggered animations (0.8s)
-      setTimeout(() => {
-        if (isExpanded && isFlipped) {
-          group.classList.add('content-visible');
-          updateDebug('5 - Content Visible', isExpanded, isFlipped, group);
-        }
-      }, 3000);
-    }
-    
-    // Function to close card with mirrored 5-stage animation
-    function closeCard(cardElement = group) {
-      const isTargetCard = cardElement === group;
-      
-      if (isTargetCard) {
-        updateDebug('Close 1 - Content Fade', false, true, cardElement);
-        
-        // Stage 1: Fade out content (0.4s)
-        cardElement.classList.add('closing-content');
-        cardElement.classList.remove('content-visible');
-        
-        // Stage 2: Shrink from full width (0.6s)
-        setTimeout(() => {
-          updateDebug('Close 2 - Width Shrink', false, true, cardElement);
-          cardElement.classList.remove('full-expanded', 'closing-content');
-          cardElement.classList.add('closing-shrink');
-        }, 400);
-        
-        // Stage 3: Unflip card (0.8s)
-        setTimeout(() => {
-          updateDebug('Close 3 - Unflip', false, false, cardElement);
-          cardElement.classList.remove('flipped', 'closing-shrink');
-          cardElement.classList.add('closing-unflip');
-          if (isTargetCard) isFlipped = false;
-        }, 1000);
-        
-        // Stage 4: Collapse to original size (0.8s)
-        setTimeout(() => {
-          updateDebug('Close 4 - Height Collapse', false, false, cardElement);
-          cardElement.classList.remove('expanding-height', 'closing-unflip');
-          cardElement.classList.add('closing-collapse');
-        }, 1800);
-        
-        // Stage 5: Return to original position (0.6s)
-        setTimeout(() => {
-          updateDebug('Close 5 - Final Return', false, false, cardElement);
-          cardElement.classList.remove('closing-return');
-          
-          // Clear all stored CSS properties including inline styles
-          cardElement.style.removeProperty('--card-original-height');
-          cardElement.style.removeProperty('--card-original-width');
-          
-          if (isTargetCard) {
-            isExpanded = false;
-            removeBackdropListener();
-            updateDebug('Closed - Initial State', false, false, cardElement);
-          }
-        }, 3200);
-      } else {
-        // Quick close for other cards
-        cardElement.classList.remove('expanding-width', 'expanding-height', 'flipped', 'full-expanded', 'content-visible');
-        
-        cardElement.style.removeProperty('--card-original-height');
-        cardElement.style.removeProperty('--card-original-width');
+      state.expandTimeouts.push(setTimeout(() => {
+        if (!state.isExpanded) return;
+        group.classList.add('flipped');
+        state.isFlipped = true;
+        updateDebug('3 - Card Flip', state.isExpanded, state.isFlipped, group);
+      }, 1400));
+      // Stage 4: Expand to larger size (0.8s)
+      state.expandTimeouts.push(setTimeout(() => {
+        if (!state.isExpanded || !state.isFlipped) return;
+        updateDebug('4 - Full Screen (Starting)', state.isExpanded, state.isFlipped, group);
+        group.classList.remove('expanding-height');
+        group.classList.add('full-expanded');
+        updateDebug('4 - Full Screen (Animating)', state.isExpanded, state.isFlipped, group);
+        state.expandTimeouts.push(setTimeout(() => {
+          if (!state.isExpanded || !state.isFlipped) return;
+          updateDebug('4 - Full Screen (Complete)', state.isExpanded, state.isFlipped, group);
+        }, 800));
+      }, 2200));
+      // Stage 5: Fade in content (0.8s)
+      state.expandTimeouts.push(setTimeout(() => {
+        if (!state.isExpanded || !state.isFlipped) return;
+        group.classList.add('content-visible');
+        updateDebug('5 - Content Visible', state.isExpanded, state.isFlipped, group);
+      }, 3000));
+    };
+
+    // CLOSE CARD (animated)
+    state.closeCardAnimated = function() {
+      if (!state.isExpanded && !state.isFlipped && !group.classList.contains('content-visible')) {
+        state.closeCardQuick();
+        return;
       }
-    }
-    
-    // Single click/touch handler - ONLY EXPANDS, never closes (only X button closes)
+      clearAllTimeouts(state.expandTimeouts);
+      clearAllTimeouts(state.closeTimeouts);
+      updateDebug('Close 1 - Content Fade', false, true, group);
+      group.classList.add('closing-content');
+      group.classList.remove('content-visible');
+      // Stage 2: Shrink from full width (0.6s)
+      state.closeTimeouts.push(setTimeout(() => {
+        if (group.classList.contains('closing-content')) {
+          updateDebug('Close 2 - Width Shrink', false, true, group);
+          group.classList.remove('full-expanded', 'closing-content');
+          group.classList.add('closing-shrink');
+        }
+      }, 400));
+      // Stage 3: Unflip card (0.8s)
+      state.closeTimeouts.push(setTimeout(() => {
+        if (group.classList.contains('closing-shrink')) {
+          updateDebug('Close 3 - Unflip', false, false, group);
+          group.classList.remove('flipped', 'closing-shrink');
+          group.classList.add('closing-unflip');
+          state.isFlipped = false;
+        }
+      }, 1000));
+      // Stage 4: Collapse to original size (0.8s)
+      state.closeTimeouts.push(setTimeout(() => {
+        if (group.classList.contains('closing-unflip')) {
+          updateDebug('Close 4 - Height Collapse', false, false, group);
+          group.classList.remove('expanding-height', 'closing-unflip');
+          group.classList.add('closing-collapse');
+        }
+      }, 1800));
+      // Stage 5: Return to original position (0.6s)
+      state.closeTimeouts.push(setTimeout(() => {
+        if (group.classList.contains('closing-collapse')) {
+          updateDebug('Close 5 - Final Return', false, false, group);
+          group.classList.remove('closing-collapse');
+          group.classList.add('closing-return');
+        }
+      }, 2600));
+      // Stage 6: Final cleanup
+      state.closeTimeouts.push(setTimeout(() => {
+        updateDebug('Close 6 - Cleanup', false, false, group);
+        group.classList.remove('closing-return');
+        group.style.removeProperty('--card-original-height');
+        group.style.removeProperty('--card-original-width');
+        state.isExpanded = false;
+        state.isFlipped = false;
+        updateDebug('Closed - Initial State', false, false, group);
+      }, 3200));
+    };
+
+    // CLOSE CARD (quick, no animation)
+    state.closeCardQuick = function() {
+      clearAllTimeouts(state.expandTimeouts);
+      clearAllTimeouts(state.closeTimeouts);
+      group.classList.remove(
+        'expanding-width', 'expanding-height', 'flipped', 'full-expanded', 'content-visible',
+        'closing-content', 'closing-shrink', 'closing-unflip', 'closing-collapse', 'closing-return'
+      );
+      group.style.removeProperty('--card-original-height');
+      group.style.removeProperty('--card-original-width');
+      state.isExpanded = false;
+      state.isFlipped = false;
+      updateDebug('Quick Closed', false, false, group);
+    };
+
+    // Card click handler
     function handleCardInteraction(e) {
-      console.log('Card interaction:', e.type, 'isExpanded:', isExpanded);
-      
-      // Prevent action if clicking a link
       if (e.target.closest('a')) return;
-      
-      // Prevent action if selecting text
       if (window.getSelection().toString()) return;
-      
-      // Prevent action if clicking close button
       if (e.target.closest('.fullscreen-close-btn')) return;
-      
-      // Only expand if not already expanded - clicking on expanded card does nothing
-      if (!isExpanded) {
+      const cardState = cardStates.get(group);
+      if (cardState && !cardState.isExpanded) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Expanding card...');
-        expandCard();
-      } else {
-        console.log('Card already expanded - ignoring click');
+        cardState.expandCard();
       }
     }
-    
-    // Add backdrop click handler - DISABLED (only close with X button)
-    /*
-    function handleBackdropClick(e) {
-      // Check if the click is on the backdrop (pseudo-element area) or outside the card content
-      if (isExpanded && (group.classList.contains('expanding-width') || group.classList.contains('expanding-height'))) {
-        const cardRect = group.getBoundingClientRect();
-        const clickX = e.clientX;
-        const clickY = e.clientY;
-        
-        // If click is outside the card area, close the card
-        if (clickX < cardRect.left || clickX > cardRect.right || 
-            clickY < cardRect.top || clickY > cardRect.bottom) {
-          e.preventDefault();
-          e.stopPropagation();
-          closeCard();
-        }
-      }
-    }
-    */
-    
-    // Add backdrop event listener to document when card is expanded - DISABLED
-    /*
-    function addBackdropListener() {
-      if (isExpanded) {
-        document.addEventListener('click', handleBackdropClick, true);
-        document.addEventListener('touchend', handleBackdropClick, true);
-      }
-    }
-    */
-    
-    function removeBackdropListener() {
-      // document.removeEventListener('click', handleBackdropClick, true);
-      // document.removeEventListener('touchend', handleBackdropClick, true);
-    }
-    
-    // Add event listeners
+
     group.addEventListener('click', handleCardInteraction);
     group.addEventListener('touchend', function(e) {
       e.preventDefault();
       handleCardInteraction(e);
     });
-    
     // Close button support
     const closeBtn = group.querySelector('.fullscreen-close-btn');
     if (closeBtn) {
       closeBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Close button clicked - closing card');
-        closeCard();
+        const cardState = cardStates.get(group);
+        if (cardState) cardState.closeCardAnimated();
       });
-      
       closeBtn.addEventListener('touchend', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Close button touched - closing card');
-        closeCard();
+        const cardState = cardStates.get(group);
+        if (cardState) cardState.closeCardAnimated();
       });
     }
   });

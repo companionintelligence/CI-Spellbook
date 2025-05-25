@@ -160,6 +160,7 @@
   margin: 0 !important;
   z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  overflow: hidden !important;
 }
 
 /* Ensure card-inner fills the full-expanded card completely */
@@ -170,16 +171,43 @@
   transform-style: preserve-3d !important;
 }
 
-/* Ensure card content fills the full area and is scrollable */
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+/* Make the back side (content) scrollable when expanded */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"],
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
   width: 100% !important;
   height: 100% !important;
   overflow-y: auto !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
+}
+
+/* Custom scrollbar for webkit browsers */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track,
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb,
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover,
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Card back content positioning for all stages */
@@ -414,7 +442,62 @@
 .group.closing-content .card-inner > div[style*="rotateY(180deg)"] > .relative {
   opacity: 0 !important;
   transform: translateY(20px) !important;
-  transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in !important;
+}
+
+.group.closing-shrink {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 80vw !important;
+  height: 80vh !important;
+  max-width: 1200px !important;
+  z-index: 50 !important;
+  transition: all 0.6s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+}
+
+.group.closing-unflip .card-inner {
+  transform: rotateY(0deg) !important;
+  transition: transform 0.8s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+}
+
+.group.closing-collapse {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 80vw !important;
+  height: var(--card-original-height) !important;
+  max-width: 1200px !important;
+  z-index: 50 !important;
+  transition: all 0.8s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+}
+
+.group.closing-return {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: calc(50% - 1rem) !important;
+  height: 42rem !important;
+  max-width: 600px !important;
+  min-width: 300px !important;
+  z-index: 1 !important;
+  transition: all 0.6s cubic-bezier(0.8, 0.25, 1, 0.25) !important;
+}
+
+@media (max-width: 768px) {
+  .group.closing-return {
+    width: calc(100% - 2rem) !important;
+    max-width: 500px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .group.closing-return {
+    width: calc(33.333% - 1.5rem) !important;
+  }
 }
 
 .group.closing-shrink {
