@@ -26,10 +26,42 @@
       display: none; /* WebKit */
     }
     
-    /* Card animation system - store original position */
+    /* Enhanced Card Animation System - 5-stage animation with text fade-in */
+    #cards-container {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: flex-start !important;
+      gap: 2rem !important;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    
     .group {
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      flex: 0 0 auto;
+      width: calc(50% - 1rem);
+      max-width: 600px;
+      min-width: 300px;
+    }
+    
+    @media (max-width: 768px) {
+      .group {
+        width: calc(100% - 2rem);
+        max-width: 500px;
+      }
+      
+      #cards-container {
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .group {
+        width: calc(33.333% - 1.5rem);
+      }
     }
     
     .card-inner {
@@ -40,50 +72,677 @@
       height: 100%;
     }
     
-    /* Expanded card container - animates from original position */
-    .group.expanded {
+    /* Stage 1: Expand width - smooth and quick */
+    .group.expanding-width {
       position: fixed !important;
-      top: 2rem !important;
-      left: 2rem !important;
-      right: 2rem !important;
-      bottom: 2rem !important;
-      width: calc(100vw - 4rem) !important;
-      height: calc(100vh - 4rem) !important;
-      z-index: 50 !important;
-      padding: 0 !important;
-      margin: 0 !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 70vw !important;
+      height: var(--card-original-height) !important;
+      z-index: 10 !important;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     
-    /* Flipped card */
-    .group.expanded.flipped .card-inner {
+    /* Stage 2: Expand height - prepare for flip */
+    .group.expanding-height {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 70vw !important;
+      height: 80vh !important;
+      z-index: 10 !important;
+      transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    /* Stage 3: Flip the card with smooth transition */
+    .group.flipped .card-inner {
       transform: rotateY(180deg);
+      transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     
-    /* Backdrop for expanded cards */
-    .group.expanded::before {
+    /* Stage 4: Expand to full window width after flip - maximum specificity */
+    .group.flipped.full-expanded,
+    .group.full-expanded.flipped {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      margin: 0 !important;
+      transform: none !important;
+      z-index: 15 !important;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+
+    /* Ultra-high specificity full-expanded rules using element IDs */
+    #cards-container .group.full-expanded,
+    #cards-container .group.flipped.full-expanded,
+    #cards-container .group.full-expanded.flipped {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      margin: 0 !important;
+      transform: none !important;
+      z-index: 15 !important;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    
+    /* Override expanding-height styles when full-expanded is applied - ultra high specificity */
+    .group.expanding-height.full-expanded,
+    .group.expanding-height.flipped.full-expanded,
+    .group.flipped.expanding-height.full-expanded,
+    .group.expanding-height.full-expanded.flipped {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      margin: 0 !important;
+      transform: none !important;
+      z-index: 15 !important;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    
+    /* Ensure the full-expanded state takes priority over other positioning - MAXIMUM PRIORITY */
+    .group.full-expanded {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      margin: 0 !important;
+      transform: none !important;
+      z-index: 15 !important;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    
+    /* Nuclear option - override any possible conflicting styles */
+    .group.full-expanded[style] {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      max-width: none !important;
+      min-width: none !important;
+      max-height: none !important;
+      min-height: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: none !important;
+      z-index: 9999 !important;
+      display: block !important;
+      flex: none !important;
+      grid-column: unset !important;
+      grid-row: unset !important;
+      float: none !important;
+      clear: both !important;
+    }
+    
+    /* Ensure parent container doesn't constrain the full-expanded card */
+    #cards-container:has(.group.full-expanded) .group.full-expanded {
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      bottom: 1rem !important;
+      width: calc(100vw - 2rem) !important;
+      height: calc(100vh - 2rem) !important;
+      transform: none !important;
+      z-index: 9999 !important;
+    }
+    
+    /* Ensure card-inner fills the full-expanded card completely */
+    .group.full-expanded .card-inner {
+      width: 100% !important;
+      height: 100% !important;
+      position: relative !important;
+      transform-style: preserve-3d !important;
+    }
+    
+    /* Ensure card content fills the full area and is scrollable */
+    .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+      width: 100% !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+    }
+    
+    /* Card back content positioning for all stages */
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"],
+    .group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      margin: 0 !important;
+      padding: 2rem !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Card back content scrollable area */
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative,
+    .group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
+      width: 100% !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      padding: 1rem !important;
+      box-sizing: border-box !important;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+    
+    /* Stage 5: Text content fade-in animations */
+    .group.content-visible .card-inner > div[style*="rotateY(180deg)"] > .relative {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition: all 0.8s ease-out 0.2s;
+    }
+    
+    /* Individual text element fade-in with staggered delays */
+    .group.content-visible h1, 
+    .group.content-visible h2, 
+    .group.content-visible h3,
+    .group.content-visible h4,
+    .group.content-visible h5,
+    .group.content-visible h6 {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .group.content-visible h1 { 
+      animation-delay: 0.1s; 
+      animation-duration: 0.8s;
+    }
+    .group.content-visible h2 { 
+      animation-delay: 0.2s; 
+      animation-duration: 0.7s;
+    }
+    .group.content-visible h3 { 
+      animation-delay: 0.3s; 
+      animation-duration: 0.6s;
+    }
+    .group.content-visible h4 { animation-delay: 0.4s; }
+    .group.content-visible h5 { animation-delay: 0.5s; }
+    .group.content-visible h6 { animation-delay: 0.6s; }
+    
+    .group.content-visible p {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+    
+    .group.content-visible p:nth-of-type(1) { animation-delay: 0.4s; }
+    .group.content-visible p:nth-of-type(2) { animation-delay: 0.5s; }
+    .group.content-visible p:nth-of-type(3) { animation-delay: 0.6s; }
+    .group.content-visible p:nth-of-type(4) { animation-delay: 0.7s; }
+    .group.content-visible p:nth-of-type(5) { animation-delay: 0.8s; }
+    .group.content-visible p:nth-of-type(n+6) { animation-delay: 0.9s; }
+    
+    .group.content-visible ul,
+    .group.content-visible ol,
+    .group.content-visible table {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.7s;
+    }
+    
+    .group.content-visible blockquote {
+      opacity: 0;
+      transform: translateX(-15px);
+      animation: fadeInLeft 0.6s ease-out forwards;
+      animation-delay: 0.8s;
+    }
+    
+    .group.content-visible code,
+    .group.content-visible pre {
+      opacity: 0;
+      transform: scale(0.95);
+      animation: fadeInScale 0.5s ease-out forwards;
+      animation-delay: 0.9s;
+    }
+    
+    .group.content-visible li {
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: fadeInLeft 0.4s ease-out forwards;
+    }
+    
+    .group.content-visible li:nth-child(1) { animation-delay: 1.0s; }
+    .group.content-visible li:nth-child(2) { animation-delay: 1.05s; }
+    .group.content-visible li:nth-child(3) { animation-delay: 1.1s; }
+    .group.content-visible li:nth-child(4) { animation-delay: 1.15s; }
+    .group.content-visible li:nth-child(5) { animation-delay: 1.2s; }
+    .group.content-visible li:nth-child(n+6) { animation-delay: 1.25s; }
+    
+    .group.content-visible tr {
+      opacity: 0;
+      transform: translateY(5px);
+      animation: fadeInUp 0.3s ease-out forwards;
+    }
+    
+    .group.content-visible tr:nth-child(1) { animation-delay: 1.1s; }
+    .group.content-visible tr:nth-child(2) { animation-delay: 1.15s; }
+    .group.content-visible tr:nth-child(3) { animation-delay: 1.2s; }
+    .group.content-visible tr:nth-child(4) { animation-delay: 1.25s; }
+    .group.content-visible tr:nth-child(n+5) { animation-delay: 1.3s; }
+    
+    /* Keyframes for text animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    /* Backdrop with smooth fade */
+    .group.expanding-width::before,
+    .group.expanding-height::before,
+    .group.flipped::before,
+    .group.flipped.full-expanded::before,
+    .group.full-expanded::before {
       content: '';
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(7, 21, 51, 0.9);
-      z-index: -1;
-      opacity: 1;
-      transition: opacity 0.8s ease-in-out;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 5;
+      opacity: 0;
+      animation: backdropFadeIn 0.6s ease-out forwards;
     }
     
-    /* Show close button for expanded cards */
-    .group.expanded .fullscreen-close-btn {
+    @keyframes backdropFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Backdrop no longer clickable - remove cursor pointer */
+    
+    /* Ensure close button shows above backdrop */
+    .group.expanding-width .fullscreen-close-btn,
+    .group.expanding-height .fullscreen-close-btn {
       display: block !important;
+      z-index: 100 !important;
+      position: fixed !important;
+      top: 1rem !important;
+      right: 1rem !important;
     }
     
-    /* Ensure background images persist during all states */
+    /* Show close button for expanded cards with proper z-index */
+    .group.expanding-width .fullscreen-close-btn,
+    .group.expanding-height .fullscreen-close-btn,
+    .group.flipped .fullscreen-close-btn,
+    .group.flipped.full-expanded .fullscreen-close-btn {
+      display: block !important;
+      z-index: 100 !important;
+      position: fixed !important;
+      top: 1rem !important;
+      right: 1rem !important;
+      background: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: scale(0);
+      animation: closeButtonAppear 0.4s ease-out 0.3s forwards;
+    }
+    
+    @keyframes closeButtonAppear {
+      from {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    
+    /* Closing animations - mirror the opening sequence */
+    .group.closing-content {
+      animation: fadeOutContent 0.4s ease-in forwards;
+    }
+    
+    .group.closing-content .card-inner > div[style*="rotateY(180deg)"] > .relative {
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+      transition: all 0.4s ease-in;
+    }
+    
+    .group.closing-shrink {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 70vw !important;
+      height: 80vh !important;
+      z-index: 10 !important;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    .group.closing-unflip .card-inner {
+      transform: rotateY(0deg) !important;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    .group.closing-collapse {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(0.8) !important;
+      width: var(--card-original-width) !important;
+      height: var(--card-original-height) !important;
+      opacity: 0.8 !important;
+      z-index: 10 !important;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    .group.closing-return {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      width: var(--card-original-width) !important;
+      height: var(--card-original-height) !important;
+      opacity: 1 !important;
+      z-index: auto !important;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    /* Backdrop fade out during closing */
+    .group.closing-content::before,
+    .group.closing-shrink::before,
+    .group.closing-unflip::before,
+    .group.closing-collapse::before {
+      animation: backdropFadeOut 0.6s ease-in forwards;
+    }
+    
+    @keyframes backdropFadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    @keyframes fadeOutContent {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    /* Ensure background images persist during all states and fix card back scrolling */
     .card-inner > div {
       background-attachment: scroll !important;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;
+      will-change: transform;
+    }
+    
+    /* Fix background during flip animation - ensure both sides maintain backgrounds */
+    .group.flipped .card-inner > div {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      will-change: auto;
+    }
+    
+    /* Ensure card back backgrounds work properly during scroll */
+    .card-inner > div[style*="rotateY(180deg)"] {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+    }
+    
+    /* Fix scrolling on card backs - ensure proper overflow behavior */
+    .group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+      overflow: hidden !important;
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+    }
+    
+    /* Fix card back content scrolling */
+    .group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative {
+      overflow-y: auto !important;
+      max-height: 100% !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Ensure card back markdown content displays properly */
+    .group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] .markdown-content {
+      width: 100% !important;
+      max-width: none !important;
+      padding: 0 !important;
+    }
+    
+    /* Fix card back tables to be responsive in expanded view */
+    .group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+      width: 100% !important;
+      max-width: 100% !important;
+      table-layout: auto !important;
+    }
+    
+    /* Ensure dark background overlay works on card backs */
+    .group.expanding-height .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"],
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(36, 72, 89, 0.9) !important;
+      pointer-events: none;
+      transition: none !important;
+    }
+    
+    /* Card-specific background overlays for card backs */
+    #card-local-first-ai-tools.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(7, 21, 51, 0.9) !important;
+    }
+    
+    #card-ai-assisted-code-dev.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(36, 72, 89, 0.9) !important;
+    }
+    
+    #card-cutting-edge-databases.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(52, 52, 78, 0.9) !important;
+    }
+    
+    #card-top-public-data-sources.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(67, 60, 89, 0.9) !important;
+    }
+    
+    #card-ai-art-gen.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(89, 60, 82, 0.9) !important;
+    }
+    
+    #card-speech-tts-stt.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(9, 67, 109, 0.9) !important;
+    }
+    
+    #card-networking-vpn.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(29, 95, 110, 0.9) !important;
+    }
+    
+    #card-vm-browser-automation.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(9, 67, 109, 0.9) !important;
+    }
+    
+    #card-ai-video-games.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(58, 63, 108, 0.9) !important;
+    }
+    
+    #card-home-automation.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+      background: rgba(67, 60, 89, 0.9) !important;
+    }
+    
+    /* Ensure background overlay persists during animation */
+    .card-inner > div > div[class*="absolute inset-0"] {
+      pointer-events: none;
+      transition: all 1.0s ease-in-out;
+      background: inherit !important;
+    }
+    
+    /* Make sure card content is properly positioned */
+    .group.expanding-width .card-inner,
+    .group.expanding-height .card-inner,
+    .group.flipped .card-inner {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    /* Ensure all backgrounds persist during transforms */
+    .group.expanding-width .card-inner > div,
+    .group.expanding-height .card-inner > div,
+    .group.flipped .card-inner > div {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+    }
+    
+    /* Fix background color overlays during animation */
+    .group.expanding-width .card-inner > div > div,
+    .group.expanding-height .card-inner > div > div,
+    .group.flipped .card-inner > div > div {
+      transition: all 1.0s ease-in-out !important;
+    }
+    
+    /* Prevent background from disappearing during flip */
+    .group .card-inner > div {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    
+    /* Fix card back background image persistence during scroll */
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      will-change: auto;
+    }
+    
+    /* Ensure proper background during all animation stages */
+    .group.expanding-width .card-inner > div[style*="rotateY(180deg)"],
+    .group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
+    .group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+    }
+    
+    /* Improve card centering during expansion */
+    .group.expanding-width,
+    .group.expanding-height {
+      transform-origin: center center !important;
+    }
+    
+    /* Ensure smooth centering animation */
+    .group.expanding-width .card-inner,
+    .group.expanding-height .card-inner {
+      margin: 0 auto !important;
+      transform-origin: center center !important;
+    }
+    
+    /* Content fade animation starts hidden */
+    .card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+    
+    /* Stage 4: Content fade-in from top to bottom */
+    .group.content-visible .card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeInFromTop 1.2s ease-out forwards;
+    }
+    
+    @keyframes fadeInFromTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      50% {
+        opacity: 0.5;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Ensure proper z-index stacking during animation */
+    .group.expanding-width,
+    .group.expanding-height {
+      z-index: 10 !important;
+    }
+    
+    .group.expanding-width .card-inner,
+    .group.expanding-height .card-inner {
+      z-index: 11 !important;
+    }
+    
+    /* Close button styling */
+    .fullscreen-close-btn {
+      z-index: 100 !important;
+      position: absolute !important;
+      top: 1rem !important;
+      right: 1rem !important;
     }
     
     /* Search bar placeholder styling */
@@ -413,7 +1072,22 @@
         let isExpanded = false;
         let isFlipped = false;
         
-        // Function to expand card
+        // Function to update debug panel
+        function updateDebug(stage, expanded, flipped, element) {
+          const debugPanel = document.getElementById('debug-panel');
+          if (debugPanel) {
+            const rect = element ? element.getBoundingClientRect() : null;
+            const styles = element ? window.getComputedStyle(element) : null;
+            
+            document.getElementById('debug-stage').textContent = `Stage: ${stage}`;
+            document.getElementById('debug-expanded').textContent = `Expanded: ${expanded}`;
+            document.getElementById('debug-flipped').textContent = `Flipped: ${flipped}`;
+            document.getElementById('debug-size').textContent = rect ? `Size: ${Math.round(rect.width)}x${Math.round(rect.height)}` : 'Size: -';
+            document.getElementById('debug-position').textContent = rect ? `Position: ${Math.round(rect.left)},${Math.round(rect.top)}` : 'Position: -';
+          }
+        }
+
+        // Function to expand card with 5-stage animation
         function expandCard() {
           // Close all other cards first
           cardGroups.forEach(g => {
@@ -422,29 +1096,238 @@
             }
           });
           
-          group.classList.add('expanded');
-          isExpanded = true;
+          // Store original dimensions for animation
+          const rect = group.getBoundingClientRect();
+          group.style.setProperty('--card-original-height', rect.height + 'px');
+          group.style.setProperty('--card-original-width', rect.width + 'px');
           
-          // Auto-flip after expansion completes
+          // Stage 1: Expand width (0.8s)
+          group.classList.add('expanding-width');
+          isExpanded = true;
+          console.log('Stage 1: Width expansion started');
+          updateDebug('1 - Width Expansion', isExpanded, isFlipped, group);
+          // addBackdropListener(); // Disabled - only close with X button
+          
+          // Stage 2: Expand height (0.6s)
           setTimeout(() => {
             if (isExpanded) {
+              group.classList.remove('expanding-width');
+              group.classList.add('expanding-height');
+              console.log('Stage 2: Height expansion started');
+              updateDebug('2 - Height Expansion', isExpanded, isFlipped, group);
+            }
+          }, 800);
+          
+          // Stage 3: Flip card (0.8s)
+          setTimeout(() => {
+            if (isExpanded) {
+              // Keep expanding-height class and add flipped
               group.classList.add('flipped');
               isFlipped = true;
+              console.log('Stage 3: Card flip started');
+              updateDebug('3 - Card Flip', isExpanded, isFlipped, group);
             }
-          }, 800); // Wait for expansion animation to complete
+          }, 1400);
+          
+          // Stage 4: Expand to full window width (0.8s)
+          setTimeout(() => {
+            if (isExpanded && isFlipped) {
+              console.log('Stage 4: Starting full-screen expansion');
+              
+              // Log current state before changes
+              const beforeRect = group.getBoundingClientRect();
+              const beforeStyles = window.getComputedStyle(group);
+              console.log('Before Stage 4 - Position:', beforeStyles.position, 'Size:', beforeRect.width + 'x' + beforeRect.height, 'Location:', beforeRect.left + ',' + beforeRect.top);
+              console.log('Before Stage 4 - Classes:', group.className);
+              
+              // Remove ALL previous positioning classes to prevent conflicts
+              group.classList.remove('expanding-width', 'expanding-height');
+              group.classList.add('full-expanded');
+              
+              // SUPER NUCLEAR OPTION: Remove from parent container completely
+              const parent = group.parentElement;
+              const nextSibling = group.nextElementSibling;
+              document.body.appendChild(group);
+              
+              // ULTRA NUCLEAR: Remove ALL possible CSS constraints
+              group.style.cssText = '';
+              group.removeAttribute('class');
+              group.className = 'group flipped full-expanded content-visible';
+              
+              // Apply styles with MAXIMUM override - use explicit pixel values
+              const vw = window.innerWidth;
+              const vh = window.innerHeight;
+              group.style.cssText = `
+                position: fixed !important;
+                top: 16px !important;
+                left: 16px !important;
+                right: 16px !important;
+                bottom: 16px !important;
+                width: ${vw - 32}px !important;
+                height: ${vh - 32}px !important;
+                max-width: none !important;
+                min-width: none !important;
+                max-height: none !important;
+                min-height: none !important;
+                transform: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                z-index: 9999 !important;
+                display: block !important;
+                flex: none !important;
+                flex-basis: auto !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+                grid-column: unset !important;
+                grid-row: unset !important;
+                float: none !important;
+                clear: both !important;
+                transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                box-sizing: border-box !important;
+                overflow: visible !important;
+                contain: none !important;
+              `;
+              
+              // Force multiple style recalculations
+              group.offsetHeight; // Trigger reflow
+              group.offsetWidth; // Trigger second reflow
+              
+              // Log state after changes
+              setTimeout(() => {
+                const afterRect = group.getBoundingClientRect();
+                const afterStyles = window.getComputedStyle(group);
+                console.log('After Stage 4 - Position:', afterStyles.position, 'Size:', afterRect.width + 'x' + afterRect.height, 'Location:', afterRect.left + ',' + afterRect.top);
+                console.log('After Stage 4 - Classes:', group.className);
+                console.log('After Stage 4 - Inline styles:', group.style.cssText);
+                updateDebug('4 - Full Screen (APPLIED)', isExpanded, isFlipped, group);
+                
+                // Store references for cleanup
+                group._originalParent = parent;
+                group._originalNextSibling = nextSibling;
+              }, 100);
+              
+              console.log('Stage 4: Super nuclear full-screen styles applied');
+            } else {
+              console.log('Stage 4: Skipped - isExpanded:', isExpanded, 'isFlipped:', isFlipped);
+            }
+          }, 2200);
+          
+          // Stage 5: Fade in content with staggered animations (0.8s)
+          setTimeout(() => {
+            if (isExpanded && isFlipped) {
+              group.classList.add('content-visible');
+              console.log('Stage 5: Content fade-in started');
+              updateDebug('5 - Content Visible', isExpanded, isFlipped, group);
+            }
+          }, 3000);
         }
         
-        // Function to close card
+        // Function to close card with mirrored 5-stage animation
         function closeCard(cardElement = group) {
-          cardElement.classList.remove('expanded', 'flipped');
-          if (cardElement === group) {
-            isExpanded = false;
-            isFlipped = false;
+          const isTargetCard = cardElement === group;
+          
+          if (isTargetCard) {
+            // Stage 1: Fade out content (0.4s)
+            cardElement.classList.add('closing-content');
+            cardElement.classList.remove('content-visible');
+            
+            // Stage 2: Shrink from full width (0.6s)
+            setTimeout(() => {
+              cardElement.classList.remove('full-expanded', 'closing-content');
+              cardElement.classList.add('closing-shrink');
+            }, 400);
+            
+            // Stage 3: Unflip card (0.8s)
+            setTimeout(() => {
+              cardElement.classList.remove('flipped', 'closing-shrink');
+              cardElement.classList.add('closing-unflip');
+              if (isTargetCard) isFlipped = false;
+            }, 1000);
+            
+            // Stage 4: Collapse to original size (0.8s)
+            setTimeout(() => {
+              cardElement.classList.remove('expanding-height', 'closing-unflip');
+              cardElement.classList.add('closing-collapse');
+            }, 1800);
+            
+            // Stage 5: Return to original position (0.6s)
+            setTimeout(() => {
+              cardElement.classList.remove('expanding-width', 'closing-collapse');
+              cardElement.classList.add('closing-return');
+            }, 2600);
+            
+            // Final cleanup
+            setTimeout(() => {
+              cardElement.classList.remove('closing-return');
+              
+              // Restore element to original parent if it was moved
+              if (cardElement._originalParent) {
+                if (cardElement._originalNextSibling) {
+                  cardElement._originalParent.insertBefore(cardElement, cardElement._originalNextSibling);
+                } else {
+                  cardElement._originalParent.appendChild(cardElement);
+                }
+                delete cardElement._originalParent;
+                delete cardElement._originalNextSibling;
+              }
+              
+              // Clear all stored CSS properties including inline styles
+              cardElement.style.removeProperty('--card-original-height');
+              cardElement.style.removeProperty('--card-original-width');
+              cardElement.style.removeProperty('position');
+              cardElement.style.removeProperty('top');
+              cardElement.style.removeProperty('left');
+              cardElement.style.removeProperty('right');
+              cardElement.style.removeProperty('bottom');
+              cardElement.style.removeProperty('transform');
+              cardElement.style.removeProperty('width');
+              cardElement.style.removeProperty('height');
+              cardElement.style.removeProperty('margin');
+              cardElement.style.removeProperty('z-index');
+              cardElement.style.removeProperty('opacity');
+              cardElement.style.removeProperty('transition');
+              
+              if (isTargetCard) {
+                isExpanded = false;
+                removeBackdropListener();
+              }
+            }, 3200);
+          } else {
+            // Quick close for other cards
+            cardElement.classList.remove('expanding-width', 'expanding-height', 'flipped', 'full-expanded', 'content-visible');
+            
+            // Restore element to original parent if it was moved
+            if (cardElement._originalParent) {
+              if (cardElement._originalNextSibling) {
+                cardElement._originalParent.insertBefore(cardElement, cardElement._originalNextSibling);
+              } else {
+                cardElement._originalParent.appendChild(cardElement);
+              }
+              delete cardElement._originalParent;
+              delete cardElement._originalNextSibling;
+            }
+            
+            cardElement.style.removeProperty('--card-original-height');
+            cardElement.style.removeProperty('--card-original-width');
+            cardElement.style.removeProperty('position');
+            cardElement.style.removeProperty('top');
+            cardElement.style.removeProperty('left');
+            cardElement.style.removeProperty('right');
+            cardElement.style.removeProperty('bottom');
+            cardElement.style.removeProperty('transform');
+            cardElement.style.removeProperty('width');
+            cardElement.style.removeProperty('height');
+            cardElement.style.removeProperty('margin');
+            cardElement.style.removeProperty('z-index');
+            cardElement.style.removeProperty('opacity');
+            cardElement.style.removeProperty('transition');
           }
         }
         
-        // Single click/touch handler
+        // Single click/touch handler - ONLY EXPANDS, never closes (only X button closes)
         function handleCardInteraction(e) {
+          console.log('Card interaction:', e.type, 'isExpanded:', isExpanded);
+          
           // Prevent action if clicking a link
           if (e.target.closest('a')) return;
           
@@ -454,14 +1337,50 @@
           // Prevent action if clicking close button
           if (e.target.closest('.fullscreen-close-btn')) return;
           
-          e.preventDefault();
-          e.stopPropagation();
-          
-          if (isExpanded) {
-            closeCard();
-          } else {
+          // Only expand if not already expanded - clicking on expanded card does nothing
+          if (!isExpanded) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Expanding card...');
             expandCard();
+          } else {
+            console.log('Card already expanded - ignoring click');
           }
+        }
+        
+        // Add backdrop click handler - DISABLED (only close with X button)
+        /*
+        function handleBackdropClick(e) {
+          // Check if the click is on the backdrop (pseudo-element area) or outside the card content
+          if (isExpanded && (group.classList.contains('expanding-width') || group.classList.contains('expanding-height'))) {
+            const cardRect = group.getBoundingClientRect();
+            const clickX = e.clientX;
+            const clickY = e.clientY;
+            
+            // If click is outside the card area, close the card
+            if (clickX < cardRect.left || clickX > cardRect.right || 
+                clickY < cardRect.top || clickY > cardRect.bottom) {
+              e.preventDefault();
+              e.stopPropagation();
+              closeCard();
+            }
+          }
+        }
+        */
+        
+        // Add backdrop event listener to document when card is expanded - DISABLED
+        /*
+        function addBackdropListener() {
+          if (isExpanded) {
+            document.addEventListener('click', handleBackdropClick, true);
+            document.addEventListener('touchend', handleBackdropClick, true);
+          }
+        }
+        */
+        
+        function removeBackdropListener() {
+          // document.removeEventListener('click', handleBackdropClick, true);
+          // document.removeEventListener('touchend', handleBackdropClick, true);
         }
         
         // Add event listeners
@@ -477,12 +1396,14 @@
           closeBtn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('Close button clicked - closing card');
             closeCard();
           });
           
           closeBtn.addEventListener('touchend', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('Close button touched - closing card');
             closeCard();
           });
         }
@@ -525,7 +1446,17 @@
   </div>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Debug Panel -->
+    <div id="debug-panel" style="position: fixed; top: 10px; right: 10px; background: black; color: white; padding: 10px; font-family: monospace; font-size: 12px; z-index: 10000; max-width: 300px; border-radius: 5px;">
+      <div><strong>Debug Info:</strong></div>
+      <div id="debug-stage">Stage: Initial</div>
+      <div id="debug-expanded">Expanded: false</div>
+      <div id="debug-flipped">Flipped: false</div>
+      <div id="debug-size">Size: -</div>
+      <div id="debug-position">Position: -</div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-8" id="cards-container">
 
       <!-- Card 1: Local-First AI Tools -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
