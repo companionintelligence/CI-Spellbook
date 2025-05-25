@@ -116,6 +116,90 @@
     p, td, li, .text-sm, .text-xs {
       font-family: 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
     }
+
+    /* Markdown content enhancements */
+    .card-inner .markdown-body {
+      font-size: 1rem;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    .card-inner .markdown-body h1,
+    .card-inner .markdown-body h2,
+    .card-inner .markdown-body h3 {
+      color: #fff;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+    }
+    .card-inner .markdown-body h1 { font-size: 1.5rem; border-bottom: 2px solid #6366f1; padding-bottom: 0.25em; }
+    .card-inner .markdown-body h2 { font-size: 1.25rem; border-bottom: 1px solid #6366f1; padding-bottom: 0.15em; }
+    .card-inner .markdown-body h3 { font-size: 1.1rem; }
+    .card-inner .markdown-body p {
+      margin-bottom: 1em;
+    }
+    .card-inner .markdown-body ul, .card-inner .markdown-body ol {
+      margin-left: 1.5em;
+      margin-bottom: 1em;
+    }
+    .card-inner .markdown-body li {
+      margin-bottom: 0.3em;
+    }
+    .card-inner .markdown-body table {
+      width: 100%;
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 0.5em;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.15);
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 1.5em;
+      overflow: hidden;
+    }
+    .card-inner .markdown-body th, .card-inner .markdown-body td {
+      border: 1px solid #6366f1;
+      padding: 0.75em 1em;
+      text-align: left;
+      background: rgba(51, 65, 85, 0.95);
+    }
+    .card-inner .markdown-body th {
+      background: #6366f1;
+      color: #fff;
+      font-weight: 700;
+    }
+    .card-inner .markdown-body tr:nth-child(even) td {
+      background: rgba(71, 85, 105, 0.95);
+    }
+    .card-inner .markdown-body a {
+      color: #38bdf8;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .card-inner .markdown-body a:hover {
+      color: #f472b6;
+    }
+    .card-inner .markdown-body code {
+      background: #1e293b;
+      color: #fbbf24;
+      padding: 0.2em 0.4em;
+      border-radius: 0.3em;
+      font-size: 0.95em;
+    }
+    .card-inner .markdown-body pre code {
+      background: #0f172a;
+      color: #fbbf24;
+      padding: 1em;
+      border-radius: 0.5em;
+      font-size: 0.95em;
+      display: block;
+      overflow-x: auto;
+    }
+    .card-inner .markdown-body blockquote {
+      border-left: 4px solid #6366f1;
+      background: rgba(51, 65, 85, 0.7);
+      padding: 0.5em 1em;
+      margin: 1em 0;
+      color: #a5b4fc;
+      border-radius: 0.3em;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
@@ -128,7 +212,7 @@
           return hljs.highlightAuto(code, [lang]).value;
         }
       });
-      document.getElementById(containerId).innerHTML = html;
+      document.getElementById(containerId).innerHTML = `<div class="markdown-body">${html}</div>`;
       document.querySelectorAll(`#${containerId} pre code`).forEach((block) => {
         hljs.highlightElement(block);
       });

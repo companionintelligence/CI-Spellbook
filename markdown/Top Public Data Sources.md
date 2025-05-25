@@ -1,5 +1,9 @@
 # Top Public Data Sources
 
+> **Directory of Authoritative Open Data for AI & Analytics**
+>
+> This table provides a curated list of the most valuable public data sources for AI, machine learning, analytics, and research. Each entry includes a direct link, a summary, and key details about access, licensing, and relevance. Use these sources to power your projects, train models, or explore new domains. All sources are open or have free tiers for non-commercial use.
+
 | Name | Overview | Data Types | Access | Format | License | AI Relevance |
 |------|----------|-----------|--------|--------|---------|-------------|
 | <ul><li>🔤 <b>Data.gov (US)</b></li><li>🔗 [data.gov](https://data.gov)</li></ul> | Central US government open data portal. 300k+ datasets, updated regularly. | Gov, climate, health, geospatial, economy, more | Portal, API (CKAN, metadata) | CSV, JSON, XML, GIS | Public domain (federal) | Authoritative US data for civic, enviro, and analytics AI |

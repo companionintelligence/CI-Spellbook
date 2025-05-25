@@ -1,36 +1,73 @@
 # Local-First AI Tools
 
-**Local-First AI Tools Directory**
+> **Build a private AI workstation**  
+> This directory lists leading open-source, local-first AI tools organized by category.  
+> Pick your stack: choose an LLM runner (e.g., Ollama or llama.cpp), add a chat UI (OpenWebUI or Text-Gen WebUI), connect data with RAG suites, and layer on agents or automations.  
+> Every entry links to project pages or repos for quick access to docs, downloads, and community support.
+
+## Local-First AI Tools Directory
 
 Below is a quick-reference directory of leading local-first AI tools grouped by function. Use it as a jump-off for building or expanding a home workstation stack—every entry links to the project’s home page or GitHub repo so you can dive straight into docs, downloads, and community.
+
+### How to use this table
+
+- **Pick a backbone** – choose an LLM runner that matches your hardware.  
+- **Add a chat UI** – wire it to a browser-based front-end.  
+- **Attach data** – hook up RAG (Retrieval-Augmented Generation) pipelines.  
+- **Automate tasks** – layer on no-code or agent frameworks for workflows.  
+- **Expand creatively** – spin up image and diffusion UIs.  
+- **Scale & train** – integrate local vector DBs and fine-tuning tooling.
 
 ### LLM Runners / Hosting
 
 | Tool      | Description |
 |-----------|-------------|
-| **Ollama**<br>🔗 [ollama.com](https://ollama.com)<br>🪪 MIT | Simple local LLM runner with one-line model downloads and REST API. Great for desktop and dev use. |
-| **LM Studio**<br>🔗 [lmstudio.ai](https://lmstudio.ai)<br>🪪 AGPL-3.0 | Cross-platform GUI for running, managing, and chatting with local LLMs. Supports many model formats. |
-| **llama.cpp**<br>🔗 [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)<br>🪪 MIT | Fast, portable C/C++ inference engine for Llama-family and compatible models. CLI and server modes. |
-| **KoboldCpp**<br>🔗 [LostRuins/koboldcpp](https://github.com/LostRuins/koboldcpp)<br>🪪 AGPL-3.0 | Easy-to-use LLM runner with web UI, story mode, and GPU/CPU support. Focused on creative writing. |
-| **GPT4All**<br>🔗 [nomic-ai/gpt4all](https://github.com/nomic-ai/gpt4all)<br>🪪 Apache-2.0 | Multi-platform LLM runner and chat UI. Supports many models, with easy install and local vector DB. |
+| **Ollama**  
+🔗 [ollama.com](https://ollama.com)  
+🪪 MIT | Simple local LLM runner with one-line model downloads and REST API. Great for desktop and dev use. |
+| **LM Studio**  
+🔗 [lmstudio.ai](https://lmstudio.ai)  
+🪪 AGPL-3.0 | Cross-platform GUI for running, managing, and chatting with local LLMs. Supports many model formats. |
+| **llama.cpp**  
+🔗 [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)  
+🪪 MIT | Fast, portable C/C++ inference engine for Llama-family and compatible models. CLI and server modes. |
+| **KoboldCpp**  
+🔗 [LostRuins/koboldcpp](https://github.com/LostRuins/koboldcpp)  
+🪪 AGPL-3.0 | Easy-to-use LLM runner with web UI, story mode, and GPU/CPU support. Focused on creative writing. |
+| **GPT4All**  
+🔗 [nomic-ai/gpt4all](https://github.com/nomic-ai/gpt4all)  
+🪪 Apache-2.0 | Multi-platform LLM runner and chat UI. Supports many models, with easy install and local vector DB. |
 
 ### Chat UI / Front-Ends
 
 | Tool      | Description |
 |-----------|-------------|
-| **OpenWebUI**<br>🔗 [open-webui/open-webui](https://github.com/open-webui/open-webui)<br>🪪 AGPL-3.0 | Modern, extensible web chat UI for local LLMs (Ollama, llama.cpp, etc). Multi-user, plugin support. |
-| **Text-Generation WebUI**<br>🔗 [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui)<br>🪪 AGPL-3.0 | Feature-rich web UI for running, chatting, and experimenting with local LLMs. Huge extension ecosystem. |
-| **SillyTavern**<br>🔗 [SillyTavern/SillyTavern](https://github.com/SillyTavern/SillyTavern)<br>🪪 GPL-3.0 | Roleplay and character-focused chat UI for local and remote LLMs. Integrates with KoboldCpp, OAI, and more. |
+| **OpenWebUI**  
+🔗 [open-webui/open-webui](https://github.com/open-webui/open-webui)  
+🪪 AGPL-3.0 | Modern, extensible web chat UI for local LLMs (Ollama, llama.cpp, etc). Multi-user, plugin support. |
+| **Text-Generation WebUI**  
+🔗 [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui)  
+🪪 AGPL-3.0 | Feature-rich web UI for running, chatting, and experimenting with local LLMs. Huge extension ecosystem. |
+| **SillyTavern**  
+🔗 [SillyTavern/SillyTavern](https://github.com/SillyTavern/SillyTavern)  
+🪪 GPL-3.0 | Roleplay and character-focused chat UI for local and remote LLMs. Integrates with KoboldCpp, OAI, and more. |
 
 ### Knowledge-Base / RAG Suites
 
 | Tool      | Description |
 |-----------|-------------|
-| **AnythingLLM**<br>🔗 [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)<br>🪪 AGPL-3.0 | Plug-and-play RAG suite for connecting docs, files, and data to local or remote LLMs. Easy setup, web UI. |
-| **Haystack**<br>🔗 [deepset-ai/haystack](https://github.com/deepset-ai/haystack)<br>🪪 Apache-2.0 | Flexible Python framework for building RAG, search, and question-answering pipelines. Many integrations. |
-| **Dify**<br>🔗 [langgenius/dify](https://github.com/langgenius/dify)<br>🪪 Apache-2.0 | All-in-one platform for building RAG, chatbots, and agent workflows. Web UI, API, and multi-model support. |
+| **AnythingLLM**  
+🔗 [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)  
+🪪 AGPL-3.0 | Plug-and-play RAG suite for connecting docs, files, and data to local or remote LLMs. Easy setup, web UI. |
+| **Haystack**  
+🔗 [deepset-ai/haystack](https://github.com/deepset-ai/haystack)  
+🪪 Apache-2.0 | Flexible Python framework for building RAG, search, and question-answering pipelines. Many integrations. |
+| **Dify**  
+🔗 [langgenius/dify](https://github.com/langgenius/dify)  
+🪪 Apache-2.0 | All-in-one platform for building RAG, chatbots, and agent workflows. Web UI, API, and multi-model support. |
 
 #### How to use these tables
+
 - Pick a backbone – choose an LLM runner (Ollama or llama.cpp) that fits your hardware.
 - Add a chat UI – wire it to OpenWebUI or Text-Gen WebUI for a browser-based experience.
 - Attach data or workflows – AnythingLLM or Haystack for RAG; Flowise or n8n for orchestration.

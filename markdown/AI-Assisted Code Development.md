@@ -1,4 +1,17 @@
-## AI-Assisted Code Development
+# AI-Assisted Code Development
+
+This section highlights open-source and commercial tools that leverage AI to improve developer productivity, code quality, and collaboration. You'll find both model-based code generators and smart assistants that integrate into your IDE or CI/CD pipelines.
+
+## How to Use This Directory
+
+1. Identify your workflow: choose a tool that best fits your environment (editor, IDE, terminal).
+2. Review licensing and deployment options: decide between local self-hosted models, cloud APIs, or hybrid approaches.
+3. Integrate with your tooling: install plugins or configure CLI tools as needed.
+4. Customize models and prompts: fine-tune open-source models or tailor prompts for your codebase.
+
+---
+
+## Tools
 
 | Tool | Description |
 |------|-------------|
