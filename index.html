@@ -934,136 +934,390 @@
     #card-home-automation .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
     #card-home-automation .markdown-body h1 { border-bottom: 2px solid #624b6d; }
     #card-home-automation .markdown-body h2 { border-bottom: 1px solid #624b6d; }
-    .card-inner .markdown-body a {
-      color: #60d9ff;
-      text-decoration: underline;
-      transition: color 0.2s;
+
+    /* Enhanced Full-Screen Scrolling and Layout */
+    .group.full-expanded {
+      /* Ensure proper scrolling behavior */
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      scroll-behavior: smooth !important;
+      -webkit-overflow-scrolling: touch !important;
     }
-    .card-inner .markdown-body a:hover {
+    
+    /* Full-screen card back content enhanced scrolling */
+    .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      scroll-behavior: smooth !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 2rem !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Enhanced content area in full-screen mode */
+    .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
+      width: 100% !important;
+      max-width: none !important;
+      overflow-y: visible !important;
+      overflow-x: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    
+    /* Responsive text sizing in full-screen mode */
+    .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+      font-size: 1rem !important;
+      line-height: 1.6 !important;
+    }
+    
+    @media (min-width: 768px) {
+      .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+        font-size: 1.1rem !important;
+        line-height: 1.7 !important;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+        font-size: 1.2rem !important;
+        line-height: 1.8 !important;
+      }
+    }
+
+    /* Comprehensive Development Debug Panel Styles */
+    .debug-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 420px;
+      max-height: 70vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8f4f8;
+      font-family: 'Courier New', 'Monaco', monospace;
+      font-size: 12px;
+      z-index: 15000;
+      border-radius: 12px;
+      border: 2px solid #3784ff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(55, 132, 255, 0.3);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .debug-panel.hidden {
+      transform: translateY(100%) translateX(-50px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .debug-header {
+      background: linear-gradient(90deg, #3784ff 0%, #4290e3 100%);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .debug-header h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .debug-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .debug-tab-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e8f4f8;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .debug-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+    
+    .debug-tab-btn.active {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      font-weight: bold;
+    }
+    
+    .debug-close {
+      background: rgba(255, 69, 69, 0.8);
+      border: none;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .debug-close:hover {
+      background: rgba(255, 69, 69, 1);
+      transform: scale(1.1);
+    }
+    
+    .debug-tab {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    
+    .debug-tab.active {
+      display: block;
+    }
+    
+    .debug-section {
+      margin-bottom: 16px;
+    }
+    
+    .debug-section h4 {
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      color: #60d9ff;
+      border-bottom: 1px solid rgba(96, 217, 255, 0.3);
+      padding-bottom: 4px;
+    }
+    
+    .debug-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    
+    .debug-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .debug-item label {
+      font-size: 10px;
+      color: #abd4d8;
+      font-weight: 500;
+    }
+    
+    .debug-value {
+      font-size: 10px;
+      color: #00ff88;
+      font-weight: bold;
+      text-align: right;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .debug-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .debug-markdown-item {
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      border-left: 3px solid #3784ff;
+      background: rgba(55, 132, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .debug-markdown-item.loading {
+      border-left-color: #ffa500;
+      background: rgba(255, 165, 0, 0.05);
+    }
+
+    .debug-markdown-item.success {
+      border-left-color: #00ff88;
+      background: rgba(0, 255, 136, 0.05);
+    }
+
+    .debug-markdown-item.error {
+      border-left-color: #ff4444;
+      background: rgba(255, 68, 68, 0.05);
+    }
+
+    .debug-markdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .debug-markdown-stats {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Courier New', monospace;
+    }
+
+    .debug-status {
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .debug-status.loading {
+      background: #ffa500;
+      color: #000;
+    }
+
+    .debug-status.success {
+      background: #00ff88;
+      color: #000;
+    }
+
+    .debug-status.error {
+      background: #ff4444;
+      color: #fff;
+    }
+
+    .debug-empty {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
+      padding: 20px;
+    }
+
+    .error {
+      color: #ff4444;
+    }
+
+    /* Enhanced debug list styles */
+    .debug-list {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .debug-markdown-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .debug-markdown-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #3784ff;
+    }
+    
+    .debug-markdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    
+    .debug-markdown-filename {
+      font-size: 11px;
+      font-weight: bold;
       color: #82ffff;
     }
-    .card-inner .markdown-body code {
-      background: #071533;
-      color: #bea9ff;
-      padding: 0.2em 0.4em;
-      border-radius: 0.3em;
-      font-size: 0.95em;
+    
+    .debug-markdown-status {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
     }
-    .card-inner .markdown-body pre code {
-      background: #071533;
-      color: #bea9ff;
-      padding: 1em;
-      border-radius: 0.5em;
-      font-size: 0.95em;
-      display: block;
-      overflow-x: auto;
+    
+    .debug-markdown-status.success {
+      background: rgba(0, 255, 136, 0.2);
+      color: #00ff88;
     }
-    .card-inner .markdown-body blockquote {
-      border-left: 4px solid #3784ff;
-      background: rgba(52, 52, 78, 0.7);
-      padding: 0.5em 1em;
-      margin: 1em 0;
+    
+    .debug-markdown-status.error {
+      background: rgba(255, 69, 69, 0.2);
+      color: #ff4545;
+    }
+    
+    .debug-markdown-status.loading {
+      background: rgba(255, 170, 0, 0.2);
+      color: #ffaa00;
+    }
+    
+    .debug-markdown-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      font-size: 9px;
       color: #abd4d8;
-      border-radius: 0.3em;
     }
     
-    /* Card-specific table colors */
-    /* Card 1 - Blue theme */
-    #card-local-first-ai-tools .markdown-body table { background: rgba(7, 21, 51, 0.95); }
-    #card-local-first-ai-tools .markdown-body th { background: #3784ff; }
-    #card-local-first-ai-tools .markdown-body th, #card-local-first-ai-tools .markdown-body td { border: 1px solid #3784ff; background: rgba(7, 21, 51, 0.95); }
-    #card-local-first-ai-tools .markdown-body tr:nth-child(even) td { background: rgba(52, 52, 78, 0.95); }
-    #card-local-first-ai-tools .markdown-body h1 { border-bottom: 2px solid #3784ff; }
-    #card-local-first-ai-tools .markdown-body h2 { border-bottom: 1px solid #3784ff; }
+    .debug-footer {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
     
-    /* Card 2 - Teal theme */
-    #card-ai-assisted-code-dev .markdown-body table { background: rgba(36, 72, 89, 0.95); }
-    #card-ai-assisted-code-dev .markdown-body th { background: #58ebbf; }
-    #card-ai-assisted-code-dev .markdown-body th, #card-ai-assisted-code-dev .markdown-body td { border: 1px solid #58ebbf; background: rgba(36, 72, 89, 0.95); }
-    #card-ai-assisted-code-dev .markdown-body tr:nth-child(even) td { background: rgba(44, 103, 109, 0.95); }
-    #card-ai-assisted-code-dev .markdown-body h1 { border-bottom: 2px solid #58ebbf; }
-    #card-ai-assisted-code-dev .markdown-body h2 { border-bottom: 1px solid #58ebbf; }
+    .debug-footer small {
+      color: #666;
+      font-size: 10px;
+    }
     
-    /* Card 3 - Blue theme */
-    #card-cutting-edge-databases .markdown-body table { background: rgba(52, 52, 78, 0.95); }
-    #card-cutting-edge-databases .markdown-body th { background: #4290e3; }
-    #card-cutting-edge-databases .markdown-body th, #card-cutting-edge-databases .markdown-body td { border: 1px solid #4290e3; background: rgba(52, 52, 78, 0.95); }
-    #card-cutting-edge-databases .markdown-body tr:nth-child(even) td { background: rgba(58, 63, 108, 0.95); }
-    #card-cutting-edge-databases .markdown-body h1 { border-bottom: 2px solid #4290e3; }
-    #card-cutting-edge-databases .markdown-body h2 { border-bottom: 1px solid #4290e3; }
+    /* Animation for debug value updates */
+    .debug-value.updated {
+      animation: debugValueFlash 0.3s ease-out;
+    }
     
-    /* Card 4 - Purple theme */
-    #card-top-public-data-sources .markdown-body table { background: rgba(67, 60, 89, 0.95); }
-    #card-top-public-data-sources .markdown-body th { background: #bea9ff; }
-    #card-top-public-data-sources .markdown-body th, #card-top-public-data-sources .markdown-body td { border: 1px solid #bea9ff; background: rgba(67, 60, 89, 0.95); }
-    #card-top-public-data-sources .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
-    #card-top-public-data-sources .markdown-body h1 { border-bottom: 2px solid #bea9ff; }
-    #card-top-public-data-sources .markdown-body h2 { border-bottom: 1px solid #bea9ff; }
+    @keyframes debugValueFlash {
+      0% { background: rgba(0, 255, 136, 0.3); }
+      100% { background: transparent; }
+    }
     
-    /* Card 5 - Purple/Pink theme */
-    #card-ai-art-gen .markdown-body table { background: rgba(89, 60, 82, 0.95); }
-    #card-ai-art-gen .markdown-body th { background: #6d456b; }
-    #card-ai-art-gen .markdown-body th, #card-ai-art-gen .markdown-body td { border: 1px solid #6d456b; background: rgba(89, 60, 82, 0.95); }
-    #card-ai-art-gen .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
-    #card-ai-art-gen .markdown-body h1 { border-bottom: 2px solid #6d456b; }
-    #card-ai-art-gen .markdown-body h2 { border-bottom: 1px solid #6d456b; }
-    
-    /* Card 6 - Cyan theme */
-    #card-speech-tts-stt .markdown-body table { background: rgba(9, 67, 109, 0.95); }
-    #card-speech-tts-stt .markdown-body th { background: #60d9ff; }
-    #card-speech-tts-stt .markdown-body th, #card-speech-tts-stt .markdown-body td { border: 1px solid #60d9ff; background: rgba(9, 67, 109, 0.95); }
-    #card-speech-tts-stt .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
-    #card-speech-tts-stt .markdown-body h1 { border-bottom: 2px solid #60d9ff; }
-    #card-speech-tts-stt .markdown-body h2 { border-bottom: 1px solid #60d9ff; }
-    
-    /* Card 7 - Teal theme */
-    #card-networking-vpn .markdown-body table { background: rgba(29, 95, 110, 0.95); }
-    #card-networking-vpn .markdown-body th { background: #079d99; }
-    #card-networking-vpn .markdown-body th, #card-networking-vpn .markdown-body td { border: 1px solid #079d99; background: rgba(29, 95, 110, 0.95); }
-    #card-networking-vpn .markdown-body tr:nth-child(even) td { background: rgba(15, 113, 122, 0.95); }
-    #card-networking-vpn .markdown-body h1 { border-bottom: 2px solid #079d99; }
-    #card-networking-vpn .markdown-body h2 { border-bottom: 1px solid #079d99; }
-    
-    /* Card 8 - Blue theme */
-    #card-vm-browser-automation .markdown-body table { background: rgba(9, 67, 109, 0.95); }
-    #card-vm-browser-automation .markdown-body th { background: #117ba0; }
-    #card-vm-browser-automation .markdown-body th, #card-vm-browser-automation .markdown-body td { border: 1px solid #117ba0; background: rgba(9, 67, 109, 0.95); }
-    #card-vm-browser-automation .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
-    #card-vm-browser-automation .markdown-body h1 { border-bottom: 2px solid #117ba0; }
-    #card-vm-browser-automation .markdown-body h2 { border-bottom: 1px solid #117ba0; }
-    
-    /* Card 9 - Purple theme */
-    #card-ai-video-games .markdown-body table { background: rgba(58, 63, 108, 0.95); }
-    #card-ai-video-games .markdown-body th { background: #3351ab; }
-    #card-ai-video-games .markdown-body th, #card-ai-video-games .markdown-body td { border: 1px solid #3351ab; background: rgba(58, 63, 108, 0.95); }
-    #card-ai-video-games .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
-    #card-ai-video-games .markdown-body h1 { border-bottom: 2px solid #3351ab; }
-    #card-ai-video-games .markdown-body h2 { border-bottom: 1px solid #3351ab; }
-    
-    /* Card 10 - Purple theme */
-    #card-home-automation .markdown-body table { background: rgba(67, 60, 89, 0.95); }
-    #card-home-automation .markdown-body th { background: #624b6d; }
-    #card-home-automation .markdown-body th, #card-home-automation .markdown-body td { border: 1px solid #624b6d; background: rgba(67, 60, 89, 0.95); }
-    #card-home-automation .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
-    #card-home-automation .markdown-body h1 { border-bottom: 2px solid #624b6d; }
-    #card-home-automation .markdown-body h2 { border-bottom: 1px solid #624b6d; }
+    /* Responsive design for debug panel */
+    @media (max-width: 480px) {
+      .debug-panel {
+        width: calc(100vw - 40px);
+        left: 20px;
+        right: 20px;
+      }
+      
+      .debug-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .debug-markdown-details {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
   <script>
-    async function renderMarkdownCard(mdPath, containerId) {
-      const res = await fetch(mdPath);
-      const md = await res.text();
-      const html = marked.parse(md, {
-        highlight: function(code, lang) {
-          return hljs.highlightAuto(code, [lang]).value;
-        }
-      });
-      document.getElementById(containerId).innerHTML = `<div class="markdown-body">${html}</div>`;
-      document.querySelectorAll(`#${containerId} pre code`).forEach((block) => {
-        hljs.highlightElement(block);
-      });
-    }
+    // Original renderMarkdownCard function - replaced by enhanced version below
     document.addEventListener('DOMContentLoaded', function () {
       // Select all card groups
       const cardGroups = document.querySelectorAll('.group');
@@ -1072,18 +1326,36 @@
         let isExpanded = false;
         let isFlipped = false;
         
-        // Function to update debug panel
+        // Enhanced function to update debug panel with comprehensive tracking
         function updateDebug(stage, expanded, flipped, element) {
           const debugPanel = document.getElementById('debug-panel');
-          if (debugPanel) {
+          if (debugPanel && !debugPanel.classList.contains('hidden')) {
             const rect = element ? element.getBoundingClientRect() : null;
             const styles = element ? window.getComputedStyle(element) : null;
+            const timestamp = new Date().toLocaleTimeString();
             
-            document.getElementById('debug-stage').textContent = `Stage: ${stage}`;
-            document.getElementById('debug-expanded').textContent = `Expanded: ${expanded}`;
-            document.getElementById('debug-flipped').textContent = `Flipped: ${flipped}`;
-            document.getElementById('debug-size').textContent = rect ? `Size: ${Math.round(rect.width)}x${Math.round(rect.height)}` : 'Size: -';
-            document.getElementById('debug-position').textContent = rect ? `Position: ${Math.round(rect.left)},${Math.round(rect.top)}` : 'Position: -';
+            // Update animation debug values with flash effect
+            const updateValue = (id, value) => {
+              const elem = document.getElementById(id);
+              if (elem) {
+                elem.textContent = value;
+                elem.classList.add('updated');
+                setTimeout(() => elem.classList.remove('updated'), 300);
+              }
+            };
+            
+            updateValue('debug-stage', stage);
+            updateValue('debug-expanded', expanded);
+            updateValue('debug-value-flipped', flipped);
+            updateValue('debug-size', rect ? `${Math.round(rect.width)}×${Math.round(rect.height)}` : '-');
+            updateValue('debug-position', rect ? `${Math.round(rect.left)},${Math.round(rect.top)}` : '-');
+            updateValue('debug-parent', element ? (element.parentElement ? element.parentElement.tagName : 'none') : '-');
+            updateValue('debug-classes', element ? element.className.split(' ').slice(-3).join(' ') : '-');
+            updateValue('debug-time', timestamp);
+            
+            // Flash the debug panel to indicate updates
+            debugPanel.style.borderColor = '#00ff88';
+            setTimeout(() => debugPanel.style.borderColor = '#3784ff', 150);
           }
         }
 
@@ -1104,7 +1376,6 @@
           // Stage 1: Expand width (0.8s)
           group.classList.add('expanding-width');
           isExpanded = true;
-          console.log('Stage 1: Width expansion started');
           updateDebug('1 - Width Expansion', isExpanded, isFlipped, group);
           // addBackdropListener(); // Disabled - only close with X button
           
@@ -1113,7 +1384,6 @@
             if (isExpanded) {
               group.classList.remove('expanding-width');
               group.classList.add('expanding-height');
-              console.log('Stage 2: Height expansion started');
               updateDebug('2 - Height Expansion', isExpanded, isFlipped, group);
             }
           }, 800);
@@ -1124,91 +1394,66 @@
               // Keep expanding-height class and add flipped
               group.classList.add('flipped');
               isFlipped = true;
-              console.log('Stage 3: Card flip started');
               updateDebug('3 - Card Flip', isExpanded, isFlipped, group);
             }
           }, 1400);
           
-          // Stage 4: Expand to full window width (0.8s)
+          // Stage 4: Expand to full window width with smooth animation (0.8s)
           setTimeout(() => {
             if (isExpanded && isFlipped) {
-              console.log('Stage 4: Starting full-screen expansion');
+              updateDebug('4 - Full Screen (Starting)', isExpanded, isFlipped, group);
               
-              // Log current state before changes
-              const beforeRect = group.getBoundingClientRect();
-              const beforeStyles = window.getComputedStyle(group);
-              console.log('Before Stage 4 - Position:', beforeStyles.position, 'Size:', beforeRect.width + 'x' + beforeRect.height, 'Location:', beforeRect.left + ',' + beforeRect.top);
-              console.log('Before Stage 4 - Classes:', group.className);
-              
-              // Remove ALL previous positioning classes to prevent conflicts
-              group.classList.remove('expanding-width', 'expanding-height');
-              group.classList.add('full-expanded');
-              
-              // SUPER NUCLEAR OPTION: Remove from parent container completely
+              // Store current position and parent for smooth transition
+              const currentRect = group.getBoundingClientRect();
               const parent = group.parentElement;
               const nextSibling = group.nextElementSibling;
+              
+              // Remove classes that might interfere
+              group.classList.remove('expanding-width', 'expanding-height');
+              
+              // Move to document body and position exactly where it currently is
               document.body.appendChild(group);
-              
-              // ULTRA NUCLEAR: Remove ALL possible CSS constraints
-              group.style.cssText = '';
-              group.removeAttribute('class');
-              group.className = 'group flipped full-expanded content-visible';
-              
-              // Apply styles with MAXIMUM override - use explicit pixel values
-              const vw = window.innerWidth;
-              const vh = window.innerHeight;
               group.style.cssText = `
                 position: fixed !important;
-                top: 16px !important;
-                left: 16px !important;
-                right: 16px !important;
-                bottom: 16px !important;
-                width: ${vw - 32}px !important;
-                height: ${vh - 32}px !important;
+                top: ${currentRect.top}px !important;
+                left: ${currentRect.left}px !important;
+                width: ${currentRect.width}px !important;
+                height: ${currentRect.height}px !important;
                 max-width: none !important;
-                min-width: none !important;
-                max-height: none !important;
-                min-height: none !important;
-                transform: none !important;
                 margin: 0 !important;
-                padding: 0 !important;
                 z-index: 9999 !important;
-                display: block !important;
-                flex: none !important;
-                flex-basis: auto !important;
-                flex-grow: 0 !important;
-                flex-shrink: 0 !important;
-                grid-column: unset !important;
-                grid-row: unset !important;
-                float: none !important;
-                clear: both !important;
                 transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-                box-sizing: border-box !important;
-                overflow: visible !important;
-                contain: none !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
               `;
               
-              // Force multiple style recalculations
-              group.offsetHeight; // Trigger reflow
-              group.offsetWidth; // Trigger second reflow
+              // Force reflow
+              group.offsetHeight;
               
-              // Log state after changes
+              // Add the full-expanded class for any additional styling
+              group.classList.add('full-expanded');
+              
+              // Animate to full screen after a brief delay
+              requestAnimationFrame(() => {
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                
+                group.style.top = '16px';
+                group.style.left = '16px';
+                group.style.width = `${vw - 32}px`;
+                group.style.height = `${vh - 32}px`;
+                
+                updateDebug('4 - Full Screen (Animating)', isExpanded, isFlipped, group);
+              });
+              
+              // Update debug when animation completes
               setTimeout(() => {
-                const afterRect = group.getBoundingClientRect();
-                const afterStyles = window.getComputedStyle(group);
-                console.log('After Stage 4 - Position:', afterStyles.position, 'Size:', afterRect.width + 'x' + afterRect.height, 'Location:', afterRect.left + ',' + afterRect.top);
-                console.log('After Stage 4 - Classes:', group.className);
-                console.log('After Stage 4 - Inline styles:', group.style.cssText);
-                updateDebug('4 - Full Screen (APPLIED)', isExpanded, isFlipped, group);
+                updateDebug('4 - Full Screen (Complete)', isExpanded, isFlipped, group);
                 
                 // Store references for cleanup
                 group._originalParent = parent;
                 group._originalNextSibling = nextSibling;
-              }, 100);
-              
-              console.log('Stage 4: Super nuclear full-screen styles applied');
-            } else {
-              console.log('Stage 4: Skipped - isExpanded:', isExpanded, 'isFlipped:', isFlipped);
+              }, 800);
             }
           }, 2200);
           
@@ -1216,7 +1461,6 @@
           setTimeout(() => {
             if (isExpanded && isFlipped) {
               group.classList.add('content-visible');
-              console.log('Stage 5: Content fade-in started');
               updateDebug('5 - Content Visible', isExpanded, isFlipped, group);
             }
           }, 3000);
@@ -1227,18 +1471,22 @@
           const isTargetCard = cardElement === group;
           
           if (isTargetCard) {
+            updateDebug('Close 1 - Content Fade', false, true, cardElement);
+            
             // Stage 1: Fade out content (0.4s)
             cardElement.classList.add('closing-content');
             cardElement.classList.remove('content-visible');
             
             // Stage 2: Shrink from full width (0.6s)
             setTimeout(() => {
+              updateDebug('Close 2 - Width Shrink', false, true, cardElement);
               cardElement.classList.remove('full-expanded', 'closing-content');
               cardElement.classList.add('closing-shrink');
             }, 400);
             
             // Stage 3: Unflip card (0.8s)
             setTimeout(() => {
+              updateDebug('Close 3 - Unflip', false, false, cardElement);
               cardElement.classList.remove('flipped', 'closing-shrink');
               cardElement.classList.add('closing-unflip');
               if (isTargetCard) isFlipped = false;
@@ -1246,18 +1494,14 @@
             
             // Stage 4: Collapse to original size (0.8s)
             setTimeout(() => {
+              updateDebug('Close 4 - Height Collapse', false, false, cardElement);
               cardElement.classList.remove('expanding-height', 'closing-unflip');
               cardElement.classList.add('closing-collapse');
             }, 1800);
             
             // Stage 5: Return to original position (0.6s)
             setTimeout(() => {
-              cardElement.classList.remove('expanding-width', 'closing-collapse');
-              cardElement.classList.add('closing-return');
-            }, 2600);
-            
-            // Final cleanup
-            setTimeout(() => {
+              updateDebug('Close 5 - Final Return', false, false, cardElement);
               cardElement.classList.remove('closing-return');
               
               // Restore element to original parent if it was moved
@@ -1290,6 +1534,7 @@
               if (isTargetCard) {
                 isExpanded = false;
                 removeBackdropListener();
+                updateDebug('Closed - Initial State', false, false, cardElement);
               }
             }, 3200);
           } else {
@@ -1409,6 +1654,9 @@
         }
       });
 
+      // Initialize debug panel functionality
+      initializeDebugPanel();
+
       // Render markdown for each card
       renderMarkdownCard('markdown/Local-First AI Tools.md', 'card-local-first-ai-tools');
       renderMarkdownCard('markdown/AI-Assisted Code Development.md', 'card-ai-assisted-code-dev');
@@ -1421,6 +1669,293 @@
       renderMarkdownCard('markdown/AI in Video Games & Virtual Beings.md', 'card-ai-video-games');
       renderMarkdownCard('markdown/Home Automation & Security.md', 'card-home-automation');
     });
+
+    // ===========================================
+    // COMPREHENSIVE DEBUG PANEL IMPLEMENTATION
+    // ===========================================
+    
+    // Debug panel state and metrics
+    let debugState = {
+      isVisible: false,
+      activeTab: 'animations',
+      markdownFiles: [],
+      performanceMetrics: {
+        startTime: performance.now(),
+        fps: 0,
+        frameCount: 0,
+        lastTime: performance.now(),
+        memory: 0,
+        cardsLoaded: 0,
+        totalCards: 10
+      }
+    };
+
+    // Initialize debug panel functionality
+    function initializeDebugPanel() {
+      const debugPanel = document.getElementById('debug-panel');
+      const closeBtn = document.getElementById('debug-close');
+      const tabBtns = document.querySelectorAll('.debug-tab-btn');
+      
+      // Keyboard toggle functionality
+      document.addEventListener('keydown', function(e) {
+        // Toggle with backtick (`) or tilde (~) keys
+        if (e.key === '`' || e.key === '~') {
+          e.preventDefault();
+          toggleDebugPanel();
+        }
+        // Close with ESC key
+        else if (e.key === 'Escape' && debugState.isVisible) {
+          e.preventDefault();
+          hideDebugPanel();
+        }
+      });
+
+      // Close button functionality
+      if (closeBtn) {
+        closeBtn.addEventListener('click', hideDebugPanel);
+      }
+
+      // Tab switching functionality
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          switchDebugTab(tabName);
+        });
+      });
+
+      // Start performance monitoring
+      startPerformanceMonitoring();
+    }
+
+    // Toggle debug panel visibility
+    function toggleDebugPanel() {
+      if (debugState.isVisible) {
+        hideDebugPanel();
+      } else {
+        showDebugPanel();
+      }
+    }
+
+    // Show debug panel
+    function showDebugPanel() {
+      const debugPanel = document.getElementById('debug-panel');
+      if (debugPanel) {
+        debugPanel.classList.remove('hidden');
+        debugState.isVisible = true;
+        updatePerformanceMetrics();
+        console.log('Debug panel opened');
+      }
+    }
+
+    // Hide debug panel
+    function hideDebugPanel() {
+      const debugPanel = document.getElementById('debug-panel');
+      if (debugPanel) {
+        debugPanel.classList.add('hidden');
+        debugState.isVisible = false;
+        console.log('Debug panel closed');
+      }
+    }
+
+    // Switch between debug tabs
+    function switchDebugTab(tabName) {
+      const tabBtns = document.querySelectorAll('.debug-tab-btn');
+      const tabs = document.querySelectorAll('.debug-tab');
+
+      // Update button states
+      tabBtns.forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update tab visibility
+      tabs.forEach(tab => {
+        if (tab.id === `debug-tab-${tabName}`) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      debugState.activeTab = tabName;
+      
+      // Refresh content based on active tab
+      if (tabName === 'markdown') {
+        updateMarkdownDebugDisplay();
+      } else if (tabName === 'performance') {
+        updatePerformanceMetrics();
+      }
+    }
+
+    // Enhanced renderMarkdownCard with debug tracking
+    async function renderMarkdownCard(mdPath, containerId) {
+      const startTime = performance.now();
+      const fileEntry = {
+        path: mdPath,
+        containerId: containerId,
+        status: 'loading',
+        startTime: startTime,
+        loadTime: 0,
+        fileSize: 0,
+        parseTime: 0,
+        renderTime: 0,
+        error: null
+      };
+
+      // Add to tracking
+      debugState.markdownFiles.push(fileEntry);
+      updateMarkdownDebugDisplay();
+
+      try {
+        // Fetch file with timing
+        const fetchStart = performance.now();
+        const res = await fetch(mdPath);
+        
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const md = await res.text();
+        const fetchEnd = performance.now();
+        
+        fileEntry.loadTime = fetchEnd - fetchStart;
+        fileEntry.fileSize = new Blob([md]).size;
+        fileEntry.status = 'parsing';
+        updateMarkdownDebugDisplay();
+
+        // Parse markdown with timing
+        const parseStart = performance.now();
+        const html = marked.parse(md, {
+          highlight: function(code, lang) {
+            return hljs.highlightAuto(code, [lang]).value;
+          }
+        });
+        const parseEnd = performance.now();
+        
+        fileEntry.parseTime = parseEnd - parseStart;
+        fileEntry.status = 'rendering';
+        updateMarkdownDebugDisplay();
+
+        // Render with timing
+        const renderStart = performance.now();
+        document.getElementById(containerId).innerHTML = `<div class="markdown-body">${html}</div>`;
+        
+        // Highlight code blocks
+        document.querySelectorAll(`#${containerId} pre code`).forEach((block) => {
+          hljs.highlightElement(block);
+        });
+        const renderEnd = performance.now();
+
+        fileEntry.renderTime = renderEnd - renderStart;
+        fileEntry.status = 'complete';
+        
+        // Update card count for performance metrics
+        debugState.performanceMetrics.cardsLoaded++;
+        
+        console.log(`Markdown rendered: ${mdPath} in ${(renderEnd - startTime).toFixed(2)}ms`);
+        
+      } catch (error) {
+        fileEntry.status = 'error';
+        fileEntry.error = error.message;
+        console.error(`Error rendering markdown ${mdPath}:`, error);
+      }
+
+      const totalTime = performance.now() - startTime;
+      fileEntry.totalTime = totalTime;
+      updateMarkdownDebugDisplay();
+    }
+
+    // Update markdown debug display
+    function updateMarkdownDebugDisplay() {
+      const markdownList = document.getElementById('debug-markdown-list');
+      if (!markdownList) return;
+
+      const html = debugState.markdownFiles.map(file => {
+        const statusClass = file.status === 'error' ? 'error' : 
+                           file.status === 'complete' ? 'success' : 'loading';
+        
+        return `
+          <div class="debug-markdown-item ${statusClass}">
+            <div class="debug-markdown-header">
+              <strong>${file.path.split('/').pop()}</strong>
+              <span class="debug-status ${statusClass}">${file.status}</span>
+            </div>
+            <div class="debug-markdown-stats">
+              ${file.fileSize > 0 ? `Size: ${(file.fileSize / 1024).toFixed(1)}KB | ` : ''}
+              ${file.loadTime > 0 ? `Load: ${file.loadTime.toFixed(1)}ms | ` : ''}
+              ${file.parseTime > 0 ? `Parse: ${file.parseTime.toFixed(1)}ms | ` : ''}
+              ${file.renderTime > 0 ? `Render: ${file.renderTime.toFixed(1)}ms` : ''}
+              ${file.totalTime > 0 ? ` | Total: ${file.totalTime.toFixed(1)}ms` : ''}
+              ${file.error ? `<br><span class="error">Error: ${file.error}</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      markdownList.innerHTML = html || '<div class="debug-empty">No markdown files loaded yet...</div>';
+    }
+
+    // Performance monitoring
+    function startPerformanceMonitoring() {
+      // FPS monitoring
+      function updateFPS() {
+        const now = performance.now();
+        debugState.performanceMetrics.frameCount++;
+        
+        if (now >= debugState.performanceMetrics.lastTime + 1000) {
+          debugState.performanceMetrics.fps = Math.round(
+            (debugState.performanceMetrics.frameCount * 1000) / 
+            (now - debugState.performanceMetrics.lastTime)
+          );
+          debugState.performanceMetrics.frameCount = 0;
+          debugState.performanceMetrics.lastTime = now;
+          
+          if (debugState.isVisible && debugState.activeTab === 'performance') {
+            updatePerformanceMetrics();
+          }
+        }
+        
+        requestAnimationFrame(updateFPS);
+      }
+      requestAnimationFrame(updateFPS);
+
+      // Memory monitoring (if available)
+      if (performance.memory) {
+        setInterval(() => {
+          debugState.performanceMetrics.memory = performance.memory.usedJSHeapSize;
+        }, 1000);
+      }
+    }
+
+    // Update performance metrics display
+    function updatePerformanceMetrics() {
+      const totalLoadTime = performance.now() - debugState.performanceMetrics.startTime;
+      
+      const updateValue = (id, value) => {
+        const elem = document.getElementById(id);
+        if (elem) {
+          elem.textContent = value;
+          elem.classList.add('updated');
+          setTimeout(() => elem.classList.remove('updated'), 300);
+        }
+      };
+
+      updateValue('debug-perf-total', `${(totalLoadTime / 1000).toFixed(2)}s`);
+      updateValue('debug-perf-fps', `${debugState.performanceMetrics.fps} fps`);
+      
+      if (debugState.performanceMetrics.memory > 0) {
+        const memoryMB = (debugState.performanceMetrics.memory / 1024 / 1024).toFixed(1);
+        updateValue('debug-perf-memory', `${memoryMB} MB`);
+      } else {
+        updateValue('debug-perf-memory', 'Not available');
+      }
+      
+      updateValue('debug-perf-cards', 
+        `${debugState.performanceMetrics.cardsLoaded}/${debugState.performanceMetrics.totalCards}`);
+    }
   </script>
 </head>
 <body class="text-white font-sans antialiased min-h-screen" style="background: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);">
@@ -1446,14 +1981,97 @@
   </div>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <!-- Debug Panel -->
-    <div id="debug-panel" style="position: fixed; top: 10px; right: 10px; background: black; color: white; padding: 10px; font-family: monospace; font-size: 12px; z-index: 10000; max-width: 300px; border-radius: 5px;">
-      <div><strong>Debug Info:</strong></div>
-      <div id="debug-stage">Stage: Initial</div>
-      <div id="debug-expanded">Expanded: false</div>
-      <div id="debug-flipped">Flipped: false</div>
-      <div id="debug-size">Size: -</div>
-      <div id="debug-position">Position: -</div>
+    <!-- Comprehensive Development Debug Panel -->
+    <div id="debug-panel" class="debug-panel hidden">
+      <div class="debug-header">
+        <h3>🛠️ Development Debug Console</h3>
+        <div class="debug-controls">
+          <button id="debug-toggle-animations" class="debug-tab-btn active" data-tab="animations">Animations</button>
+          <button id="debug-toggle-markdown" class="debug-tab-btn" data-tab="markdown">Markdown</button>
+          <button id="debug-toggle-performance" class="debug-tab-btn" data-tab="performance">Performance</button>
+          <button id="debug-close" class="debug-close">×</button>
+        </div>
+      </div>
+
+      <!-- Animation Debug Tab -->
+      <div id="debug-tab-animations" class="debug-tab active">
+        <div class="debug-section">
+          <h4>🎬 Current Animation State</h4>
+          <div class="debug-grid">
+            <div class="debug-item">
+              <label>Stage:</label>
+              <span id="debug-stage" class="debug-value">Initial</span>
+            </div>
+            <div class="debug-item">
+              <label>Expanded:</label>
+              <span id="debug-expanded" class="debug-value">false</span>
+            </div>
+            <div class="debug-item">
+              <label>Flipped:</label>
+              <span id="debug-value-flipped" class="debug-value">false</span>
+            </div>
+            <div class="debug-item">
+              <label>Size:</label>
+              <span id="debug-size" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Position:</label>
+              <span id="debug-position" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Parent:</label>
+              <span id="debug-parent" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Classes:</label>
+              <span id="debug-classes" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Updated:</label>
+              <span id="debug-time" class="debug-value">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Markdown Debug Tab -->
+      <div id="debug-tab-markdown" class="debug-tab">
+        <div class="debug-section">
+          <h4>📝 Markdown Processing</h4>
+          <div id="debug-markdown-list" class="debug-list">
+            <!-- Markdown entries will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Debug Tab -->
+      <div id="debug-tab-performance" class="debug-tab">
+        <div class="debug-section">
+          <h4>⚡ Performance Metrics</h4>
+          <div class="debug-grid">
+            <div class="debug-item">
+              <label>Total Load Time:</label>
+              <span id="debug-perf-total" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Animation FPS:</label>
+              <span id="debug-perf-fps" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Memory Usage:</label>
+              <span id="debug-perf-memory" class="debug-value">-</span>
+            </div>
+            <div class="debug-item">
+              <label>Cards Rendered:</label>
+              <span id="debug-perf-cards" class="debug-value">0/10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="debug-footer">
+        <small>Press ` or ~ to toggle | ESC to close</small>
+      </div>
     </div>
 
     <div class="flex flex-wrap justify-center gap-8" id="cards-container">
@@ -1591,7 +2209,7 @@
       <!-- Card 6: Speech-to-Text & Text-to-Speech -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -1617,7 +2235,7 @@
       <!-- Card 7: Networking, VPN, & Infrastructure Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -1643,7 +2261,7 @@
       <!-- Card 8: Virtual Machine and Browser Automation and Scrapers -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -1669,7 +2287,7 @@
       <!-- Card 9: AI in Video Games & Virtual Beings -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -1695,7 +2313,7 @@
       <!-- Card 10: Home Automation & Security -->
       <div class="group w-full h-[42rem] [perspective:1000px]">
         <!-- Close button for fullscreen cards -->
-        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 text-white rounded-full p-2 shadow-lg transition hover:bg-opacity-80" style="background: rgba(7, 21, 51, 0.9);" aria-label="Close card">
+        <button type="button" class="fullscreen-close-btn hidden absolute top-4 right-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white rounded-full p-2 shadow-lg transition" aria-label="Close card">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
