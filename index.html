@@ -9,20 +9,56 @@
   <link href="https://fonts.googleapis.com/css2?family=Miriam+Mono+CLM:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
   <style>
-    /* For programmatically flipping the card */
-    .group.expanded .card-inner {
-      transform: rotateY(180deg) !important;
-    }
+    /* Card animation system */
     .card-inner {
-      transition: transform 0.7s, height 0.7s, min-height 0.7s;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
     }
-    .group:hover .card-inner {
-      /* Disable hover flip, only allow click/tap */
+    
+    /* Expanded card container */
+    .group.expanded {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: calc(100vw - 4rem) !important;
+      height: calc(100vh - 4rem) !important;
+      z-index: 50 !important;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    
+    /* Flipped card */
+    .group.expanded.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    /* Adjust card inner for expanded state */
+    .group.expanded .card-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem !important;
+    }
+    
+    /* Backdrop for expanded cards */
+    .group.expanded::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: -1;
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+    }
+    
+    /* Disable hover effects during expansion */
+    .group:not(.expanded):hover .card-inner {
+      /* Disable hover flip for normal cards */
       transform: none !important;
-    }
-    /* Remove hover flip if expanded */
-    .group.expanded:hover .card-inner {
-      transform: rotateY(180deg) !important;
     }
     /* Basic scrollbar styling for modal content if needed */
     .modal-content::-webkit-scrollbar {
@@ -35,34 +71,8 @@
     .modal-content::-webkit-scrollbar-track {
       background-color: rgba(0,0,0,0.1);
     }
-    /* Fullscreen card style */
-    .fullscreen-card {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      z-index: 50 !important;
-      margin: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 0 0 9999px rgba(0,0,0,0.7);
-      transition: all 0.7s cubic-bezier(0.4,0,0.2,1); /* Match card-inner transition */
-      padding: 2.5rem !important; /* Add padding when maximized */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .fullscreen-card .card-inner {
-      height: 100%;
-      min-height: 100%;
-      border-radius: 0 !important;
-      transition: transform 0.7s, height 0.7s, min-height 0.7s; /* Smooth height change */
-    }
-    .fullscreen-card .card-inner > div {
-      border-radius: 0 !important;
-    }
-    /* Show close button only in fullscreen */
-    .fullscreen-card .fullscreen-close-btn {
+    /* Show close button for expanded cards */
+    .group.expanded .fullscreen-close-btn {
       display: block !important;
     }
 
@@ -220,40 +230,82 @@
     document.addEventListener('DOMContentLoaded', function () {
       // Select all card groups
       const cardGroups = document.querySelectorAll('.group');
+      
       cardGroups.forEach(group => {
-        // Card click/tap to expand fullscreen
-        group.addEventListener('click', function (e) {
-          // Prevent toggling if clicking a link
-          if (e.target.closest('a')) return;
-          // Only toggle if not selecting text
-          if (window.getSelection().toString()) return;
-          // Remove expanded/fullscreen from all other cards (accordion behavior)
+        let isExpanded = false;
+        let isFlipped = false;
+        
+        // Function to expand card
+        function expandCard() {
+          // Close all other cards first
           cardGroups.forEach(g => {
             if (g !== group) {
-              g.classList.remove('expanded', 'fullscreen-card');
+              closeCard(g);
             }
           });
-          group.classList.toggle('expanded');
-          group.classList.toggle('fullscreen-card');
-        });
-        // Touch support
-        group.addEventListener('touchstart', function (e) {
+          
+          group.classList.add('expanded');
+          isExpanded = true;
+          
+          // Auto-flip after expansion completes
+          setTimeout(() => {
+            if (isExpanded) {
+              group.classList.add('flipped');
+              isFlipped = true;
+            }
+          }, 800); // Wait for expansion animation to complete
+        }
+        
+        // Function to close card
+        function closeCard(cardElement = group) {
+          cardElement.classList.remove('expanded', 'flipped');
+          if (cardElement === group) {
+            isExpanded = false;
+            isFlipped = false;
+          }
+        }
+        
+        // Single click/touch handler
+        function handleCardInteraction(e) {
+          // Prevent action if clicking a link
           if (e.target.closest('a')) return;
+          
+          // Prevent action if selecting text
           if (window.getSelection().toString()) return;
-          cardGroups.forEach(g => {
-            if (g !== group) {
-              g.classList.remove('expanded', 'fullscreen-card');
-            }
-          });
-          group.classList.toggle('expanded');
-          group.classList.toggle('fullscreen-card');
+          
+          // Prevent action if clicking close button
+          if (e.target.closest('.fullscreen-close-btn')) return;
+          
+          e.preventDefault();
+          e.stopPropagation();
+          
+          if (isExpanded) {
+            closeCard();
+          } else {
+            expandCard();
+          }
+        }
+        
+        // Add event listeners
+        group.addEventListener('click', handleCardInteraction);
+        group.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          handleCardInteraction(e);
         });
+        
         // Close button support
         const closeBtn = group.querySelector('.fullscreen-close-btn');
         if (closeBtn) {
           closeBtn.addEventListener('click', function (e) {
+            e.preventDefault();
             e.stopPropagation();
-            group.classList.remove('expanded', 'fullscreen-card');
+            closeCard();
+          });
+          
+          closeBtn.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeCard();
           });
         }
       });
