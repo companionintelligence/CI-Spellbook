@@ -1,9 +1,16 @@
 # Local-First AI Tools
 
-> **Build a private AI workstation**  
-> This directory lists leading open-source, local-first AI tools organized by category.  
+> **Build a private AI workstation with zero cloud dependencies**  
+> This comprehensive guide catalogs leading open-source, local-first AI tools organized by category.  
 > Pick your stack: choose an LLM runner (e.g., Ollama or llama.cpp), add a chat UI (OpenWebUI or Text-Gen WebUI), connect data with RAG suites, and layer on agents or automations.  
 > Every entry links to project pages or repos for quick access to docs, downloads, and community support.
+>
+> **Key benefits of local-first AI:**
+> - **Privacy**: Your data never leaves your device
+> - **No usage fees**: Run unlimited queries without per-token costs
+> - **Offline capability**: Work without internet connectivity
+> - **Customization**: Fine-tune models for your specific domain
+> - **Ownership**: Full control over models, data, and infrastructure
 
 ## Local-First AI Tools Directory
 
