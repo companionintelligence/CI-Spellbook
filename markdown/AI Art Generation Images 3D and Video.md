@@ -1,5 +1,15 @@
 # AI Art Generation: Images, 3D, and Video
 
+> Explore top tools for creative AI generation of images, 3D assets, and video content. This guide helps you select the right UI, models, and workflows for rapid prototyping, fine art, and production pipelines.
+
+## Usage Recommendations
+
+- Start with a web UI (e.g., AUTOMATIC1111 or ComfyUI) to experiment with prompts and models interactively.
+- For batch image generation, script using Python SDKs or CLI clients for reproducibility.
+- Use modular UIs (ComfyUI) for custom pipelines, chaining effects, and advanced post-processing.
+- Leverage video diffusion models (Stable Video Diffusion, AnimateDiff) for short clips; keep clips under 30 frames for faster iterations.
+- When generating 3D assets, convert point clouds (Point-E) or use graph-based pipelines (Hunyuan3D) then refine in Blender or other 3D tools.
+
 ## AI Image Generation Tools
 
 | Name & Info | Primary Focus/Description | Underlying AI Model(s) Supported | Key Features | Output Quality & Style Versatility | Ease of Use & Community Perception | System Requirements |

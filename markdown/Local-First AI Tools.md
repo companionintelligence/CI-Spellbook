@@ -66,6 +66,24 @@ Below is a quick-reference directory of leading local-first AI tools grouped by 
 🔗 [langgenius/dify](https://github.com/langgenius/dify)  
 🪪 Apache-2.0 | All-in-one platform for building RAG, chatbots, and agent workflows. Web UI, API, and multi-model support. |
 
+## Example Workstation Setup
+
+> Build a minimal local AI workstation with this example stack:
+>
+>- Install **llama.cpp** for lightweight model inference and **Ollama** for REST API serving.
+>- Deploy **OpenWebUI** at [http://localhost:3000](http://localhost:3000) for browser-based chat.
+>- Connect **Qdrant** for embedding storage and fast vector search.
+>- Orchestrate workflows with **n8n** to automate data ingestion, Slack notifications, or email alerts.
+>- Launch **ComfyUI** for image diffusion pipelines and creative prototyping.
+
+## Recommended Usage Patterns
+
+1. Start with a core LLM runner and chat UI to validate basic text workflows.
+2. Layer on a vector database and RAG suite for context-aware agents.
+3. Integrate no-code builders or agent frameworks for multi-step automations.
+4. Add creative UIs (image, video) as needed for multimodal pipelines.
+5. Monitor resource usage and scale components (e.g., GPU runners, DB nodes) based on workload.
+
 #### How to use these tables
 
 - Pick a backbone – choose an LLM runner (Ollama or llama.cpp) that fits your hardware.

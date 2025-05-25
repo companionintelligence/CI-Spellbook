@@ -1,5 +1,18 @@
 # Virtual Machine and Browser Automation and Scrapers
 
+> Automate complex workflows and data extraction by combining VM-based agents and browser automation frameworks. Ideal for end-to-end testing, RPA, and large-scale web scraping.
+
+## Overview
+
+> This guide covers tools that enable AI-driven control of virtual machines, browsers, and extensions for scraping and automation tasks.
+
+## Usage Guidelines
+
+- Choose a headless automation framework (Playwright, Puppeteer) for background tasks; use browser UIs for interactive debugging.
+- Secure credentials and sessions: use environment variables or encrypted vaults.
+- Log actions and handle errors with retries and backoff to ensure reliability.
+- Comply with terms of service when scraping sites; respect robots.txt and rate limits.
+
 ## VM & Browser Automation
 
 | Tool | Type | Key Features | Notes |

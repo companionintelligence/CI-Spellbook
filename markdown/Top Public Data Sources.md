@@ -22,3 +22,16 @@
 | <ul><li>🔤 <b>NASA Open Data</b></li><li>🔗 [data.nasa.gov](https://data.nasa.gov)</li></ul> | Space, earth science, satellite imagery, and mission data. Open and regularly updated. | Imagery, science, telemetry, research | Portal, API, bulk download | CSV, JSON, images, NetCDF | US Gov/Public domain | Remote sensing, earth/space AI |
 | <ul><li>🔤 <b>WHO Open Data</b></li><li>🔗 [who.int/data](https://www.who.int/data)</li></ul> | Global health, disease, and COVID-19 data. Authoritative and open. | Health, disease, epidemiology | Portal, API, bulk download | CSV, XLSX, JSON | CC BY-NC-SA 3.0 IGO | Health, epidemiology, global AI |
 | <ul><li>🔤 <b>IMDb Datasets</b></li><li>🔗 [imdb.com/interfaces](https://www.imdb.com/interfaces/)</li></ul> | Movies, TV, and entertainment metadata. Updated daily, free for personal/non-commercial use. | Movies, TV, people, ratings | Bulk download | TSV | Non-commercial, see site | Recommender, NER, media AI |
+
+## Data Ingestion Tips
+
+- Use rate-limited, paginated API clients (e.g., Python `requests` with `backoff`).
+- Cache responses locally with expiration (e.g., Redis, disk cache) to avoid rate limits.
+- Validate and normalize schemas: unify date formats, handle missing fields, and standardize units.
+
+## API Best Practices
+
+- Respect API terms: monitor usage against quotas and attribution requirements.
+- Use exponential backoff on 429/5xx errors.
+- Secure API keys: store in environment variables or secrets manager.
+- Utilize pagination and filtering to reduce payload size and improve performance.

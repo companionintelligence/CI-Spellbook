@@ -1,5 +1,14 @@
 # Cutting Edge Databases
 
+> Select the right database based on your AI workload: consider vector search for RAG, columnar stores for analytics, GPU acceleration for real-time ML, and multi-model solutions for hybrid data scenarios.
+
+## Usage Scenarios
+
+- **Retrieval-Augmented Generation & Semantic Search**: Qdrant, Milvus, Weaviate
+- **Real-Time Analytics & OLAP**: ClickHouse, DuckDB, QuestDB
+- **GPU-Accelerated Queries**: HeavyDB
+- **Multi-Model Data**: ArangoDB, FoundationDB, OrientDB
+
 ## Top AI Vector Databases
 
 | Tool | Description |

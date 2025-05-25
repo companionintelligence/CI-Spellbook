@@ -1,5 +1,16 @@
 # Home Automation & Security
 
+> Centralized guide to open-source home automation and security platforms. Integrate smart devices, secure access, and build monitoring pipelines with these tools.
+
+## Usage Guidelines
+
+- Establish a secure home network: separate IoT devices on isolated VLANs or subnets.
+- Use **Home Assistant** as the primary control plane; leverage community add-ons for devices.
+- Automate alerts and monitoring: integrate **Uptime Kuma** for service health, **Plausible Analytics** for privacy-friendly metrics.
+- Secure video feeds: run **Frigate** or **ZoneMinder** locally, enable on-device object detection to avoid cloud dependencies.
+- Backup configurations and use version control (Git) for automation scripts and YAML configs.
+- Plan for redundancy: mirror critical services (NVR, automation hub) on secondary devices or virtual machines.
+
 ## Home Automation Tools
 
 | Tool                  | Description                              | Link      |

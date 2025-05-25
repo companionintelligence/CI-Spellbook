@@ -1,5 +1,13 @@
 # Speech-to-Text & Text-to-Speech
 
+> Comprehensive tools for converting speech to text and generating natural-sounding speech. Supports real-time streaming, batch processing, multilingual models, and on-device or cloud deployments.
+
+## Usage Guidelines
+
+- **Speech-to-Text Pipelines**: Choose between streaming (low-latency) and batch (high-accuracy) modes. Configure chunk sizes, punctuation models, and noise suppression for best results.
+- **Text-to-Speech Pipelines**: Decide on on-device (privacy, offline) vs cloud (higher quality, scalability) synthesis. Use SSML for prosody control, caching for repeat phrases, and voice cloning for personalization.
+- **Model Selection**: Balance accuracy vs performance by selecting appropriate model sizes (e.g., Whisper tiny for mobile, large for broadcast-quality).
+
 ## Speech-to-Text Tools
 
 | Tool | Core Architecture(s) | Key Features | Performance & Real-Time | Multilingual | Customization | Strengths | Limitations |

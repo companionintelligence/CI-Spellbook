@@ -25,3 +25,9 @@ This section highlights open-source and commercial tools that leverage AI to imp
 | **Continue**<br>🔗 [continuedev/continue](https://github.com/continuedev/continue)<br>🪪 Apache-2.0 | Open-source autopilot for VS Code and JetBrains. Brings Copilot-like chat, code completion, and context to your IDE using local or remote LLMs. |
 | **Cursor**<br>🔗 [cursor.so](https://www.cursor.so/)<br>🪪 Commercial (Free tier) | AI-powered code editor with built-in chat, refactoring, and context awareness. Supports local and cloud LLMs. Free and paid plans. |
 | **Open Interpreter**<br>🔗 [open-interpreter/open-interpreter](https://github.com/open-interpreter/open-interpreter)<br>🪪 MIT | Run code, scripts, and natural language commands in your terminal with LLMs. Supports local and remote models, file editing, and automation. |
+
+## Example Workflows
+
+- **Interactive Refactoring**: Use **Aider** in your terminal for multi-file edits, then validate with **Sourcegraph Cody** chat for code QA.
+- **IDE Autocomplete**: Enable **Tabnine** or **Codeium** in VSCode for inline suggestions, complemented by **PolyCoder** for C-specific code.
+- **On-the-Go Snippets**: Leverage **PocketPal AI** mobile app to draft code ideas offline, sync back to your repo.

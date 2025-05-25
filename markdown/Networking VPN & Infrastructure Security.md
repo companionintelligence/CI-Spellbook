@@ -1,5 +1,20 @@
 # Networking, VPN, & Infrastructure Security
 
+> Enhance connectivity and secure your infrastructure with modern networking, VPNs, and orchestration tools. This guide covers both enterprise-scale and home-lab scenarios.
+
+## Overview
+
+> From web servers and reverse proxies to self-hosted VPNs and container orchestration, choose tools based on scale, security requirements, and ease of management.
+
+## Usage Guidelines
+
+- Plan network segmentation: isolate services via VLANs, subnets, and firewalls.
+- Automate certificate management with Let's Encrypt (Certbot, Caddy, Traefik).
+- Use zero-trust VPNs (WireGuard, Tailscale/Headscale) for secure remote access.
+- Monitor performance and security with logs, metrics, and IDS/IPS solutions.
+- Deploy container orchestration platforms (CapRover, Portainer) for microservice management.
+- Backup configurations and use Infrastructure as Code (Terraform, Ansible) for reproducibility.
+
 ## Web Servers & Reverse Proxies
 
 | Tools | Description | Notes |

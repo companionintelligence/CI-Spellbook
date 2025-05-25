@@ -1,5 +1,19 @@
 # AI in Video Games & Virtual Beings
 
+> Dive into AI-driven NPCs, virtual characters, and immersive worlds using state-of-the-art behavior engines and SDKs. This guide covers frameworks for dialogue, emotion, and real-time integration in game engines and web platforms.
+
+## Overview
+
+> From adaptive NPC behavior to full character pipelines, these tools enable lifelike interactions based on LLMs, procedural AI, and RL planners. Leverage SDKs for Unity, Unreal, or web to bring virtual beings to life.
+
+## Usage Guidelines
+
+- Select an engine that fits your target platform (Unity, Unreal, or browser-based). Evaluate license and hosted vs self-hosted deployment.
+- Prototype with provided SDKs and sample avatars (e.g., Ready Player Me, MetaHumans) to understand integration and animation pipelines.
+- Combine dialogue models with custom memory modules to retain context across sessions.
+- For web demos, use REST/WebSocket APIs; for games, integrate native SDKs and manage performance budgets (batch requests, caching).
+- Monitor user engagement and collect telemetry to refine behavior trees and prompt templates.
+
 | Tool | Description | AI/LLM/Tech Stack | Supported Avatar Formats | Integrations (SDKs/APIs) |
 |------|-------------|-------------------|------------------------|-------------------------|
 | **Artificial Agency**<br>[Website](https://artificial.agency) | AI-driven NPC behavior engine for games. NPCs have goals, memory, adaptive behaviors, and respond to live game events. Focus on unscripted, lifelike interactions. | Proprietary LLM-powered engine (dialogue, decision-making, behavior trees, RL planners) | Agnostic (works with any 3D character in supported engines) | Game Engine SDKs (Unity, Unreal planned), API for runtime integration |
