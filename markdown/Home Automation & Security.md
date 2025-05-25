@@ -35,3 +35,22 @@
 | **Viseron**    | AI computer vision NVR             | [GitHub](https://github.com/roflcoopter/viseron) |
 | **Shinobi**    | Scalable CCTV NVR system           | [GitLab](https://gitlab.com/Shinobi-Systems/Shinobi) |
 | **Moonfire NVR** | Network video recorder            | [GitHub](https://github.com/scottlamb/moonfire-nvr) |
+
+## Example: Home Assistant Automation
+
+```yaml
+# automations.yaml
+- id: 'motion_alert'
+  alias: Motion Detected Notification
+  description: "Sends a notification when motion is detected"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door_motion
+      to: 'on'
+  condition: []
+  action:
+    - service: notify.mobile_app_my_phone
+      data:
+        title: "Home Alert"
+        message: "Motion detected at the front door"
+  mode: single

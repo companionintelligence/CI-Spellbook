@@ -20,6 +20,27 @@
 | **Vosk API**<br>🪪 Apache 2.0<br>🔗 [Code](https://github.com/alphacep/vosk-api) / [Docs](https://alphacephei.com/vosk/) | Kaldi-based | Offline, lightweight, real-time, reconfigurable vocab, speaker ID | 5.69%/9.85% WER, real-time, zero-latency | >20 languages | Custom language models possible | Lightweight, offline, easy integration | Small models less accurate, large models less lightweight |
 | **Kaldi**<br>🪪 Apache 2.0<br>🔗 [Code](https://github.com/kaldi-asr/kaldi) / [Docs](https://kaldi-asr.org/doc/) | GMM-HMM, DNN-HMM, End-to-End | Highly flexible, research-focused, cross-compile | Depends on recipe, real-time possible | Many via recipes | Extremely flexible, customizable | Ultimate flexibility, research toolkit | Very complex, steep learning curve |
 
+## Example: Transcribe Audio with Whisper
+
+```python
+from whisper import WhisperModel
+
+model = WhisperModel("base")
+audio_path = "podcast_episode.mp3"
+
+# Transcribe the audio file
+segments, info = model.transcribe(audio_path)
+
+# Print the transcript
+for segment in segments:
+    print(f"{segment.start:.2f}s - {segment.end:.2f}s: {segment.text}")
+
+# Optional: Save to file
+with open("transcript.txt", "w") as f:
+    for segment in segments:
+        f.write(f"{segment.start:.2f} - {segment.end:.2f}: {segment.text}\n")
+```
+
 ## Text-to-Speech Tools
 
 | Tool | Synthesis Method | Key Features | Quality & Compute | Languages | Strengths | Limitations | Use Cases |

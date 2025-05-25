@@ -19,6 +19,37 @@
 | **Chroma**<br>🔗 [chroma-core/chroma](https://github.com/chroma-core/chroma)<br>🪪 Apache 2.0 | Lightweight, developer-friendly embedding DB for LLM apps. Runs locally or at scale, integrates with LangChain/LlamaIndex, and supports text/image embeddings for RAG and semantic search. |
 | **Faiss**<br>🔗 [facebookresearch/faiss](https://github.com/facebookresearch/faiss)<br>🪪 MIT | Efficient C++/Python library for vector similarity search and clustering. Supports huge datasets, GPU acceleration, and many indexing methods. Widely used as a backend for custom vector search. |
 
+## Example: Qdrant with Python
+
+```python
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import VectorParams, PointStruct
+
+# Connect to Qdrant
+client = QdrantClient(url="http://localhost:6333")
+
+# Create collection
+client.recreate_collection(
+    collection_name="my_collection",
+    vectors_config=VectorParams(size=128, distance="Cosine")
+)
+
+# Insert sample vectors
+points = [
+    PointStruct(id=i, vector=[0.1]*128, payload={"text": f"Document {i}"})
+    for i in range(3)
+]
+client.upsert(collection_name="my_collection", points=points)
+
+# Perform a search
+results = client.search(
+    collection_name="my_collection",
+    query_vector=[0.1]*128,
+    limit=2
+)
+print(results)
+```
+
 ## Top GPU-Based & High Performance Databases
 
 | Tool | Description |

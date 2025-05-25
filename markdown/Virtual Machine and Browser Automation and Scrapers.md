@@ -24,6 +24,21 @@
 | **Browser Use (Ollama & DeepSeek)**<br>[Code](https://github.com/browser-use/browser-use) | Open Source (Python Library) | Framework for building local AI agents that can control web browsers (e.g., Chrome, Firefox via Playwright) using LLMs like DeepSeek run via Ollama. | More of a developer tool/framework for creating custom AI browser automation agents. Offers privacy through local execution. |
 | **Imbue**<br>[Docs](https://imbue.com/) | Commercial (Research/Development) | Building AI agents that can reason and code, with a long-term vision of enabling AI to robustly accomplish complex goals in the real world, including computer usage. | Focused on more general AI capabilities that could underpin advanced UX automation. Still in heavy R&D. |
 
+## Sample Automation Script
+
+```javascript
+const { chromium } = require('playwright');
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log(`Title: ${title}`);
+  // Add additional browsing and scraping logic here
+  await browser.close();
+})();
+```
+
 ## Browser Extension Data Scrapers
 
 | Tool | Type | Key Features | Notes |
