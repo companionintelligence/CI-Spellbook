@@ -1,0 +1,1293 @@
+/* Hide all scrollbars globally */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Enhanced Card Animation System - 5-stage animation with text fade-in */
+#cards-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 2rem !important;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.group {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex: 0 0 auto;
+  width: calc(50% - 1rem);
+  max-width: 600px;
+  min-width: 300px;
+}
+
+@media (max-width: 768px) {
+  .group {
+    width: calc(100% - 2rem);
+    max-width: 500px;
+  }
+  
+  #cards-container {
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .group {
+    width: calc(33.333% - 1.5rem);
+  }
+}
+
+.card-inner {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stage 1: Expand width - smooth and quick */
+.group.expanding-width {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 70vw !important;
+  height: var(--card-original-height) !important;
+  z-index: 10 !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Stage 2: Expand height - prepare for flip */
+.group.expanding-height {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 70vw !important;
+  height: 80vh !important;
+  z-index: 10 !important;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Stage 3: Flip the card with smooth transition */
+.group.flipped .card-inner {
+  transform: rotateY(180deg);
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Stage 4: Expand to full window width after flip - maximum specificity */
+.group.flipped.full-expanded,
+.group.full-expanded.flipped {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  margin: 0 !important;
+  transform: none !important;
+  z-index: 15 !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Ultra-high specificity full-expanded rules using element IDs */
+#cards-container .group.full-expanded,
+#cards-container .group.flipped.full-expanded,
+#cards-container .group.full-expanded.flipped {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  margin: 0 !important;
+  transform: none !important;
+  z-index: 15 !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Override expanding-height styles when full-expanded is applied - ultra high specificity */
+.group.expanding-height.full-expanded,
+.group.expanding-height.flipped.full-expanded,
+.group.flipped.expanding-height.full-expanded,
+.group.expanding-height.full-expanded.flipped {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  margin: 0 !important;
+  transform: none !important;
+  z-index: 15 !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Ensure the full-expanded state takes priority over other positioning - MAXIMUM PRIORITY */
+.group.full-expanded {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  margin: 0 !important;
+  transform: none !important;
+  z-index: 15 !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Nuclear option - override any possible conflicting styles */
+.group.full-expanded[style] {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  max-width: none !important;
+  min-width: none !important;
+  max-height: none !important;
+  min-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  z-index: 9999 !important;
+  display: block !important;
+  flex: none !important;
+  grid-column: unset !important;
+  grid-row: unset !important;
+  float: none !important;
+  clear: both !important;
+}
+
+/* Ensure parent container doesn't constrain the full-expanded card */
+#cards-container:has(.group.full-expanded) .group.full-expanded {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: calc(100vw - 2rem) !important;
+  height: calc(100vh - 2rem) !important;
+  transform: none !important;
+  z-index: 9999 !important;
+}
+
+/* Ensure card-inner fills the full-expanded card completely */
+.group.full-expanded .card-inner {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  transform-style: preserve-3d !important;
+}
+
+/* Ensure card content fills the full area and is scrollable */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+  width: 100% !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Card back content positioning for all stages */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"],
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 2rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Card back content scrollable area */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative,
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
+  width: 100% !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+/* Stage 5: Text content fade-in animations */
+.group.content-visible .card-inner > div[style*="rotateY(180deg)"] > .relative {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: all 0.8s ease-out 0.2s;
+}
+
+/* Individual text element fade-in with staggered delays */
+.group.content-visible h1, 
+.group.content-visible h2, 
+.group.content-visible h3,
+.group.content-visible h4,
+.group.content-visible h5,
+.group.content-visible h6 {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.group.content-visible h1 { 
+  animation-delay: 0.1s; 
+  animation-duration: 0.8s;
+}
+.group.content-visible h2 { 
+  animation-delay: 0.2s; 
+  animation-duration: 0.7s;
+}
+.group.content-visible h3 { 
+  animation-delay: 0.3s; 
+  animation-duration: 0.6s;
+}
+.group.content-visible h4 { animation-delay: 0.4s; }
+.group.content-visible h5 { animation-delay: 0.5s; }
+.group.content-visible h6 { animation-delay: 0.6s; }
+
+.group.content-visible p {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.group.content-visible p:nth-of-type(1) { animation-delay: 0.4s; }
+.group.content-visible p:nth-of-type(2) { animation-delay: 0.5s; }
+.group.content-visible p:nth-of-type(3) { animation-delay: 0.6s; }
+.group.content-visible p:nth-of-type(4) { animation-delay: 0.7s; }
+.group.content-visible p:nth-of-type(5) { animation-delay: 0.8s; }
+.group.content-visible p:nth-of-type(n+6) { animation-delay: 0.9s; }
+
+.group.content-visible ul,
+.group.content-visible ol,
+.group.content-visible table {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-delay: 0.7s;
+}
+
+.group.content-visible blockquote {
+  opacity: 0;
+  transform: translateX(-15px);
+  animation: fadeInLeft 0.6s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+.group.content-visible code,
+.group.content-visible pre {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInScale 0.5s ease-out forwards;
+  animation-delay: 0.9s;
+}
+
+.group.content-visible li {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: fadeInLeft 0.4s ease-out forwards;
+}
+
+.group.content-visible li:nth-child(1) { animation-delay: 1.0s; }
+.group.content-visible li:nth-child(2) { animation-delay: 1.05s; }
+.group.content-visible li:nth-child(3) { animation-delay: 1.1s; }
+.group.content-visible li:nth-child(4) { animation-delay: 1.15s; }
+.group.content-visible li:nth-child(5) { animation-delay: 1.2s; }
+.group.content-visible li:nth-child(n+6) { animation-delay: 1.25s; }
+
+.group.content-visible tr {
+  opacity: 0;
+  transform: translateY(5px);
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.group.content-visible tr:nth-child(1) { animation-delay: 1.1s; }
+.group.content-visible tr:nth-child(2) { animation-delay: 1.15s; }
+.group.content-visible tr:nth-child(3) { animation-delay: 1.2s; }
+.group.content-visible tr:nth-child(4) { animation-delay: 1.25s; }
+.group.content-visible tr:nth-child(n+5) { animation-delay: 1.3s; }
+
+/* Keyframes for text animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Backdrop with smooth fade */
+.group.expanding-width::before,
+.group.expanding-height::before,
+.group.flipped::before,
+.group.flipped.full-expanded::before,
+.group.full-expanded::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  opacity: 0;
+  animation: backdropFadeIn 0.6s ease-out forwards;
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Ensure close button shows above backdrop */
+.group.expanding-width .fullscreen-close-btn,
+.group.expanding-height .fullscreen-close-btn {
+  display: block !important;
+  z-index: 100 !important;
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1rem !important;
+}
+
+/* Show close button for expanded cards with proper z-index */
+.group.expanding-width .fullscreen-close-btn,
+.group.expanding-height .fullscreen-close-btn,
+.group.flipped .fullscreen-close-btn,
+.group.flipped.full-expanded .fullscreen-close-btn {
+  display: block !important;
+  z-index: 100 !important;
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: scale(0);
+  animation: closeButtonAppear 0.4s ease-out 0.3s forwards;
+}
+
+@keyframes closeButtonAppear {
+  from {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Closing animations - mirror the opening sequence */
+.group.closing-content {
+  animation: fadeOutContent 0.4s ease-in forwards;
+}
+
+.group.closing-content .card-inner > div[style*="rotateY(180deg)"] > .relative {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  transition: all 0.4s ease-in;
+}
+
+.group.closing-shrink {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 70vw !important;
+  height: 80vh !important;
+  z-index: 10 !important;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.group.closing-unflip .card-inner {
+  transform: rotateY(0deg) !important;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.group.closing-collapse {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(0.8) !important;
+  width: var(--card-original-width) !important;
+  height: var(--card-original-height) !important;
+  opacity: 0.8 !important;
+  z-index: 10 !important;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.group.closing-return {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: var(--card-original-width) !important;
+  height: var(--card-original-height) !important;
+  opacity: 1 !important;
+  z-index: auto !important;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Backdrop fade out during closing */
+.group.closing-content::before,
+.group.closing-shrink::before,
+.group.closing-unflip::before,
+.group.closing-collapse::before {
+  animation: backdropFadeOut 0.6s ease-in forwards;
+}
+
+@keyframes backdropFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fadeOutContent {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Ensure background images persist during all states and fix card back scrolling */
+.card-inner > div {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  will-change: transform;
+}
+
+/* Fix background during flip animation - ensure both sides maintain backgrounds */
+.group.flipped .card-inner > div {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  will-change: auto;
+}
+
+/* Ensure card back backgrounds work properly during scroll */
+.card-inner > div[style*="rotateY(180deg)"] {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Fix scrolling on card backs - ensure proper overflow behavior */
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+  overflow: hidden !important;
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Fix card back content scrolling */
+.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative {
+  overflow-y: auto !important;
+  max-height: 100% !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Ensure card back markdown content displays properly */
+.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] .markdown-content {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+/* Fix card back tables to be responsive in expanded view */
+.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: auto !important;
+}
+
+/* Ensure dark background overlay works on card backs */
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"],
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(36, 72, 89, 0.9) !important;
+  pointer-events: none;
+  transition: none !important;
+}
+
+/* Card-specific background overlays for card backs */
+#card-local-first-ai-tools.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(7, 21, 51, 0.9) !important;
+}
+
+#card-ai-assisted-code-dev.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(36, 72, 89, 0.9) !important;
+}
+
+#card-cutting-edge-databases.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(52, 52, 78, 0.9) !important;
+}
+
+#card-top-public-data-sources.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(67, 60, 89, 0.9) !important;
+}
+
+#card-ai-art-gen.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(89, 60, 82, 0.9) !important;
+}
+
+#card-speech-tts-stt.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(9, 67, 109, 0.9) !important;
+}
+
+#card-networking-vpn.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(29, 95, 110, 0.9) !important;
+}
+
+#card-vm-browser-automation.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(9, 67, 109, 0.9) !important;
+}
+
+#card-ai-video-games.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(58, 63, 108, 0.9) !important;
+}
+
+#card-home-automation.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+  background: rgba(67, 60, 89, 0.9) !important;
+}
+
+/* Ensure background overlay persists during animation */
+.card-inner > div > div[class*="absolute inset-0"] {
+  pointer-events: none;
+  transition: all 1.0s ease-in-out;
+  background: inherit !important;
+}
+
+/* Make sure card content is properly positioned */
+.group.expanding-width .card-inner,
+.group.expanding-height .card-inner,
+.group.flipped .card-inner {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure all backgrounds persist during transforms */
+.group.expanding-width .card-inner > div,
+.group.expanding-height .card-inner > div,
+.group.flipped .card-inner > div {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Fix background color overlays during animation */
+.group.expanding-width .card-inner > div > div,
+.group.expanding-height .card-inner > div > div,
+.group.flipped .card-inner > div > div {
+  transition: all 1.0s ease-in-out !important;
+}
+
+/* Prevent background from disappearing during flip */
+.group .card-inner > div {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Fix card back background image persistence during scroll */
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  will-change: auto;
+}
+
+/* Ensure proper background during all animation stages */
+.group.expanding-width .card-inner > div[style*="rotateY(180deg)"],
+.group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Improve card centering during expansion */
+.group.expanding-width,
+.group.expanding-height {
+  transform-origin: center center !important;
+}
+
+/* Ensure smooth centering animation */
+.group.expanding-width .card-inner,
+.group.expanding-height .card-inner {
+  margin: 0 auto !important;
+  transform-origin: center center !important;
+}
+
+/* Content fade animation starts hidden */
+.card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* Stage 4: Content fade-in from top to bottom */
+.group.content-visible .card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInFromTop 1.2s ease-out forwards;
+}
+
+@keyframes fadeInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure proper z-index stacking during animation */
+.group.expanding-width,
+.group.expanding-height {
+  z-index: 10 !important;
+}
+
+.group.expanding-width .card-inner,
+.group.expanding-height .card-inner {
+  z-index: 11 !important;
+}
+
+/* Close button styling */
+.fullscreen-close-btn {
+  z-index: 100 !important;
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+}
+
+/* Search bar placeholder styling */
+input[type="text"]::placeholder {
+  color: #abd4d8;
+  opacity: 0.7;
+}
+input[type="text"]:focus {
+  border-color: #4290e3;
+  box-shadow: 0 0 0 2px rgba(66, 144, 227, 0.3);
+}
+
+/* Add margin to all table cells */
+table td, table th {
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Style for icon bullets in merged cells */
+.table-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.table-bullets li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.15em;
+}
+.table-bullets .icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+body, .font-sans {
+  font-family: 'Miriam Mono CLM', 'Miriam Mono', 'Lekton', monospace, sans-serif;
+  background: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);
+}
+h1, h2, h3, .card-title, .font-bold {
+  font-family: 'Lekton', 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
+}
+/* Card title font size overrides */
+h2.text-2xl.font-bold {
+  font-size: 2.5rem !important;
+  line-height: 1.1;
+}
+h2.text-xl.font-bold {
+  font-size: 2rem !important;
+  line-height: 1.15;
+}
+@media (min-width: 768px) {
+  h2.text-2xl.font-bold {
+    font-size: 3rem !important;
+  }
+  h2.text-xl.font-bold {
+    font-size: 2.25rem !important;
+  }
+}
+p, td, li, .text-sm, .text-xs {
+  font-family: 'Miriam Mono CLM', 'Miriam Mono', monospace, sans-serif;
+}
+
+/* Markdown content enhancements */
+.card-inner .markdown-body {
+  font-size: 1rem;
+  color: #d2f6ff;
+  line-height: 1.6;
+}
+.card-inner .markdown-body h1,
+.card-inner .markdown-body h2,
+.card-inner .markdown-body h3 {
+  color: #82ffff;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+.card-inner .markdown-body h1 { font-size: 1.5rem; padding-bottom: 0.25em; }
+.card-inner .markdown-body h2 { font-size: 1.25rem; padding-bottom: 0.15em; }
+.card-inner .markdown-body h3 { font-size: 1.1rem; color: #60d9ff; }
+.card-inner .markdown-body p {
+  margin-bottom: 1em;
+}
+.card-inner .markdown-body ul, .card-inner .markdown-body ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+.card-inner .markdown-body li {
+  margin-bottom: 0.3em;
+}
+
+/* Base table styling */
+.card-inner .markdown-body table {
+  width: 100%;
+  border-radius: 0.5em;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.15);
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1.5em;
+  overflow: hidden;
+}
+.card-inner .markdown-body th, .card-inner .markdown-body td {
+  padding: 0.75em 1em;
+  text-align: left;
+}
+.card-inner .markdown-body th {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Card-specific table colors */
+/* Card 1 - Blue theme */
+#card-local-first-ai-tools .markdown-body table { background: rgba(7, 21, 51, 0.95); }
+#card-local-first-ai-tools .markdown-body th { background: #3784ff; }
+#card-local-first-ai-tools .markdown-body th, #card-local-first-ai-tools .markdown-body td { border: 1px solid #3784ff; background: rgba(7, 21, 51, 0.95); }
+#card-local-first-ai-tools .markdown-body tr:nth-child(even) td { background: rgba(52, 52, 78, 0.95); }
+#card-local-first-ai-tools .markdown-body h1 { border-bottom: 2px solid #3784ff; }
+#card-local-first-ai-tools .markdown-body h2 { border-bottom: 1px solid #3784ff; }
+
+/* Card 2 - Teal theme */
+#card-ai-assisted-code-dev .markdown-body table { background: rgba(36, 72, 89, 0.95); }
+#card-ai-assisted-code-dev .markdown-body th { background: #58ebbf; }
+#card-ai-assisted-code-dev .markdown-body th, #card-ai-assisted-code-dev .markdown-body td { border: 1px solid #58ebbf; background: rgba(36, 72, 89, 0.95); }
+#card-ai-assisted-code-dev .markdown-body tr:nth-child(even) td { background: rgba(44, 103, 109, 0.95); }
+#card-ai-assisted-code-dev .markdown-body h1 { border-bottom: 2px solid #58ebbf; }
+#card-ai-assisted-code-dev .markdown-body h2 { border-bottom: 1px solid #58ebbf; }
+
+/* Card 3 - Blue theme */
+#card-cutting-edge-databases .markdown-body table { background: rgba(52, 52, 78, 0.95); }
+#card-cutting-edge-databases .markdown-body th { background: #4290e3; }
+#card-cutting-edge-databases .markdown-body th, #card-cutting-edge-databases .markdown-body td { border: 1px solid #4290e3; background: rgba(52, 52, 78, 0.95); }
+#card-cutting-edge-databases .markdown-body tr:nth-child(even) td { background: rgba(58, 63, 108, 0.95); }
+#card-cutting-edge-databases .markdown-body h1 { border-bottom: 2px solid #4290e3; }
+#card-cutting-edge-databases .markdown-body h2 { border-bottom: 1px solid #4290e3; }
+
+/* Card 4 - Purple theme */
+#card-top-public-data-sources .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+#card-top-public-data-sources .markdown-body th { background: #bea9ff; }
+#card-top-public-data-sources .markdown-body th, #card-top-public-data-sources .markdown-body td { border: 1px solid #bea9ff; background: rgba(67, 60, 89, 0.95); }
+#card-top-public-data-sources .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+#card-top-public-data-sources .markdown-body h1 { border-bottom: 2px solid #bea9ff; }
+#card-top-public-data-sources .markdown-body h2 { border-bottom: 1px solid #bea9ff; }
+
+/* Card 5 - Purple/Pink theme */
+#card-ai-art-gen .markdown-body table { background: rgba(89, 60, 82, 0.95); }
+#card-ai-art-gen .markdown-body th { background: #6d456b; }
+#card-ai-art-gen .markdown-body th, #card-ai-art-gen .markdown-body td { border: 1px solid #6d456b; background: rgba(89, 60, 82, 0.95); }
+#card-ai-art-gen .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+#card-ai-art-gen .markdown-body h1 { border-bottom: 2px solid #6d456b; }
+#card-ai-art-gen .markdown-body h2 { border-bottom: 1px solid #6d456b; }
+
+/* Card 6 - Cyan theme */
+#card-speech-tts-stt .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+#card-speech-tts-stt .markdown-body th { background: #60d9ff; }
+#card-speech-tts-stt .markdown-body th, #card-speech-tts-stt .markdown-body td { border: 1px solid #60d9ff; background: rgba(9, 67, 109, 0.95); }
+#card-speech-tts-stt .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+#card-speech-tts-stt .markdown-body h1 { border-bottom: 2px solid #60d9ff; }
+#card-speech-tts-stt .markdown-body h2 { border-bottom: 1px solid #60d9ff; }
+
+/* Card 7 - Teal theme */
+#card-networking-vpn .markdown-body table { background: rgba(29, 95, 110, 0.95); }
+#card-networking-vpn .markdown-body th { background: #079d99; }
+#card-networking-vpn .markdown-body th, #card-networking-vpn .markdown-body td { border: 1px solid #079d99; background: rgba(29, 95, 110, 0.95); }
+#card-networking-vpn .markdown-body tr:nth-child(even) td { background: rgba(15, 113, 122, 0.95); }
+#card-networking-vpn .markdown-body h1 { border-bottom: 2px solid #079d99; }
+#card-networking-vpn .markdown-body h2 { border-bottom: 1px solid #079d99; }
+
+/* Card 8 - Blue theme */
+#card-vm-browser-automation .markdown-body table { background: rgba(9, 67, 109, 0.95); }
+#card-vm-browser-automation .markdown-body th { background: #117ba0; }
+#card-vm-browser-automation .markdown-body th, #card-vm-browser-automation .markdown-body td { border: 1px solid #117ba0; background: rgba(9, 67, 109, 0.95); }
+#card-vm-browser-automation .markdown-body tr:nth-child(even) td { background: rgba(17, 123, 160, 0.95); }
+#card-vm-browser-automation .markdown-body h1 { border-bottom: 2px solid #117ba0; }
+#card-vm-browser-automation .markdown-body h2 { border-bottom: 1px solid #117ba0; }
+
+/* Card 9 - Purple theme */
+#card-ai-video-games .markdown-body table { background: rgba(58, 63, 108, 0.95); }
+#card-ai-video-games .markdown-body th { background: #3351ab; }
+#card-ai-video-games .markdown-body th, #card-ai-video-games .markdown-body td { border: 1px solid #3351ab; background: rgba(58, 63, 108, 0.95); }
+#card-ai-video-games .markdown-body tr:nth-child(even) td { background: rgba(73, 90, 139, 0.95); }
+#card-ai-video-games .markdown-body h1 { border-bottom: 2px solid #3351ab; }
+#card-ai-video-games .markdown-body h2 { border-bottom: 1px solid #3351ab; }
+
+/* Card 10 - Purple theme */
+#card-home-automation .markdown-body table { background: rgba(67, 60, 89, 0.95); }
+#card-home-automation .markdown-body th { background: #624b6d; }
+#card-home-automation .markdown-body th, #card-home-automation .markdown-body td { border: 1px solid #624b6d; background: rgba(67, 60, 89, 0.95); }
+#card-home-automation .markdown-body tr:nth-child(even) td { background: rgba(98, 75, 109, 0.95); }
+#card-home-automation .markdown-body h1 { border-bottom: 2px solid #624b6d; }
+#card-home-automation .markdown-body h2 { border-bottom: 1px solid #624b6d; }
+
+/* Enhanced Full-Screen Scrolling and Layout */
+.group.full-expanded {
+  /* Ensure proper scrolling behavior */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Full-screen card back content enhanced scrolling */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 2rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Enhanced content area in full-screen mode */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
+  width: 100% !important;
+  max-width: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Responsive text sizing in full-screen mode */
+.group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+@media (min-width: 768px) {
+  .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+    font-size: 1.1rem !important;
+    line-height: 1.7 !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .group.full-expanded .card-inner > div[style*="rotateY(180deg)"] .relative {
+    font-size: 1.2rem !important;
+    line-height: 1.8 !important;
+  }
+}
+
+/* Comprehensive Development Debug Panel Styles */
+.debug-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 420px;
+  max-height: 70vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #e8f4f8;
+  font-family: 'Courier New', 'Monaco', monospace;
+  font-size: 12px;
+  z-index: 15000;
+  border-radius: 12px;
+  border: 2px solid #3784ff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(55, 132, 255, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.debug-panel.hidden {
+  transform: translateY(100%) translateX(-50px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.debug-header {
+  background: linear-gradient(90deg, #3784ff 0%, #4290e3 100%);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.debug-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.debug-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.debug-tab-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e8f4f8;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.debug-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.debug-tab-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: bold;
+}
+
+.debug-close {
+  background: rgba(255, 69, 69, 0.8);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.debug-close:hover {
+  background: rgba(255, 69, 69, 1);
+  transform: scale(1.1);
+}
+
+.debug-tab {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.debug-tab.active {
+  display: block;
+}
+
+.debug-section {
+  margin-bottom: 16px;
+}
+
+.debug-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: #60d9ff;
+  border-bottom: 1px solid rgba(96, 217, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.debug-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.debug-item label {
+  font-size: 10px;
+  color: #abd4d8;
+  font-weight: 500;
+}
+
+.debug-value {
+  font-size: 10px;
+  color: #00ff88;
+  font-weight: bold;
+  text-align: right;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.debug-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.debug-markdown-item {
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border-left: 3px solid #3784ff;
+  background: rgba(55, 132, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.debug-markdown-item.loading {
+  border-left-color: #ffa500;
+  background: rgba(255, 165, 0, 0.05);
+}
+
+.debug-markdown-item.success {
+  border-left-color: #00ff88;
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.debug-markdown-item.error {
+  border-left-color: #ff4444;
+  background: rgba(255, 68, 68, 0.05);
+}
+
+.debug-markdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.debug-markdown-stats {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Courier New', monospace;
+}
+
+.debug-status {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.debug-status.loading {
+  background: #ffa500;
+  color: #000;
+}
+
+.debug-status.success {
+  background: #00ff88;
+  color: #000;
+}
+
+.debug-status.error {
+  background: #ff4444;
+  color: #fff;
+}
+
+.debug-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  padding: 20px;
+}
+
+.error {
+  color: #ff4444;
+}
+
+/* Enhanced debug list styles */
+.debug-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.debug-markdown-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.debug-markdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #3784ff;
+}
+
+.debug-markdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.debug-markdown-filename {
+  font-size: 11px;
+  font-weight: bold;
+  color: #82ffff;
+}
+
+.debug-markdown-status {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.debug-markdown-status.success {
+  background: rgba(0, 255, 136, 0.2);
+  color: #00ff88;
+}
+
+.debug-markdown-status.error {
+  background: rgba(255, 69, 69, 0.2);
+  color: #ff4545;
+}
+
+.debug-markdown-status.loading {
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffaa00;
+}
+
+.debug-markdown-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  font-size: 9px;
+  color: #abd4d8;
+}
+
+.debug-footer {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.debug-footer small {
+  color: #666;
+  font-size: 10px;
+}
+
+/* Animation for debug value updates */
+.debug-value.updated {
+  animation: debugValueFlash 0.3s ease-out;
+}
+
+@keyframes debugValueFlash {
+  0% { background: rgba(0, 255, 136, 0.3); }
+  100% { background: transparent; }
+}
+
+/* Responsive design for debug panel */
+@media (max-width: 480px) {
+  .debug-panel {
+    width: calc(100vw - 40px);
+    left: 20px;
+    right: 20px;
+  }
+  
+  .debug-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .debug-markdown-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
