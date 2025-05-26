@@ -1,6 +1,7 @@
 # AI Art Generation: Images, 3D, and Video
 
-> Explore top tools for creative AI generation of images, 3D assets, and video content. This guide helps you select the right UI, models, and workflows for rapid prototyping, fine art, and production pipelines.
+> Explore top tools for creative AI generation of images, 3D assets, and video content.
+> This guide helps you select the right UI, models, and workflows for rapid prototyping, media creation, and production pipelines.
 
 ## Usage Recommendations
 
