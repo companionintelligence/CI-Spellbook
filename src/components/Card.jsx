@@ -10,16 +10,22 @@ const Card = ({
   baseColor, 
   markdownPath, 
   containerId,
-  onCardExpand 
+  onCardExpand,
+  searchMode = false,
+  searchSnippetHtml = null,
+  searchMeta = null
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const cardRef = useRef(null);
   
   const { content, loading, error } = useMarkdown(markdownPath, containerId);
 
+  const isSearchResult = Boolean(searchMode);
+  const isOpen = isSearchResult ? false : isExpanded;
+
   // Scroll to card when expanded
   useEffect(() => {
-    if (isExpanded && cardRef.current) {
+    if (isOpen && cardRef.current) {
       // Small delay to let animation start
       setTimeout(() => {
         cardRef.current.scrollIntoView({ 
@@ -28,23 +34,25 @@ const Card = ({
         });
       }, 100);
     }
-  }, [isExpanded]);
+  }, [isOpen]);
 
   // Close on escape key
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isExpanded) {
+      if (e.key === 'Escape' && isOpen) {
         setIsExpanded(false);
       }
     };
     
-    if (isExpanded) {
+    if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
-  }, [isExpanded]);
+  }, [isOpen]);
 
   const handleCardClick = (e) => {
+    if (isSearchResult) return;
+
     // Don't expand if clicking links or close button
     if (e.target.closest('a')) return;
     if (e.target.closest('.close-btn')) return;
@@ -76,10 +84,10 @@ const Card = ({
   return (
     <div 
       ref={cardRef}
-      className={classNames('group', { 'expanded': isExpanded })}
+      className={classNames('group', { 'expanded': isOpen, 'search-result': isSearchResult })}
     >
       {/* Close button - only visible when expanded */}
-      {isExpanded && (
+      {isOpen && (
         <button
           type="button"
           className="close-btn fullscreen-close-btn"
@@ -150,7 +158,27 @@ const Card = ({
           
           {/* Content */}
           <div className="relative z-10 w-full h-full px-6 py-8" id={containerId}>
-            {loading ? (
+            {isSearchResult ? (
+              <div className="search-snippet">
+                <div className="search-snippet-header">
+                  <h3 className="text-xl font-bold text-white">{title}</h3>
+                  {searchMeta?.query ? (
+                    <div className="search-snippet-subtitle">
+                      <span className="opacity-90">Matches for</span>{' '}
+                      <span className="font-semibold">“{searchMeta.query}”</span>
+                      {typeof searchMeta.matchCount === 'number' ? (
+                        <span className="opacity-75"> · {searchMeta.matchCount} hits</span>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
+
+                <div
+                  className="search-snippet-body"
+                  dangerouslySetInnerHTML={{ __html: searchSnippetHtml || '' }}
+                />
+              </div>
+            ) : loading ? (
               <div className="flex items-center justify-center h-64">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
                 <span className="ml-3 text-sm">Loading content...</span>

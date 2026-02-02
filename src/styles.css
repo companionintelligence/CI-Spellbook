@@ -136,6 +136,63 @@
    MARKDOWN CONTENT STYLING
    =========================================== */
 
+/* ===========================================
+   SEARCH RESULT MODE
+   =========================================== */
+
+/* Force cards to show the back face when in search results mode */
+.group.search-result .card-inner {
+  transform: rotateY(180deg);
+}
+
+.group.search-result .card-front {
+  visibility: hidden;
+}
+
+.search-snippet {
+  width: 100%;
+}
+
+.search-snippet-header {
+  margin-bottom: 0.75rem;
+}
+
+.search-snippet-subtitle {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.search-snippet-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  max-height: 26rem;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.search-snippet-line {
+  padding: 0.15rem 0;
+  opacity: 0.95;
+}
+
+.search-snippet-line.is-hit {
+  opacity: 1;
+}
+
+.search-snippet-ellipsis {
+  opacity: 0.6;
+  padding: 0.15rem 0;
+}
+
+.search-snippet-body mark {
+  background: rgba(96, 165, 250, 0.35);
+  color: #e2e8f0;
+  padding: 0.05em 0.15em;
+  border-radius: 0.25rem;
+}
+
 .markdown-body {
   color: #e2e8f0;
   line-height: 1.7;
