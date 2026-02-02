@@ -1,387 +1,145 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ===========================================
+   CARD ANIMATION SYSTEM - Simplified & Clean
+   =========================================== */
 
-/* Hide all scrollbars globally */
-* {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-*::-webkit-scrollbar {
-  display: none; /* WebKit */
-}
-
-/* Enhanced Card Animation System - 5-stage animation with inline expansion */
+/* Base container - flexbox grid for cards */
 #cards-container {
-  margin-top: 0;
-  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Base card styles - stays in document flow */
+.group {
+  position: relative;
+  width: calc(50% - 1rem);
+  max-width: 550px;
+  min-width: 280px;
+  height: 38rem;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+/* Card inner - handles the 3D flip */
+.card-inner {
+  position: relative;
   width: 100%;
-  z-index: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Card Sizes - Enhanced responsiveness */
-.card {
-  /* Base styles that apply to all cards */
-  position: relative;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  transform-origin: center;
-  overflow: hidden;
-  cursor: pointer;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-  border-color: rgba(55, 132, 255, 0.3);
-}
-
-/* Card Sizes */
-.card.size-small {
-  width: 300px;
-  height: 200px;
-}
-
-.card.size-medium {
-  width: 400px;
-  height: 280px;
-}
-
-.card.size-large {
-  width: 500px;
-  height: 360px;
-}
-
-/* Animation States */
-.card.stage-initial {
-  opacity: 0;
-  transform: translateY(50px) scale(0.9);
-}
-
-.card.stage-appearing {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.card.stage-hovering {
-  transform: translateY(-4px) scale(1.02);
-}
-
-.card.stage-expanding {
-  transform: scale(1.1);
-  z-index: 10;
-}
-
-.card.stage-flipped {
-  transform: rotateY(180deg) scale(1.1);
-  z-index: 10;
-}
-
-/* Card content */
-.card-content {
-  padding: 24px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 2;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-front, .card-back {
-  backface-visibility: hidden;
+/* Card faces - front and back */
+.card-front,
+.card-back {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .card-back {
   transform: rotateY(180deg);
-  padding: 24px;
-  overflow-y: auto;
 }
 
-.card.stage-flipped .card-front {
+/* ===========================================
+   EXPANDED STATE - Card grows, pushes others
+   =========================================== */
+
+/* When card is expanded - it grows in place */
+.group.expanded {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  min-height: 38rem;
+  z-index: 100;
+  margin: 0 auto;
+  /* Center expanded card and let others flow below */
+  flex-basis: 100%;
+}
+
+/* Flip the card when expanded */
+.group.expanded .card-inner {
   transform: rotateY(180deg);
 }
 
-.card.stage-flipped .card-back {
-  transform: rotateY(0deg);
+/* Card inner needs to fit content when expanded */
+.group.expanded .card-inner {
+  height: auto;
+  min-height: 38rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .card.size-small {
-    width: 280px;
-    height: 180px;
-  }
-  
-  .card.size-medium {
-    width: 320px;
-    height: 220px;
-  }
-  
-  .card.size-large {
-    width: 360px;
-    height: 260px;
-  }
+/* Card back needs to show full content */
+.group.expanded .card-back {
+  position: relative;
+  transform: rotateY(180deg);
+  height: auto;
+  min-height: 100%;
 }
 
-/* Enhanced Card Layout */
-#cards-container.layout-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 24px;
+/* Hide front when flipped */
+.group.expanded .card-front {
+  visibility: hidden;
 }
 
-#cards-container.layout-masonry {
-  columns: 3;
-  column-gap: 24px;
-  padding: 24px;
+/* Content container in expanded card */
+.group.expanded .card-back > .relative {
+  min-height: 38rem;
 }
 
-#cards-container.layout-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 24px;
+/* Other cards dim slightly when one is expanded */
+.group:not(.expanded) {
+  transition: all 0.4s ease;
 }
 
-/* Debug Panel Styles */
-.debug-panel {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 400px;
-  max-height: 80vh;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(55, 132, 255, 0.3);
-  border-radius: 12px;
-  padding: 20px;
-  z-index: 1000;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  color: #e2e8f0;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+#cards-container:has(.group.expanded) .group:not(.expanded) {
+  opacity: 0.6;
+  transform: scale(0.98);
 }
 
-.debug-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(55, 132, 255, 0.2);
+#cards-container:has(.group.expanded) .group:not(.expanded):hover {
+  opacity: 0.8;
+  transform: scale(1);
 }
 
-.debug-header h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: bold;
-  color: #3b82f6;
-}
+/* ===========================================
+   CLOSE BUTTON
+   =========================================== */
 
-.debug-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.debug-tab-btn {
-  background: rgba(55, 132, 255, 0.1);
-  border: 1px solid rgba(55, 132, 255, 0.3);
-  color: #94a3b8;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.debug-tab-btn:hover {
-  background: rgba(55, 132, 255, 0.2);
-  color: #e2e8f0;
-}
-
-.debug-tab-btn.active {
-  background: rgba(55, 132, 255, 0.3);
-  color: #3b82f6;
-  border-color: #3b82f6;
-}
-
-.debug-close {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  line-height: 1;
-}
-
-.debug-close:hover {
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.debug-tab {
-  display: none;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-.debug-tab.active {
-  display: block;
-}
-
-.debug-section {
-  margin-bottom: 16px;
-}
-
-.debug-section h4 {
-  margin: 0 0 8px 0;
-  font-size: 12px;
-  color: #60a5fa;
-  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
-  padding-bottom: 4px;
-}
-
-.debug-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.debug-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 8px;
-  background: rgba(30, 41, 59, 0.5);
-  border-radius: 4px;
-  border: 1px solid rgba(71, 85, 105, 0.3);
-}
-
-.debug-item label {
-  color: #94a3b8;
-  font-weight: bold;
-}
-
-.debug-value {
-  color: #10b981;
-  font-family: 'Courier New', monospace;
-}
-
-.debug-list {
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.debug-file-item {
-  padding: 8px;
-  margin: 4px 0;
-  background: rgba(30, 41, 59, 0.5);
-  border-radius: 4px;
-  border-left: 3px solid #64748b;
-}
-
-.debug-file-item.status-loading {
-  border-left-color: #f59e0b;
-}
-
-.debug-file-item.status-complete {
-  border-left-color: #10b981;
-}
-
-.debug-file-item.status-error {
-  border-left-color: #ef4444;
-}
-
-.debug-file-name {
-  font-weight: bold;
-  color: #e2e8f0;
-  margin-bottom: 4px;
-}
-
-.debug-file-details {
-  font-size: 10px;
-  color: #94a3b8;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-}
-
-.debug-controls-section {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(55, 132, 255, 0.2);
-}
-
-.debug-button {
-  background: rgba(55, 132, 255, 0.1);
-  border: 1px solid rgba(55, 132, 255, 0.3);
-  color: #3b82f6;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 11px;
-  margin: 4px;
-  transition: all 0.2s;
-}
-
-.debug-button:hover {
-  background: rgba(55, 132, 255, 0.2);
-  transform: translateY(-1px);
-}
-
-.debug-toggle-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(55, 132, 255, 0.9);
-  color: white;
+.fullscreen-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  background: rgba(30, 41, 59, 0.9);
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  padding: 0.5rem;
   cursor: pointer;
-  font-size: 18px;
-  z-index: 999;
-  box-shadow: 0 4px 20px rgba(55, 132, 255, 0.4);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.debug-toggle-btn:hover {
+.fullscreen-close-btn:hover {
+  background: rgba(51, 65, 85, 1);
   transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(55, 132, 255, 0.6);
 }
 
-/* Markdown rendering styles */
+/* ===========================================
+   MARKDOWN CONTENT STYLING
+   =========================================== */
+
 .markdown-body {
   color: #e2e8f0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 0.9rem;
 }
 
 .markdown-body h1,
@@ -390,149 +148,192 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  color: #60a5fa;
-  margin-top: 0;
-  margin-bottom: 12px;
+  color: #f1f5f9;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
 }
 
-.markdown-body h1 { font-size: 1.5em; }
-.markdown-body h2 { font-size: 1.3em; }
-.markdown-body h3 { font-size: 1.1em; }
+.markdown-body h1 { font-size: 1.75rem; }
+.markdown-body h2 { font-size: 1.5rem; }
+.markdown-body h3 { font-size: 1.25rem; }
 
 .markdown-body p {
-  margin-bottom: 12px;
+  margin-bottom: 1rem;
+}
+
+.markdown-body a {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-body a:hover {
+  color: #93c5fd;
 }
 
 .markdown-body ul,
 .markdown-body ol {
-  margin-bottom: 12px;
-  padding-left: 20px;
+  margin: 1rem 0;
+  padding-left: 1.5rem;
 }
 
 .markdown-body li {
-  margin-bottom: 4px;
-}
-
-.markdown-body a {
-  color: #3b82f6;
-  text-decoration: none;
-}
-
-.markdown-body a:hover {
-  text-decoration: underline;
+  margin: 0.5rem 0;
 }
 
 .markdown-body code {
-  background: rgba(30, 41, 59, 0.6);
-  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2em 0.4em;
   border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9em;
-  color: #10b981;
+  font-size: 0.85em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 .markdown-body pre {
-  background: rgba(15, 23, 42, 0.8);
-  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
-  margin-bottom: 16px;
-  border: 1px solid rgba(55, 132, 255, 0.2);
+  margin: 1rem 0;
+  border-left: 3px solid rgba(96, 165, 250, 0.5);
 }
 
 .markdown-body pre code {
   background: none;
   padding: 0;
-  color: #e2e8f0;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.markdown-body th,
+.markdown-body td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown-body th {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
 }
 
 .markdown-body blockquote {
-  border-left: 4px solid #3b82f6;
-  padding-left: 16px;
-  margin: 16px 0;
+  border-left: 4px solid rgba(96, 165, 250, 0.5);
+  padding-left: 1rem;
+  margin: 1rem 0;
   color: #94a3b8;
   font-style: italic;
 }
 
-/* Performance optimizations */
-.card, .debug-panel {
-  will-change: transform, opacity;
-  contain: layout style paint;
+/* ===========================================
+   RESPONSIVE DESIGN
+   =========================================== */
+
+@media (max-width: 768px) {
+  #cards-container {
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .group {
+    width: 100%;
+    max-width: none;
+    height: 32rem;
+  }
+  
+  .group.expanded {
+    min-height: 32rem;
+  }
+  
+  .group.expanded .card-inner,
+  .group.expanded .card-back > .relative {
+    min-height: 32rem;
+  }
+  
+  .markdown-body {
+    font-size: 0.85rem;
+  }
+  
+  .markdown-body h1 { font-size: 1.5rem; }
+  .markdown-body h2 { font-size: 1.25rem; }
+  .markdown-body h3 { font-size: 1.1rem; }
 }
 
-/* Scrollbar styling for debug panel */
-.debug-tab::-webkit-scrollbar,
-.debug-list::-webkit-scrollbar {
+@media (min-width: 1200px) {
+  .group {
+    width: calc(33.333% - 1rem);
+  }
+  
+  .group.expanded {
+    max-width: 1400px;
+  }
+}
+
+/* ===========================================
+   CONTENT FADE-IN ANIMATION
+   =========================================== */
+
+.group.expanded .markdown-body {
+  animation: fadeInContent 0.5s ease-out 0.3s both;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================
+   CARD HOVER EFFECTS (non-expanded)
+   =========================================== */
+
+.group:not(.expanded):hover {
+  transform: translateY(-4px);
+  z-index: 2;
+}
+
+.group:not(.expanded):hover .card-inner {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================================
+   SCROLLBAR STYLING (subtle, not hidden)
+   =========================================== */
+
+.markdown-body::-webkit-scrollbar {
   width: 6px;
 }
 
-.debug-tab::-webkit-scrollbar-track,
-.debug-list::-webkit-scrollbar-track {
-  background: rgba(30, 41, 59, 0.5);
+.markdown-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.markdown-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 
-.debug-tab::-webkit-scrollbar-thumb,
-.debug-list::-webkit-scrollbar-thumb {
-  background: rgba(55, 132, 255, 0.6);
-  border-radius: 3px;
-}
-
-.debug-tab::-webkit-scrollbar-thumb:hover,
-.debug-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(55, 132, 255, 0.8);
-}
-
-/* Loading states */
-.card.loading {
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-.card.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
-  border: 2px solid #3b82f6;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Error states */
-.card.error {
-  border-color: rgba(239, 68, 68, 0.5);
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-}
-
-.card.error .card-content {
-  color: #fca5a5;
-}
-
-/* Success states */
-.card.loaded {
-  animation: loadSuccess 0.5s ease-out;
-}
-
-@keyframes loadSuccess {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
+.markdown-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }

@@ -196,8 +196,6 @@ const App = () => {
               baseColor={config.baseColor}
               markdownPath={config.markdownPath}
               containerId={config.containerId}
-              updateDebug={updateDebug}
-              onMarkdownLoad={handleMarkdownLoad}
               onCardExpand={handleCardExpand}
             />
           ))}
