@@ -4,12 +4,17 @@ import hljs from 'highlight.js';
 
 // Ensure highlight.js CSS is loaded, e.g., in App.jsx, main.jsx, or index-react.html (CDN link is fine for now)
 
-const useMarkdown = (markdownPath) => {
-  const [markdownContent, setMarkdownContent] = useState('');
+const useMarkdown = (markdownPath, containerId, onMarkdownLoad) => {
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const contentRef = useRef(null);
 
   useEffect(() => {
     if (markdownPath) {
+      setLoading(true);
+      setError(null);
+      
       fetch(markdownPath)
         .then(res => {
           if (!res.ok) {
@@ -24,16 +29,25 @@ const useMarkdown = (markdownPath) => {
               return hljs.highlight(code, { language, ignoreIllegals: true }).value;
             }
           });
-          setMarkdownContent(html);
+          setContent(html);
+          setLoading(false);
+          
+          // Notify parent that content is loaded (after a small delay for rendering)
+          setTimeout(() => {
+            onMarkdownLoad?.(containerId);
+          }, 100);
         })
         .catch(err => {
           console.error(`Error processing markdown ${markdownPath}:`, err);
-          setMarkdownContent(`<p>Error loading content for ${markdownPath}. ${err.message}</p>`);
+          const errorMsg = `Error loading content: ${err.message}`;
+          setContent('');
+          setError(errorMsg);
+          setLoading(false);
         });
     }
-  }, [markdownPath]);
+  }, [markdownPath, containerId, onMarkdownLoad]);
 
-  return { markdownContent, contentRef };
+  return { content, loading, error, contentRef };
 };
 
 export default useMarkdown;

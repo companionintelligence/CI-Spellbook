@@ -5,6 +5,7 @@ export const useCardAnimation = (updateDebug) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [animationStage, setAnimationStage] = useState('initial');
   const [contentHeight, setContentHeight] = useState(null);
+  const [needsRemeasure, setNeedsRemeasure] = useState(false);
   
   const cardRef = useRef(null);
   const expandTimeouts = useRef([]);
@@ -15,33 +16,77 @@ export const useCardAnimation = (updateDebug) => {
     timeoutArray.current = [];
   }, []);
 
-  const measureContentHeight = useCallback(() => {
-    if (!cardRef.current) return null;
+  const measureContentHeight = useCallback((force = false) => {
+    if (!cardRef.current) {
+      console.log('⚠️  No cardRef available');
+      return null;
+    }
 
-    const backContent = cardRef.current.querySelector('.card-inner > div[style*="rotateY(180deg)"]');
-    if (!backContent) return null;
+    const backContent = cardRef.current.querySelector('.card-back');
+    if (!backContent) {
+      console.log('⚠️  No .card-back found');
+      return null;
+    }
 
-    // Create temporary element to measure content
-    const tempDiv = backContent.cloneNode(true);
+    // Get the markdown body - this contains the actual content
+    const markdownBody = backContent.querySelector('.markdown-body');
+    if (!markdownBody || markdownBody.innerHTML.trim() === '') {
+      console.log('⚠️  No markdown content loaded yet');
+      return window.innerHeight * 0.8; // Fallback while loading
+    }
+
+    // Clone the markdown body and measure it at full expanded width
+    const tempDiv = document.createElement('div');
+    tempDiv.className = 'markdown-body';
+    tempDiv.innerHTML = markdownBody.innerHTML;
     tempDiv.style.cssText = `
       position: absolute;
       top: -9999px;
       left: -9999px;
-      width: 90vw;
-      max-width: 1400px;
+      width: calc(90vw - 96px);
+      max-width: 1300px;
+      height: auto !important;
+      max-height: none !important;
+      min-height: 0 !important;
       visibility: hidden;
-      transform: none;
-      opacity: 1;
+      overflow: visible !important;
+      display: block !important;
+      padding: 0 !important;
+      font-size: 0.875rem;
+      line-height: 1.6;
     `;
     document.body.appendChild(tempDiv);
     
-    const contentHeight = tempDiv.scrollHeight + 120; // Add padding
-    const maxHeight = window.innerHeight * 0.95; // 95vh max
-    const finalHeight = Math.min(contentHeight, maxHeight);
+    const contentHeight = tempDiv.scrollHeight;
+    
+    // Add generous padding for: card padding (64px), close button area (60px), extra breathing room (40px)
+    const totalPadding = 164;
+    const finalHeight = contentHeight + totalPadding;
+    
+    console.log('📏 Content measurement:', {
+      rawContentHeight: contentHeight,
+      padding: totalPadding,
+      finalHeight: finalHeight,
+      windowHeight: window.innerHeight
+    });
     
     document.body.removeChild(tempDiv);
     return finalHeight;
   }, []);
+
+  // Function to remeasure and update height (called after content loads)
+  const remeasureHeight = useCallback(() => {
+    if (!isExpanded || !cardRef.current) return;
+    
+    console.log('🔄 Remeasuring content height...');
+    const height = measureContentHeight(true);
+    
+    if (height && cardRef.current) {
+      cardRef.current.style.setProperty('--card-content-height', height + 'px');
+      setContentHeight(height);
+      console.log('✅ Updated --card-content-height to:', height + 'px');
+    }
+  }, [isExpanded, measureContentHeight]);
 
   const expandCard = useCallback(() => {
     if (isExpanded) return;
@@ -49,9 +94,10 @@ export const useCardAnimation = (updateDebug) => {
     clearAllTimeouts(expandTimeouts);
     clearAllTimeouts(closeTimeouts);
 
-    // Measure content height
+    // Measure content height (initial estimate)
     const height = measureContentHeight();
     setContentHeight(height);
+    setNeedsRemeasure(true);
 
     // Store original dimensions
     if (cardRef.current) {
@@ -62,6 +108,11 @@ export const useCardAnimation = (updateDebug) => {
       cardRef.current.style.setProperty('--card-original-left', rect.left + 'px');
       if (height) {
         cardRef.current.style.setProperty('--card-content-height', height + 'px');
+        // Also set on container for padding-top calculation
+        const container = document.getElementById('cards-container');
+        if (container) {
+          container.style.setProperty('--card-content-height', height + 'px');
+        }
       }
     }
 
@@ -80,6 +131,21 @@ export const useCardAnimation = (updateDebug) => {
       setIsFlipped(true);
       setAnimationStage('flipped');
       updateDebug?.('3 - Card Flip', true, true, cardRef.current);
+      
+      // Remeasure after flip (content should be visible now)
+      setTimeout(() => {
+        const newHeight = measureContentHeight(true);
+        if (newHeight && cardRef.current) {
+          cardRef.current.style.setProperty('--card-content-height', newHeight + 'px');
+          setContentHeight(newHeight);
+          // Also set on container for padding-top calculation
+          const container = document.getElementById('cards-container');
+          if (container) {
+            container.style.setProperty('--card-content-height', newHeight + 'px');
+          }
+          console.log('🔄 Post-flip height adjustment:', newHeight + 'px');
+        }
+      }, 100);
     }, 1400));
 
     // Stage 4: Full expansion
@@ -183,6 +249,7 @@ export const useCardAnimation = (updateDebug) => {
     animationStage,
     contentHeight,
     expandCard,
-    closeCard
+    closeCard,
+    remeasureHeight
   };
 };

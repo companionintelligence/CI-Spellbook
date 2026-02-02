@@ -20,11 +20,24 @@ const Card = ({
     isExpanded,
     isFlipped,
     animationStage,
+    contentHeight,
     expandCard,
-    closeCard
+    closeCard,
+    remeasureHeight
   } = useCardAnimation(updateDebug);
 
   const { content, loading, error } = useMarkdown(markdownPath, containerId, onMarkdownLoad);
+
+  // Remeasure height when content loads
+  React.useEffect(() => {
+    if (!loading && !error && content && isExpanded) {
+      // Wait a bit for DOM to settle
+      const timer = setTimeout(() => {
+        remeasureHeight();
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, error, content, isExpanded, remeasureHeight]);
 
   const handleCardClick = (e) => {
     // Prevent expansion if clicking on links or if text is selected
@@ -63,8 +76,14 @@ const Card = ({
     }
   );
 
+  // Calculate inline styles for expanded state
+  const expandedStyles = isExpanded && contentHeight ? {
+    height: `${contentHeight}px`,
+    maxHeight: 'none'
+  } : {};
+
   return (
-    <div ref={cardRef} className={cardClasses}>
+    <div ref={cardRef} className={cardClasses} style={expandedStyles}>
       {/* Close button */}
       <button
         type="button"
@@ -100,7 +119,7 @@ const Card = ({
       >
         {/* Front */}
         <div 
-          className="absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:rounded-xl before:transition-all before:duration-500 cursor-pointer"
+          className="card-front absolute inset-0 rounded-xl p-6 text-center flex flex-col justify-center items-center shadow-lg [backface-visibility:hidden] transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:rounded-xl before:transition-all before:duration-500 cursor-pointer"
           style={{
             backgroundImage: `url('${backgroundImage}')`,
             backgroundSize: 'cover',
@@ -123,7 +142,7 @@ const Card = ({
 
         {/* Back */}
         <div 
-          className="absolute inset-0 h-full w-full rounded-xl px-6 py-4 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto transition-all duration-500"
+          className="card-back absolute inset-0 rounded-xl text-white [transform:rotateY(180deg)] [backface-visibility:hidden] transition-all duration-500 flex flex-col"
           style={{
             backgroundImage: `url('${backgroundImage}')`,
             backgroundSize: 'cover',
@@ -132,10 +151,10 @@ const Card = ({
           }}
         >
           <div 
-            className="absolute inset-0 rounded-xl"
+            className="absolute inset-0 rounded-xl pointer-events-none"
             style={{ background: `rgba(${baseColor}, 0.9)` }}
           />
-          <div className="relative z-10 text-xs md:text-sm" id={containerId}>
+          <div className="relative z-10 text-xs md:text-sm flex-1 w-full px-6 py-4" id={containerId}>
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>

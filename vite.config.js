@@ -9,12 +9,5 @@ export default defineConfig({
     port: 5500,
     host: true
   },
-  publicDir: 'public',
-  build: {
-    rollupOptions: {
-      input: {
-        main: '/Users/williambroza/devel/CI-Spellbook/index.html'
-      }
-    }
-  }
+  publicDir: 'public'
 })

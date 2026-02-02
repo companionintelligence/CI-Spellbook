@@ -7,6 +7,17 @@
   display: none; /* WebKit */
 }
 
+/* CRITICAL: Override Tailwind h-[42rem] for expanded cards - inline styles have highest priority */
+/* This ensures cards expand to full content height */
+.group.flipped,
+.group.full-expanded,
+.group.content-visible,
+.group.expanding-height {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
 /* Enhanced Card Animation System - 5-stage animation with inline expansion */
 #cards-container {
   display: flex !important;
@@ -63,6 +74,37 @@
   height: 100%;
 }
 
+/* Card front face - visible by default, hidden when flipped */
+.card-front {
+  backface-visibility: hidden;
+}
+
+/* Card back face - hidden by default, visible when flipped */
+.card-back {
+  backface-visibility: hidden;
+}
+
+/* Allow card-back to grow to content height */
+.group.flipped .card-back,
+.group.expanding-height .card-back,
+.group.full-expanded .card-back {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+/* Ensure the content container inside card-back displays full content */
+.group.flipped .card-back > .relative,
+.group.expanding-height .card-back > .relative,
+.group.full-expanded .card-back > .relative {
+  flex: 1 !important;
+  overflow: visible !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
 /* Stage 1: Expand width - stay in container but grow */
 .group.expanding-width {
   position: absolute !important;
@@ -82,12 +124,24 @@
   top: 0 !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  width: 80vw !important;
-  height: var(--card-content-height, 80vh) !important;
-  max-height: 90vh !important;
-  max-width: 1200px !important;
+  width: 90vw !important;
+  height: var(--card-content-height, auto) !important;
+  max-width: 1400px !important;
   z-index: 50 !important;
   transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Stage 3: Card flipped - maintain height with content visible */
+.group.flipped {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90vw !important;
+  height: var(--card-content-height, auto) !important;
+  max-width: 1400px !important;
+  z-index: 50 !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Stage 3: Flip the card with smooth transition */
@@ -96,7 +150,7 @@
   transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Stage 4: Expand to optimal size after flip - use content height */
+/* Stage 4: Expand to optimal size after flip - full content height */
 .group.flipped.full-expanded,
 .group.full-expanded.flipped {
   position: absolute !important;
@@ -104,8 +158,7 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: var(--card-content-height, 85vh) !important;
-  max-height: 95vh !important;
+  height: var(--card-content-height, auto) !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
@@ -121,15 +174,14 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: var(--card-content-height, 85vh) !important;
-  max-height: 95vh !important;
+  height: var(--card-content-height, auto) !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* When a card is expanded, add space for other cards to flow around it - use dynamic heights */
+/* When a card is expanded, add space for other cards to flow around it */
 #cards-container:has(.group.full-expanded) {
   padding-top: calc(var(--card-content-height, 85vh) + 2rem);
 }
@@ -158,45 +210,36 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: 85vh !important;
+  height: var(--card-content-height, auto) !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
-/* Ensure card-inner fills the full-expanded card completely */
-.group.full-expanded .card-inner {
+/* Ensure card-inner fills the full-expanded card completely and allows content to grow */
+.group.full-expanded .card-inner,
+.group.expanding-height .card-inner {
   width: 100% !important;
   height: 100% !important;
+  min-height: auto !important;
   position: relative !important;
   transform-style: preserve-3d !important;
 }
 
-/* Make the back side (content) scrollable when expanded */
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"],
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
-  width: 100% !important;
-  height: 100% !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  scrollbar-width: thin !important;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
-}
+/* Make the back side (content) scrollable when expanded - now handled by flex rules above */
 
 /* Enhanced content styling for dynamic card heights */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] .markdown-body {
+.group.flipped .card-back .markdown-body {
   width: 100% !important;
   height: auto !important;
-  min-height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
 /* Tables in expanded cards with dynamic height */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+.group.flipped .card-back table {
   width: 100% !important;
   table-layout: auto !important;
   border-collapse: collapse !important;
@@ -207,8 +250,8 @@
   overflow: hidden !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] table th,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] table td {
+.group.flipped .card-back table th,
+.group.flipped .card-back table td {
   padding: 0.75rem !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   text-align: left !important;
@@ -216,7 +259,7 @@
   word-wrap: break-word !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] table th {
+.group.flipped .card-back table th {
   background: rgba(255, 255, 255, 0.1) !important;
   font-weight: 600 !important;
   position: sticky !important;
@@ -225,7 +268,7 @@
 }
 
 /* Code blocks in expanded cards */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] pre {
+.group.flipped .card-back pre {
   width: 100% !important;
   max-width: 100% !important;
   overflow-x: auto !important;
@@ -236,14 +279,14 @@
   border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] code {
+.group.flipped .card-back code {
   font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
   font-size: 0.85rem !important;
   line-height: 1.4 !important;
 }
 
 /* Images in expanded cards */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] img {
+.group.flipped .card-back img {
   max-width: 100% !important;
   height: auto !important;
   border-radius: 8px !important;
@@ -252,71 +295,43 @@
 }
 
 /* Lists in expanded cards */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] ul,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] ol {
+.group.flipped .card-back ul,
+.group.flipped .card-back ol {
   margin: 1rem 0 !important;
   padding-left: 2rem !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] li {
+.group.flipped .card-back li {
   margin: 0.5rem 0 !important;
   line-height: 1.6 !important;
 }
 
 /* Responsive content adjustments */
 @media (max-width: 768px) {
-  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+  .group.flipped .card-back table {
     font-size: 0.8rem !important;
   }
   
-  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table th,
-  .group.flipped .card-inner > div[style*="rotateY(180deg)"] table td {
+  .group.flipped .card-back table th,
+  .group.flipped .card-back table td {
     padding: 0.5rem !important;
   }
   
-  .group.flipped .card-inner > div[style*="rotateY(180deg)"] pre {
+  .group.flipped .card-back pre {
     padding: 0.75rem !important;
     font-size: 0.75rem !important;
   }
 }
 
-/* Custom scrollbar for webkit browsers */
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar {
-  width: 8px !important;
-}
+/* No scrollbar styling needed - cards expand to full content height */
 
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track,
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 4px !important;
-}
-
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb,
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 4px !important;
-}
-
-.group.full-expanded .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover,
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover,
-.group.flipped .card-inner > div[style*="rotateY(180deg)"]::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Card back content positioning for all stages */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"],
-.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
+/* Card back content positioning for all stages - allow content to define height */
+.group.flipped .card-back,
+.group.flipped.full-expanded .card-back {
+  position: relative !important;
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
@@ -326,44 +341,23 @@
   box-sizing: border-box !important;
 }
 
-/* Card back content scrollable area - optimized for dynamic height */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative,
-.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
+/* Card back content area - full content display without scrolling */
+.group.flipped .card-back > .relative,
+.group.flipped.full-expanded .card-back > .relative {
   width: 100% !important;
-  height: 100% !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  height: auto !important;
+  overflow: visible !important;
   padding: 1rem !important;
   box-sizing: border-box !important;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease-out;
-  /* Custom scrollbar for better UX with dynamic content */
-  scrollbar-width: thin !important;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
 }
 
-/* Webkit scrollbar styling for dynamic content */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar {
-  width: 8px !important;
-}
-
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 4px !important;
-}
-
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 4px !important;
-}
-
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
+/* Card back content scrollable area removed - cards show full content without scrolling */
 
 /* Stage 5: Text content fade-in animations */
-.group.content-visible .card-inner > div[style*="rotateY(180deg)"] > .relative {
+.group.content-visible .card-back > .relative {
   opacity: 1 !important;
   transform: translateY(0) !important;
   transition: all 0.8s ease-out 0.2s;
@@ -562,14 +556,13 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: var(--card-content-height, 85vh) !important;
-  max-height: 95vh !important;
+  height: var(--card-content-height, auto) !important;
   max-width: 1400px !important;
   z-index: 50 !important;
   transition: all 0.4s ease-in !important;
 }
 
-.group.closing-content .card-inner > div[style*="rotateY(180deg)"] > .relative {
+.group.closing-content .card-back > .relative {
   opacity: 0 !important;
   transform: translateY(20px) !important;
   transition: all 0.4s ease-in !important;
@@ -582,8 +575,7 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 80vw !important;
-  height: var(--card-content-height, 80vh) !important;
-  max-height: 90vh !important;
+  height: var(--card-content-height, auto) !important;
   max-width: 1200px !important;
   z-index: 50 !important;
   transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
@@ -674,40 +666,33 @@
   background-repeat: no-repeat !important;
 }
 
-/* Fix scrolling on card backs - ensure proper overflow behavior */
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"],
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] {
-  overflow: hidden !important;
+/* Card backs show full content - no scrolling needed */
+.group.expanding-height .card-back,
+.group.flipped .card-back {
+  overflow: visible !important;
   background-attachment: scroll !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
 }
 
-/* Fix card back content scrolling */
-.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative {
-  overflow-y: auto !important;
-  max-height: 100% !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
 /* Ensure card back markdown content displays properly */
-.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] .markdown-content {
+.group.expanding-height.flipped .card-back .markdown-body {
   width: 100% !important;
   max-width: none !important;
   padding: 0 !important;
 }
 
 /* Fix card back tables to be responsive in expanded view */
-.group.expanding-height.flipped .card-inner > div[style*="rotateY(180deg)"] table {
+.group.expanding-height.flipped .card-back table {
   width: 100% !important;
   max-width: 100% !important;
   table-layout: auto !important;
 }
 
 /* Ensure dark background overlay works on card backs */
-.group.expanding-height .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"],
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+.group.expanding-height .card-back > .absolute.inset-0,
+.group.flipped .card-back > .absolute.inset-0 {
   background: rgba(36, 72, 89, 0.9) !important;
   pointer-events: none;
   transition: none !important;
