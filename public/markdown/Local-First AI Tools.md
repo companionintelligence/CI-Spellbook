@@ -15,7 +15,22 @@
 ## Local-First AI Tools Directory
 
 Below is a quick-reference directory of leading local-first AI tools grouped by function. Use it as a jump-off for building or expanding a home workstation stack—every entry links to the project’s home page or GitHub repo so you can dive straight into docs, downloads, and community.
+---
 
+## 2026 Model Recommendations
+
+| Use Case | Model | Size | Notes |
+|----------|-------|------|-------|
+| **General Assistant** | Llama 3.3 70B | 40GB Q4 | Best open-weights general model |
+| **Coding** | DeepSeek-Coder-V3 | 37GB Q4 | State-of-the-art code generation |
+| **Reasoning** | Qwen 2.5-72B | 42GB Q4 | Strong math and logic |
+| **Small & Fast** | Llama 3.2 3B | 2GB Q4 | Great for Raspberry Pi 5 / Mac Mini |
+| **Balanced** | Mistral Large 2 (123B) | 70GB Q4 | Multilingual, instruction-following |
+| **Creative Writing** | Mixtral 8x22B | 80GB Q4 | MoE architecture, diverse outputs |
+| **Vision-Language** | Llama 3.2-Vision 11B | 7GB Q4 | Multimodal understanding |
+| **Edge Devices** | Phi-3.5-mini 3.8B | 2.5GB | Optimized for constrained hardware |
+
+---
 ### How to use this table
 
 - **Pick a backbone** – choose an LLM runner that matches your hardware.  
@@ -29,71 +44,65 @@ Below is a quick-reference directory of leading local-first AI tools grouped by 
 
 | Tool      | Description |
 |-----------|-------------|
-| **Ollama**  
-🔗 [ollama.com](https://ollama.com)  
-🪪 MIT | Simple local LLM runner with one-line model downloads and REST API. Great for desktop and dev use. |
-| **LM Studio**  
-🔗 [lmstudio.ai](https://lmstudio.ai)  
-🪪 AGPL-3.0 | Cross-platform GUI for running, managing, and chatting with local LLMs. Supports many model formats. |
-| **llama.cpp**  
-🔗 [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)  
-🪪 MIT | Fast, portable C/C++ inference engine for Llama-family and compatible models. CLI and server modes. |
-| **KoboldCpp**  
-🔗 [LostRuins/koboldcpp](https://github.com/LostRuins/koboldcpp)  
-🪪 AGPL-3.0 | Easy-to-use LLM runner with web UI, story mode, and GPU/CPU support. Focused on creative writing. |
-| **GPT4All**  
-🔗 [nomic-ai/gpt4all](https://github.com/nomic-ai/gpt4all)  
-🪪 Apache-2.0 | Multi-platform LLM runner and chat UI. Supports many models, with easy install and local vector DB. |
+| **Ollama**<br>🔗 [ollama.com](https://ollama.com)<br>🪪 MIT | Simple local LLM runner with one-line model downloads and REST API. Now supports vision models, tool calling, and structured outputs. |
+| **LM Studio**<br>🔗 [lmstudio.ai](https://lmstudio.ai)<br>🪪 Proprietary (Free) | Cross-platform GUI with local server mode, MLX support for Apple Silicon, and GGUF model browser. Supports vision and embedding models. |
+| **llama.cpp**<br>🔗 [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)<br>🪪 MIT | Fast, portable C/C++ inference engine. Supports speculative decoding, vision models, grammar-constrained generation, and Vulkan GPU backend. |
+| **SGLang**<br>🔗 [sgl-project/sglang](https://github.com/sgl-project/sglang)<br>🪪 Apache-2.0 | High-performance serving framework with RadixAttention for efficient prefix caching. 5x faster than vLLM for some workloads. |
+| **vLLM**<br>🔗 [vllm-project/vllm](https://github.com/vllm-project/vllm)<br>🪪 Apache-2.0 | Production-ready serving with PagedAttention, continuous batching, and multi-GPU support. The standard for high-throughput inference. |
+| **TensorRT-LLM**<br>🔗 [NVIDIA/TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)<br>🪪 Apache-2.0 | NVIDIA's optimized inference engine. Best performance on NVIDIA GPUs with FP8 quantization and advanced kernels. |
+| **KoboldCpp**<br>🔗 [LostRuins/koboldcpp](https://github.com/LostRuins/koboldcpp)<br>🪪 AGPL-3.0 | Easy-to-use LLM runner with web UI, story mode, and GPU/CPU support. Focused on creative writing and roleplay. |
+| **GPT4All**<br>🔗 [nomic-ai/gpt4all](https://github.com/nomic-ai/gpt4all)<br>🪪 Apache-2.0 | Multi-platform LLM runner with built-in RAG and local vector DB. Great for beginners with polished UI. |
+| **MLX**<br>🔗 [ml-explore/mlx](https://github.com/ml-explore/mlx)<br>🪪 MIT | Apple's ML framework optimized for Apple Silicon. Native support for Llama, Mistral, and other architectures. |
+| **ExLlamaV2**<br>🔗 [turboderp/exllamav2](https://github.com/turboderp/exllamav2)<br>🪪 MIT | Fastest inference for EXL2/GPTQ quantized models on consumer GPUs. Great memory efficiency. |
 
 ### Chat UI / Front-Ends
 
 | Tool      | Description |
 |-----------|-------------|
-| **OpenWebUI**  
-🔗 [open-webui/open-webui](https://github.com/open-webui/open-webui)  
-🪪 AGPL-3.0 | Modern, extensible web chat UI for local LLMs (Ollama, llama.cpp, etc). Multi-user, plugin support. |
-| **Text-Generation WebUI**  
-🔗 [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui)  
-🪪 AGPL-3.0 | Feature-rich web UI for running, chatting, and experimenting with local LLMs. Huge extension ecosystem. |
-| **SillyTavern**  
-🔗 [SillyTavern/SillyTavern](https://github.com/SillyTavern/SillyTavern)  
-🪪 GPL-3.0 | Roleplay and character-focused chat UI for local and remote LLMs. Integrates with KoboldCpp, OAI, and more. |
+| **OpenWebUI**<br>🔗 [open-webui/open-webui](https://github.com/open-webui/open-webui)<br>🪪 MIT | Modern, extensible web chat UI for local LLMs. Multi-user, RAG, pipelines, functions, and tool calling support. The standard chat UI. |
+| **Text-Generation WebUI**<br>🔗 [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui)<br>🪪 AGPL-3.0 | Feature-rich web UI with huge extension ecosystem. Supports multimodal, training, and advanced generation controls. |
+| **SillyTavern**<br>🔗 [SillyTavern/SillyTavern](https://github.com/SillyTavern/SillyTavern)<br>🪪 AGPL-3.0 | Roleplay and character-focused chat UI. Advanced persona management, world info, and multi-backend support. |
+| **LibreChat**<br>🔗 [danny-avila/LibreChat](https://github.com/danny-avila/LibreChat)<br>🪪 MIT | Multi-model chat interface supporting Ollama, OpenAI, Anthropic. Plugins, presets, and conversation branching. |
+| **Jan**<br>🔗 [janhq/jan](https://github.com/janhq/jan)<br>🪪 AGPL-3.0 | Offline-first chat application with built-in model management. Clean UI, cross-platform, extension system. |
+| **Msty**<br>🔗 [msty.app](https://msty.app)<br>🪪 Proprietary (Free) | Beautiful native chat app for Mac/Windows/Linux. Multi-model conversations, RAG, and local-first design. |
 
 ### Knowledge-Base / RAG Suites
 
 | Tool      | Description |
 |-----------|-------------|
-| **AnythingLLM**<br>🔗 [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)<br>🪪 AGPL-3.0 | Plug-and-play RAG suite for connecting docs, files, and data to local or remote LLMs. Easy setup, web UI. |
-| **Haystack**<br>🔗 [deepset-ai/haystack](https://github.com/deepset-ai/haystack)<br>🪪 Apache-2.0 | Flexible Python framework for building RAG, search, and question-answering pipelines. Many integrations. |
-| **Dify**<br>🔗 [langgenius/dify](https://github.com/langgenius/dify)<br>🪪 Apache-2.0 | All-in-one platform for building RAG, chatbots, and agent workflows. Web UI, API, and multi-model support. |
-| **PrivateGPT**<br>🔗 [imartinez/privateGPT](https://github.com/imartinez/privateGPT)<br>🪪 Apache-2.0 | Complete local RAG solution for chatting with documents. Uses Ollama/LlamaCpp with vector databases. |
-| **LocalGPT**<br>🔗 [PromtEngineer/localGPT](https://github.com/PromtEngineer/localGPT)<br>🪪 Apache-2.0 | Local document Q&A using GPT models. Ingest PDFs, web pages, and more into a searchable knowledge base. |
-| **Quivr**<br>🔗 [QuivrHQ/quivr](https://github.com/QuivrHQ/quivr)<br>🪪 Apache-2.0 | Personal productivity assistant that can ingest and chat with various document types using local LLMs. |
-| **Danswer**<br>🔗 [danswer-ai/danswer](https://github.com/danswer-ai/danswer)<br>🪪 MIT | Enterprise-grade RAG system for connecting internal knowledge bases with local LLMs. Slack integration. |
+| **AnythingLLM**<br>🔗 [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)<br>🪪 MIT | Plug-and-play RAG suite with web UI, API, and agent support. Connects to Ollama, OpenAI, and more. Best all-in-one solution. |
+| **Dify**<br>🔗 [langgenius/dify](https://github.com/langgenius/dify)<br>🪪 Apache-2.0 | All-in-one platform for building RAG, chatbots, and agent workflows. Visual workflow builder, API, multi-model. |
+| **Haystack**<br>🔗 [deepset-ai/haystack](https://github.com/deepset-ai/haystack)<br>🪪 Apache-2.0 | Production-ready Python framework for RAG pipelines. Excellent for custom implementations. |
+| **Kotaemon**<br>🔗 [Cinnamon/kotaemon](https://github.com/Cinnamon/kotaemon)<br>🪪 Apache-2.0 | Clean document QA interface with multi-modal RAG, citations, and local model support. Great for PDFs. |
+| **PrivateGPT**<br>🔗 [zylon-ai/private-gpt](https://github.com/zylon-ai/private-gpt)<br>🪪 Apache-2.0 | Production-ready local RAG server. API-first design, multiple vector stores, Ollama integration. |
+| **Quivr**<br>🔗 [QuivrHQ/quivr](https://github.com/QuivrHQ/quivr)<br>🪪 Apache-2.0 | "Second brain" RAG app. Multi-brain architecture, Slack/Discord integrations, clean UI. |
+| **Danswer (Onyx)**<br>🔗 [onyx-dot-app/onyx](https://github.com/onyx-dot-app/onyx)<br>🪪 MIT | Enterprise-grade RAG with Slack, Confluence, and Google Drive connectors. Self-hosted search. |
+| **R2R**<br>🔗 [SciPhi-AI/R2R](https://github.com/SciPhi-AI/R2R)<br>🪪 MIT | Production RAG engine with hybrid search, knowledge graphs, and advanced retrieval strategies. |
 
 ### Vector Databases & Embedding Stores
 
 | Tool      | Description |
 |-----------|-------------|
-| **Qdrant**<br>🔗 [qdrant/qdrant](https://github.com/qdrant/qdrant)<br>🪪 Apache-2.0 | High-performance vector database with REST API, clustering support, and advanced filtering capabilities. |
-| **Chroma**<br>🔗 [chroma-core/chroma](https://github.com/chroma-core/chroma)<br>🪪 Apache-2.0 | AI-native open-source embedding database with Python/JS clients and simple setup. |
-| **Weaviate**<br>🔗 [weaviate/weaviate](https://github.com/weaviate/weaviate)<br>🪪 BSD-3-Clause | Vector database with hybrid search, GraphQL API, and built-in NLP modules for local deployment. |
-| **Milvus**<br>🔗 [milvus-io/milvus](https://github.com/milvus-io/milvus)<br>🪪 Apache-2.0 | Scalable vector database with high-performance similarity search and cloud-native architecture. |
-| **FAISS**<br>🔗 [facebookresearch/faiss](https://github.com/facebookresearch/faiss)<br>🪪 MIT | Facebook's library for efficient similarity search and clustering of dense vectors. CPU/GPU optimized. |
-| **Vespa**<br>🔗 [vespa-engine/vespa](https://github.com/vespa-engine/vespa)<br>🪪 Apache-2.0 | Big data serving engine with real-time vector search, ML inference, and structured data querying. |
-| **txtai**<br>🔗 [neuml/txtai](https://github.com/neuml/txtai)<br>🪪 Apache-2.0 | All-in-one embeddings database for semantic search, LLM orchestration, and language model workflows. |
+| **Qdrant**<br>🔗 [qdrant/qdrant](https://github.com/qdrant/qdrant)<br>🪪 Apache-2.0 | High-performance vector database with filtering, multi-tenancy, and hybrid search. Best overall. |
+| **Chroma**<br>🔗 [chroma-core/chroma](https://github.com/chroma-core/chroma)<br>🪪 Apache-2.0 | AI-native embedding database. Simple setup, Python-first, great for prototyping. |
+| **LanceDB**<br>🔗 [lancedb/lancedb](https://github.com/lancedb/lancedb)<br>🪪 Apache-2.0 | Serverless vector database built on Lance format. Embedded or cloud, multi-modal support. |
+| **Weaviate**<br>🔗 [weaviate/weaviate](https://github.com/weaviate/weaviate)<br>🪪 BSD-3-Clause | Vector database with hybrid search, GraphQL API, and built-in vectorization modules. |
+| **Milvus**<br>🔗 [milvus-io/milvus](https://github.com/milvus-io/milvus)<br>🪪 Apache-2.0 | Scalable vector database for billion-scale deployments. GPU support, cloud-native. |
+| **pgvector**<br>🔗 [pgvector/pgvector](https://github.com/pgvector/pgvector)<br>🪪 PostgreSQL | Vector similarity search for PostgreSQL. Use your existing database infrastructure. |
+| **FAISS**<br>🔗 [facebookresearch/faiss](https://github.com/facebookresearch/faiss)<br>🪪 MIT | Meta's library for efficient similarity search. GPU-optimized, excellent for large-scale. |
 
 ### Agent Frameworks & Automation
 
 | Tool      | Description |
 |-----------|-------------|
-| **CrewAI**<br>🔗 [joaomdmoura/crewAI](https://github.com/joaomdmoura/crewAI)<br>🪪 MIT | Framework for orchestrating role-playing, autonomous AI agents for collaborative task execution. |
-| **AutoGen**<br>🔗 [microsoft/autogen](https://github.com/microsoft/autogen)<br>🪪 MIT | Microsoft's framework for building multi-agent conversational AI systems with local LLM support. |
-| **LangGraph**<br>🔗 [langchain-ai/langgraph](https://github.com/langchain-ai/langgraph)<br>🪪 MIT | Build stateful, multi-actor applications with LLMs using graph-based workflows and local models. |
-| **AgentGPT**<br>🔗 [reworkd/AgentGPT](https://github.com/reworkd/AgentGPT)<br>🪪 GPL-3.0 | Autonomous AI agents in your browser. Deploy and configure agents to accomplish goals with local LLMs. |
-| **AutoGPT**<br>🔗 [Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)<br>🪪 MIT | Autonomous GPT-4 agent that can execute tasks, browse the web, and interact with applications. |
-| **BabyAGI**<br>🔗 [yoheinakajima/babyagi](https://github.com/yoheinakajima/babyagi)<br>🪪 MIT | Task-driven autonomous agent using LLMs to generate, prioritize, and execute tasks towards a goal. |
-| **MetaGPT**<br>🔗 [geekan/MetaGPT](https://github.com/geekan/MetaGPT)<br>🪪 MIT | Multi-agent framework that assigns different roles to GPTs to form a collaborative software entity. |
+| **LangGraph**<br>🔗 [langchain-ai/langgraph](https://github.com/langchain-ai/langgraph)<br>🪪 MIT | Build stateful, multi-actor agent applications with graph-based workflows. Production-ready. |
+| **CrewAI**<br>🔗 [crewAIInc/crewAI](https://github.com/crewAIInc/crewAI)<br>🪪 MIT | Framework for orchestrating role-based AI agents. Simple API for multi-agent collaboration. |
+| **AutoGen**<br>🔗 [microsoft/autogen](https://github.com/microsoft/autogen)<br>🪪 MIT | Microsoft's multi-agent framework. Supports local models, tool use, and complex conversations. |
+| **PydanticAI**<br>🔗 [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai)<br>🪪 MIT | Type-safe AI agent framework from Pydantic team. Structured outputs, dependency injection. |
+| **Smolagents**<br>🔗 [huggingface/smolagents](https://github.com/huggingface/smolagents)<br>🪪 Apache-2.0 | HuggingFace's lightweight agent library. Code-first approach, tool calling, multi-step reasoning. |
+| **DSPy**<br>🔗 [stanfordnlp/dspy](https://github.com/stanfordnlp/dspy)<br>🪪 MIT | Programming framework for foundation models. Compile prompt chains, optimize pipelines. |
+| **OpenAI Agents SDK**<br>🔗 [openai/openai-agents-python](https://github.com/openai/openai-agents-python)<br>🪪 MIT | Official SDK for building agents with handoffs, tools, and guardrails. Works with local APIs. |
+| **MetaGPT**<br>🔗 [geekan/MetaGPT](https://github.com/geekan/MetaGPT)<br>🪪 MIT | Multi-agent framework simulating software company roles. Great for code generation tasks. |
 
 ### Workflow Orchestration & No-Code
 

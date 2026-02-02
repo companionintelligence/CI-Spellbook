@@ -15,7 +15,6 @@
   align-items: flex-start !important;
   gap: 2rem !important;
   min-height: 100vh;
-  padding: 1rem;
   position: relative;
 }
 
@@ -45,7 +44,6 @@
   
   #cards-container {
     gap: 1rem;
-    padding: 0.5rem;
   }
 }
 

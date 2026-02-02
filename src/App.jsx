@@ -16,6 +16,16 @@ const App = () => {
   // Card configuration
   const cardConfigs = [
     {
+      id: 'ai-agents',
+      title: 'AI Agents & Autonomous Systems',
+      backgroundImage: '/background/background1.jpg',
+      borderColor: '#8b5cf6',
+      hoverColor: '139, 92, 246',
+      baseColor: '45, 27, 78',
+      markdownPath: '/markdown/AI Agents & Autonomous Systems.md',
+      containerId: 'card-ai-agents'
+    },
+    {
       id: 'local-first-ai-tools',
       title: 'Local-First AI Tools',
       backgroundImage: '/background/background1.jpg',
@@ -34,6 +44,26 @@ const App = () => {
       baseColor: '36, 72, 89',
       markdownPath: '/markdown/AI-Assisted Code Development.md',
       containerId: 'card-ai-assisted-code-dev'
+    },
+    {
+      id: 'maker-hardware',
+      title: 'Maker & Hardware Prototyping',
+      backgroundImage: '/background/background3.png',
+      borderColor: '#f97316',
+      hoverColor: '249, 115, 22',
+      baseColor: '78, 45, 22',
+      markdownPath: '/markdown/Maker & Hardware Prototyping.md',
+      containerId: 'card-maker-hardware'
+    },
+    {
+      id: 'xr-spatial',
+      title: 'XR & Spatial Computing',
+      backgroundImage: '/background/background4.png',
+      borderColor: '#06b6d4',
+      hoverColor: '6, 182, 212',
+      baseColor: '22, 67, 78',
+      markdownPath: '/markdown/XR & Spatial Computing.md',
+      containerId: 'card-xr-spatial'
     },
     {
       id: 'cutting-edge-databases',
@@ -133,14 +163,14 @@ const App = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="py-6 flex justify-between items-center relative z-[100]">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+        <header className="py-1 flex justify-between items-center relative z-[100]">
           {/* Logo */}
           <div className="flex items-center">
             <img 
               src="/logo/2024_CI__LogoMark_light.png" 
               alt="Companion Intelligence Logo" 
-              className="h-36 w-auto" 
+              className="w-auto h-36" 
             />
           </div>
           
@@ -150,7 +180,7 @@ const App = () => {
               <input 
                 type="text" 
                 placeholder="Search the Spellbook..." 
-                className="w-full h-12 pl-4 pr-12 rounded-lg text-white focus:outline-none focus:ring-2 transition shadow-md" 
+                className="w-full h-12 pl-4 pr-12 text-white transition rounded-lg shadow-md focus:outline-none focus:ring-2" 
                 style={{
                   background: 'rgba(52, 52, 78, 0.8)',
                   border: '1px solid #3784ff',
@@ -159,13 +189,13 @@ const App = () => {
               />
               <button 
                 type="button" 
-                className="absolute right-3 hover:text-blue-300 focus:outline-none transition" 
+                className="absolute transition right-3 hover:text-blue-300 focus:outline-none" 
                 style={{ color: '#abd4d8' }}
                 aria-label="Clear search"
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5" 
+                  className="w-5 h-5" 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
@@ -184,7 +214,7 @@ const App = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+      <div className="container p-4 mx-auto sm:p-6 lg:p-8">
         <div className="flex flex-wrap justify-center gap-8" id="cards-container">
           {cardConfigs.map((config) => (
             <Card

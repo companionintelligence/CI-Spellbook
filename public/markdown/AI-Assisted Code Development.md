@@ -2,6 +2,24 @@
 
 This section highlights open-source and commercial tools that leverage AI to improve developer productivity, code quality, and collaboration. You'll find both model-based code generators and smart assistants that integrate into your IDE or CI/CD pipelines.
 
+---
+
+## 2026 Highlights: Agentic Coding
+
+The biggest shift in AI-assisted development is the move from **autocomplete** to **agentic coding**—AI that can autonomously write, test, and iterate on code across multiple files while understanding your entire codebase context.
+
+| Tool | Type | Best For | Notes |
+|------|------|----------|-------|
+| **Claude Code** | CLI Agent | Complex multi-file tasks | Best reasoning, MCP support |
+| **Cursor** | IDE | Daily development | Fast, great UX |
+| **Windsurf** | IDE | Flow state coding | Free tier, good agentic features |
+| **Aider** | CLI Agent | Open source, local models | Works with any LLM |
+| **Cline** | VS Code Extension | VS Code users | Agent mode in familiar environment |
+| **Devin** | Autonomous Agent | Delegating full tasks | Background execution |
+| **Amazon Q Developer** | IDE/CLI | AWS integration | Free tier, security focus |
+
+---
+
 ## How to Use This Directory
 
 1. Identify your workflow: choose a tool that best fits your environment (editor, IDE, terminal).
@@ -11,73 +29,92 @@ This section highlights open-source and commercial tools that leverage AI to imp
 
 ---
 
+## Agentic Coding Tools
+
+| Tool | Description | Key Features | Platform Support |
+|------|-------------|--------------|------------------|
+| **Claude Code (Anthropic)**<br>🔗 [anthropic.com](https://www.anthropic.com/claude-code)<br>🪪 Commercial | Agentic coding assistant that runs in your terminal. Understands full codebase, executes commands, edits files, and supports MCP tools. | Multi-file editing, terminal commands, MCP integration, git-aware, extended thinking | Cross-platform CLI (Max plan) |
+| **Cursor**<br>🔗 [cursor.so](https://www.cursor.so/)<br>🪪 Commercial (Free tier) | AI-first code editor with Composer for multi-file agentic editing, codebase chat, and agent mode for autonomous task completion. | Agent mode, Composer, codebase indexing, apply mode, custom models | Desktop (VS Code fork) |
+| **Windsurf (Codeium)**<br>🔗 [codeium.com/windsurf](https://codeium.com/windsurf)<br>🪪 Free/Commercial | AI IDE with Cascade—an agentic flow system that maintains context across editing sessions. Supercomplete predicts your next edit. | Cascade agentic flow, Supercomplete, command mode, flows | Desktop (Cross-platform) |
+| **Aider**<br>🔗 [paul-gauthier/aider](https://github.com/paul-gauthier/aider)<br>🪪 Apache-2.0 | Terminal-based AI pair programmer. Works with any LLM (local or cloud). Multi-file editing with git integration. | Architect mode, multi-file refactor, Git integration, supports 40+ LLMs, voice mode | Cross-platform CLI |
+| **Cline (VS Code)**<br>🔗 [cline.bot](https://cline.bot/)<br>🪪 Apache-2.0 | VS Code extension with autonomous agent capabilities. Can browse web, execute commands, and edit files with human-in-the-loop. | Agent mode, browser use, terminal access, MCP support, multi-model | VS Code Extension |
+| **Devin (Cognition)**<br>🔗 [devin.ai](https://devin.ai/)<br>🪪 Commercial | Autonomous AI software engineer that works in background. Handles full tasks from issue to PR. Slack integration. | Autonomous execution, full context, PR creation, Slack integration | Cloud service |
+| **OpenHands (ex-OpenDevin)**<br>🔗 [all-hands-ai/OpenHands](https://github.com/all-hands-ai/OpenHands)<br>🪪 MIT | Open-source autonomous AI agent for software development. Runs in sandboxed environment, supports multiple LLMs. | Sandboxed execution, browser automation, multi-model, self-hosted | Docker/Self-hosted |
+| **SWE-agent (Princeton)**<br>🔗 [princeton-nlp/SWE-agent](https://github.com/princeton-nlp/SWE-agent)<br>🪪 MIT | Research agent for automatically resolving GitHub issues. Benchmarked on SWE-bench. | Issue resolution, GitHub integration, research-grade | CLI/Research |
+
 ## AI Coding Assistants & IDEs
 
 | Tool | Description | Key Features | Platform Support |
 |------|-------------|--------------|------------------|
-| **Aider**<br>🔗 [paul-gauthier/aider](https://github.com/paul-gauthier/aider)<br>🪪 Apache-2.0 | AI pair programmer for your terminal. Edits code in your repo using local or remote LLMs, tracks context, and supports multi-file refactoring. | Multi-file editing, Git integration, context awareness, supports GPT-4, Claude, local models | Cross-platform CLI |
-| **CodeGeeX**<br>🔗 [THUDM/CodeGeeX](https://github.com/THUDM/CodeGeeX)<br>🪪 Apache-2.0 (Code) | Multilingual code generation model and toolkit. Supports VS Code, JetBrains, and web IDEs. Model weights and code are open source. | 100+ languages, IDE plugins, web interface, open model weights | VS Code, JetBrains, Web |
-| **Codeium**<br>🔗 [codeium.com](https://www.codeium.com/)<br>🪪 MIT (Core) | Fast, privacy-focused code completion for 70+ languages. Free for individuals, with local/on-prem options for enterprise. | Real-time suggestions, chat interface, context-aware, privacy-first | 40+ IDEs including VS Code, JetBrains |
-| **Sourcegraph Cody**<br>🔗 [sourcegraph/cody](https://github.com/sourcegraph/cody)<br>🪪 Apache-2.0 | Context-aware AI coding assistant. Deep codebase search, chat, and code generation. Integrates with Sourcegraph and IDEs. | Codebase understanding, enterprise search, multi-model support | VS Code, JetBrains, Neovim |
-| **Tabnine**<br>🔗 [tabnine.com](https://www.tabnine.com/)<br>🪪 MIT (Core) | AI code completion for all major IDEs. Free basic plan, self-hosted and enterprise options. Focus on privacy and team collaboration. | Whole-line completion, team training, on-premise deployment | 15+ IDEs, all major platforms |
-| **Continue**<br>🔗 [continuedev/continue](https://github.com/continuedev/continue)<br>🪪 Apache-2.0 | Open-source autopilot for VS Code and JetBrains. Brings Copilot-like chat, code completion, and context to your IDE using local or remote LLMs. | Chat interface, context providers, custom models, slash commands | VS Code, JetBrains |
-| **Cursor**<br>🔗 [cursor.so](https://www.cursor.so/)<br>🪪 Commercial (Free tier) | AI-powered code editor with built-in chat, refactoring, and context awareness. Supports local and cloud LLMs. Free and paid plans. | Built-in AI, composer mode, codebase chat, apply mode | Desktop (Electron-based) |
-| **Windsurf (Codeium)**<br>🔗 [codeium.com/windsurf](https://codeium.com/windsurf)<br>🪪 Free/Commercial | AI-first IDE that combines coding, search, and terminal in one interface. Features agentic AI that can understand and modify codebases. | Flow state, cascade view, supercomplete, AI command mode | Desktop (Cross-platform) |
+| **GitHub Copilot**<br>🔗 [github.com/features/copilot](https://github.com/features/copilot)<br>🪪 Commercial | Industry-standard AI pair programmer with inline suggestions, chat, and now agent capabilities (Copilot Workspace). | Inline completion, chat, workspace, CLI, PR summaries | VS Code, JetBrains, Neovim, CLI |
+| **Amazon Q Developer**<br>🔗 [aws.amazon.com/q/developer](https://aws.amazon.com/q/developer/)<br>🪪 Free/Commercial | AWS's coding assistant with security scanning, inline suggestions, and agent capabilities for AWS tasks. | Security scanning, AWS integration, /dev agent, free tier | VS Code, JetBrains, CLI |
+| **Continue**<br>🔗 [continuedev/continue](https://github.com/continuedev/continue)<br>🪪 Apache-2.0 | Open-source AI code assistant for VS Code and JetBrains. Use any model (local or cloud), with full customization. | Any model support, context providers, MCP support, custom commands | VS Code, JetBrains |
+| **Codeium**<br>🔗 [codeium.com](https://www.codeium.com/)<br>🪪 Free/Commercial | Fast, privacy-focused code completion. Free for individuals, enterprise deployment options. | Real-time suggestions, chat, context-aware, 70+ languages | 40+ IDEs |
+| **Sourcegraph Cody**<br>🔗 [sourcegraph/cody](https://github.com/sourcegraph/cody)<br>🪪 Apache-2.0 | Context-aware AI assistant with deep codebase understanding via Sourcegraph's code graph. | Codebase search, multi-repo context, enterprise search | VS Code, JetBrains, Web |
+| **Tabnine**<br>🔗 [tabnine.com](https://www.tabnine.com/)<br>🪪 Commercial | AI code completion with on-premise deployment options. Team training on your codebase. | Private deployment, team learning, whole-line completion | 15+ IDEs |
+| **CodeGeeX**<br>🔗 [THUDM/CodeGeeX](https://github.com/THUDM/CodeGeeX)<br>🪪 Apache-2.0 | Open-source multilingual code model (CodeGeeX4 based on GLM-4). IDE plugins and API. | 100+ languages, open weights, free | VS Code, JetBrains |
+
+## Code Models for Local Development
+
+| Model | Size | Description | Best For |
+|-------|------|-------------|----------|
+| **DeepSeek-Coder-V3**<br>🔗 [deepseek-ai/DeepSeek-Coder-V3](https://huggingface.co/deepseek-ai/DeepSeek-Coder-V3)<br>🪪 MIT | 236B (MoE) | State-of-the-art open code model. Matches GPT-4 on many benchmarks. | Best open model for complex coding |
+| **Qwen2.5-Coder-32B**<br>🔗 [Qwen/Qwen2.5-Coder-32B](https://huggingface.co/Qwen/Qwen2.5-Coder-32B)<br>🪪 Apache-2.0 | 32B | Excellent reasoning and code generation. 128K context. | Balance of quality and speed |
+| **Codestral (Mistral)**<br>🔗 [mistral.ai/codestral](https://mistral.ai/news/codestral/)<br>🪪 MNPL | 22B | Mistral's code-specialized model. Fast, supports 80+ languages. | Production use, speed |
+| **CodeLlama 70B**<br>🔗 [meta-llama/CodeLlama-70b](https://huggingface.co/meta-llama/CodeLlama-70b-hf)<br>🪪 Llama 2 | 70B | Meta's large code model. Infill support, Python specialization available. | Local dev, fine-tuning |
+| **StarCoder2-15B**<br>🔗 [bigcode/starcoder2-15b](https://huggingface.co/bigcode/starcoder2-15b)<br>🪪 BigCode-OpenRAIL-M | 15B | Trained on The Stack v2. Good balance of size and capability. | Mid-size local deployment |
+| **DeepSeek-Coder-V2-Lite**<br>🔗 [deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct](https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct)<br>🪪 MIT | 16B | Smaller DeepSeek model, runs on consumer hardware. | 16GB+ VRAM local development |
+| **Granite-Code (IBM)**<br>🔗 [ibm-granite/granite-3b-code-base](https://huggingface.co/ibm-granite)<br>🪪 Apache-2.0 | 3B-34B | IBM's code models, commercial-friendly license, multiple sizes. | Enterprise, compliance needs |
 
 ## Code Analysis & Quality Tools
 
 | Tool | Description | Key Features | Use Cases |
 |------|-------------|--------------|-----------|
-| **SonarQube**<br>🔗 [sonarqube.org](https://www.sonarqube.org/)<br>🪪 LGPL v3 | Code quality and security analysis platform with AI-powered suggestions | Static analysis, security hotspots, code smells, quality gates | CI/CD integration, code review |
-| **DeepCode (Snyk Code)**<br>🔗 [snyk.io/product/snyk-code](https://snyk.io/product/snyk-code/)<br>🪪 Commercial | AI-powered static analysis tool that learns from millions of commits | ML-based vulnerability detection, real-time scanning, IDE integration | Security scanning, vulnerability detection |
-| **Codacy**<br>🔗 [codacy.com](https://www.codacy.com/)<br>🪪 Commercial/Open Source | Automated code review tool with AI insights and quality metrics | Automated reviews, duplication detection, complexity analysis | Code quality monitoring, team collaboration |
-| **CodeClimate**<br>🔗 [codeclimate.com](https://codeclimate.com/)<br>🪪 Commercial | Engineering intelligence platform with AI-driven insights | Maintainability scores, test coverage, velocity tracking | Technical debt management, engineering metrics |
-
-## Local LLM Development Tools
-
-| Tool | Description | Key Features | Best For |
-|------|-------------|--------------|----------|
-| **PolyCoder**<br>🔗 [VHellendoorn/PolyCoder](https://github.com/VHellendoorn/PolyCoder)<br>🪪 MIT | Open-source code LLM (GPT-2 architecture) trained on C. Research project from CMU. Model and code available. | Open weights, research-focused, C language specialization | Research, C development, model experimentation |
-| **Code Llama**<br>🔗 [facebookresearch/codellama](https://github.com/facebookresearch/codellama)<br>🪪 Custom License | Meta's code-specialized version of Llama 2, available in multiple sizes (7B, 13B, 34B) | Multiple model sizes, instruction-tuned variants, infill capabilities | Local development, fine-tuning, research |
-| **StarCoder**<br>🔗 [bigcode-project/starcoder](https://github.com/bigcode-project/starcoder)<br>🪪 Apache-2.0 | Open-source 15B parameter model trained on 80+ programming languages | Large context window, FIM support, commercial-friendly license | Production use, multi-language support |
-| **Phind CodeLlama**<br>🔗 [Phind-CodeLlama-34B-v2](https://huggingface.co/Phind/Phind-CodeLlama-34B-v2)<br>🪪 Custom License | Fine-tuned version of Code Llama optimized for coding tasks and explanations | Enhanced reasoning, better code explanations, optimized for coding | Code explanation, complex problem solving |
+| **SonarQube**<br>🔗 [sonarqube.org](https://www.sonarqube.org/)<br>🪪 LGPL v3 | Code quality and security analysis with AI-powered suggestions | Static analysis, security hotspots, quality gates | CI/CD integration |
+| **Snyk Code**<br>🔗 [snyk.io/product/snyk-code](https://snyk.io/product/snyk-code/)<br>🪪 Commercial | AI-powered security scanning that learns from real vulnerabilities | ML vulnerability detection, IDE integration | Security scanning |
+| **CodeRabbit**<br>🔗 [coderabbit.ai](https://coderabbit.ai/)<br>🪪 Commercial | AI code review bot for GitHub/GitLab PRs. Summarizes changes, finds issues. | PR review, summaries, suggestions | Automated code review |
+| **Codacy**<br>🔗 [codacy.com](https://www.codacy.com/)<br>🪪 Commercial | Automated code review with AI insights and quality metrics | Automated reviews, duplication detection | Code quality monitoring |
 
 ## Terminal & CLI Tools
 
 | Tool | Description | Key Features | Platform Support |
 |------|-------------|--------------|------------------|
-| **Open Interpreter**<br>🔗 [open-interpreter/open-interpreter](https://github.com/open-interpreter/open-interpreter)<br>🪪 MIT | Run code, scripts, and natural language commands in your terminal with LLMs. Supports local and remote models, file editing, and automation. | Natural language to code, file operations, system automation, multi-modal | Cross-platform CLI |
-| **PocketPal AI**<br>🔗 [PocketPalAI/PocketPal](https://github.com/PocketPalAI/PocketPal)<br>🪪 MIT | Mobile AI assistant for iOS/Android. Runs small LLMs on-device for private, offline chat and code help. | On-device inference, offline capability, mobile-optimized | iOS, Android |
-| **Shell GPT**<br>🔗 [TheR1D/shell_gpt](https://github.com/TheR1D/shell_gpt)<br>🪪 MIT | Command-line productivity tool powered by OpenAI's models for shell commands, code generation, and chat | Shell command generation, code execution, chat mode, custom roles | Cross-platform CLI |
-| **AI Shell**<br>🔗 [BuilderIO/ai-shell](https://github.com/BuilderIO/ai-shell)<br>🪪 MIT | CLI that converts natural language to shell commands using AI | Command suggestions, explanation mode, safety confirmations | Cross-platform CLI |
+| **Open Interpreter**<br>🔗 [open-interpreter/open-interpreter](https://github.com/open-interpreter/open-interpreter)<br>🪪 AGPL-3.0 | Run code via natural language in terminal. Computer use, file editing, automation. | Code execution, file ops, computer use, multi-modal | Cross-platform CLI |
+| **Shell GPT**<br>🔗 [TheR1D/shell_gpt](https://github.com/TheR1D/shell_gpt)<br>🪪 MIT | Natural language to shell commands. Execute, explain, or generate scripts. | Shell commands, code execution, roles | Cross-platform CLI |
+| **AI Shell**<br>🔗 [BuilderIO/ai-shell](https://github.com/BuilderIO/ai-shell)<br>🪪 MIT | Simple CLI for converting natural language to shell commands | Command suggestions, safety confirmations | Cross-platform CLI |
+| **LLM CLI**<br>🔗 [simonw/llm](https://github.com/simonw/llm)<br>🪪 Apache-2.0 | CLI for interacting with LLMs. Supports many providers and local models. | Multi-provider, plugins, templates | Cross-platform CLI |
 
-## Code Documentation & Generation
+## MCP (Model Context Protocol) Integration
 
-| Tool | Description | Key Features | Integration |
-|------|-------------|--------------|-------------|
-| **Mintlify**<br>🔗 [mintlify.com](https://mintlify.com/)<br>🪪 Commercial | AI-powered documentation platform that generates and maintains documentation | Auto-generation, interactive components, version control integration | GitHub, GitLab, API-based |
-| **DocuWriter.ai**<br>🔗 [docuwriter.ai](https://docuwriter.ai/)<br>🪪 Commercial | Automated code documentation generation using AI | Comment generation, README creation, API documentation | IDE plugins, CLI tools |
-| **Codex Docs**<br>🔗 [github.com/microsoft/vscode-docs-authoring](https://github.com/microsoft/vscode-docs-authoring)<br>🪪 MIT | VS Code extension for authoring documentation with AI assistance | Markdown authoring, content suggestions, SEO optimization | VS Code |
-| **GitBook AI**<br>🔗 [gitbook.com](https://www.gitbook.com/)<br>🪪 Commercial | AI-enhanced documentation platform with smart editing and content generation | AI writing assistant, automatic summaries, content optimization | Web-based, Git integration |
+MCP allows AI assistants to securely access tools, data sources, and APIs. Many coding tools now support MCP for extended capabilities.
 
-## Code Search & Discovery
+| MCP Server | Description | Use With |
+|------------|-------------|----------|
+| **filesystem** | Read/write local files | Claude Code, Cline, Continue |
+| **github** | GitHub API access (issues, PRs, repos) | Claude Code, Cline |
+| **postgres/sqlite** | Database queries | Claude Code, Cline |
+| **playwright** | Browser automation for testing | Claude Code, Cline |
+| **memory** | Persistent knowledge storage | Claude Code |
+| **fetch** | HTTP requests | Claude Code, Cline |
 
-| Tool | Description | Key Features | Scale |
-|------|-------------|--------------|-------|
-| **Sourcegraph**<br>🔗 [sourcegraph.com](https://sourcegraph.com/)<br>🪪 Apache-2.0 (OSS) | Universal code search and intelligence platform with AI-powered insights | Code search, batch changes, insights, code graph navigation | Enterprise, large codebases |
-| **GitHub Copilot**<br>🔗 [github.com/features/copilot](https://github.com/features/copilot)<br>🪪 Commercial | AI pair programmer that suggests code and entire functions in real-time | Inline suggestions, chat interface, CLI integration | Individual, enterprise |
-| **Amazon CodeWhisperer**<br>🔗 [aws.amazon.com/codewhisperer](https://aws.amazon.com/codewhisperer/)<br>🪪 Commercial/Free | AI coding companion that generates code suggestions based on comments and existing code | Real-time suggestions, security scanning, reference tracking | AWS ecosystem, multiple IDEs |
-| **Replit Ghostwriter**<br>🔗 [replit.com/site/ghostwriter](https://replit.com/site/ghostwriter)<br>🪪 Commercial | AI-powered coding assistant integrated into the Replit online IDE | Code completion, generation, explanation, debugging | Web-based development |
+---
 
 ## Example Workflows
 
-- **Interactive Refactoring**: Use **Aider** in your terminal for multi-file edits, then validate with **Sourcegraph Cody** chat for code QA.
-- **IDE Autocomplete**: Enable **Tabnine** or **Codeium** in VSCode for inline suggestions, complemented by **PolyCoder** for C-specific code.
-- **On-the-Go Snippets**: Leverage **PocketPal AI** mobile app to draft code ideas offline, sync back to your repo.
-- **Documentation Pipeline**: Use **Mintlify** for automated docs generation, integrate with **SonarQube** for quality gates.
-- **Local Development**: Set up **Code Llama** with **Continue** extension for privacy-first AI assistance without cloud dependencies.
+### Agentic Coding with Claude Code
 
-## Setup Examples
+```bash
+# Install Claude Code (requires Anthropic Max subscription)
+npm install -g @anthropic-ai/claude-code
+
+# Start Claude Code in your project
+claude
+
+# Example commands in Claude Code:
+# "Refactor the authentication module to use JWT instead of sessions"
+# "Write tests for the payment processing functions"
+# "Fix all TypeScript errors in the src directory"
+```
 
 ### Aider with Local Models
 
@@ -86,33 +123,52 @@ This section highlights open-source and commercial tools that leverage AI to imp
 pip install aider-chat
 
 # Use with local Ollama model
-aider --model ollama/codellama:13b
+aider --model ollama/deepseek-coder-v2:16b
 
-# Or with OpenAI API
-export OPENAI_API_KEY=your_key_here
-aider --model gpt-4
+# Use with Claude for complex tasks
+export ANTHROPIC_API_KEY=your_key
+aider --model claude-3-5-sonnet-20241022
+
+# Architect mode for planning
+aider --architect --model claude-3-5-sonnet-20241022
 ```
 
-### Continue Configuration
+### Continue with MCP
 
 ```json
 {
   "models": [
     {
-      "title": "Ollama",
-      "provider": "ollama",
-      "model": "codellama:7b",
-      "apiBase": "http://localhost:11434"
-    }
-  ],
-  "contextProviders": [
-    {
-      "name": "codebase",
-      "params": {}
+      "title": "Claude 3.5 Sonnet",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20241022"
     },
     {
-      "name": "diff",
-      "params": {}
+      "title": "Local DeepSeek",
+      "provider": "ollama",
+      "model": "deepseek-coder-v2:16b"
     }
-  ]
+  ],
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-filesystem", "/path/to/project"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
 }
+```
+
+### Cursor Setup for Agentic Coding
+
+1. Open Cursor Settings → Models
+2. Enable "Agent" mode in Composer
+3. Configure codebase indexing for full context
+4. Use `Cmd/Ctrl+K` for inline edits, `Cmd/Ctrl+L` for chat
+5. In Composer, describe multi-file changes and let Agent execute

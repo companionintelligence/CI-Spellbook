@@ -3,6 +3,45 @@
 > Explore top tools for creative AI generation of images, 3D assets, and video content.
 > This guide helps you select the right UI, models, and workflows for rapid prototyping, media creation, and production pipelines.
 
+---
+
+## 2026 Model Highlights
+
+### Latest Image Models
+
+| Model | Type | Key Features | VRAM | Notes |
+|-------|------|--------------|------|-------|
+| **FLUX.1 [dev/schnell]** | Text-to-Image | 12B params, exceptional quality, distillation | 12-24GB | Best open model for quality |
+| **Stable Diffusion 3.5 Large** | Text-to-Image | Transformer architecture, text rendering | 12GB+ | Improved text in images |
+| **FLUX ControlNets** | Conditional | Canny, depth, pose, tile | 16GB+ | Best for guided generation |
+| **Ideogram 2.0** | Text-to-Image | Superior text rendering, API | Cloud | Best text-in-image |
+| **Midjourney v6.1** | Text-to-Image | Exceptional aesthetics | Cloud | Subscription-based |
+
+### Latest Video Models
+
+| Model | Type | Key Features | Duration | Notes |
+|-------|------|--------------|----------|-------|
+| **Kling 1.6** | Text/Image-to-Video | High motion, 10s clips | 5-10s | Great motion quality |
+| **Runway Gen-3 Alpha Turbo** | Text/Image-to-Video | Fast, controllable | 5-10s | Professional workflows |
+| **Pika 2.0** | Text/Image-to-Video | Scene modification | 3-5s | Novel editing features |
+| **Vidu** | Text/Image-to-Video | Chinese competitor | 4-16s | High quality output |
+| **Mochi 1** | Text-to-Video | Open weights | 5s | Best open video model |
+| **LTX Video** | Text/Image-to-Video | Fast inference | 5s | Real-time capable |
+| **CogVideoX** | Text-to-Video | Open weights, 6B params | 6s | Good quality/size ratio |
+
+### Latest 3D Generation
+
+| Model | Type | Key Features | Notes |
+|-------|------|--------------|-------|
+| **Meshy v4** | Image/Text-to-3D | Production-ready meshes | Best overall 3D |
+| **Tripo AI v2** | Image-to-3D | Fast, good topology | Great for games |
+| **Genie (Google)** | Image-to-3D | Research model | High fidelity |
+| **Rodin Gen-1** | Text-to-3D | Stylized assets | Character generation |
+| **TRELLIS** | Image-to-3D | Open weights | Microsoft research |
+| **Stable Point-E** | Text-to-3D | Point clouds | Open source option |
+
+---
+
 ## Usage Recommendations
 
 - Start with a web UI (e.g., AUTOMATIC1111 or ComfyUI) to experiment with prompts and models interactively.
@@ -15,11 +54,12 @@
 
 | Name & Info | Primary Focus/Description | Underlying AI Model(s) Supported | Key Features | Output Quality & Style Versatility | Ease of Use & Community Perception | System Requirements |
 |-------------|--------------------------|----------------------------------|--------------|------------------------------------|------------------------------------|---------------------|
-| **AUTOMATIC1111 Stable Diffusion WebUI (A1111)**<br>🪪 AGPL-3.0<br>🔗 [GitHub](https://github.com/AUTOMATIC1111/stable-diffusion-webui)<br>📄 [GitHub Wiki](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki) | Feature-rich web UI for Stable Diffusion, extensive community support. | SD1.x, SD2.x, SDXL, custom checkpoints/LoRAs. | GUI, Txt2img, Img2img, Inpainting, Outpainting, ControlNet, LoRAs, Upscaling, Face Restore, API. | High, very versatile due to model/LoRA support. | Feature-rich but can be complex for beginners. Large community, many extensions. Some find it slower than alternatives. | Win/Lin/Mac; Python 3.10.6; NVidia (2GB+ VRAM, 4GB+ rec.), AMD; 16GB RAM; 10GB+ disk. |
-| **ComfyUI**<br>🪪 GPL-3.0<br>🔗 [GitHub](https://github.com/comfyanonymous/ComfyUI)<br>📄 [Documentation](https://comfyui.github.io/documentation/) | Powerful and modular graph/node-based interface for Stable Diffusion pipelines. | SD1.x, SD2.x, SDXL, SDXL Turbo, SD3, SD3.5, Stable Cascade, PixArt, many others including video/audio models. | Node-based UI, extreme flexibility, efficient (re-executes changes only), smart VRAM management, ControlNet, LoRAs, Model Merging, API. | Very High, extremely versatile due to pipeline control and broad model support. | Steep learning curve due to nodes; highly valued by power users for control and cutting-edge features. | Win/Lin/Mac; Python 3.12 rec.; NVidia, AMD, Intel, Apple Silicon (1GB+ VRAM), CPU. |
-| **InvokeAI**<br>🪪 Apache-2.0<br>🔗 [GitHub](https://github.com/invoke-ai/InvokeAI)<br>📄 [Documentation](https://invoke.ai/) | Creative engine for Stable Diffusion with a polished WebUI, Unified Canvas, and node system. | SD1.5, SD2.0, SDXL, FLUX; .ckpt & diffusers models. | GUI + Nodes, Unified Canvas (in/outpaint), Model/Embedding Manager, Upscaling, Workflow Editor. | High, good versatility, strong for interactive editing. | Polished UI, easier for inpainting than A1111 for some. Good balance of features/usability. | Win10+/Mac14+/Lin; Python 3.10-3.12; NVidia (4GB+ VRAM for SD1.5, 8GB+ for SDXL), AMD (Linux); 8-32GB+ RAM. |
+| **ComfyUI**<br>🪪 GPL-3.0<br>🔗 [GitHub](https://github.com/comfyanonymous/ComfyUI)<br>📄 [Documentation](https://comfyui.github.io/documentation/) | Powerful node-based interface for all diffusion pipelines. The standard for advanced workflows. | SD1.x-3.5, SDXL, FLUX, Mochi, CogVideoX, audio models, and more. | Node-based UI, extreme flexibility, efficient VRAM management, ControlNet, LoRAs, video generation, 3D. | Very High, supports all cutting-edge models. | Steep learning curve; the choice of power users and professionals. | Win/Lin/Mac; Python 3.12 rec.; NVidia, AMD, Intel, Apple Silicon (1GB+ VRAM), CPU. |
+| **Forge (SD WebUI Forge)**<br>🪪 AGPL-3.0<br>🔗 [GitHub](https://github.com/lllyasviel/stable-diffusion-webui-forge) | Optimized A1111 fork with better performance and FLUX support. | SD1.x, SDXL, SD3.5, FLUX, custom checkpoints. | 30-45% faster than A1111, lower VRAM usage, FLUX support, all A1111 extensions. | High, excellent FLUX and SDXL performance. | Easier than ComfyUI, familiar A1111 interface. | Win/Lin; NVidia (6GB+ VRAM rec.), AMD; 16GB RAM; Python 3.10. |
+| **AUTOMATIC1111 Stable Diffusion WebUI (A1111)**<br>🪪 AGPL-3.0<br>🔗 [GitHub](https://github.com/AUTOMATIC1111/stable-diffusion-webui)<br>📄 [GitHub Wiki](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki) | Feature-rich web UI for Stable Diffusion, extensive community support. | SD1.x, SD2.x, SDXL, custom checkpoints/LoRAs. | GUI, Txt2img, Img2img, Inpainting, Outpainting, ControlNet, LoRAs, Upscaling, Face Restore, API. | High, very versatile due to model/LoRA support. | Feature-rich but slower than Forge. Large community, many extensions. | Win/Lin/Mac; Python 3.10.6; NVidia (2GB+ VRAM, 4GB+ rec.), AMD; 16GB RAM; 10GB+ disk. |
+| **InvokeAI**<br>🪪 Apache-2.0<br>🔗 [GitHub](https://github.com/invoke-ai/InvokeAI)<br>📄 [Documentation](https://invoke.ai/) | Professional creative engine with polished WebUI, Unified Canvas, and node system. | SD1.5, SD2.0, SDXL, FLUX, SD3.5; .ckpt & diffusers models. | GUI + Nodes, Unified Canvas (in/outpaint), Model Manager, FLUX support, Workflow Editor. | High, good versatility, strong for interactive editing. | Polished UI, easier for inpainting than A1111 for some. Good balance of features/usability. | Win10+/Mac14+/Lin; Python 3.10-3.12; NVidia (4GB+ VRAM for SD1.5, 12GB+ for FLUX), AMD (Linux); 8-32GB+ RAM. |
 | **Fooocus**<br>🪪 GPL-3.0<br>🔗 [GitHub](https://github.com/lllyasviel/Fooocus)<br>📄 [Documentation](https://github.com/lllyasviel/Fooocus) | User-friendly SDXL-focused GUI, emphasizing prompts over parameters (Midjourney-like). | Primarily SDXL, supports Civitai SDXL models. | Simplified UI, offline GPT-2 prompt processing, automated quality improvements, Inpaint/Outpaint, Upscale, FaceSwap, Image Prompt (ControlNet-like). | High quality for SDXL with minimal effort. Less versatile for non-SDXL. | Very easy to use, excellent for quick, high-quality SDXL results. LTS status (bug fixes only). | Win/Lin/Mac; Python; NVidia (4GB+ VRAM), AMD (8GB+ VRAM), CPU (32GB RAM). |
-| **Krita AI Diffusion Plugin**<br>🪪 GPL-3.0<br>🔗 [GitHub](https://github.com/lnyanzi/krita-ai-diffusion)<br>📄 [kritaaidiffusion.com](https://kritaaidiffusion.com) | Integrates Stable Diffusion (SD1.5, SDXL, partial SD3/Flux) into Krita painting software. | SD1.5, SDXL, partial Flux/SD3. | Krita Plugin, Inpaint, Outpaint, Generate, Refine, Live Painting, ControlNet, IP-Adapter, Upscaling. Uses ComfyUI backend. | Good, leverages Krita's tools for artistic control. | Intuitive for Krita users, excellent for artist-led AI generation and editing. | Krita 5.2.0+; Win/Lin/Mac; Python; GPU rec. (6GB+ VRAM). |
+| **Krita AI Diffusion Plugin**<br>🪪 GPL-3.0<br>🔗 [GitHub](https://github.com/lnyanzi/krita-ai-diffusion)<br>📄 [kritaaidiffusion.com](https://kritaaidiffusion.com) | Integrates Stable Diffusion and FLUX into Krita painting software. | SD1.5, SDXL, FLUX, partial SD3. | Krita Plugin, Inpaint, Outpaint, Generate, Refine, Live Painting, ControlNet, IP-Adapter, Upscaling. Uses ComfyUI backend. | Good, leverages Krita's tools for artistic control. | Intuitive for Krita users, excellent for artist-led AI generation and editing. | Krita 5.2.0+; Win/Lin/Mac; Python; GPU rec. (8GB+ VRAM for FLUX). |
 | **GIMP AI Plugins with OpenVINO (Intel)**<br>🪪 Apache-2.0<br>🔗 [GitHub](https://github.com/GIMP-AI/GIMP-AI)<br>📄 [User Guides](https://github.com/GIMP-AI/GIMP-AI/wiki) | AI plugins for GIMP 3 using OpenVINO for Intel hardware. Includes SD functionality. | SD 1.5, SDXL, SD3 (Medium, Turbo), ControlNets. | GIMP Plugin, Super-Res, Seg., SD (Txt2img, Img2img, Inpaint, ControlNet). | Dependent on specific SD models used via OpenVINO. | Aims to integrate AI into GIMP workflows. Focused on Intel hardware. | GIMP 3; Python 3; OpenVINO; Win/Lin; Intel Hardware (CPU, iGPU, NPU). |
 
 ## 3D Model Generation Tools
