@@ -1,4 +1,4 @@
-# XR & Spatial Computing
+# Spatial Computing (XR & WebXR)
 
 > **Build immersive experiences for the next generation of computing**  
 > This guide covers the 2026 landscape of extended reality (XR)—from VR headsets and AR glasses to spatial computing platforms, development tools, and AI-powered 3D content creation.  

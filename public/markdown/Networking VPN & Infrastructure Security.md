@@ -1,4 +1,12 @@
-# Networking, VPN, & Infrastructure Security
+# Networking & Infrastructure Security
+
+## Quickstart (2026)
+
+- **Remote access**: WireGuard or an overlay mesh (Tailscale + Headscale).
+- **Inbound web**: Caddy/Traefik in front of services + automatic TLS.
+- **Segmentation**: VLANs / separate SSIDs for IoT, guests, and core services.
+- **Observability**: metrics + logs + basic IDS/IPS alerts (start small).
+- **Reproducibility**: keep config in git; automate with Ansible/Terraform.
 
 > Enhance connectivity and secure your infrastructure with modern networking, VPNs, and orchestration tools. This guide covers both enterprise-scale and home-lab scenarios.
 

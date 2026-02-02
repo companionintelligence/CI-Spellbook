@@ -1,4 +1,4 @@
-# Maker & Hardware Prototyping
+# Hardware & Edge Prototyping
 
 > **From idea to physical prototype with modern tools and AI assistance**  
 > This guide covers the 2026 maker ecosystem—microcontrollers, single-board computers, AI accelerators, 3D printing, PCB design, and the software tools that tie them together.  

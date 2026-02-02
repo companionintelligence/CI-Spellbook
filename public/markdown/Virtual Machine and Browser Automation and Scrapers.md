@@ -1,4 +1,4 @@
-# Virtual Machine and Browser Automation and Scrapers
+# Automation (Browsers, VMs & Scraping)
 
 > Automate complex workflows and data extraction by combining VM-based agents and browser automation frameworks. Ideal for end-to-end testing, RPA, and large-scale web scraping.
 

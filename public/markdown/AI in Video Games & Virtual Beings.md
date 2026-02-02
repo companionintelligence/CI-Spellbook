@@ -1,4 +1,4 @@
-# AI in Video Games & Virtual Beings
+# Game AI & Virtual Beings
 
 > Dive into AI-driven NPCs, virtual characters, and immersive worlds using state-of-the-art behavior engines and SDKs. This guide covers frameworks for dialogue, emotion, and real-time integration in game engines and web platforms.
 

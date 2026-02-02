@@ -1,4 +1,12 @@
-# Home Automation & Security
+# Smart Home & HomeLab Security
+
+## Quickstart (2026)
+
+1. Segment your network: put IoT on its own VLAN/SSID with strict egress rules.
+2. Pick a control plane: **Home Assistant** (plus **MQTT** if you have many devices).
+3. Add visibility: uptime checks + basic dashboards/alerts.
+4. Keep video local: an NVR (e.g., Frigate) with on-device detection where possible.
+5. Back up configs and secrets (and test restores).
 
 > Centralized guide to open-source home automation and security platforms. Integrate smart devices, secure access, and build monitoring pipelines with these tools.
 

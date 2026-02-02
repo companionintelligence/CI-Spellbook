@@ -1,6 +1,12 @@
-# Cutting Edge Databases
+# Data Stores for AI (Vector, OLAP, Graph)
 
 > Select the right database based on your AI workload: consider vector search for RAG, columnar stores for analytics, GPU acceleration for real-time ML, and multi-model solutions for hybrid data scenarios.
+
+## Quickstart (2026)
+
+- Shipping a RAG app today: start with **Postgres** for your source-of-truth + a dedicated **vector DB** (Qdrant/Weaviate/Milvus) when you need scale.
+- Prototyping locally: start with **DuckDB** for analytics + an embedded/vector option for quick iteration.
+- Real-time dashboards: reach for a columnar OLAP store (e.g., ClickHouse) and keep raw events in object storage.
 
 ## Usage Scenarios
 
@@ -120,24 +126,37 @@ print(results)
 ### Performance Benchmarks
 
 ```python
-# Example: Vector similarity benchmark
+# Example: minimal, self-contained vector search benchmark (Qdrant)
 import time
+
 import numpy as np
 from qdrant_client import QdrantClient
+from qdrant_client.http.models import Distance, PointStruct, VectorParams
 
-# Generate test data
-vectors = np.random.random((10000, 128)).astype(np.float32)
-query_vector = np.random.random(128).astype(np.float32)
+client = QdrantClient(url="http://localhost:6333")
+collection_name = "benchmark"
 
-# Benchmark search performance
-start_time = time.time()
-results = client.search(
-    collection_name="benchmark",
-    query_vector=query_vector,
-    limit=10
+client.recreate_collection(
+  collection_name=collection_name,
+  vectors_config=VectorParams(size=128, distance=Distance.COSINE),
 )
-search_time = time.time() - start_time
-print(f"Search time: {search_time:.4f}s")
+
+vectors = np.random.random((10_000, 128)).astype(np.float32)
+points = [
+  PointStruct(id=i, vector=vectors[i].tolist(), payload={})
+  for i in range(len(vectors))
+]
+client.upsert(collection_name=collection_name, points=points)
+
+query_vector = np.random.random(128).astype(np.float32).tolist()
+
+# Warm up
+client.search(collection_name=collection_name, query_vector=query_vector, limit=10)
+
+start_time = time.perf_counter()
+client.search(collection_name=collection_name, query_vector=query_vector, limit=10)
+elapsed_ms = (time.perf_counter() - start_time) * 1000
+print(f"Search time: {elapsed_ms:.2f} ms")
 ```
 
 ### Integration Examples

@@ -1,4 +1,12 @@
-# AI-Assisted Code Development
+# AI for Developers (Coding Agents & Tooling)
+
+## Quickstart (2026)
+
+1. Pick your "daily driver" (IDE assistant) and one "heavy lifter" (terminal agent).
+2. Add guardrails: allowlist commands, require confirmations for destructive operations, and run agents in a sandbox/branch.
+3. Make context explicit: write a short `CONTRIBUTING.md` / `copilot-instructions.md`, and keep dependencies/scripts documented.
+4. Add tool access via MCP (filesystem + git + issue tracker + test runner) so the agent can act safely.
+5. Close the loop: run tests/linters automatically and keep a human review step.
 
 This section highlights open-source and commercial tools that leverage AI to improve developer productivity, code quality, and collaboration. You'll find both model-based code generators and smart assistants that integrate into your IDE or CI/CD pipelines.
 

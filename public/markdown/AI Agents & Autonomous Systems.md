@@ -1,4 +1,4 @@
-# AI Agents & Autonomous Systems
+# Agents & Autonomous Systems
 
 > **Build intelligent agents that reason, plan, and act autonomously**  
 > This guide covers the 2026 landscape of AI agents—from coding assistants to computer-use agents, multi-agent orchestration, and MCP (Model Context Protocol) integrations.  

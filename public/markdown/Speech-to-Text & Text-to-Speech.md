@@ -1,4 +1,4 @@
-# Speech-to-Text & Text-to-Speech
+# Speech & Audio (STT, TTS, VAD)
 
 > Comprehensive tools for converting speech to text and generating natural-sounding speech. Supports real-time streaming, batch processing, multilingual models, and on-device or cloud deployments.
 
@@ -22,23 +22,29 @@
 
 ## Example: Transcribe Audio with Whisper
 
+> Tip: the Python APIs differ between **openai-whisper** and **faster-whisper**.
+
+### Option A: `openai-whisper` (simple batch transcription)
+
 ```python
-from whisper import WhisperModel
+import whisper
 
-model = WhisperModel("base")
-audio_path = "podcast_episode.mp3"
+model = whisper.load_model("base")
+result = model.transcribe("podcast_episode.mp3")
 
-# Transcribe the audio file
-segments, info = model.transcribe(audio_path)
+print(result["text"])
+```
 
-# Print the transcript
+### Option B: `faster-whisper` (faster inference, timestamps)
+
+```python
+from faster_whisper import WhisperModel
+
+model = WhisperModel("base", device="cpu", compute_type="int8")
+segments, info = model.transcribe("podcast_episode.mp3", beam_size=5)
+
 for segment in segments:
     print(f"{segment.start:.2f}s - {segment.end:.2f}s: {segment.text}")
-
-# Optional: Save to file
-with open("transcript.txt", "w") as f:
-    for segment in segments:
-        f.write(f"{segment.start:.2f} - {segment.end:.2f}: {segment.text}\n")
 ```
 
 ## Text-to-Speech Tools

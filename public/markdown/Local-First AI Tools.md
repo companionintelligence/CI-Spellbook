@@ -1,4 +1,4 @@
-# Local-First AI Tools
+# Local AI Stack (Local-First Tools)
 
 > **Build a private AI workstation with zero cloud dependencies**  
 > This comprehensive guide catalogs leading open-source, local-first AI tools organized by category.  
