@@ -1,228 +1,66 @@
-# Smart Home & HomeLab Security
+# Self-Hosting, Home Server & Smart Home Platforms
 
-## Quickstart (2026)
+> This card gathers the operational side of the stack: dashboards, automation, server platforms, media management, homelab apps, and smart-home tooling.
 
-1. Segment your network: put IoT on its own VLAN/SSID with strict egress rules.
-2. Pick a control plane: **Home Assistant** (plus **MQTT** if you have many devices).
-3. Add visibility: uptime checks + basic dashboards/alerts.
-4. Keep video local: an NVR (e.g., Frigate) with on-device detection where possible.
-5. Back up configs and secrets (and test restores).
+## Dashboards & Home Server Platforms
 
-> Centralized guide to open-source home automation and security platforms. Integrate smart devices, secure access, and build monitoring pipelines with these tools.
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Cockpit](https://github.com/cockpit-project/cockpit) | Web interface for managing servers. | Linux | Good general-purpose admin UI. |
+| [dashdot](https://github.com/MauriceNino/dashdot) | Modern personal server dashboard. | Self-hosted | Useful for smaller homelabs. |
+| [Dashy](https://github.com/Lissy93/dashy) | Highly customizable dashboard and start page. | Self-hosted | Great front door for a homelab. |
+| [Glance](https://github.com/glanceapp/glance) | Self-hosted homepage for feeds and widgets. | Self-hosted | Good minimalist dashboard. |
+| [homepage](https://github.com/gethomepage/homepage) | Application dashboard with service integrations. | Self-hosted | Strong balance of polish and utility. |
+| [CasaOS](https://github.com/IceWhaleTech/CasaOS) | Personal cloud and home server management layer. | Linux | Good simple home-server entry point. |
+| [Cosmos](https://github.com/azukaar/Cosmos-Server) | Secure self-hosted home server platform. | Self-hosted | Strong if you want auth and hardening built in. |
+| [Runtipi](https://github.com/runtipi/runtipi) | One-command home server platform with one-click apps. | Self-hosted | Fast path to a service-rich homelab. |
+| [Sandstorm](https://github.com/sandstorm-io/sandstorm) | Web app package platform with a security-first model. | Self-hosted | Good for sandboxed self-hosted apps. |
 
-## Usage Guidelines
+## Automation & Operations
 
-- Establish a secure home network: separate IoT devices on isolated VLANs or subnets.
-- Use **Home Assistant** as the primary control plane; leverage community add-ons for devices.
-- Automate alerts and monitoring: integrate **Uptime Kuma** for service health, **Plausible Analytics** for privacy-friendly metrics.
-- Secure video feeds: run **Frigate** or **ZoneMinder** locally, enable on-device object detection to avoid cloud dependencies.
-- Backup configurations and use version control (Git) for automation scripts and YAML configs.
-- Plan for redundancy: mirror critical services (NVR, automation hub) on secondary devices or virtual machines.
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Ansible](https://github.com/ansible/ansible) | Automation platform for servers, apps, and infrastructure. | Cross-platform | Core tool for repeatable operations. |
+| [Cronicle](https://github.com/jhuckaby/Cronicle) | Distributed job scheduler with a web UI. | Cross-platform, Self-hosted | Useful for orchestrating recurring tasks. |
+| [Healthchecks](https://github.com/healthchecks/healthchecks) | Monitoring for cron jobs and background tasks. | Self-hosted, Web | Good safety net for automations. |
+| [n8n](https://github.com/n8n-io/n8n) | Workflow automation platform with AI features and many integrations. | Web, Self-hosted | Strong default for visual automation. |
+| [Node-RED](https://github.com/node-red/node-red) | Flow-based programming for event-driven apps. | Self-hosted | Excellent for IoT and automation glue. |
+| [Script Kit](https://github.com/johnlindquist/kit) | Local automation toolkit for scripts and workflows. | Cross-platform | Great for personal automation surfaces. |
+| [Semaphore](https://github.com/semaphoreui/semaphore) | UI and API for Ansible, Terraform, and scripting workflows. | Cross-platform | Good for lightweight ops teams. |
 
-## Home Automation Platforms
+## Smart Home & Energy
 
-| Tool | Description | Key Features | Best For |
-|------|-------------|--------------|----------|
-| **Home Assistant**<br>🔗 [Website](https://www.home-assistant.io/) | Open-source home automation platform | 1000+ integrations, local control, automation engine, mobile app | Privacy-focused users, advanced automation |
-| **OpenHAB**<br>🔗 [Website](https://www.openhab.org/) | Vendor and technology agnostic open source automation software | Java-based, rule engine, extensive bindings, cloud connector | Java developers, enterprise environments |
-| **Hubitat Elevation**<br>🔗 [Website](https://hubitat.com/) | Local processing smart home hub | Z-Wave/Zigbee support, local processing, rule machine, cloud backup | Users wanting local control with commercial support |
-| **Node-RED**<br>🔗 [Website](https://nodered.org/) | Flow-based development tool for visual programming | Visual flow editor, extensive node library, MQTT support | Visual programmers, IoT prototyping |
-| **Domoticz**<br>🔗 [Website](https://www.domoticz.com/) | Lightweight home automation system | Multi-platform, hardware/protocol support, web interface | Lightweight setups, Raspberry Pi users |
-| **Jeedom**<br>🔗 [Website](https://www.jeedom.com/) | Home automation platform with marketplace | Plugin marketplace, scenarios, mobile app, voice control | French users, plugin ecosystem |
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Domoticz](https://github.com/domoticz/domoticz) | Home automation platform for a broad range of devices. | Self-hosted | Mature and flexible. |
+| [ESPHome](https://github.com/esphome/esphome) | Device firmware tooling for ESP-based automation hardware. | Self-hosted | Essential for DIY sensors and controllers. |
+| [evcc](https://github.com/evcc-io/evcc) | Energy and EV charging orchestration. | Cross-platform, Self-hosted | Great for solar and EV-aware homes. |
+| [Gladys](https://github.com/GladysAssistant/Gladys) | Privacy-first home assistant platform. | Self-hosted | Good alternative home automation stack. |
+| [Home Assistant](https://github.com/home-assistant/core) | Local-first home automation platform. | Cross-platform, Self-hosted | Still the center of the DIY smart-home universe. |
+| [EOS](https://github.com/Akkudoktor-EOS/EOS) | Energy optimization system for batteries and household devices. | Cross-platform, Self-hosted | Worth tracking for smart energy management. |
 
-## Smart Device Integration
+## Media & Library Servers
 
-| Tool | Description | Protocol Support | Integration |
-|------|-------------|------------------|-------------|
-| **Zigbee2MQTT**<br>🔗 [GitHub](https://github.com/Koenkk/zigbee2mqtt) | Bridge between Zigbee devices and MQTT | Zigbee 3.0, 2000+ supported devices | Home Assistant, OpenHAB, Node-RED |
-| **Tasmota**<br>🔗 [Website](https://tasmota.github.io/docs/) | Alternative firmware for ESP8266/ESP32 devices | WiFi, MQTT, HTTP, multiple sensors | DIY devices, Sonoff switches |
-| **ESPHome**<br>🔗 [Website](https://esphome.io/) | Configuration-based firmware for ESP devices | YAML config, OTA updates, native HA API | Home Assistant users, custom sensors |
-| **Z-Wave JS**<br>🔗 [GitHub](https://github.com/zwave-js/node-zwave-js) | Modern Z-Wave driver for Node.js | Z-Wave protocol, security, mesh networking | Home Assistant Z-Wave integration |
-| **Matter**<br>🔗 [Website](https://csa-iot.org/all-solutions/matter/) | Universal smart home connectivity standard | Thread, WiFi, Ethernet, vendor interoperability | Future-proof smart home setups |
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [audiobookshelf](https://github.com/advplyr/audiobookshelf) | Self-hosted server for audiobooks and podcasts. | iOS, Android, Self-hosted | Excellent specialized media server. |
+| [BookLore](https://github.com/booklore-app/booklore) | Multi-user digital library with reader support. | Self-hosted | Great for curated book collections. |
+| [Calibre-Web](https://github.com/janeczku/calibre-web) | Web app for browsing Calibre libraries. | Self-hosted | Strong lightweight ebook server. |
+| [Immich](https://github.com/immich-app/immich) | High-performance self-hosted photo and video platform. | Self-hosted | One of the strongest self-hosted media apps. |
+| [Jellyfin](https://github.com/jellyfin/jellyfin) | Open media server backend and API. | Self-hosted | Great default for self-hosted streaming. |
+| [Kavita](https://github.com/Kareadita/Kavita) | Reading server for comics, manga, and books. | Self-hosted | Good for larger digital reading libraries. |
+| [Kodi](https://github.com/xbmc/xbmc) | Media center software with rich frontend support. | Cross-platform, Self-hosted | Useful as a playback layer. |
+| [Tube Archivist](https://github.com/tubearchivist/tubearchivist?tab=readme-ov-file#installing) | Self-hosted YouTube media server and archive. | Self-hosted | Good for long-term video archiving. |
 
-## Video Surveillance & NVR
+## Surveillance & Media Requests
 
-| Tool | Description | Key Features | Best For |
-|------|-------------|--------------|----------|
-| **Frigate**<br>🔗 [GitHub](https://github.com/blakeblackshear/frigate) | NVR with local object detection | AI object detection, MQTT integration, clips/snapshots | Home Assistant users, AI detection |
-| **ZoneMinder**<br>🔗 [Website](https://zoneminder.com/) | Full-featured video security system | Motion detection, alerts, streaming, mobile app | Traditional CCTV setups, enterprise |
-| **MotionEye**<br>🔗 [GitHub](https://github.com/motioneye-project/motioneye) | Web frontend for motion daemon | Simple setup, streaming, mobile access | Basic surveillance, easy setup |
-| **Viseron**<br>🔗 [GitHub](https://github.com/roflcoopter/viseron) | AI computer vision NVR | TensorFlow integration, face recognition, zones | AI-powered surveillance |
-| **Shinobi**<br>🔗 [GitLab](https://gitlab.com/Shinobi-Systems/Shinobi) | Scalable CCTV NVR system | API, plugins, face recognition, cloud storage | Scalable installations |
-| **Blue Iris**<br>🔗 [Website](https://blueirissoftware.com/) | Windows-based video security software | AI detection, mobile alerts, PTZ control | Windows users, professional setups |
-| **Moonfire NVR**<br>🔗 [GitHub](https://github.com/scottlamb/moonfire-nvr) | Network video recorder | High efficiency, web interface, timeline view | Storage-conscious users |
-| **Agent DVR**<br>🔗 [Website](https://www.ispyconnect.com/download) | AI-powered video surveillance | Cloud AI, local processing, alerts | Mixed cloud/local setups |
-
-## Security & Access Control
-
-| Tool | Description | Key Features | Use Cases |
-|------|-------------|--------------|-----------|
-| **Fail2Ban**<br>🔗 [Website](https://www.fail2ban.org/) | Intrusion prevention software | Log monitoring, IP banning, customizable filters | SSH protection, web server security |
-| **Pi-hole**<br>🔗 [Website](https://pi-hole.net/) | Network-wide ad blocker | DNS sinkhole, admin interface, query logging | Ad blocking, malware protection |
-| **AdGuard Home**<br>🔗 [GitHub](https://github.com/AdguardTeam/AdguardHome) | Network-wide ad and tracker blocker | DNS filtering, parental controls, statistics | Enhanced ad blocking |
-| **pfSense**<br>🔗 [Website](https://www.pfsense.org/) | Open source firewall and router | VPN server, traffic shaping, intrusion detection | Network security, VPN access |
-| **OPNsense**<br>🔗 [Website](https://opnsense.org/) | Firewall and routing platform | Web interface, plugins, high availability | Modern firewall management |
-| **Vaultwarden**<br>🔗 [GitHub](https://github.com/dani-garcia/vaultwarden) | Bitwarden server implementation | Password management, secure sharing, 2FA | Self-hosted password management |
-| **Authelia**<br>🔗 [Website](https://www.authelia.com/) | Authentication and authorization server | 2FA, SSO, LDAP integration, access control | Single sign-on, access control |
-
-## Monitoring & Analytics
-
-| Tool | Description | Key Features | Monitoring Focus |
-|------|-------------|--------------|------------------|
-| **Uptime Kuma**<br>🔗 [GitHub](https://github.com/louislam/uptime-kuma) | Self-hosted monitoring tool | Status pages, notifications, multiple protocols | Service availability |
-| **Grafana**<br>🔗 [Website](https://grafana.com/) | Observability and monitoring platform | Dashboards, alerting, data source integration | Metrics visualization |
-| **Prometheus**<br>🔗 [Website](https://prometheus.io/) | Monitoring and alerting toolkit | Time-series DB, service discovery, alerting | Infrastructure monitoring |
-| **Zabbix**<br>🔗 [Website](https://www.zabbix.com/) | Enterprise monitoring solution | Agent/agentless monitoring, auto-discovery | Network and server monitoring |
-| **LibreNMS**<br>🔗 [Website](https://www.librenms.org/) | Network monitoring system | SNMP monitoring, alerting, graphing | Network device monitoring |
-| **Netdata**<br>🔗 [Website](https://www.netdata.cloud/) | Real-time performance monitoring | Real-time metrics, alarms, distributed | System performance monitoring |
-| **PRTG**<br>🔗 [Website](https://www.paessler.com/prtg) | Network monitoring (free up to 100 sensors) | Easy setup, comprehensive monitoring | Windows environments |
-
-## Energy Management
-
-| Tool | Description | Key Features | Integration |
-|------|-------------|--------------|-------------|
-| **Emoncms**<br>🔗 [Website](https://emoncms.org/) | Open-source energy monitoring | Data logging, visualization, feeds | Energy monitors, IoT sensors |
-| **OpenEnergyMonitor**<br>🔗 [Website](https://openenergymonitor.org/) | Open-source energy monitoring | Hardware/software ecosystem, real-time data | DIY energy monitoring |
-| **Solar Assistant**<br>🔗 [Website](https://solar-assistant.io/) | Solar power monitoring | Inverter integration, MQTT, web dashboard | Solar installations |
-| **PVOutput**<br>🔗 [Website](https://pvoutput.org/) | Solar generation tracking | Community platform, performance comparison | Solar performance tracking |
-
-## Voice Assistants & AI
-
-| Tool | Description | Key Features | Privacy Level |
-|------|-------------|--------------|---------------|
-| **Rhasspy**<br>🔗 [Website](https://rhasspy.readthedocs.io/) | Open source voice assistant | Offline processing, intent recognition, TTS/STT | Fully offline/private |
-| **Mycroft AI**<br>🔗 [Website](https://mycroft.ai/) | Open source voice assistant | Skills marketplace, customizable wake words | Privacy-focused |
-| **OpenAI Whisper (local)**<br>🔗 [GitHub](https://github.com/openai/whisper) | Speech recognition system | High accuracy, multiple languages, local processing | Offline speech recognition |
-| **Piper TTS**<br>🔗 [GitHub](https://github.com/rhasspy/piper) | Fast neural text to speech | Multiple voices, offline, lightweight | Local text-to-speech |
-| **Willow**<br>🔗 [Website](https://heywillow.io/) | Open source voice assistant | ESP32-based, offline wake word, Home Assistant | Privacy-focused, hardware-based |
-
-## Backup & Data Management
-
-| Tool | Description | Key Features | Backup Type |
-|------|-------------|--------------|-------------|
-| **Duplicati**<br>🔗 [Website](https://www.duplicati.com/) | Backup client with encryption | Web interface, encryption, cloud backends | Incremental backups |
-| **Restic**<br>🔗 [Website](https://restic.net/) | Fast, secure backup program | Deduplication, encryption, multiple backends | Command-line backups |
-| **Borg Backup**<br>🔗 [Website](https://www.borgbackup.org/) | Deduplicating backup program | Space-efficient, encryption, incremental | Advanced deduplication |
-| **Syncthing**<br>🔗 [Website](https://syncthing.net/) | Continuous file synchronization | P2P sync, versioning, privacy-focused | File synchronization |
-| **rsync**<br>🔗 [Website](https://rsync.samba.org/) | Fast incremental file transfer | Delta encoding, network efficiency | File transfers/backups |
-
-## Network Storage & Media
-
-| Tool | Description | Key Features | Media Features |
-|------|-------------|--------------|----------------|
-| **OpenMediaVault**<br>🔗 [Website](https://www.openmediavault.org/) | NAS solution based on Debian | Web management, plugins, RAID support | SMB/NFS shares, media streaming |
-| **TrueNAS Scale**<br>🔗 [Website](https://www.truenas.com/) | Enterprise storage with containers | ZFS, hyperconverged, Kubernetes apps | Enterprise features, app ecosystem |
-| **Nextcloud**<br>🔗 [Website](https://nextcloud.com/) | Self-hosted cloud platform | File sync, calendar, contacts, apps | Personal cloud, collaboration |
-| **Jellyfin**<br>🔗 [Website](https://jellyfin.org/) | Media server software | Streaming, transcoding, client apps | Media streaming, no licensing |
-| **Plex**<br>🔗 [Website](https://www.plex.tv/) | Media server platform | Easy setup, remote access, apps | User-friendly media streaming |
-| **Emby**<br>🔗 [Website](https://emby.media/) | Media server solution | DVR, live TV, mobile sync | Media management with premium features |
-
-## IoT & Sensor Platforms
-
-| Tool | Description | Key Features | Sensor Types |
-|------|-------------|--------------|--------------|
-| **Mosquitto**<br>🔗 [Website](https://mosquitto.org/) | MQTT broker | Lightweight, SSL/TLS support, bridge mode | All MQTT devices |
-| **InfluxDB**<br>🔗 [Website](https://www.influxdata.com/) | Time-series database | High write throughput, retention policies | Sensor data storage |
-| **ThingsBoard**<br>🔗 [Website](https://thingsboard.io/) | IoT platform | Device management, dashboards, rule engine | Enterprise IoT |
-| **Blynk**<br>🔗 [Website](https://blynk.io/) | IoT platform with mobile apps | Drag-and-drop interface, notifications | Mobile-first IoT |
-| **Arduino IoT Cloud**<br>🔗 [Website](https://create.arduino.cc/iot/) | Arduino's IoT platform | Arduino integration, webhooks, dashboard | Arduino ecosystem |
-
-## Advanced Integrations
-
-### Home Assistant Add-ons & Integrations
-
-| Add-on/Integration | Description | Use Case |
-|-------------------|-------------|----------|
-| **HACS**<br>🔗 [GitHub](https://github.com/hacs/integration) | Home Assistant Community Store | Custom components and themes |
-| **AppDaemon**<br>🔗 [Website](https://appdaemon.readthedocs.io/) | Python automation platform | Complex automation logic |
-| **ESPHome**<br>🔗 [Website](https://esphome.io/) | ESP device integration | Custom sensors and devices |
-| **Zigbee2MQTT**<br>🔗 [GitHub](https://github.com/Koenkk/zigbee2mqtt) | Zigbee to MQTT bridge | Zigbee device integration |
-| **Node-RED**<br>🔗 [Website](https://nodered.org/) | Visual flow programming | Complex integrations |
-
-### Example: Complete Home Security Setup
-
-```yaml
-# Home Assistant configuration.yaml excerpt
-automation:
-  - alias: "Security Alert"
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.front_door
-        to: 'on'
-    condition:
-      - condition: state
-        entity_id: alarm_control_panel.home
-        state: 'armed_away'
-    action:
-      - service: notify.mobile_app
-        data:
-          title: "Security Alert"
-          message: "Front door opened while armed"
-      - service: light.turn_on
-        entity_id: light.security_lights
-      - service: camera.record
-        entity_id: camera.front_door
-```
-
-### Docker Compose Stack Example
-
-```yaml
-version: '3.8'
-services:
-  homeassistant:
-    container_name: homeassistant
-    image: homeassistant/home-assistant:stable
-    volumes:
-      - ./config:/config
-      - /etc/localtime:/etc/localtime:ro
-    restart: unless-stopped
-    network_mode: host
-
-  mosquitto:
-    container_name: mosquitto
-    image: eclipse-mosquitto
-    volumes:
-      - ./mosquitto:/mosquitto
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-    restart: unless-stopped
-
-  frigate:
-    container_name: frigate
-    image: blakeblackshear/frigate:stable
-    volumes:
-      - ./frigate/config.yml:/config/config.yml
-      - ./frigate/storage:/media/frigate
-    ports:
-      - "5000:5000"
-    restart: unless-stopped
-
-  uptime-kuma:
-    container_name: uptime-kuma
-    image: louislam/uptime-kuma
-    volumes:
-      - ./uptime-kuma:/app/data
-    ports:
-      - "3001:3001"
-    restart: unless-stopped
-```
-
-## Security Best Practices
-
-### Network Segmentation
-- Isolate IoT devices on separate VLAN
-- Use firewall rules to restrict device communication
-- Implement network access control (NAC)
-
-### Device Security
-- Change default passwords on all devices
-- Enable automatic security updates
-- Regularly audit connected devices
-- Use VPN for remote access
-
-### Data Protection
-- Encrypt sensitive data at rest and in transit
-- Regular automated backups
-- Version control for configurations
-- Monitor access logs
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Frigate](https://github.com/blakeblackshear/frigate) | NVR with local object detection. | Self-hosted | Great fit for AI-enabled camera setups. |
+| [Scrypted](https://github.com/koush/scrypted) | Video integration and automation platform. | Self-hosted | Strong glue layer between cameras and smart homes. |
+| [Viseron](https://github.com/roflcoopter/viseron) | Local-only NVR and computer vision stack. | Self-hosted | Good privacy-first surveillance option. |
+| [ZoneMinder](https://github.com/ZoneMinder/zoneminder) | Long-running CCTV and camera monitoring platform. | Self-hosted | Mature traditional surveillance stack. |
+| [Bazarr](https://github.com/morpheus65535/bazarr) | Subtitle companion for media libraries. | Cross-platform, Self-hosted | Great alongside automation media stacks. |
+| [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) | Media request and discovery manager. | Self-hosted | Useful when a household shares media servers. |
+| [Radarr](https://github.com/Radarr/Radarr) | Movie management automation. | Cross-platform, Self-hosted | Core piece of many home media stacks. |
+| [Sonarr](https://github.com/Sonarr/Sonarr) | TV management automation. | Cross-platform, Self-hosted | Common complement to Radarr. |

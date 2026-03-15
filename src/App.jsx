@@ -9,7 +9,7 @@ import { marked } from 'marked';
 const CARD_CONFIGS = [
   {
     id: 'ai-assisted-code-dev',
-    title: 'AI for Developers (Coding Agents & Tooling)',
+    title: 'Developer Tooling & Code Assistants',
     backgroundImage: '/background/background2.png',
     borderColor: '#58ebbf',
     hoverColor: '88, 235, 191',
@@ -19,7 +19,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'ai-agents',
-    title: 'Agents & Autonomous Systems',
+    title: 'AI Agents, Research & Models',
     backgroundImage: '/background/background1.jpg',
     borderColor: '#8b5cf6',
     hoverColor: '139, 92, 246',
@@ -29,7 +29,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'local-first-ai-tools',
-    title: 'Local AI Stack (Local-First Tools)',
+    title: 'Local AI Apps & Model Managers',
     backgroundImage: '/background/background1.jpg',
     borderColor: '#3784ff',
     hoverColor: '55, 132, 255',
@@ -39,7 +39,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'cutting-edge-databases',
-    title: 'Data Stores for AI (Vector, OLAP, Graph)',
+    title: 'Data Platforms, Backup & Sync',
     backgroundImage: '/background/background3.png',
     borderColor: '#4290e3',
     hoverColor: '66, 144, 227',
@@ -49,7 +49,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'top-public-data-sources',
-    title: 'Public Data Sources & Datasets',
+    title: 'Knowledge, Notes & Productivity',
     backgroundImage: '/background/background4.png',
     borderColor: '#ff6b6b',
     hoverColor: '255, 107, 107',
@@ -59,7 +59,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'ai-art-gen',
-    title: 'Generative Media (Images, 3D & Video)',
+    title: 'Creative Media & AI Art',
     backgroundImage: '/background/background5.png',
     borderColor: '#ffd93d',
     hoverColor: '255, 217, 61',
@@ -69,7 +69,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'speech-tts-stt',
-    title: 'Speech & Audio (STT, TTS, VAD)',
+    title: 'Communication, Speech & Collaboration',
     backgroundImage: '/background/background6.png',
     borderColor: '#6bcf7f',
     hoverColor: '107, 207, 127',
@@ -79,7 +79,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'ai-video-games',
-    title: 'Game AI & Virtual Beings',
+    title: 'Entertainment, Games & Social',
     backgroundImage: '/background/background9.png',
     borderColor: '#34d399',
     hoverColor: '52, 211, 153',
@@ -89,7 +89,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'xr-spatial',
-    title: 'Spatial Computing (XR & WebXR)',
+    title: 'Desktop Systems & Windowing',
     backgroundImage: '/background/background4.png',
     borderColor: '#06b6d4',
     hoverColor: '6, 182, 212',
@@ -99,7 +99,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'vm-browser-automation',
-    title: 'Automation (Browsers, VMs & Scraping)',
+    title: 'Browsers, Automation & Virtualization',
     backgroundImage: '/background/background8.png',
     borderColor: '#fb7185',
     hoverColor: '251, 113, 133',
@@ -109,7 +109,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'networking-vpn',
-    title: 'Networking & Infrastructure Security',
+    title: 'Security, Privacy & Network Access',
     backgroundImage: '/background/background7.png',
     borderColor: '#a78bfa',
     hoverColor: '167, 139, 250',
@@ -119,7 +119,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'home-automation',
-    title: 'Smart Home & HomeLab Security',
+    title: 'Self-Hosting, Home Server & Smart Home',
     backgroundImage: '/background/background10.png',
     borderColor: '#fbbf24',
     hoverColor: '251, 191, 36',
@@ -129,7 +129,7 @@ const CARD_CONFIGS = [
   },
   {
     id: 'maker-hardware',
-    title: 'Hardware & Edge Prototyping',
+    title: 'Hardware, STEM & Edge Labs',
     backgroundImage: '/background/background3.png',
     borderColor: '#f97316',
     hoverColor: '249, 115, 22',

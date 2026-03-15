@@ -1,110 +1,70 @@
-# Networking & Infrastructure Security
+# Security, Privacy & Network Access
 
-## Quickstart (2026)
+> Practical privacy and security tools for real machines: blockers, password managers, VPNs, authentication layers, firewalls, and network diagnostics.
 
-- **Remote access**: WireGuard or an overlay mesh (Tailscale + Headscale).
-- **Inbound web**: Caddy/Traefik in front of services + automatic TLS.
-- **Segmentation**: VLANs / separate SSIDs for IoT, guests, and core services.
-- **Observability**: metrics + logs + basic IDS/IPS alerts (start small).
-- **Reproducibility**: keep config in git; automate with Ansible/Terraform.
+## Ad Blocking & Privacy Protection
 
-> Enhance connectivity and secure your infrastructure with modern networking, VPNs, and orchestration tools. This guide covers both enterprise-scale and home-lab scenarios.
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) | Network-wide DNS blocker for ads and trackers. | Self-hosted, Chromium, Firefox | Good household-wide privacy baseline. |
+| [Blocky](https://github.com/0xERR0R/blocky) | Fast DNS proxy with ad-blocking features. | Self-hosted | Good lightweight infrastructure blocker. |
+| [hBlock](https://github.com/hectorm/hblock) | Host-based domain block list generator. | Cross-platform | Simple option for local blocking. |
+| [Pi-hole](https://github.com/pi-hole/pi-hole) | Classic self-hosted ad-blocking DNS sinkhole. | Self-hosted | Still one of the best home-network defaults. |
+| [wBlock](https://github.com/0xCUB3/wBlock) | Safari-focused ad and privacy blocker. | macOS | Good Apple-only option. |
+| [Zen Privacy](https://github.com/ZenPrivacy/zen-desktop) | Desktop ad blocker and privacy guard. | Cross-platform | Useful for endpoint-level blocking. |
 
-## Overview
+## Authentication & Secrets
 
-> From web servers and reverse proxies to self-hosted VPNs and container orchestration, choose tools based on scale, security requirements, and ease of management.
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [2FAS](https://github.com/twofas/2fas-android) | Two-factor authentication app. | Mobile | Good general-purpose OTP option. |
+| [2FAuth](https://github.com/Bubka/2FAuth) | Self-hosted web app for managing 2FA tokens. | Self-hosted | Good for self-hosted OTP management. |
+| [Aegis](https://github.com/beemdevelopment/Aegis) | Android authenticator focused on secure token storage. | Android | One of the strongest Android OTP apps. |
+| [authelia](https://github.com/authelia/authelia) | Single sign-on and multi-factor portal for self-hosted apps. | Self-hosted | Strong reverse-proxy companion. |
+| [Zitadel](https://github.com/zitadel/zitadel) | Identity infrastructure platform. | Self-hosted | Good when you need a modern auth layer. |
+| [Infisical](https://github.com/Infisical/infisical) | Secret management, certificates, and privileged access platform. | Cross-platform, Web, Self-hosted | Strong choice for teams and infra. |
 
-## Usage Guidelines
+## Password Managers
 
-- Plan network segmentation: isolate services via VLANs, subnets, and firewalls.
-- Automate certificate management with Let's Encrypt (Certbot, Caddy, Traefik).
-- Use zero-trust VPNs (WireGuard, Tailscale/Headscale) for secure remote access.
-- Monitor performance and security with logs, metrics, and IDS/IPS solutions.
-- Deploy container orchestration platforms (CapRover, Portainer) for microservice management.
-- Backup configurations and use Infrastructure as Code (Terraform, Ansible) for reproducibility.
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [AliasVault](https://github.com/aliasvault/aliasvault) | Password manager with aliasing and self-hosting support. | Mobile, Chromium, Firefox | Good privacy-focused alternative. |
+| [Bitwarden](https://github.com/bitwarden/server) | Open password manager for individuals and teams. | Cross-platform, Mobile, Browsers | Mature and broadly supported. |
+| [KeePassXC](https://github.com/keepassxreboot/keepassxc) | Community-driven desktop password manager. | Cross-platform | Great local-first password vault. |
+| [LessPass](https://github.com/lesspass/lesspass) | Stateless password generation. | Cross-platform, Browsers | Useful for users who prefer derived secrets. |
+| [Passbolt](https://github.com/passbolt/passbolt_api) | Password manager for teams. | Cross-platform, Self-hosted, Browsers | Strong fit for group credential sharing. |
+| [Vaultwarden](https://github.com/dani-garcia/vaultwarden) | Lightweight Bitwarden-compatible server. | Self-hosted | Excellent self-hosted password vault. |
 
-## Web Servers & Reverse Proxies
+## Firewalls & Endpoint Security
 
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Nginx**<br>📜 BSD 2-Clause<br>🔗 [Docs](https://nginx.org/en/docs/) / [Download](https://nginx.org/en/download.html) | High-performance web server and reverse proxy | Supports SSL, load balancing, and multiplexing |
-| **Nginx Proxy Manager**<br>📜 Apache 2.0<br>🔗 [Docs](https://nginxproxymanager.com/guide/) / [Download](https://github.com/jc21/nginx-proxy-manager/releases) | GUI for managing Nginx reverse proxy with SSL support | Ideal for managing multiple services with Let's Encrypt integration |
-| **Caddy**<br>📜 Apache 2.0<br>🔗 [Docs](https://caddyserver.com/docs/) / [Download](https://github.com/caddyserver/caddy/releases) | Automatic HTTPS-enabled web server | Simplifies TLS management with automatic certificate provisioning |
-| **Apache HTTP Server**<br>📜 Apache License 2.0<br>🔗 [Docs](https://httpd.apache.org/docs/) / [Download](https://httpd.apache.org/download.cgi) | Versatile and widely-used web server | Extensive module ecosystem and configuration flexibility |
-| **Traefik**<br>📜 MIT<br>🔗 [Docs](https://doc.traefik.io/traefik/) / [Download](https://github.com/traefik/traefik/releases) | Modern HTTP reverse proxy and load balancer | Dynamic service discovery and Let's Encrypt integration |
-| **HAProxy**<br>📜 GPL v2<br>🔗 [Docs](https://docs.haproxy.org/) / [Download](https://www.haproxy.org/download/) | High-performance TCP/HTTP load balancer | Enterprise-grade features, excellent for high-traffic scenarios |
-| **Cloudflare Tunnel**<br>📜 Commercial/Free<br>🔗 [Docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) / [Download](https://github.com/cloudflare/cloudflared) | Secure tunnel to expose local services | No open ports required, built-in DDoS protection |
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [ClamAV](https://github.com/Cisco-Talos/clamav) | Open-source antivirus engine. | Cross-platform, Self-hosted | Good baseline scanning component. |
+| [BunkerWeb](https://github.com/bunkerity/bunkerweb) | Modern open-source web application firewall. | Self-hosted | Good for exposed web services. |
+| [LuLu](https://github.com/objective-see/LuLu) | Free outbound firewall for macOS. | macOS | Excellent endpoint firewall on Apple devices. |
+| [SafeLine](https://github.com/chaitin/SafeLine) | Self-hosted WAF and reverse proxy. | Self-hosted | Good if you want app protection at the edge. |
 
-## VPN & Overlay Networking
+## VPN & Remote Network Access
 
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **WireGuard**<br>📜 GPLv2<br>🔗 [Docs](https://www.wireguard.com/) / [Download](https://www.wireguard.com/install/) | Simple and fast VPN protocol | Known for its performance and ease of configuration |
-| **Netmaker**<br>📜 Apache 2.0<br>🔗 [Docs](https://docs.netmaker.io/) / [Download](https://github.com/gravitl/netmaker/releases) | WireGuard-based network management platform | Facilitates mesh VPNs and site-to-site connections |
-| **Headscale**<br>📜 MIT<br>🔗 [Docs](https://github.com/juanfont/headscale#documentation) / [Download](https://github.com/juanfont/headscale/releases) | Self-hosted coordination server for Tailscale clients | Enables Tailscale-like networks without relying on Tailscale's servers |
-| **Nebula**<br>📜 Apache 2.0<br>🔗 [Docs](https://github.com/slackhq/nebula#readme) / [Download](https://github.com/slackhq/nebula/releases) | Scalable overlay networking tool | Developed by Slack for internal networking |
-| **Innernet**<br>📜 Apache 2.0<br>🔗 [Docs](https://github.com/graphcore/innernet#readme) / [Download](https://github.com/graphcore/innernet/releases) | Private network system built on WireGuard | Designed for managing internal networks securely |
-| **OpenVPN**<br>📜 GPL v2<br>🔗 [Docs](https://openvpn.net/community-resources/) / [Download](https://openvpn.net/community-downloads/) | Traditional SSL/TLS VPN solution | Mature, widely supported, more complex than WireGuard |
-| **PiVPN**<br>📜 MIT<br>🔗 [Docs](https://www.pivpn.io/) / [Download](https://github.com/pivpn/pivpn) | Simple VPN installer for Raspberry Pi | Supports both OpenVPN and WireGuard |
-| **Pritunl**<br>📜 AGPL v3<br>🔗 [Docs](https://docs.pritunl.com/) / [Download](https://pritunl.com/) | Enterprise VPN server with web UI | OpenVPN-based with management interface |
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Algo](https://github.com/trailofbits/algo) | Scripts for provisioning a personal VPN. | Cross-platform | Good for cloud-hosted personal VPN setups. |
+| [Amnezia](https://github.com/amnezia-vpn/amnezia-client) | VPN client for desktop and mobile. | Cross-platform | Useful for end-user VPN access. |
+| [EasyTier](https://github.com/EasyTier/EasyTier) | Decentralized mesh VPN with WireGuard support. | Cross-platform | Good peer-to-peer secure networking option. |
+| [Gluetun](https://github.com/qdm12/gluetun) | VPN client container with optional proxy features. | Self-hosted | Great for routing other containers through a VPN. |
+| [headscale](https://github.com/juanfont/headscale) | Self-hosted control plane compatible with Tailscale-style networking. | Self-hosted | Excellent for private tailnet-style deployments. |
+| [NetBird](https://github.com/netbirdio/netbird) | WireGuard overlay network with policy and SSO support. | Cross-platform | Strong team-friendly VPN layer. |
+| [Netmaker](https://github.com/gravitl/netmaker) | Distributed virtual network orchestration with WireGuard. | Self-hosted, Web | Good for larger self-hosted mesh setups. |
+| [OpenVPN](https://github.com/OpenVPN/openvpn) | Traditional open-source VPN daemon. | Cross-platform | Good when legacy interoperability matters. |
+| [Tailscale](https://github.com/tailscale/tailscale) | Mesh VPN built on WireGuard principles. | Self-hosted | Extremely easy for user-facing secure access. |
+| [WireGuard Easy](https://github.com/wg-easy/wg-easy) | Simplified WireGuard VPN with admin UI. | Self-hosted | Great for quick self-hosted VPN rollout. |
+| [ZeroTier](https://github.com/zerotier/ZeroTierOne) | Overlay network that behaves like a smart Ethernet switch. | Cross-platform, Mobile | Good for flexible cross-network connectivity. |
 
-## Security & Monitoring Tools
+## Network Visibility
 
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Fail2Ban**<br>📜 GPL v2<br>🔗 [Docs](https://github.com/fail2ban/fail2ban/wiki) / [Download](https://github.com/fail2ban/fail2ban) | Intrusion prevention software | Bans IPs after failed login attempts |
-| **CrowdSec**<br>📜 MIT<br>🔗 [Docs](https://docs.crowdsec.net/) / [Download](https://github.com/crowdsecurity/crowdsec) | Collaborative security engine | Community-driven threat intelligence |
-| **Suricata**<br>📜 GPL v2<br>🔗 [Docs](https://docs.suricata.io/) / [Download](https://suricata.io/download/) | Network IDS/IPS and security monitoring | High-performance threat detection |
-| **OSSEC**<br>📜 GPL v2<br>🔗 [Docs](https://www.ossec.net/docs/) / [Download](https://www.ossec.net/download/) | Host-based intrusion detection system | Log analysis, integrity checking, alerting |
-| **Wazuh**<br>📜 GPL v2<br>🔗 [Docs](https://documentation.wazuh.com/) / [Download](https://wazuh.com/install/) | Security monitoring platform | OSSEC fork with modern UI and features |
-| **pfSense**<br>📜 Apache 2.0<br>🔗 [Docs](https://docs.netgate.com/pfsense/en/latest/) / [Download](https://www.pfsense.org/download/) | Open-source firewall and router | Feature-rich network security appliance |
-| **OPNsense**<br>📜 BSD 2-Clause<br>🔗 [Docs](https://docs.opnsense.org/) / [Download](https://opnsense.org/download/) | pfSense fork with modern UI | Easier to use, frequent updates |
-
-## Network Monitoring & Analytics
-
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Zabbix**<br>📜 GPL v2<br>🔗 [Docs](https://www.zabbix.com/documentation) / [Download](https://www.zabbix.com/download) | Enterprise monitoring solution | Comprehensive network, server, and application monitoring |
-| **Nagios Core**<br>📜 GPL v2<br>🔗 [Docs](https://www.nagios.org/documentation/) / [Download](https://www.nagios.org/downloads/) | Infrastructure monitoring system | Plugin-based architecture, industry standard |
-| **LibreNMS**<br>📜 GPL v3<br>🔗 [Docs](https://docs.librenms.org/) / [Download](https://www.librenms.org/) | Network monitoring system | Auto-discovery, modern web interface |
-| **PRTG Network Monitor**<br>📜 Commercial/Free (100 sensors)<br>🔗 [Docs](https://www.paessler.com/manuals/prtg) / [Download](https://www.paessler.com/prtg/download) | Comprehensive network monitoring | Easy setup, great for Windows environments |
-| **Pandora FMS**<br>📜 GPL v2<br>🔗 [Docs](https://pandorafms.com/manual/) / [Download](https://pandorafms.com/community/) | Flexible monitoring solution | Network, server, and application monitoring |
-| **Cacti**<br>📜 GPL v2<br>🔗 [Docs](https://www.cacti.net/info/docs) / [Download](https://www.cacti.net/download_cacti.php) | Network graphing solution | RRDtool-based performance graphing |
-| **ntopng**<br>📜 GPL v3<br>🔗 [Docs](https://www.ntop.org/guides/ntopng/) / [Download](https://www.ntop.org/products/traffic-analysis/ntop/) | High-speed web-based traffic analysis | Real-time network traffic monitoring |
-
-## DNS & Certificate Management
-
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Pi-hole**<br>📜 EUPL-1.2<br>🔗 [Docs](https://docs.pi-hole.net/) / [Download](https://pi-hole.net/) | Network-wide ad blocker | DNS sinkhole with web interface |
-| **AdGuard Home**<br>📜 GPL v3<br>🔗 [Docs](https://github.com/AdguardTeam/AdguardHome/wiki) / [Download](https://github.com/AdguardTeam/AdguardHome) | Network-wide ad and tracker blocker | More features than Pi-hole, single binary |
-| **Unbound**<br>📜 BSD<br>🔗 [Docs](https://unbound.docs.nlnetlabs.nl/) / [Download](https://nlnetlabs.nl/projects/unbound/download/) | Validating, recursive DNS resolver | Security-focused, DNSSEC support |
-| **PowerDNS**<br>📜 GPL v2<br>🔗 [Docs](https://doc.powerdns.com/) / [Download](https://www.powerdns.com/) | Authoritative DNS server | High-performance, API-driven |
-| **Certbot**<br>📜 Apache 2.0<br>🔗 [Docs](https://certbot.eff.org/docs/) / [Download](https://certbot.eff.org/) | Let's Encrypt certificate client | Automated SSL/TLS certificate management |
-| **acme.sh**<br>📜 GPL v3<br>🔗 [Docs](https://github.com/acmesh-official/acme.sh/wiki) / [Download](https://github.com/acmesh-official/acme.sh) | ACME protocol client | Pure shell script, many DNS providers |
-| **Lego**<br>📜 MIT<br>🔗 [Docs](https://go-acme.github.io/lego/) / [Download](https://github.com/go-acme/lego) | Let's Encrypt client and ACME library | Written in Go, extensive DNS provider support |
-
-## Infrastructure as Code & Automation
-
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Ansible**<br>📜 GPL v3<br>🔗 [Docs](https://docs.ansible.com/) / [Download](https://www.ansible.com/) | Agentless automation platform | Configuration management, deployment, orchestration |
-| **Terraform**<br>📜 Mozilla Public License 2.0<br>🔗 [Docs](https://www.terraform.io/docs) / [Download](https://www.terraform.io/downloads) | Infrastructure as code tool | Multi-cloud resource provisioning |
-| **Pulumi**<br>📜 Apache 2.0<br>🔗 [Docs](https://www.pulumi.com/docs/) / [Download](https://www.pulumi.com/docs/get-started/install/) | Modern infrastructure as code | Uses familiar programming languages |
-| **SaltStack**<br>📜 Apache 2.0<br>🔗 [Docs](https://docs.saltproject.io/) / [Download](https://saltproject.io/) | Configuration management and remote execution | Event-driven automation, scalable |
-| **Chef**<br>📜 Apache 2.0<br>🔗 [Docs](https://docs.chef.io/) / [Download](https://www.chef.io/downloads) | Configuration management tool | Infrastructure as code, compliance automation |
-
-## Server Management & Orchestration (Additional)
-
-| Tools | Description | Notes |
-|-------|-------------|-------|
-| **Umbrel**<br>📜 PolyForm Noncommercial 1.0.0<br>🔗 [Docs](https://community.umbrel.com/) / [Download](https://umbrel.com/) | Easy home server/cloud OS, Bitcoin focus initially | Beginners, Home users, Bitcoin enthusiasts; Appliance-like install |
-| **YunoHost**<br>📜 GNU AGPLv3<br>🔗 [Docs](https://yunohost.org/docs) / [Download](https://yunohost.org/install) | Democratize self-hosting for non-experts | Non-experts, Small orgs; Guided image install |
-| **CasaOS**<br>📜 Apache 2.0<br>🔗 [Docs](https://wiki.casaos.io) / [Download](https://get.casaos.io) | Simple personal cloud, Docker ecosystem | Beginners, Home users; One-liner script install |
-| **Dokku**<br>📜 MIT<br>🔗 [Docs](https://dokku.com/docs/) / [Download](https://dokku.com/docs/getting-started/installation/) | Lightweight PaaS, Heroku alternative | Developers; CLI-based setup |
-| **CapRover**<br>📜 Apache 2.0 + Appendix<br>🔗 [Docs](https://caprover.com/docs/) / [Download](https://caprover.com/docs/get-started.html) | Easy PaaS, app/database deployment | Developers; Docker Swarm, auto SSL |
-| **Portainer CE**<br>📜 Zlib<br>🔗 [Docs](https://docs.portainer.io/) / [Download](https://docs.portainer.io/start/install-ce/) | Container management UI (Docker, Kubernetes) | All levels; Easy Docker run |
-| **Sandstorm.io**<br>📜 Apache 2.0<br>🔗 [Docs](https://docs.sandstorm.io/) / [Download](https://sandstorm.io/install) | Secure web app package manager | Security-focused; Sandboxed grains |
-| **FreedomBox**<br>📜 GNU AGPLv3<br>🔗 [Docs](https://wiki.debian.org/FreedomBox) / [Download](https://freedombox.org/download/) | Private server for non-experts, privacy focus | Non-experts; Debian-based image |
-| **OpenMediaVault**<br>📜 GNU GPLv3<br>🔗 [Docs](https://docs.openmediavault.org/) / [Download](https://www.openmediavault.org/download.html) | NAS solution, extendable via plugins | Home/SOHO; Plugin ecosystem |
-| **Cosmos Cloud**<br>📜 Apache 2.0 + Commons Clause<br>🔗 [Docs](https://cosmos-cloud.io/doc/) / [Download](https://cosmos-cloud.io/doc/) | Secure & easy self-hosting platform | Security-focused; integrated backup & SSO |
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Scanopy](https://github.com/scanopy/scanopy) | Network documentation that updates itself. | Self-hosted, Web, Cross-platform | Good for inventory and topology awareness. |
+| [Sniffnet](https://github.com/GyulyVGC/sniffnet) | Friendly network traffic monitor. | Cross-platform | Great for high-level traffic visibility. |
+| [trippy](https://github.com/fujiapple852/trippy) | Network diagnostic TUI. | Cross-platform | Useful for path and latency debugging. |
+| [Wireshark](https://github.com/wireshark/wireshark) | Deep packet inspection and protocol analysis. | Cross-platform | Still the standard for network investigation. |
