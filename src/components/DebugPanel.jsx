@@ -1,189 +1,184 @@
 import React from 'react';
 
-const DebugPanel = ({ 
-  debugState, 
-  onClose, 
-  onTabSwitch 
-}) => {
-  const { isVisible, activeTab, markdownFiles, performanceMetrics } = debugState;
+const TABS = [
+  { id: 'animations', label: 'Animation' },
+  { id: 'markdown', label: 'Markdown' },
+  { id: 'performance', label: 'Perf' }
+];
 
-  if (!isVisible) return null;
+const formatMilliseconds = (value) => {
+  if (!Number.isFinite(value) || value <= 0) return '-';
+  return `${value.toFixed(1)}ms`;
+};
 
-  const formatTime = (time) => time > 0 ? `${time.toFixed(1)}ms` : '-';
-  const formatSize = (bytes) => bytes > 0 ? `${(bytes / 1024).toFixed(1)}KB` : '-';
+const formatFileSize = (value) => {
+  if (!Number.isFinite(value) || value <= 0) return '-';
+  return `${(value / 1024).toFixed(1)} KB`;
+};
+
+const formatMemory = (value) => {
+  if (!Number.isFinite(value) || value <= 0) return 'Not available';
+  return `${(value / 1024 / 1024).toFixed(1)} MB`;
+};
+
+const getStatusTone = (status) => {
+  if (status === 'complete') {
+    return 'border-emerald-400/50 bg-emerald-400/10 text-emerald-200';
+  }
+
+  if (status === 'error') {
+    return 'border-rose-400/50 bg-rose-400/10 text-rose-200';
+  }
+
+  return 'border-amber-300/50 bg-amber-300/10 text-amber-100';
+};
+
+const StatRow = ({ label, value }) => (
+  <div className="flex items-center justify-between rounded border border-white/10 bg-white/5 px-3 py-2">
+    <span className="text-[11px] uppercase tracking-[0.18em] text-sky-100/70">{label}</span>
+    <span className="ml-4 max-w-[12rem] truncate text-[11px] font-semibold text-emerald-200">{value}</span>
+  </div>
+);
+
+const DebugPanel = ({ debugState, onClose, onTabSwitch }) => {
+  if (!debugState?.isVisible) {
+    return null;
+  }
+
+  const performanceMetrics = debugState.performanceMetrics ?? {};
+  const markdownFiles = debugState.markdownFiles ?? [];
+  const currentTab = debugState.activeTab ?? 'animations';
+  const totalLoadTime = performanceMetrics.startTime
+    ? (performance.now() - performanceMetrics.startTime) / 1000
+    : 0;
 
   return (
-    <div className="debug-panel fixed top-4 right-4 w-96 bg-slate-800 border-2 border-blue-500 rounded-lg shadow-xl z-[9999] max-h-[80vh] overflow-hidden">
-      {/* Header */}
-      <div className="debug-header bg-slate-700 p-3 flex justify-between items-center">
-        <h3 className="text-white font-bold">🛠️ Development Debug Console</h3>
+    <aside
+      className="fixed bottom-5 left-5 z-[15000] flex max-h-[70vh] w-[min(420px,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-xl border-2 border-[#3784ff] bg-[linear-gradient(135deg,#1a1a2e_0%,#16213e_50%,#0f3460_100%)] font-mono text-[12px] text-slate-100 shadow-[0_8px_32px_rgba(0,0,0,0.8),0_0_20px_rgba(55,132,255,0.3)] backdrop-blur-md"
+      aria-label="Debug panel"
+    >
+      <div className="flex items-center justify-between border-b border-white/10 bg-[linear-gradient(90deg,#3784ff_0%,#4290e3_100%)] px-4 py-3">
+        <h3 className="m-0 text-sm font-bold text-white">Spellbook Debug</h3>
         <div className="flex items-center gap-2">
+          {TABS.map((tab) => {
+            const isActive = currentTab === tab.id;
+
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => onTabSwitch(tab.id)}
+                className={[
+                  'rounded border px-2 py-1 text-[10px] transition',
+                  isActive
+                    ? 'border-white/30 bg-white/30 font-bold text-white'
+                    : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'
+                ].join(' ')}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
           <button
-            onClick={() => onTabSwitch('animations')}
-            className={`px-2 py-1 text-xs rounded ${
-              activeTab === 'animations' 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-slate-600 text-gray-300 hover:bg-slate-500'
-            }`}
-          >
-            Animations
-          </button>
-          <button
-            onClick={() => onTabSwitch('markdown')}
-            className={`px-2 py-1 text-xs rounded ${
-              activeTab === 'markdown' 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-slate-600 text-gray-300 hover:bg-slate-500'
-            }`}
-          >
-            Markdown
-          </button>
-          <button
-            onClick={() => onTabSwitch('performance')}
-            className={`px-2 py-1 text-xs rounded ${
-              activeTab === 'performance' 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-slate-600 text-gray-300 hover:bg-slate-500'
-            }`}
-          >
-            Performance
-          </button>
-          <button
+            type="button"
             onClick={onClose}
-            className="text-gray-300 hover:text-white text-lg leading-none"
+            className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/80 text-base leading-none text-white transition hover:scale-110 hover:bg-rose-500"
+            aria-label="Close debug panel"
           >
             ×
           </button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-3 overflow-y-auto max-h-96">
-        {/* Animation Tab */}
-        {activeTab === 'animations' && (
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold">🎬 Current Animation State</h4>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="text-gray-300">
-                <span className="font-medium">Stage:</span>
-                <span className="ml-2 text-green-400">{debugState.currentStage || 'Initial'}</span>
-              </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Expanded:</span>
-                <span className="ml-2 text-blue-400">{debugState.currentExpanded ? 'true' : 'false'}</span>
-              </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Flipped:</span>
-                <span className="ml-2 text-purple-400">{debugState.currentFlipped ? 'true' : 'false'}</span>
-              </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Size:</span>
-                <span className="ml-2 text-yellow-400">{debugState.currentSize || '-'}</span>
-              </div>
-              <div className="text-gray-300 col-span-2">
-                <span className="font-medium">Position:</span>
-                <span className="ml-2 text-orange-400">{debugState.currentPosition || '-'}</span>
-              </div>
-              <div className="text-gray-300 col-span-2">
-                <span className="font-medium">Updated:</span>
-                <span className="ml-2 text-cyan-400">{debugState.lastUpdate || '-'}</span>
+      <div className="flex-1 overflow-y-auto p-4">
+        {currentTab === 'animations' ? (
+          <div className="space-y-4">
+            <div>
+              <h4 className="mb-3 border-b border-cyan-300/30 pb-1 text-[13px] font-semibold text-cyan-200">Card state</h4>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <StatRow label="Stage" value={debugState.currentStage ?? '-'} />
+                <StatRow label="Expanded" value={String(debugState.currentExpanded ?? false)} />
+                <StatRow label="Flipped" value={String(debugState.currentFlipped ?? false)} />
+                <StatRow label="Size" value={debugState.currentSize ?? '-'} />
+                <StatRow label="Position" value={debugState.currentPosition ?? '-'} />
+                <StatRow label="Updated" value={debugState.lastUpdate ?? '-'} />
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Markdown Tab */}
-        {activeTab === 'markdown' && (
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold">📝 Markdown Processing</h4>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {markdownFiles.length === 0 ? (
-                <div className="text-gray-400 text-sm">No markdown files loaded yet...</div>
-              ) : (
-                markdownFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    className={`p-2 rounded border text-xs ${
-                      file.status === 'error'
-                        ? 'border-red-500 bg-red-900/20'
-                        : file.status === 'complete'
-                        ? 'border-green-500 bg-green-900/20'
-                        : 'border-yellow-500 bg-yellow-900/20'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-medium text-white truncate">
-                        {file.path.split('/').pop()}
-                      </span>
-                      <span
-                        className={`px-1 py-0.5 rounded text-xs ${
-                          file.status === 'error'
-                            ? 'bg-red-500 text-white'
-                            : file.status === 'complete'
-                            ? 'bg-green-500 text-white'
-                            : 'bg-yellow-500 text-black'
-                        }`}
-                      >
-                        {file.status}
-                      </span>
-                    </div>
-                    <div className="text-gray-300 space-y-0.5">
-                      {file.fileSize > 0 && <div>Size: {formatSize(file.fileSize)}</div>}
-                      {file.loadTime > 0 && <div>Load: {formatTime(file.loadTime)}</div>}
-                      {file.parseTime > 0 && <div>Parse: {formatTime(file.parseTime)}</div>}
-                      {file.renderTime > 0 && <div>Render: {formatTime(file.renderTime)}</div>}
-                      {file.totalTime > 0 && <div>Total: {formatTime(file.totalTime)}</div>}
-                      {file.error && (
-                        <div className="text-red-400 mt-1">Error: {file.error}</div>
-                      )}
-                    </div>
-                  </div>
-                ))
-              )}
+            <div>
+              <h4 className="mb-3 border-b border-cyan-300/30 pb-1 text-[13px] font-semibold text-cyan-200">Controls</h4>
+              <p className="text-[11px] leading-5 text-slate-200/80">
+                Press <span className="font-semibold text-white">`</span> or <span className="font-semibold text-white">~</span> to toggle the panel. Press <span className="font-semibold text-white">Esc</span> to close it.
+              </p>
             </div>
           </div>
-        )}
+        ) : null}
 
-        {/* Performance Tab */}
-        {activeTab === 'performance' && (
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold">⚡ Performance Metrics</h4>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="text-gray-300">
-                <span className="font-medium">Total Load Time:</span>
-                <span className="ml-2 text-green-400">
-                  {((performance.now() - performanceMetrics.startTime) / 1000).toFixed(2)}s
-                </span>
+        {currentTab === 'markdown' ? (
+          <div>
+            <h4 className="mb-3 border-b border-cyan-300/30 pb-1 text-[13px] font-semibold text-cyan-200">Markdown loads</h4>
+            {markdownFiles.length === 0 ? (
+              <div className="rounded border border-white/10 bg-white/5 px-4 py-6 text-center italic text-white/50">
+                No markdown files loaded yet...
               </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Animation FPS:</span>
-                <span className="ml-2 text-blue-400">{performanceMetrics.fps} fps</span>
+            ) : (
+              <div className="space-y-2">
+                {markdownFiles.map((file) => {
+                  const statusTone = getStatusTone(file.status);
+                  const filename = file.path?.split('/').pop() ?? file.path ?? 'Unknown file';
+
+                  return (
+                    <div
+                      key={`${file.path}-${file.containerId}`}
+                      className={`rounded border px-3 py-3 ${statusTone}`}
+                    >
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <div className="truncate text-[11px] font-bold text-cyan-100">{filename}</div>
+                        <div className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]">
+                          {file.status ?? 'unknown'}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-[10px] text-white/75 sm:grid-cols-3">
+                        <div>Size: {formatFileSize(file.fileSize)}</div>
+                        <div>Load: {formatMilliseconds(file.loadTime)}</div>
+                        <div>Parse: {formatMilliseconds(file.parseTime)}</div>
+                        <div>Render: {formatMilliseconds(file.renderTime)}</div>
+                        <div>Total: {formatMilliseconds(file.totalTime)}</div>
+                        <div>ID: {file.containerId ?? '-'}</div>
+                      </div>
+                      {file.error ? (
+                        <div className="mt-2 text-[10px] font-semibold text-rose-200">Error: {file.error}</div>
+                      ) : null}
+                    </div>
+                  );
+                })}
               </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Memory Usage:</span>
-                <span className="ml-2 text-purple-400">
-                  {performanceMetrics.memory > 0 
-                    ? `${(performanceMetrics.memory / 1024 / 1024).toFixed(1)} MB`
-                    : 'Not available'
-                  }
-                </span>
-              </div>
-              <div className="text-gray-300">
-                <span className="font-medium">Cards Rendered:</span>
-                <span className="ml-2 text-yellow-400">
-                  {performanceMetrics.cardsLoaded}/{performanceMetrics.totalCards}
-                </span>
+            )}
+          </div>
+        ) : null}
+
+        {currentTab === 'performance' ? (
+          <div className="space-y-4">
+            <div>
+              <h4 className="mb-3 border-b border-cyan-300/30 pb-1 text-[13px] font-semibold text-cyan-200">Runtime</h4>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <StatRow label="Session" value={`${totalLoadTime.toFixed(2)}s`} />
+                <StatRow label="FPS" value={`${performanceMetrics.fps ?? 0} fps`} />
+                <StatRow label="Memory" value={formatMemory(performanceMetrics.memory)} />
+                <StatRow
+                  label="Cards"
+                  value={`${performanceMetrics.cardsLoaded ?? 0}/${performanceMetrics.totalCards ?? 0}`}
+                />
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
-      {/* Footer */}
-      <div className="bg-slate-700 p-2 text-center">
-        <small className="text-gray-400">Press ` or ~ to toggle | ESC to close</small>
+      <div className="border-t border-white/10 bg-black/30 px-4 py-2 text-center">
+        <small className="text-[10px] text-white/40">Developer overlay</small>
       </div>
-    </div>
+    </aside>
   );
 };
 
