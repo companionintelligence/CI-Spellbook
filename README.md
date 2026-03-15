@@ -1,12 +1,21 @@
 # CI-Spellbook
 
-## COPYRIGHT COMPANION INTELLIGENCE - LIFESCOPE INC
+## Confidentiality
+Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
 
-## DO NOT DISTRIBUTE
+## Summary
+CI-Spellbook is the front-end experience for the Companion Intelligence product line, focused on card-driven content exploration and rich markdown presentation.
 
-## PRIVATE AND CONFIDENTIAL
+## Quick Start
+```bash
+npm install
+npm run dev
+```
+
+## Design Tokens
 
 ### Colors
+Usage guidance: define primary/secondary accents and set background/text colors via CSS variables in `src/index.css`.
 
 ```
   #3784ff
@@ -18,13 +27,9 @@
   #624b6d
   #593c52
   #6d456b
-  #6d456b
   #3351ab
-  #3784ff
-  #4290e3
   #495a8b
   #3a3f6c
-  #071533
   #09436d
   #117ba0
   #60d9ff
@@ -40,7 +45,10 @@
   #abd4d8
   #d2f6ff
 ```
+
 ### Fonts
+- Miriam Mono CLM: headings and data labels
+- Lekton: body copy and long-form markdown
 
 - Miriam Mono CLM
 - Lekton

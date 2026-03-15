@@ -1,21 +1,23 @@
 # Card Height Issue - Playwright Debugging Results
 
+Status: Fixed and re-validated as of 2026-02-06.
+
 ## Issues Identified
 
 ### 1. **Hardcoded Height Override (FIXED)**
-- **Location:** `/workspaces/CI-Spellbook/src/index.css` line 171
+- **Location:** `src/index.css` line 171
 - **Problem:** `.group.full-expanded` had `height: 85vh !important;` which overrode the dynamic `--card-content-height` CSS variable
 - **Fix Applied:** Changed to `height: var(--card-content-height, 85vh) !important;`
 - **Impact:** HIGH - This was the primary cause of content being cut off
 
 ### 2. **Overflow Conflict (FIXED)**
-- **Location:** `/workspaces/CI-Spellbook/src/index.css` line 1076
+- **Location:** `src/index.css` line 1076
 - **Problem:** `.group.full-expanded` had `overflow-y: auto !important;` making the card container scrollable instead of just the card-back
 - **Fix Applied:** Changed to `overflow: hidden !important;` - only `.card-back` should scroll
 - **Impact:** MEDIUM - Caused confusion about which element should handle scrolling
 
 ### 3. **Content Height Measurement (IMPROVED)**
-- **Location:** `/workspaces/CI-Spellbook/src/hooks/useCardAnimation.js` line 18
+- **Location:** `src/hooks/useCardAnimation.js` line 18
 - **Problem:** `measureContentHeight()` was:
   - Selecting the wrong element (`.card-inner > div[style*="rotateY(180deg)"]` instead of `.card-back`)
   - Not accounting for all content properly
@@ -61,7 +63,12 @@
 4. Sets `--card-content-height` CSS variable on card element
 5. CSS rules use this variable for height animation
 
-## Potential Remaining Issues
+## Reproduction Steps
+1. Start the dev server and open `http://localhost:5503`.
+2. Click a card with long markdown content.
+3. Observe the card height expansion and verify bottom content is reachable.
+
+## Follow-ups
 
 1. **Padding accounting:** card-back has `px-6 py-4` (24px horizontal, 16px vertical padding)
    - Total vertical padding: 32px (16px top + 16px bottom)
@@ -71,9 +78,12 @@
 
 3. **Markdown content rendering:** If images or async content loads after measurement, height will be wrong
 
+## Why Playwright
+Playwright was used to automate repeatable card expansion and height checks with consistent timing and screenshot capture.
+
 ## Recommended Tests
 
-Run the debug page at `/workspaces/CI-Spellbook/debug-card-height.html` to:
+Run the debug page at `debug-card-height.html` to:
 1. Measure actual vs. expected heights
 2. Check if content is still cut off
 3. Verify scrolling behavior
@@ -96,4 +106,3 @@ npm test -- tests/card-height.spec.js
 ✅ No hardcoded height values override the dynamic calculation
 ✅ `.card-back` is the only scrollable element
 ✅ Content at bottom is accessible via scrolling
-
