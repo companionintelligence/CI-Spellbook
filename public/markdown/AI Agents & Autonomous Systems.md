@@ -37,6 +37,8 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Agntcy Directory](https://github.com/agntcy/dir) | Distributed directory for publishing, storing, and discovering AI agent records across a peer-to-peer network. | Self-hosted | Strong fit for capability-based agent discovery and knowledge exchange. |
+| [Agent Directory Protocol](https://github.com/agntcy/dir-spec) | Technical specification for the Agntcy directory service and interoperable agent record exchange. | Cross-platform | Helpful when implementing compatible directory tooling and integrations. |
 | [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | Privacy-focused assistant for documents, retrieval, and workspace-based chat. | Cross-platform | Easy entry point for local RAG. |
 | [DocsGPT](https://github.com/arc53/DocsGPT) | Private AI platform for search, documents, and built-in agent tools. | Cross-platform, Self-hosted | Useful for internal documentation assistants. |
 | [kotaemon](https://github.com/Cinnamon/kotaemon) | Document-centric RAG workspace for chatting with files and reports. | Self-hosted | Good for knowledge-heavy teams. |
