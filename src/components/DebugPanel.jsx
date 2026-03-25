@@ -34,10 +34,10 @@ const getStatusTone = (status) => {
 };
 
 const StatRow = ({ label, value }) => (
-  <div className="flex items-center justify-between rounded border border-white/10 bg-white/5 px-3 py-2">
-    <span className="text-[11px] uppercase tracking-[0.18em] text-sky-100/70">{label}</span>
-    <span className="ml-4 max-w-[12rem] truncate text-[11px] font-semibold text-emerald-200">{value}</span>
-  </div>
+  <dl className="grid grid-cols-[auto,1fr] items-center rounded border border-white/10 bg-white/5 px-3 py-2">
+    <dt className="text-[11px] uppercase tracking-[0.18em] text-sky-100/70">{label}</dt>
+    <dd className="ml-4 max-w-[12rem] truncate text-[11px] font-semibold text-emerald-200">{value}</dd>
+  </dl>
 );
 
 const DebugPanel = ({ debugState, onClose, onTabSwitch }) => {
@@ -60,25 +60,30 @@ const DebugPanel = ({ debugState, onClose, onTabSwitch }) => {
       <div className="flex items-center justify-between border-b border-white/10 bg-[linear-gradient(90deg,#3784ff_0%,#4290e3_100%)] px-4 py-3">
         <h3 className="m-0 text-sm font-bold text-white">Spellbook Debug</h3>
         <div className="flex items-center gap-2">
-          {TABS.map((tab) => {
-            const isActive = currentTab === tab.id;
+          <div role="tablist" aria-label="Debug panel tabs" className="flex items-center gap-2">
+            {TABS.map((tab) => {
+              const isActive = currentTab === tab.id;
 
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => onTabSwitch(tab.id)}
-                className={[
-                  'rounded border px-2 py-1 text-[10px] transition',
-                  isActive
-                    ? 'border-white/30 bg-white/30 font-bold text-white'
-                    : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'
-                ].join(' ')}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={tab.id}
+                  id={`debug-tab-${tab.id}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => onTabSwitch(tab.id)}
+                  className={[
+                    'rounded border px-2 py-1 text-[10px] transition',
+                    isActive
+                      ? 'border-white/30 bg-white/30 font-bold text-white'
+                      : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'
+                  ].join(' ')}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
           <button
             type="button"
             onClick={onClose}
@@ -90,7 +95,11 @@ const DebugPanel = ({ debugState, onClose, onTabSwitch }) => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div
+        className="flex-1 overflow-y-auto p-4"
+        role="tabpanel"
+        aria-labelledby={`debug-tab-${currentTab}`}
+      >
         {currentTab === 'animations' ? (
           <div className="space-y-4">
             <div>

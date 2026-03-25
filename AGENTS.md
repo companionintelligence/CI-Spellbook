@@ -12,7 +12,7 @@ npm install
 ```bash
 npm run dev
 ```
-The dev server runs on `http://localhost:5500` (see `vite.config.js`).
+The dev server runs on `http://localhost:5503` (see `vite.config.js`).
 
 ## Tests
 ```bash

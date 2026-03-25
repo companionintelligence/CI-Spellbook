@@ -1,4 +1,4 @@
-# AI Agents, Research & Model Systems
+# AI Agents & Autonomous Systems
 
 > A practical map of the current AI toolchain: agents, orchestration frameworks, RAG stacks, research tools, and model-building platforms.
 
@@ -10,7 +10,7 @@
 | [AgenticSeek](https://github.com/Fosowl/agenticSeek) | Local-first autonomous agent focused on browsing, reasoning, and task execution without recurring API costs. | Cross-platform | Strong fit for private local workflows. |
 | [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) | General-purpose autonomous agent framework with long-running task execution. | Self-hosted | Best when you want a flexible agent sandbox. |
 | [Browser Use](https://github.com/browser-use/browser-use) | Browser automation stack that makes websites easier for agents to navigate. | Cross-platform | Useful for agentic web tasks and testing. |
-| [c/ua](https://github.com/trycua/cua) | Infrastructure for computer-use agents across desktop environments. | Cross-platform | Focused on sandboxes, SDKs, and evaluation. |
+| [CUA (c/ua)](https://github.com/trycua/cua) | Infrastructure for computer-use agents across desktop environments. | Cross-platform | Focused on sandboxes, SDKs, and evaluation. |
 | [Claudia](https://github.com/getAsterisk/claudia) | GUI and toolkit for Claude Code workflows and background agents. | Cross-platform | Helpful when you want a more visual agent workflow. |
 | [Crush](https://github.com/charmbracelet/crush) | Terminal-first agentic coding experience with a polished TUI. | Cross-platform | Strong fit for keyboard-driven workflows. |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open-source terminal agent built around Gemini models. | Cross-platform | Good for shell-heavy development loops. |
