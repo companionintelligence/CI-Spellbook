@@ -7,6 +7,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Aider](https://github.com/Aider-AI/aider) | Terminal-based AI pair programmer for multi-file changes. | Cross-platform | Strong fit for repo-aware editing with any model. |
+| [Claude Code](https://github.com/anthropics/claude-code) | Anthropic's official terminal-native coding agent with hooks, skills, plugins, and MCP support. | Cross-platform | Strong fit for repo-scale work and scripted automation. |
 | [Cline](https://github.com/cline/cline) | Autonomous coding agent inside VS Code with browser and terminal access. | VS Code | Good when you want approvals in the loop. |
 | [Codex](https://github.com/openai/codex) | Lightweight coding agent for terminal workflows. | Cross-platform | Useful for focused command-line tasks. |
 | [Continue](https://github.com/continuedev/continue) | Open-source code assistant with customizable models and checks. | VS Code, JetBrains | Good fit for teams standardizing prompt and model behavior. |
