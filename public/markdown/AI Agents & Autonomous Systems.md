@@ -16,10 +16,12 @@
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open-source terminal agent built around Gemini models. | Cross-platform | Good for shell-heavy development loops. |
 | [gptme](https://github.com/gptme/gptme) | Terminal-native personal agent with tools, web access, and coding support. | Cross-platform | Lightweight option for persistent local agents. |
 | [Huginn](https://github.com/huginn/huginn) | Event-driven agent platform for monitoring, scraping, and automation. | Self-hosted | More automation-oriented than chat-oriented. |
+| [Letta](https://github.com/letta-ai/letta) | Stateful agents framework (formerly MemGPT) with persistent memory, reasoning, and context management. | Self-hosted | Strong fit when long-lived agent memory is the primary requirement. |
 | [Nanobrowser](https://github.com/nanobrowser/nanobrowser) | Browser extension for AI-powered automation inside Chrome. | Chromium | Useful for quick multi-agent web flows. |
 | [Open Interpreter](https://github.com/OpenInterpreter/open-interpreter) | Natural language interface for running code and controlling a computer. | Cross-platform | Strong for terminal and desktop task execution. |
 | [opencode](https://github.com/sst/opencode) | Open-source coding agent with a focused developer workflow. | Cross-platform | Built for software tasks rather than general chat. |
 | [Refact](https://github.com/smallcloudai/refact) | Engineering agent that plans, executes, and iterates across developer tools. | VS Code | Good fit for end-to-end software tasks. |
+| [SWE-agent](https://github.com/SWE-agent/SWE-agent) | Takes a GitHub issue and tries to fix it with the LLM of your choice; also used for offensive security and competitive coding. | Cross-platform | Strong baseline for repo-aware autonomous fixes. |
 | [TEN Agent](https://github.com/TEN-framework/TEN-Agent) | Framework for conversational voice agents. | Self-hosted | Useful when voice is the main interface. |
 | [UI-TARS](https://github.com/bytedance/UI-TARS-desktop) | Multimodal agent stack for UI understanding and agent infrastructure. | Cross-platform | Good for computer-use and UI-driven automation. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language analytics and BI assistant for databases. | Web, Self-hosted | Strong when analytics is the user-facing agent. |
@@ -48,6 +50,7 @@
 | [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Good for teams already using Weaviate. |
 | [DeepSearcher](https://github.com/zilliztech/deep-searcher) | Open-source deep research assistant for private data. | Cross-platform | Best for search-heavy investigation flows. |
 | [GPT Researcher](https://github.com/assafelovic/gpt-researcher) | Autonomous research agent that gathers, analyzes, and structures sources. | Cross-platform, Self-hosted | Strong report-generation workflow. |
+| [Haystack](https://github.com/deepset-ai/haystack) | End-to-end LLM framework for building RAG pipelines and agent workflows over private data. | Cross-platform, Self-hosted | Mature production option from deepset. |
 | [STORM](https://github.com/stanford-oval/storm) | Research system for topic exploration and report synthesis with citations. | Cross-platform | Good for long-form knowledge curation. |
 
 ## Model, Eval & Prompt Infrastructure
@@ -56,9 +59,11 @@
 | --- | --- | --- | --- |
 | [Agno](https://github.com/agno-agi/agno) | CLI framework for building and operating agentic software at scale. | Cross-platform | Good for app and agent backends. |
 | [Kiln](https://github.com/Kiln-AI/Kiln) | Toolkit for evals, fine-tuning, synthetic data, and MCP-aware systems. | Cross-platform | Useful when teams need a full iteration loop. |
+| [Langfuse](https://github.com/langfuse/langfuse) | Open-source LLM engineering platform: observability, evals, prompt management, datasets, and playground. | Self-hosted, Web | The default OSS observability layer for many LLM stacks. |
 | [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | Fine-tuning workstation for many LLMs and VLMs. | Self-hosted | One of the most complete open tuning stacks. |
 | [Ludwig](https://github.com/ludwig-ai/ludwig) | Low-code framework for custom model building. | Cross-platform | Good when teams want lower-friction experimentation. |
 | [Opik](https://github.com/comet-ml/opik) | Tracing, evaluation, and monitoring for LLM and agent workflows. | Self-hosted, Web | Strong observability layer for production AI. |
+| [Phoenix](https://github.com/Arize-ai/phoenix) | AI observability and evaluation with OpenTelemetry-native tracing for many LLM frameworks. | Self-hosted | Strong when you want vendor-neutral OTEL tracing for agents. |
 | [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) | Training framework for large-scale model development. | Cross-platform | A solid foundation for serious model work. |
 | [Second Me](https://github.com/mindverse/Second-Me) | Platform for training a personalized AI identity and interaction layer. | Self-hosted, Web | Useful for persistent persona experiments. |
 
