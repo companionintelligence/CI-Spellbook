@@ -14,6 +14,13 @@
 | [SwarmUI](https://github.com/mcmonkeyprojects/SwarmUI) | Modular Stable Diffusion interface with performance focus. | Cross-platform | Useful when you want power-user controls. |
 | [WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge) | Performance-tuned Stable Diffusion UI branch. | Self-hosted | Good if you want Forge-specific optimizations. |
 
+## AI Video Generation
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [FramePack](https://github.com/lllyasviel/FramePack) | Next-frame prediction model for long video generation at constant VRAM usage. | Self-hosted | Works on 6 GB GPU; from the Fooocus/Forge author. |
+| [Wan2.2](https://github.com/Wan-Video/Wan2.2) | Alibaba's open MoE video generation model for text-to-video and image-to-video. | Self-hosted | Top of VBench leaderboard; 2.2 M+ downloads. |
+
 ## Graphics, Design & Illustration
 
 | Tool | Description | Platforms | Notes |

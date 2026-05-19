@@ -6,8 +6,11 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Fish Speech](https://github.com/fishaudio/fish-speech) | SOTA open-source multilingual TTS with zero-shot voice cloning from 3–10 s of audio. | Cross-platform, Self-hosted | 26k+ stars; strong ElevenLabs alternative. |
 | [Handy](https://github.com/cjpais/Handy) | Offline speech-to-text application for macOS. | macOS | Good simple desktop transcription tool. |
 | [Hyprnote](https://github.com/fastrepl/hyprnote) | AI notepad for meetings and speech capture. | Cross-platform | Useful for rapid meeting summaries. |
+| [Kokoro](https://github.com/hexgrad/kokoro) | Lightweight 82 M-parameter TTS model with Apache-licensed weights. | Cross-platform, Self-hosted | Punches well above its size; good for edge and local deployments. |
+| [whisper.cpp](https://github.com/ggml-org/whisper.cpp) | C/C++ port of OpenAI Whisper optimised for local inference. | Cross-platform | The standard starting point for on-device speech recognition. |
 | [VoiceInk](https://github.com/Beingpax/VoiceInk) | Fast voice-to-text utility for macOS. | macOS | Good for dictation into any app. |
 | [WhisperLiveKit](https://github.com/QuentinFuxa/WhisperLiveKit) | Streaming speech recognition toolkit. | Self-hosted | Useful for live and semi-live transcription systems. |
 | [Meetily](https://github.com/Zackriya-Solutions/meeting-minutes) | Privacy-first local meeting assistant with diarization and summaries. | Windows, macOS | Strong fit for offline meeting capture. |

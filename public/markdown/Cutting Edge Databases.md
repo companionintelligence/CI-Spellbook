@@ -2,6 +2,16 @@
 
 > This section brings together modern data stores with the practical systems that keep your data durable, portable, and easy to move.
 
+## Vector & Analytical Databases
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Chroma](https://github.com/chroma-core/chroma) | Embedding database for AI applications with a simple Python API. | Cross-platform, Self-hosted | Default first choice for many RAG prototypes. |
+| [DuckDB](https://github.com/duckdb/duckdb) | In-process analytical SQL database with no server required. | Cross-platform | Increasingly the go-to for local data analysis and pipelines. |
+| [LanceDB](https://github.com/lancedb/lancedb) | Embedded vector database built on Apache Arrow and Lance format. | Cross-platform | Good fit for ML workflows that want a file-native vector store. |
+| [pgvector](https://github.com/pgvector/pgvector) | Open-source vector similarity search extension for PostgreSQL. | Cross-platform, Self-hosted | The default path for teams already on Postgres. |
+| [SurrealDB](https://github.com/surrealdb/surrealdb) | Multi-model database combining document, graph, and relational in one. | Cross-platform, Self-hosted | Strong fit when data shapes are mixed and evolving. |
+
 ## Databases & Data Infrastructure
 
 | Tool | Description | Platforms | Notes |
