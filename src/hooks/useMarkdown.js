@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { marked } from 'marked';
-import hljs from 'highlight.js';
+import marked from '../lib/markdown';
 
-// Ensure highlight.js CSS is loaded, e.g., in App.jsx, main.jsx, or index-react.html (CDN link is fine for now)
+// highlight.js CSS is bundled via src/main.jsx (import 'highlight.js/styles/github.min.css')
 
 const useMarkdown = (markdownPath, containerId, onMarkdownLoad) => {
   const [content, setContent] = useState('');
@@ -23,12 +22,7 @@ const useMarkdown = (markdownPath, containerId, onMarkdownLoad) => {
           return res.text();
         })
         .then(text => {
-          const html = marked.parse(text, {
-            highlight: function (code, lang) {
-              const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-              return hljs.highlight(code, { language, ignoreIllegals: true }).value;
-            }
-          });
+          const html = marked.parse(text);
           setContent(html);
           setLoading(false);
           
