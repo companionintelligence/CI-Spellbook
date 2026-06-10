@@ -3,7 +3,7 @@ import Card from './components/Card';
 import DebugPanel from './components/DebugPanel';
 import { useDebugPanel } from './hooks/useDebugPanel';
 import MiniSearch from 'minisearch';
-import { marked } from 'marked';
+import marked from './lib/markdown';
 
 // Card configuration
 const CARD_CONFIGS = [
@@ -334,7 +334,7 @@ const App = () => {
           </div>
           
           {/* Search Bar */}
-          <form className="flex-grow ml-8" onSubmit={(e) => e.preventDefault()}>
+          <form className="grow ml-8" onSubmit={(e) => e.preventDefault()}>
             <div className="relative flex items-center">
               <input 
                 type="text" 
