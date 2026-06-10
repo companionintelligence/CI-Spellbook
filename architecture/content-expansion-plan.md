@@ -2,7 +2,7 @@
 
 > Companion to [architecture.md](architecture.md) and [roadmap.md](roadmap.md). Defines what categories exist, what should be added, source quality bar, and how the weekly auto-research routine should treat each.
 
-## Current categories (snapshot 2026-05-18)
+## Current categories (snapshot 2026-06-10)
 
 | File | Coverage today | Saturation | Auto-research priority |
 | --- | --- | --- | --- |
@@ -19,6 +19,9 @@
 | Top Public Data Sources.md | Datasets, indexes | Medium | Low |
 | Virtual Machine and Browser Automation and Scrapers.md | VM, headless, scrapers | Medium | Medium |
 | XR & Spatial Computing.md | XR runtimes, scanning, headsets | Medium | Medium |
+| MCP Servers & Connectors.md | Registries, servers, gateways, SDKs | Medium | **High** — moves weekly |
+| Evaluation, Observability & Tracing.md | Tracing, evals, guardrails | Medium | **High** — moves weekly |
+| Embeddings & Vector Pipelines.md | Embedding serving, parsing, chunking, rerankers | Medium | Medium |
 
 ## Categories worth adding
 
@@ -32,6 +35,18 @@
 | `Privacy & Identity.md` | Aligns with CI ethos (private appliance) | `Authelia`, `Pocket ID`, `Vaultwarden`, `Bitwarden` |
 | `Calendars, Email & Contacts (Self-Hosted).md` | Common ask for personal-data appliances | `SOGo`, `Radicale`, `Stalwart`, `Snappymail` |
 
+### Decisions (2026-06-10 rebuild)
+
+| Proposed file | Decision | Rationale |
+| --- | --- | --- |
+| `MCP Servers & Connectors.md` | **Added** | Distinct fast-moving ecosystem; now a card. |
+| `Evaluation, Observability & Tracing.md` | **Added** | No overlap with existing cards; now a card. |
+| `Embeddings & Vector Pipelines.md` | **Added** | Pipeline tooling is distinct from the vector stores in Databases; now a card. |
+| `Personal Knowledge & Notes.md` | Declined | Already covered by the broadened "Knowledge, Notes & Productivity Systems" card. |
+| `Self-Hosting & Homelab.md` | Declined | Already covered by the broadened "Self-Hosting, Home Server & Smart Home Platforms" card. |
+| `Privacy & Identity.md` | Declined | Already covered by the broadened "Security, Privacy & Network Access" card. |
+| `Calendars, Email & Contacts (Self-Hosted).md` | Declined | Mail/calendar entries live in the "Communication, Collaboration & Speech Tools" card. |
+
 ## Conventions every file must follow
 
 These are what makes the content machine-readable (so `dist/data.json` and the Agntcy export from [roadmap.md](roadmap.md) work):
@@ -42,12 +57,15 @@ These are what makes the content machine-readable (so `dist/data.json` and the A
 | Second non-blank line = `> blurb` | Used as the card description |
 | Every entry table has columns: `Tool \| Description \| Platforms \| Notes` | Stable schema for export |
 | Tool cell is `[Name](url)` | Link is the canonical identifier |
-| `Platforms` column uses controlled vocabulary | `Cross-platform`, `Self-hosted`, `Web`, `macOS`, `Windows`, `Linux`, `iOS`, `Android`, `VS Code`, `JetBrains`, `Neovim`, `Vim`, `Chromium` |
+| `Platforms` column uses controlled vocabulary | `Cross-platform`, `Self-hosted`, `Web`, `macOS`, `Windows`, `Linux`, `iOS`, `Android`, `Mobile`, `VS Code`, `JetBrains`, `Neovim`, `Vim`, `Chromium`, `CLI` — plus `Open weights` / `Hosted API` for model rows and `Hardware` for boards |
 | One subcategory per `##` heading | Lets cards collapse cleanly |
+| Model-heavy categories carry a `## Notable Models` section | Owner request (2026-06-10): track current model releases alongside the tools that run them |
+| Every file ends with `## Tutorials & Learning` | Owner request (2026-06-10): 3–6 durable learning resources per category |
 | No marketing language in `Description` | Description is what it does, `Notes` is opinion |
 | `Description` ≤ 140 chars; `Notes` ≤ 120 chars | Keeps card layout sane |
 
-The schema check in the planned `markdown-lint` CI job (see [roadmap.md](roadmap.md)) enforces this.
+The schema check in the planned `markdown-lint` CI job (see [roadmap.md](roadmap.md)) enforces this. A local
+implementation exists at `dev-tools/lint-content.mjs` (`node dev-tools/lint-content.mjs`).
 
 ## Source quality bar (for auto-research)
 
@@ -100,10 +118,10 @@ Auto-research must also propose *removals*, not just additions:
 
 ## Out of scope (deliberately)
 
-- **News / blog posts.** This is a tools catalog, not a feed reader.
+- **News / blog posts.** This is a tools catalog, not a feed reader. Durable tutorials/courses are allowed in `## Tutorials & Learning`.
 - **Hosted-only proprietary SaaS** outside the existing "Proprietary Tools Worth Knowing" subsections. Stay aligned with the private-appliance ethos.
 - **One-person prototypes** with no traction. Quality bar above filters these.
-- **Models themselves.** Spellbook lists *tools that run* models, not model checkpoints.
+- ~~**Models themselves.**~~ Amended 2026-06-10 per owner request: current model releases are tracked in per-category `## Notable Models` sections (kept to notable, verifiable releases — not every checkpoint).
 
 ## Done definition for the expansion phase
 
