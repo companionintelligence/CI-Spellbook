@@ -137,5 +137,7 @@ dist
 .aider*
 
 # Playwright artifacts
-playwright-report/
-test-results/
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/

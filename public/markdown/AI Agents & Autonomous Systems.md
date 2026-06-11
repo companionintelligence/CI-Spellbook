@@ -16,10 +16,12 @@
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open-source terminal agent built around Gemini models. | Cross-platform | Good for shell-heavy development loops. |
 | [gptme](https://github.com/gptme/gptme) | Terminal-native personal agent with tools, web access, and coding support. | Cross-platform | Lightweight option for persistent local agents. |
 | [Huginn](https://github.com/huginn/huginn) | Event-driven agent platform for monitoring, scraping, and automation. | Self-hosted | More automation-oriented than chat-oriented. |
+| [Letta](https://github.com/letta-ai/letta) | Stateful agents framework (formerly MemGPT) with persistent memory, reasoning, and context management. | Self-hosted | Strong fit when long-lived agent memory is the primary requirement. |
 | [Nanobrowser](https://github.com/nanobrowser/nanobrowser) | Browser extension for AI-powered automation inside Chrome. | Chromium | Useful for quick multi-agent web flows. |
 | [Open Interpreter](https://github.com/OpenInterpreter/open-interpreter) | Natural language interface for running code and controlling a computer. | Cross-platform | Strong for terminal and desktop task execution. |
 | [opencode](https://github.com/sst/opencode) | Open-source coding agent with a focused developer workflow. | Cross-platform | Built for software tasks rather than general chat. |
 | [Refact](https://github.com/smallcloudai/refact) | Engineering agent that plans, executes, and iterates across developer tools. | VS Code | Good fit for end-to-end software tasks. |
+| [SWE-agent](https://github.com/SWE-agent/SWE-agent) | Takes a GitHub issue and tries to fix it with the LLM of your choice; also used for offensive security and competitive coding. | Cross-platform | Strong baseline for repo-aware autonomous fixes. |
 | [TEN Agent](https://github.com/TEN-framework/TEN-Agent) | Framework for conversational voice agents. | Self-hosted | Useful when voice is the main interface. |
 | [UI-TARS](https://github.com/bytedance/UI-TARS-desktop) | Multimodal agent stack for UI understanding and agent infrastructure. | Cross-platform | Good for computer-use and UI-driven automation. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language analytics and BI assistant for databases. | Web, Self-hosted | Strong when analytics is the user-facing agent. |

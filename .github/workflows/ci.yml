@@ -23,14 +23,13 @@ jobs:
       - name: Run tests
         run: npm test
 
-  deploy:
+  build-main:
     runs-on: ubuntu-latest
-    name: Deploy (Cloudflare Pages)
+    name: Build (main smoke test)
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
-      deployments: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,10 +40,10 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ secrets.CLOUDFLARE_PAGES_PROJECT }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      # Cloudflare Pages production deploys are handled by the Cloudflare
+      # GitHub App (configured in the Cloudflare dashboard), which builds
+      # from main on its own and posts the deploy URL as a check.
+      # We only run a build step here as a smoke test; we skip wrangler
+      # because the required CLOUDFLARE_API_TOKEN / CLOUDFLARE_PAGES_PROJECT
+      # secrets aren't set in this repo. To re-enable wrangler-based
+      # deploys: add those secrets, then restore the wrangler-action step.
