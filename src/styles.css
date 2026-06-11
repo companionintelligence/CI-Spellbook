@@ -73,10 +73,6 @@
 /* Flip the card when expanded */
 .group.expanded .card-inner {
   transform: rotateY(180deg);
-}
-
-/* Card inner needs to fit content when expanded */
-.group.expanded .card-inner {
   height: auto;
   min-height: 38rem;
 }
@@ -202,7 +198,7 @@
   color: #e2e8f0;
   line-height: 1.7;
   font-size: 0.9rem;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .markdown-body h1,
@@ -399,6 +395,12 @@
 /* ===========================================
    SCROLLBAR STYLING (subtle, not hidden)
    =========================================== */
+
+.markdown-body {
+  /* Standards-based scrollbar styling (e.g., Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
 
 .markdown-body::-webkit-scrollbar {
   width: 6px;

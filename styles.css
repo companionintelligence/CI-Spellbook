@@ -1,6 +1,5 @@
-/* Hide all scrollbars globally */
+/* Hide scrollbars for legacy browsers while allowing components to control Firefox/WebKit behavior */
 * {
-  scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 *::-webkit-scrollbar {
@@ -137,7 +136,7 @@
 }
 
 #cards-container:has(.group.expanding-width) {
-  padding-top: calc(42rem + 2rem);
+  padding-top: calc(var(--card-content-height, 42rem) + 2rem);
 }
 
 /* Hide other cards temporarily during expansion to avoid layout jumps */
@@ -156,7 +155,7 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 90vw !important;
-  height: 85vh !important;
+  height: var(--card-content-height, 85vh) !important;
   max-width: 1400px !important;
   margin: 0 !important;
   z-index: 50 !important;
@@ -336,22 +335,34 @@
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease-out;
+}
+
+/* Reusable custom scrollbar utility for dynamic content areas */
+.custom-scrollbar-thin-light,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative,
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative {
   /* Custom scrollbar for better UX with dynamic content */
   scrollbar-width: thin !important;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
 }
 
 /* Webkit scrollbar styling for dynamic content */
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar {
+.custom-scrollbar-thin-light::-webkit-scrollbar,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar,
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar {
   width: 8px !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-track {
+.custom-scrollbar-thin-light::-webkit-scrollbar-track,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-track,
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 4px !important;
 }
 
-.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb {
+.custom-scrollbar-thin-light::-webkit-scrollbar-thumb,
+.group.flipped .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb,
+.group.flipped.full-expanded .card-inner > div[style*="rotateY(180deg)"] > .relative::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3) !important;
   border-radius: 4px !important;
 }
@@ -711,20 +722,30 @@
   transition: none !important;
 }
 
-/* Card-specific background overlays for card backs */
-#card-local-first-ai-tools.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+/* Card-specific background overlays for card backs
+   Apply these by adding the corresponding theme class to the card container,
+   e.g., <div class="group card-theme-local-first-ai-tools">...</div> */
+.card-theme-local-first-ai-tools.flipped
+  .card-inner > div[style*="rotateY(180deg)"]
+  > div[class*="absolute inset-0"] {
   background: rgba(7, 21, 51, 0.9) !important;
 }
 
-#card-ai-assisted-code-dev.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+.card-theme-ai-assisted-code-dev.flipped
+  .card-inner > div[style*="rotateY(180deg)"]
+  > div[class*="absolute inset-0"] {
   background: rgba(36, 72, 89, 0.9) !important;
 }
 
-#card-cutting-edge-databases.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+.card-theme-cutting-edge-databases.flipped
+  .card-inner > div[style*="rotateY(180deg)"]
+  > div[class*="absolute inset-0"] {
   background: rgba(52, 52, 78, 0.9) !important;
 }
 
-#card-top-public-data-sources.flipped .card-inner > div[style*="rotateY(180deg)"] > div[class*="absolute inset-0"] {
+.card-theme-top-public-data-sources.flipped
+  .card-inner > div[style*="rotateY(180deg)"]
+  > div[class*="absolute inset-0"] {
   background: rgba(67, 60, 89, 0.9) !important;
 }
 
