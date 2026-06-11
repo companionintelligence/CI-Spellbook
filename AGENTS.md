@@ -1,54 +1,40 @@
-# CI-Spellbook Agent Guide
+# AGENTS.md — CI-Spellbook
 
-## Summary
-CI-Spellbook is a Vite + React front-end for card-driven markdown exploration. Playwright is used for end-to-end testing.
+## Platform context
 
-## Local Setup
+CI-Spellbook is the **Client** layer component of the Companion Intelligence platform — a private, local-first digital memory system.
+
+Full architecture: `CI-Engineering/architecture/architecture.md`
+
+## Repo summary
+
+Vite + React card-driven markdown explorer — a front-end for browsing and interacting with CI knowledge cards.
+
+## Stack
+
+- Vite + React
+- Playwright (e2e)
+- npm
+
+## Setup & commands
+
 ```bash
-npm install
+npm install   # install
+npm run dev   # dev
+npm test   # test
+npm run build   # build
 ```
 
-## Dev Server
-```bash
-npm run dev
-```
-The dev server runs on `http://localhost:5503` (see `vite.config.js`).
+## Testing
 
-## Tests
-```bash
-npm test
-```
-Notes:
-- Playwright runs against the dev server using the `webServer` config in `playwright.config.js`.
-- The first time on a new machine, install browsers:
-```bash
-npx playwright install
-```
+Playwright runs against the dev server via webServer config. First run on a new machine: `npx playwright install`.
 
-## Build
-```bash
-npm run build
-```
-Output goes to `dist/` for deployment.
+## Git discipline
 
-## CI and Deploy
-GitHub Actions workflow: `.github/workflows/ci.yml`
-- Runs Playwright tests on PRs and on `main`.
-- Deploys to Cloudflare Pages on `main` if tests pass.
+- Never `git reset --hard` or `git clean -f` without user confirmation.
+- Commit messages: imperative mood, ≤ 72 chars.
+- Reference CI-Engineering issues in PRs (e.g. `Closes companionintelligence/CI-Engineering#32`).
 
-Required GitHub Secrets:
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
-- `CLOUDFLARE_PAGES_PROJECT` (Pages project name)
+## Confidentiality
 
-## Repo Map
-- `src/` app source
-- `public/` static assets
-- `tests/` Playwright tests
-- `playwright.config.js` Playwright configuration
-- `vite.config.js` Vite configuration
-
-## Working Conventions
-- Prefer existing `npm` scripts over custom commands.
-- Keep test fixtures deterministic for Playwright runs.
-- Do not change ports without updating `playwright.config.js`.
+Private & Confidential — Property of Lifescope Inc. Do not distribute.
