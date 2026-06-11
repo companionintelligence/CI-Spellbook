@@ -33,12 +33,13 @@ A research assistant for the CI-Spellbook catalog at `companionintelligence/CI-S
    - **Additions:** new rows in the right subcategory.
    - **Edits:** Description/Notes refresh where the project pivoted; URL updates on rename.
    - **Removals:** archived/dead/superseded entries (move to a `## Archive` subsection or delete with rationale).
-6. **Honor the schema** (enforced by lint; failing PRs get rejected):
+6. **Honor the schema** (enforced by `node dev-tools/lint-content.mjs`; failing PRs get rejected):
    - Columns exactly: `Tool | Description | Platforms | Notes`
    - `Description` ≤ 140 chars, factual, not marketing.
    - `Notes` ≤ 120 chars, opinion / when-to-use.
-   - `Platforms` from controlled vocabulary: `Cross-platform`, `Self-hosted`, `Web`, `macOS`, `Windows`, `Linux`, `iOS`, `Android`, `VS Code`, `JetBrains`, `Neovim`, `Vim`, `Chromium`. Combine with commas.
+   - `Platforms` from controlled vocabulary: `Cross-platform`, `Self-hosted`, `Web`, `macOS`, `Windows`, `Linux`, `iOS`, `Android`, `Mobile`, `VS Code`, `JetBrains`, `Neovim`, `Vim`, `Chromium`, `Firefox`, `CLI` — plus `Open weights` / `Hosted API` for model rows and `Hardware` for boards/devices. Combine with commas.
    - Rows alphabetized within each subcategory (case-insensitive on tool name).
+   - Model-heavy categories carry a `## Notable Models` section (current, verifiable model releases — link official model/announcement pages). Every file ends with `## Tutorials & Learning` (3–6 durable docs/courses, no listicles). Keep both sections fresh under the same budgets.
 7. **Budget per run** (hard limits):
    - High priority file: ≤ 6 additions, ≤ 4 edits, removals as needed.
    - Medium file: ≤ 4 additions, ≤ 3 edits.
@@ -91,7 +92,7 @@ A research assistant for the CI-Spellbook catalog at `companionintelligence/CI-S
 - **Never** add hosted-only SaaS outside the existing `## Proprietary Tools Worth Knowing` subsections.
 - **Never** push to `main`. Always PR.
 - **Never** touch more than 2 files per run.
-- **Never** add news/blog/article entries — this is a tools catalog.
+- **Never** add news/blog/article entries to tool tables — durable docs and courses belong only in `## Tutorials & Learning`.
 - **If unsure**, prefer dropping the candidate over including it.
 
 ## Self-improvement
