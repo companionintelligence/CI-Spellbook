@@ -10,7 +10,7 @@
 | [llama.cpp](https://github.com/ggml-org/llama.cpp) | C++ inference engine for GGUF models; runs on CPU, CUDA, Metal, and more. | Cross-platform | The engine under many tools; use directly for edge or custom deployments. |
 | [llamafile](https://github.com/mozilla-ai/llamafile) | Single-executable LLM distribution format from Mozilla; double-click to run. | Cross-platform | Simplest path to a fully offline model with zero setup. |
 | [LocalAI](https://github.com/mudler/LocalAI) | OpenAI-compatible REST API gateway routing to multiple local backends. | Self-hosted | Good when you want one API endpoint across many model backends. |
-| [mlx-lm](https://github.com/ml-explore/mlx-examples) | Apple MLX Python package for running and fine-tuning LLMs on Apple Silicon. | macOS | Fastest path on M-series; Ollama 0.19+ uses it under the hood. |
+| [mlx-lm](https://github.com/ml-explore/mlx-lm) | Apple MLX Python package for running and fine-tuning LLMs on Apple Silicon. | macOS | Fastest path for LLMs on M-series hardware. |
 | [Ollama](https://github.com/ollama/ollama) | Popular model runner for local LLMs and embeddings; OpenAI-compatible API. | Cross-platform, Self-hosted | The default starting point for most local stacks; v0.24 as of May 2026. |
 | [vLLM](https://github.com/vllm-project/vllm) | High-throughput LLM serving with PagedAttention and continuous batching. | Self-hosted, Linux | Best choice for multi-user or production GPU serving; ~20x Ollama throughput. |
 
@@ -39,8 +39,6 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [KoboldCpp](https://github.com/LostRuins/koboldcpp) | Single-binary GGUF runner with UI support. | Cross-platform, Self-hosted | Good for lightweight local inference. |
-| [LM Studio](https://lmstudio.ai/) | Desktop app for discovering, downloading, and serving local models. | Cross-platform | Strong UX for local model experimentation; v0.4.14 as of May 2026. |
-| [Ollama](https://github.com/ollama/ollama) | Popular model runner for local LLMs and embeddings. | Cross-platform, Self-hosted | The default starting point for many local stacks. |
 | [StabilityMatrix](https://github.com/LykosAI/StabilityMatrix) | Manager for Stable Diffusion and other generative AI tools and models. | Cross-platform | Useful when image tools sprawl across multiple apps. |
 
 ## Assistants, Memory & Context
@@ -77,13 +75,13 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [DeepSeek R1](https://github.com/deepseek-ai/DeepSeek-R1) | Reasoning model; 671B MoE full or distilled 1.5B–70B variants. | Open weights | Distilled variants run well on consumer hardware. |
-| [DeepSeek V3](https://github.com/deepseek-ai/DeepSeek-V3) | General-purpose MoE flagship from DeepSeek; strong coding and reasoning. | Open weights | R1-0528 point-release improved reasoning through mid-2026. |
-| [Gemma 4](https://huggingface.co/collections/google/gemma-4-release-680eb1e7c9571c3a7e5ec8bc) | Google MoE multimodal model; 12B dense version scores 77.2% MMLU Pro. | Open weights | Released June 3, 2026; runs well on consumer GPUs. |
-| [Granite 3.3](https://github.com/ibm-granite/granite-3.0-language-models) | IBM Granite 1B and 3B MoE models designed for low-latency edge use. | Open weights | Good fit for enterprise on-device deployments. |
-| [Kimi K2.6](https://huggingface.co/moonshotai/Kimi-K2-Instruct) | Moonshot AI MoE; ~1T params / 32B active, 256K context, vision. | Open weights | Tops open-weight SWE-Bench-adjacent coding tasks. |
+| [DeepSeek V4](https://huggingface.co/deepseek-ai) | DeepSeek's MoE flagship family; V4-Flash (284B, 13B active) suits strong local rigs. | Open weights | Released April 2026; MIT; strong coding and reasoning. |
+| [Gemma 4](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/) | Google multimodal open family: E2B, E4B, 12B, 26B-A4B, and 31B variants. | Open weights | Released April 2026 under Apache 2.0; E-variants run well on-device. |
+| [Granite 4](https://huggingface.co/ibm-granite) | IBM's hybrid Mamba/Transformer family designed for efficient enterprise and edge use. | Open weights | Apache 2.0; small variants are strong on modest hardware. |
+| [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI MoE; ~1T params / 32B active, 256K context, vision. | Open weights | Tops open-weight agentic coding benchmarks; needs serious hardware. |
 | [Llama 4 Scout](https://github.com/meta-llama/llama-models) | Meta MoE; 109B total / 17B active, 10M-token context, multimodal. | Open weights | Unique for extremely long-context local use cases. |
-| [MiniMax M3](https://huggingface.co/MiniMaxAI/MiniMax-M3) | First open-weight model combining frontier coding, 1M context, multimodal. | Open weights | Released June 2026; tops open-weight SWE-Bench Pro at 59.0%. |
-| [Mistral Small 4](https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503) | 119B MoE merging reasoning, vision, and coding in one model; Apache 2.0. | Open weights | Released March 2026; replaces Magistral/Pixtral/Devstral trio. |
+| [MiniMax M3](https://github.com/MiniMax-AI) | Open-weight model combining frontier coding, 1M context, and native multimodality. | Open weights | Released June 2026; exceptional context-length-to-cost ratio. |
+| [Mistral Small 4](https://huggingface.co/mistralai) | ~120B MoE (6B active) merging reasoning, vision, and coding in one model. | Open weights | Released March 2026; Apache 2.0; replaces Magistral/Pixtral/Devstral trio. |
 | [Phi-4](https://huggingface.co/microsoft/phi-4) | Microsoft 14B dense model; strong STEM and reasoning per parameter. | Open weights | Phi-4-mini (3.8B) is a strong on-device reasoning option. |
 | [Qwen3](https://github.com/QwenLM/Qwen3) | Alibaba MoE; 235B total / 22B active; spans 0.6B edge to 235B flagship. | Open weights | Generally rated best overall open-weight family as of mid-2026. |
 | [SmolLM3](https://huggingface.co/HuggingFaceTB/SmolLM3-3B) | HuggingFace 3B fully open instruct/reasoning model; outperforms Llama 3.2-3B. | Open weights | Good for edge and mobile; SmolLM2 family goes down to 135M. |

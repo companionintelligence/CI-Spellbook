@@ -93,16 +93,16 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Claude Fable 5 / Opus 4.8](https://www.anthropic.com/news/claude-4) | Anthropic's flagship tier: Fable 5 is the widest-release Mythos-class model; Opus 4.8 leads the Opus tier for agentic coding. | Hosted API | Fable 5 tops SWE-Bench Pro at 80.3%; Opus 4.8 strong for long-horizon autonomy. |
-| [DeepSeek V4](https://github.com/deepseek-ai/DeepSeek-V3) | DeepSeek's latest open-weight all-rounder; ranks #1 on agentic leaderboards among open models. | Open weights, Hosted API | 80.6% SWE-Bench Verified; MIT-licensed; strong coding and tool-call accuracy. |
-| [Gemini 3.5 Flash](https://ai.google.dev/gemini-api/docs/models) | Google's current GA frontier model; optimized for agentic and coding tasks at scale. | Hosted API | Generally available on Gemini API and Vertex AI as of mid-2026. |
-| [GLM-5](https://github.com/THUDM/GLM-4) | Zhipu AI's flagship open-weight model with strong agentic coding scores. | Open weights, Hosted API | 77.8% SWE-bench Verified; MIT license is a differentiator for enterprise fine-tuning. |
-| [GPT-5.5](https://openai.com/index/introducing-gpt-5-5/) | OpenAI's current flagship; iterative release atop the GPT-5 base with enhanced reasoning. | Hosted API | Available to Plus/Pro users; 58.6% SWE-Bench Pro; strong at professional knowledge work. |
-| [Grok 4.3](https://x.ai/news) | xAI's production flagship model balancing reasoning density with API throughput. | Hosted API | Strong tool-calling; API access live from May 2026; complement is Grok Build for agentic coding. |
-| [Kimi K2](https://github.com/MoonshotAI/Kimi-K2) | Moonshot AI's open-weight MoE model; 1T params / 32B active; coding-focused. | Open weights, Hosted API | 58.6% SWE-Bench Pro; 256K context; one of the strongest Chinese open-weight releases. |
-| [Llama 4 Scout / Maverick](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) | Meta's multimodal MoE family: Scout (17B active, 10M context) and Maverick (full quality). | Open weights | Apache 2.0; Scout fits on a single H100; broad community adoption for fine-tuning. |
-| [Mistral Small 4](https://mistral.ai/news/mistral-small-4/) | Mistral's latest small model unifying reasoning, multimodal, and agentic coding capabilities. | Open weights, Hosted API | 119B total / 6B active MoE; Apache 2.0; good efficiency-to-quality ratio. |
-| [Qwen 3.6 Plus](https://github.com/QwenLM/Qwen3) | Alibaba's top open-weight choice for demanding agentic coding; 1M token context. | Open weights, Hosted API | Frontier-competitive benchmarks; strong multilingual and coding performance under Apache 2.0. |
+| [Claude Fable 5 / Opus 4.8](https://www.anthropic.com/news/claude-fable-5-mythos-5) | Anthropic's flagship tier: Fable 5 is the widest-release Mythos-class model; Opus 4.8 leads the Opus tier for agentic coding. | Hosted API | Fable 5 GA June 2026; current top published results on agentic coding benchmarks. |
+| [DeepSeek V4](https://huggingface.co/deepseek-ai) | DeepSeek's open-weight family (V4-Pro 1.6T MoE, V4-Flash 284B); released April 2026. | Open weights, Hosted API | 80.6% SWE-bench Verified; MIT-licensed; strong coding and tool-call accuracy. |
+| [Gemini 3.5 Flash](https://ai.google.dev/gemini-api/docs/models) | Google's current GA frontier model; optimized for agentic and coding tasks at scale. | Hosted API | Default Gemini model since May 2026; Gemini 3.5 Pro announced at I/O, GA pending. |
+| [GLM-5.1](https://huggingface.co/zai-org/GLM-5) | Z.ai's open-weight MoE flagship (745B) specialised for agentic engineering. | Open weights, Hosted API | Tops SWE-Bench Pro among open models; MIT license is a differentiator for fine-tuning. |
+| [GPT-5.5](https://openai.com/index/introducing-gpt-5-5/) | OpenAI's current flagship; iterative release atop the GPT-5 base with enhanced reasoning. | Hosted API | Released April 2026; strong at agentic coding, computer use, and knowledge work. |
+| [Grok 4.3](https://x.ai/news) | xAI's production flagship model balancing reasoning density with API throughput. | Hosted API | Strong tool-calling; API access live from May 2026. |
+| [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI's open-weight MoE family; ~1T params / 32B active; coding-focused. | Open weights, Hosted API | Leads SWE-Bench Pro among open models with GLM-5.1; 256K context; modified MIT. |
+| [Llama 4 Scout / Maverick](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) | Meta's multimodal MoE family: Scout (17B active, 10M context) and Maverick (full quality). | Open weights | Llama Community License; Scout fits on a single H100; broad fine-tuning adoption. |
+| [Mistral Small 4](https://mistral.ai/news/mistral-small-4/) | Mistral's small model unifying reasoning, multimodal, and agentic coding capabilities. | Open weights, Hosted API | ~120B total / 6B active MoE; Apache 2.0; merges the Magistral/Pixtral/Devstral trio. |
+| [Qwen3.6](https://github.com/QwenLM/Qwen3.6) | Alibaba's current open-weight family: 27B dense and 35B-A3B MoE; Max-Preview is hosted-only. | Open weights, Hosted API | Apache 2.0; the 27B dense model is frontier-competitive on agentic coding. |
 
 ## Tutorials & Learning
 
@@ -112,4 +112,4 @@
 | [DeepLearning.AI: Agent Skills with Anthropic](https://www.deeplearning.ai/courses/agent-skills-with-anthropic/) | Short course on building Claude agents, covering MCP, Claude Code, and the Agent SDK. | Web | Up to date with the 2026 Claude platform; good on-ramp for new developers. |
 | [Hugging Face Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction) | Free multi-unit course on building agents with smolagents, LangGraph, and tool use. | Web | Covers code agents, multi-agent systems, and tool integration; actively maintained. |
 | [OpenAI: Practical Guide to Building Agents](https://openai.com/index/new-tools-for-building-agents/) | OpenAI's practical reference for the Agents SDK, handoffs, guardrails, and tracing. | Web | Essential reading for teams using the OpenAI Agents SDK in production. |
-| [Awesome AI Agents (Shroominic)](https://github.com/e2b-dev/awesome-ai-agents) | Curated list of AI agents, frameworks, and tools with categorised links. | Web | Broadly maintained community list; good for discovery across the ecosystem. |
+| [Awesome AI Agents (e2b)](https://github.com/e2b-dev/awesome-ai-agents) | Curated list of AI agents, frameworks, and tools with categorised links. | Web | Broadly maintained community list; good for discovery across the ecosystem. |

@@ -21,7 +21,9 @@ test('new category markdown is served', async ({ page }) => {
     'Embeddings & Vector Pipelines.md'
   ];
   for (const file of files) {
-    const res = await page.request.get(`/markdown/${encodeURIComponent(file)}`);
+    // encodeURI (not encodeURIComponent): the app fetches these paths with
+    // literal "&", and the Vite dev server doesn't resolve %26 to files.
+    const res = await page.request.get(`/markdown/${encodeURI(file)}`);
     expect(res.ok(), `${file} should be served`).toBeTruthy();
     const body = await res.text();
     expect(body.startsWith('# '), `${file} should start with an H1 title`).toBeTruthy();

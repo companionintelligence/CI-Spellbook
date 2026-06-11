@@ -33,9 +33,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Brave Search MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search) | Web and local search via the Brave Search API with privacy-respecting results. | Cross-platform | Official reference; good default for general web search; requires Brave API key. |
+| [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Web, image, video, news, and local search via the Brave Search API. | Cross-platform | Official Brave server (the old reference server is archived); requires API key. |
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server) | Semantic and similarity-based web search from Exa AI for research-oriented queries. | Cross-platform | Strong for "find content like this" queries; complements keyword search tools. |
-| [MCP Postgres](https://github.com/modelcontextprotocol/servers/tree/main/src/postgres) | Read-only PostgreSQL query and schema inspection for connected databases. | Cross-platform | Official reference; always run read-only in production; review schema exposure carefully. |
+| [Postgres MCP Pro](https://github.com/crystaldba/postgres-mcp) | PostgreSQL server with health checks, index tuning, EXPLAIN, and safe SQL execution. | Cross-platform | Community successor to the archived reference server; configurable read/write access. |
 | [Supabase MCP](https://github.com/supabase/mcp-server-supabase) | Manages Supabase projects: databases, auth, storage, edge functions, and SQL workflows. | Cross-platform | Official Supabase server; best for teams already on the Supabase platform. |
 
 ## Productivity & Communications
@@ -43,16 +43,15 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Atlassian MCP](https://github.com/sooperset/mcp-atlassian) | Connects AI agents to Confluence and Jira; supports cloud and on-premises deployments. | Cross-platform | Community server with strong adoption; good for engineering team knowledge workflows. |
-| [Gmail MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gmail) | Reads, searches, and sends email via the Gmail API from an agent. | Cross-platform | Official reference; use with scoped OAuth; draft-first workflow recommended. |
-| [Google Drive MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive) | Lists, reads, and searches files across Google Drive. | Cross-platform | Official reference; pairs well with Docs/Sheets for knowledge-base workflows. |
+| [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Drive, Calendar, Docs, Sheets, Slides, and Tasks access with OAuth 2.1. | Cross-platform | Most feature-complete Workspace server; scope OAuth narrowly; MIT licensed. |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion server for reading, searching, and writing pages and databases. | Web, Cross-platform | Official Notion release; supports workspace search across connected tools like Slack and Jira. |
-| [Slack MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/slack) | Posts messages, reads channel history, and looks up users in a Slack workspace. | Cross-platform | Official reference; narrow OAuth scopes to channels the agent actually needs. |
+| [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Fetches messages, searches conversations, posts content, and manages reactions in Slack. | Cross-platform | Leading community server (official reference archived); stdio, SSE, and HTTP transports. |
 
 ## Gateways, Proxies & Security
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [FastMCP Horizon](https://gofastmcp.com/) | Enterprise MCP gateway from the FastMCP team with SSO, RBAC, audit logs, and observability. | Self-hosted | Powers 70%+ of MCP servers; Horizon adds production governance on top of the OSS core. |
+| [FastMCP Horizon](https://gofastmcp.com/) | Enterprise MCP gateway from the FastMCP team with SSO, RBAC, audit logs, and observability. | Self-hosted | Adds production governance on top of the dominant OSS framework. |
 | [MCP Auth Proxy](https://github.com/sigbit/mcp-auth-proxy) | Drop-in OAuth 2.1/OIDC proxy for MCP servers; no server code changes required. | Self-hosted | Verified with Claude, Cursor, GitHub Copilot; supports Google, GitHub, Okta, Auth0. |
 | [MCP Gateway & Registry](https://github.com/agentic-community/mcp-gateway-registry) | Enterprise gateway combining OAuth auth, dynamic tool discovery, and Keycloak/Entra integration. | Self-hosted | Good for teams centralising many MCP servers under one governed access layer. |
 | [MCP OAuth Gateway](https://github.com/atrawog/mcp-oauth-gateway) | Adds OAuth 2.1 with dynamic client registration to any MCP server as a sidecar. | Self-hosted | Zero modification to target servers; uses GitHub as identity provider by default. |
@@ -61,7 +60,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [FastMCP](https://github.com/jlowin/fastmcp) | High-level Python framework for building MCP servers and clients with minimal boilerplate. | Cross-platform | The dominant Python MCP framework; 1M+ daily downloads; also powers Prefect Horizon. |
+| [FastMCP](https://github.com/jlowin/fastmcp) | High-level Python framework for building MCP servers and clients with minimal boilerplate. | Cross-platform | The dominant Python MCP framework; wraps and extends the official SDK. |
 | [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Official low-level Python SDK for building MCP servers and clients. | Cross-platform | Use when you need full protocol control; FastMCP wraps this for everyday use. |
 | [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) | Official TypeScript SDK for MCP servers and clients; published as @modelcontextprotocol/sdk. | Cross-platform | Ideal when your stack is Node/TypeScript; well-maintained by the core MCP team. |
 

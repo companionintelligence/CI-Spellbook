@@ -63,7 +63,7 @@
 | [KOReader](https://github.com/koreader/koreader) | Powerful reader for e-ink and Android devices. | Android | Good for serious portable reading. |
 | [LanguageTool](https://github.com/languagetool-org/languagetool) | Grammar and style checker for many languages. | Self-hosted, Web | Useful across docs, mail, and notes. |
 | [Readest](https://github.com/readest/readest) | Cross-platform reading app with modern UX. | Cross-platform, Mobile, Web | Good for unified reading across devices. |
-| [Zotero](https://github.com/zotero/zotero) | Reference manager for collecting and annotating research sources. | Cross-platform, iOS, Browser | Essential for citation-heavy research. |
+| [Zotero](https://github.com/zotero/zotero) | Reference manager for collecting and annotating research sources. | Cross-platform, iOS | Essential for citation-heavy research; browser connector for capture. |
 
 ## Planning, Finance & Work Management
 
@@ -79,6 +79,13 @@
 | [Super Productivity](https://github.com/johannesjo/super-productivity) | Task management with integrated timeboxing and tracking. | Cross-platform | Excellent personal productivity dashboard. |
 | [Vikunja](https://github.com/go-vikunja/vikunja) | To-do management app for personal or team use. | Cross-platform, Mobile, Self-hosted, Web | Good flexible open task manager. |
 | [Wallos](https://github.com/ellite/Wallos) | Subscription tracker with budgeting views. | Self-hosted | Good for recurring-expense visibility. |
+
+## Proprietary Tools Worth Knowing
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Notion](https://www.notion.so/) | Hosted workspace combining docs, databases, and AI features. | Web, Cross-platform, Mobile | Reference point the open tools above compete with; strong templates ecosystem. |
+| [Obsidian](https://obsidian.md/) | Local-markdown knowledge base with a huge plugin ecosystem. | Cross-platform, Mobile | Free for personal use; files stay local; the default serious PKM choice. |
 
 ## Tutorials & Learning
 

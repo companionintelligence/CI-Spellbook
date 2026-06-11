@@ -66,13 +66,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Chatterbox (Resemble AI)](https://github.com/resemble-ai/chatterbox) | Open-weight MIT TTS; voice cloning; outperforms ElevenLabs in blind tests. | Open weights | Best quality/accessibility ratio among open TTS as of mid-2026. |
-| [Dia / Dia2](https://github.com/nari-labs/dia) | Apache 2.0 multi-speaker dialogue TTS with nonverbal cues; Dia2 adds streaming. | Open weights | Good for fiction, storytelling, and podcast-style dialogue generation. |
-| [Fish Speech V1.5](https://github.com/fishaudio/fish-speech) | Multilingual zero-shot TTS; TTS Arena ELO ~1339; strong EN/ZH/JA. | Open weights | Good hosted-service alternative for multilingual cloning. |
-| [Kokoro](https://github.com/hexgrad/kokoro) | 82M-param Apache 2.0 TTS; 54 voices; 210× real-time; no cloning. | Open weights | Best small-model option for edge and local deployment. |
-| [NVIDIA Parakeet-TDT](https://huggingface.co/nvidia/parakeet-tdt-1.1b) | NVIDIA NeMo ASR model; ~3380× real-time on GPU; 25-language v3. | Open weights | Fastest open STT available; outpaces faster-whisper by ~150×. |
+| [NVIDIA Parakeet-TDT](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) | NVIDIA NeMo ASR model; ~3380× real-time on GPU; v3 covers 25 languages. | Open weights | Fastest open STT available; tops the Open ASR leaderboard for speed. |
 | [Whisper Large v3](https://huggingface.co/openai/whisper-large-v3) | OpenAI's multilingual STT model; 99-language support; MIT licensed. | Open weights | Still the community reference for offline multilingual transcription. |
-| [Cartesia Sonic-3](https://cartesia.ai/) | Hosted TTS API with ~90ms latency; Sonic Turbo variant at ~40ms. | Hosted API | Top-tier for latency-sensitive voice agent pipelines. |
+| [Cartesia Sonic](https://cartesia.ai/) | Hosted low-latency TTS API; Sonic 3.5 current with ~82ms end-to-end latency. | Hosted API | Top-tier for latency-sensitive voice agent pipelines. |
 | [Deepgram Nova-3](https://deepgram.com/) | Hosted STT API; conversational Flux model adds <300ms end-of-turn detection. | Hosted API | Strong for real-time transcription with EOT detection. |
 | [ElevenLabs Eleven v3](https://elevenlabs.io/) | Hosted TTS; expressive inline tags ([whispers], [laughs]); 70+ languages. | Hosted API | Still a benchmark for expressive, emotionally varied speech. |
 | [OpenAI Realtime-2](https://platform.openai.com/docs/guides/realtime) | Unified speech-to-speech model collapsing STT+TTS; GPT-5-class reasoning. | Hosted API | Released May 2026; ideal for voice agents that need reasoning mid-call. |

@@ -9,6 +9,7 @@
 | [Brave](https://github.com/brave/brave-browser) | Privacy-focused Chromium-based browser. | Cross-platform | Good for hardened daily browsing. |
 | [Firefox](https://github.com/mozilla-firefox/firefox) | General-purpose browser with strong extension support. | Cross-platform, Mobile | Still a top open browser baseline. |
 | [Floorp](https://github.com/Floorp-Projects/Floorp) | Firefox-derived browser with advanced customization. | Cross-platform | Great for tab-heavy users. |
+| [Helium](https://github.com/imputnet/helium) | Chromium-based browser focused on privacy, minimal UI, and honest defaults. | Cross-platform | Active beta tracking current Chromium; from the team behind Cobalt. |
 | [Min](https://github.com/minbrowser/min) | Minimal browser with privacy-minded defaults. | Cross-platform | Good when you want a reduced browser footprint. |
 | [Zen](https://github.com/zen-browser/desktop) | Firefox-based browser focused on calm UX and privacy; now at v1.20+ (beta). | Cross-platform | Active project; strong Arc-style alternative. |
 | [Morphic](https://github.com/miurla/morphic) | AI-powered search engine with generative interface. | Self-hosted, Web | Good for search-driven knowledge work. |

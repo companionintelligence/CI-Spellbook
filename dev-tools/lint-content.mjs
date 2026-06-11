@@ -10,7 +10,7 @@ const SEPARATOR = '| --- | --- | --- | --- |';
 const PLATFORM_TOKENS = new Set([
   'Cross-platform', 'Self-hosted', 'Web', 'macOS', 'Windows', 'Linux',
   'iOS', 'Android', 'Mobile', 'VS Code', 'JetBrains', 'Neovim', 'Vim',
-  'Chromium', 'CLI', 'Open weights', 'Hosted API', 'Hardware'
+  'Chromium', 'Firefox', 'CLI', 'Open weights', 'Hosted API', 'Hardware'
 ]);
 const MAX_DESC = 140;
 const MAX_NOTES = 120;

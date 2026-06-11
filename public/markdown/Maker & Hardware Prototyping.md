@@ -83,7 +83,7 @@
 | --- | --- | --- | --- |
 | [GR00T N1.5 / N1.7](https://huggingface.co/nvidia/GR00T-N1.5-3B) | NVIDIA's open VLA model for humanoid robot control. | Open weights | Integrated into LeRobot v0.4+; targets full-body manipulation. |
 | [pi0 / pi0-FAST](https://huggingface.co/blog/pi0) | Physical Intelligence's vision-language-action model family. | Open weights | pi0-FAST uses FAST tokenization; 5x faster training vs diffusion VLAs. |
-| [SmolVLA](https://github.com/huggingface/lerobot) | Compact VLA model for resource-constrained robot deployments. | Open weights | Included in LeRobot; good for edge hardware experimentation. |
+| [SmolVLA](https://huggingface.co/lerobot/smolvla_base) | Compact VLA model for resource-constrained robot deployments. | Open weights | Included in LeRobot; good for edge hardware experimentation. |
 
 ## Tutorials & Learning
 

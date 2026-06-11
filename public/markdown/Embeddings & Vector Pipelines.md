@@ -36,8 +36,8 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Chonkie](https://github.com/chonkie-ai/chonkie) | Fast, lightweight dedicated text chunking library with semantic and recursive modes. | Cross-platform | Focused and dependency-light; good when chunking is the only concern. |
-| [LangChain TextSplitters](https://github.com/langchain-ai/langchain) | Recursive, character, token, and semantic splitters built into LangChain core. | Cross-platform | RecursiveCharacterTextSplitter remains a solid general-purpose default. |
-| [LlamaIndex NodeParsers](https://github.com/run-llama/llama_index) | Sophisticated node parsers with hierarchical, semantic, and auto-merge strategies. | Cross-platform | Best-in-class for RAG-optimized chunking within the LlamaIndex ecosystem. |
+| [LangChain TextSplitters](https://python.langchain.com/docs/concepts/text_splitters/) | Recursive, character, token, and semantic splitters built into LangChain core. | Cross-platform | RecursiveCharacterTextSplitter remains a solid general-purpose default. |
+| [LlamaIndex NodeParsers](https://docs.llamaindex.ai/en/stable/module_guides/loading/node_parsers/) | Sophisticated node parsers with hierarchical, semantic, and auto-merge strategies. | Cross-platform | Best-in-class for RAG-optimized chunking within the LlamaIndex ecosystem. |
 | [semantic-text-splitter](https://github.com/benbrandt/text-splitter) | Rust-backed semantic splitter with Python/WASM bindings; fast and embedding-aware. | Cross-platform | Good choice when chunking throughput matters in high-volume ingestion. |
 
 ## Rerankers & Retrieval Quality
@@ -45,7 +45,6 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) | Ultra-fast CPU reranker using TinyBERT/MiniLM cross-encoders; sub-20ms latency. | Cross-platform | Best pick for tight latency budgets on CPU-only infrastructure. |
-| [RAGatouille](https://github.com/bclavie/RAGatouille) | ColBERT late-interaction retrieval; creates token-level vectors for precise matching. | Cross-platform | Listed above; also the go-to for ColBERT-based reranking. |
 | [rerankers](https://github.com/AnswerDotAI/rerankers) | Unified lightweight API for cross-encoders, ColBERT, RankLLM, and Cohere rerankers. | Cross-platform | Lowest-friction way to swap between reranking backends. |
 
 ## Notable Models
@@ -55,9 +54,10 @@
 | [BGE-M3](https://huggingface.co/BAAI/bge-m3) | BAAI multilingual embedding; 568M params, 100+ languages, up to 8192 tokens. | Open weights | Supports dense, sparse, and multi-vector (ColBERT) retrieval in one model. |
 | [BGE Reranker v2.5](https://huggingface.co/BAAI/bge-reranker-v2.5-gemma2-lightweight) | BAAI lightweight reranker based on Gemma2; supports token compression and layerwise ops. | Open weights | Good quality/cost balance for production reranking. |
 | [bge-multilingual-gemma2](https://huggingface.co/BAAI/bge-multilingual-gemma2) | BAAI 9B multilingual embedding model based on Gemma 2; SOTA on MIRACL/MTEB. | Open weights | Use when multilingual retrieval quality matters more than size. |
-| [Jina Embeddings v3](https://huggingface.co/jinaai/jina-embeddings-v3) | Jina 570M model with 8192-token context; long-document and late-chunking support. | Open weights | Strong on long documents; available via Jina API or self-hosted. |
+| [EmbeddingGemma](https://huggingface.co/google/embeddinggemma-300m) | Google's 308M on-device embedding model with Matryoshka dimension truncation. | Open weights | Best-in-class under 500M params; runs in under 200 MB RAM. |
+| [Jina Embeddings v4](https://huggingface.co/jinaai/jina-embeddings-v4) | Jina 3.8B multimodal multilingual embedding for text, image, and code retrieval. | Open weights | Strong on long and visual documents; API or self-hosted. |
 | [Nomic Embed v2](https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe) | MoE embedding model with 8192-token context; competitive open-source quality. | Open weights | Longest context among practical open-source embedding options. |
-| [Qwen3-Embedding](https://huggingface.co/Qwen/Qwen3-Embedding) | Alibaba instruction-aware multilingual embedding; flexible 256–2048 dim output. | Open weights | One of the top-ranked open models on MTEB as of mid-2026. |
+| [Qwen3-Embedding](https://github.com/QwenLM/Qwen3-Embedding) | Alibaba instruction-aware multilingual embedding; flexible 256–2048 dim output. | Open weights | One of the top-ranked open models on MTEB as of mid-2026. |
 | [voyage-3-large](https://docs.voyageai.com/docs/embeddings) | Voyage AI hosted embedding model; top retrieval quality in commercial benchmarks. | Hosted API | Recommended for production pipelines where quality outweighs self-hosting cost. |
 
 ## Tutorials & Learning

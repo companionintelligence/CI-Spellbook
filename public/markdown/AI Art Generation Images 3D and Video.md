@@ -86,18 +86,15 @@
 | --- | --- | --- | --- |
 | [FLUX.1 dev](https://github.com/black-forest-labs/flux) | Black Forest Labs' flagship open-weight T2I model; 12B params, non-commercial licence. | Open weights | Best open image model for prompt adherence and photorealism in 2026. |
 | [FLUX.2 dev](https://huggingface.co/black-forest-labs/FLUX.2-dev) | Successor with multi-reference editing (up to 10 sources) and 4MP output. | Open weights, Hosted API | FLUX.2 klein is Apache 2.0; dev is source-available non-commercial. |
-| [HunyuanImage](https://github.com/Tencent/HunyuanDiT) | Tencent's open-weight T2I model with strong Chinese/multilingual prompt support. | Open weights | Good complement to FLUX for CJK-language prompting. |
+| [HunyuanImage](https://github.com/Tencent-Hunyuan/HunyuanImage-3.0) | Tencent's 80B MoE autoregressive image model for generation and editing. | Open weights | Strong multilingual prompting; good complement to FLUX for CJK languages. |
 | [Qwen-Image](https://github.com/QwenLM/Qwen-Image) | Alibaba's 20B unified generation+editing model; v2.0 is 7B, top AI Arena ranking. | Hosted API | v2.0 open weights not yet released as of June 2026; available via API. |
 | [Stable Diffusion 3.5](https://huggingface.co/stabilityai/stable-diffusion-3.5-large) | Stability AI's MMDiT-based T2I model; SD3.5 Large is 8B params. | Open weights | Strong community LoRA ecosystem; needs 18 GB VRAM for the large variant. |
-| [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) | Tencent open-source video model; v1.5 is 8.3B params, Apache 2.0. | Open weights | Excels at natural motion and fluid physics. |
-| [LTX-Video 2.3](https://github.com/Lightricks/LTX-Video) | Lightricks' 22B open-weight video model with native 4K/50fps and stereo audio. | Open weights | Fastest open model for iteration; Apache 2.0. |
-| [Wan 2.2](https://github.com/Wan-Video/Wan2.2) | Alibaba open MoE video model; covers T2V, I2V, character animation, audio-driven. | Open weights | Leads photorealism on VBench; Apache 2.0; 1.3B variant for low VRAM. |
-| [Imagen 4](https://deepmind.google/models/imagen/) | Google DeepMind hosted T2I model; GA in Gemini API as of Feb 2026; up to 2K output. | Hosted API | Three tiers: Ultra, Flagship ($0.04/img), Fast ($0.02/img). |
-| [Kling 3.0](https://kling.kuaishou.com/) | Kuaishou's hosted video model; 15 s at 4K/60fps in one pass. | Hosted API | Four entries in top-10 of 2026 video leaderboards. |
-| [Midjourney V8](https://www.midjourney.com/) | Hosted T2I/T2V service; V8.1 default as of April 2026; native 2K output. | Hosted API | Still the benchmark for aesthetic quality among hosted image generators. |
-| [Sora 2](https://openai.com/sora) | OpenAI hosted video+audio model; consumer app discontinued April 2026. | Hosted API | API remains available until Sept 2026; $0.10–$0.70/s generated video. |
-| [TRELLIS.2](https://github.com/microsoft/TRELLIS.2) | Microsoft's 4B-param image-to-3D model; outputs PBR meshes and 3D Gaussians. | Open weights | CVPR 2025 spotlight; best production-grade open 3D generator. |
-| [TripoSR](https://github.com/VAST-AI-Research/TripoSR) | Fast MIT-licensed image-to-3D model; sub-second inference on 6–8 GB VRAM. | Open weights | Best starting point for accessible open 3D generation. |
+| [Imagen 4](https://deepmind.google/models/imagen/) | Google DeepMind hosted T2I model; GA in Gemini API as of Feb 2026; up to 2K output. | Hosted API | Three tiers: Ultra, Flagship, and Fast. |
+| [Kling 3.0](https://kling.kuaishou.com/) | Kuaishou's hosted video model; 15 s clips at 4K/60fps in one pass. | Hosted API | Multiple entries in the top-10 of 2026 video leaderboards. |
+| [Midjourney](https://www.midjourney.com/) | Hosted T2I/T2V service; V8 generation current as of spring 2026. | Hosted API | Still the benchmark for aesthetic quality among hosted image generators. |
+| [Sora 2](https://openai.com/sora) | OpenAI hosted video+audio model; consumer app discontinued April 2026. | Hosted API | Deprecated — API shuts down Sept 2026; avoid new pipelines on it. |
+| [Veo 3.1](https://deepmind.google/models/veo/) | Google DeepMind hosted video model with native 48kHz audio generation. | Hosted API | Consistent top-3 on video leaderboards; available via Gemini API. |
+| [TRELLIS.2](https://github.com/microsoft/TRELLIS.2) | Microsoft's 4B-param image-to-3D model; outputs PBR meshes and 3D Gaussians. | Open weights | Best production-grade open 3D generator; successor to TRELLIS. |
 
 ## Tutorials & Learning
 

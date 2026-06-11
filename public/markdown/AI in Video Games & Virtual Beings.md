@@ -52,10 +52,10 @@
 | [Ice Cubes](https://github.com/Dimillian/IceCubesApp) | Native Mastodon client. | macOS, iOS | Nice Apple-first social client. |
 | [Lemmy](https://github.com/LemmyNet/lemmy) | Federated link aggregator and discussion platform. | Web, Self-hosted | Best open Reddit alternative in the fediverse. |
 | [Mastodon](https://github.com/mastodon/mastodon) | Federated social network platform. | Web, Mobile | The default open microblogging stack. |
-| [Pixelfed](https://github.com/pixelfed/pixelfed) | Federated photo-sharing platform; 2nd-highest fediverse MAU in 2026. | Web, Mobile | Good open alternative for image-centric social. |
-| [toot](https://github.com/ihabunek/toot) | CLI and TUI client for Mastodon. | Cross-platform, CLI | Handy for terminal-centric social workflows. |
 | [Misskey](https://github.com/misskey-dev/misskey) | Feature-rich federated microblogging platform; base for Calckey/Firefish forks. | Web, Self-hosted | Active fediverse node with rich emoji reactions and theming. |
 | [PeerTube](https://github.com/Chocobozzz/PeerTube) | Federated video hosting platform using BitTorrent for distribution. | Web, Self-hosted | Third-highest fediverse MAU; good self-hosted YouTube alternative. |
+| [Pixelfed](https://github.com/pixelfed/pixelfed) | Federated photo-sharing platform; 2nd-highest fediverse MAU in 2026. | Web, Mobile | Good open alternative for image-centric social. |
+| [toot](https://github.com/ihabunek/toot) | CLI and TUI client for Mastodon. | Cross-platform, CLI | Handy for terminal-centric social workflows. |
 
 ## Tutorials & Learning
 

@@ -104,14 +104,14 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Claude Sonnet 4.6 / Opus 4.8](https://www.anthropic.com/claude) | Anthropic's current coding flagship pair: Sonnet 4.6 for cost-effective work, Opus 4.8 for hard tasks. | Hosted API | Opus 4.8: 88.6% SWE-bench Verified (May 2026); Sonnet 4.6 at $3/$15 per M tokens. |
-| [Claude Fable 5](https://www.anthropic.com/claude) | Anthropic's top-tier agentic model, GA June 9 2026. | Hosted API | 95.0% SWE-bench Verified; $10/$50 per M tokens; leads all public benchmarks at time of writing. |
-| [DeepSeek-V4-Pro-Max](https://github.com/deepseek-ai/DeepSeek-V3) | DeepSeek's open-weight frontier model, 80.6% SWE-bench Verified. | Open weights, Hosted API | Leads open-weight category; Apache 2.0; very competitive cost. |
-| [Gemini 3.1 Pro](https://deepmind.google/technologies/gemini/) | Google DeepMind's flagship coding model with 1M context. | Hosted API | 80.6% SWE-bench Verified; strong multimodal and long-context capabilities. |
-| [GPT-5.4 / GPT-5.5](https://openai.com/) | OpenAI's current flagship coding models; 5.4 incorporates Codex capabilities. | Hosted API | GPT-5: 74.9% SWE-bench Verified at launch; 5.5 released April 2026; strong agentic tool-use. |
-| [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI's 1T-param MoE open model, 32B active; 80.2% SWE-bench Verified. | Open weights, Hosted API | Modified MIT license; released April 2026; strong agentic stability. |
-| [MiniMax M3](https://github.com/MiniMaxAI) | MiniMax's open-weight model with 1M context at $0.30/$1.20 per M tokens. | Open weights, Hosted API | 80.5% SWE-bench Verified; exceptionally cost-effective for its benchmark tier. |
-| [Qwen3-Coder-Next](https://github.com/QwenLM/Qwen3) | Alibaba's 80B MoE coding specialist (3B active), strong agentic task performance. | Open weights, Hosted API | 70.6% SWE-bench Verified; Apache 2.0; runs locally on modest hardware due to MoE design. |
+| [Claude Sonnet 4.6 / Opus 4.8](https://www.anthropic.com/claude) | Anthropic's coding flagship pair: Sonnet 4.6 for cost-effective work, Opus 4.8 for hard tasks. | Hosted API | Opus 4.8 leads the Claude line on SWE-bench Verified; Sonnet 4.6 is the everyday default. |
+| [Claude Fable 5](https://www.anthropic.com/news/claude-fable-5-mythos-5) | Anthropic's top-tier Mythos-class agentic model, GA June 2026. | Hosted API | Current top published results on agentic coding benchmarks at release. |
+| [DeepSeek V4](https://huggingface.co/deepseek-ai) | DeepSeek's open-weight frontier family (V4-Pro / V4-Flash), released April 2026. | Open weights, Hosted API | 80.6% SWE-bench Verified leads the open-weight category; MIT; very competitive cost. |
+| [Gemini 3.1 Pro](https://deepmind.google/technologies/gemini/) | Google DeepMind's flagship coding model with 1M context. | Hosted API | 80.6% SWE-bench Verified; Gemini 3.5 generation rolling out mid-2026. |
+| [GPT-5.4 / GPT-5.5](https://openai.com/index/introducing-gpt-5-5/) | OpenAI's current flagship coding models; both power Codex workflows. | Hosted API | GPT-5.5 released April 2026; strong agentic tool use and long-task efficiency. |
+| [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI's ~1T-param MoE open model, 32B active, tuned for coding. | Open weights, Hosted API | Modified MIT license; released April 2026; strong agentic stability. |
+| [MiniMax M3](https://github.com/MiniMax-AI) | MiniMax's open-weight model combining frontier coding, 1M context, and multimodality. | Open weights, Hosted API | Released June 2026; exceptionally cost-effective for its benchmark tier. |
+| [Qwen3.6](https://github.com/QwenLM/Qwen3.6) | Alibaba's open-weight line tuned for agentic coding; 27B dense and 35B-A3B MoE. | Open weights, Hosted API | Apache 2.0; matches much larger models on terminal-agent benchmarks; runs on one GPU. |
 
 ## Tutorials & Learning
 
