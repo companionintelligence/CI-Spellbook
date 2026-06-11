@@ -19,6 +19,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [DeepEval](https://github.com/confident-ai/deepeval) | Pytest-style LLM unit testing framework with built-in metrics for RAG and agents. | Cross-platform | Apache 2.0; closest to a standard pytest workflow for LLM outputs. |
+| [Giskard](https://github.com/Giskard-AI/giskard) | Open-source testing library for LLMs with automated vulnerability scanning and CI integration. | Cross-platform | Apache 2.0; covers bias, hallucination, prompt injection, and sensitive data detection. |
 | [Inspect (UK AISI)](https://github.com/UKGovernmentBEIS/inspect_ai) | UK AI Safety Institute's open framework for rigorous LLM evaluations with 200+ pre-built evals. | Cross-platform | MIT license; used for frontier model safety evals; composable scorers and agents. |
 | [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) | EleutherAI's evaluation suite; official integration point for most public LLM benchmarks. | Cross-platform | MIT license; de facto standard for comparing open-weight model releases. |
 | [Ragas](https://github.com/explodinggradients/ragas) | Evaluation framework for RAG pipelines with retrieval and generation metrics. | Cross-platform | Apache 2.0; reference tool for RAG quality assessment. |
@@ -30,7 +31,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Agenta](https://github.com/agenta-ai/agenta) | Open-source LLM engineering platform for prompt versioning, evaluation, and deployment. | Self-hosted, Web | MIT license; good for teams wanting self-hosted prompt registry with eval integration. |
-| [Braintrust](https://github.com/brainlid/braintrust) | AI evaluation platform with CI/CD quality gating, scoring, and merge-blocking workflows. | Web | Strong fit for teams that gate releases on eval scores; no per-seat pricing. |
+| [Braintrust](https://www.braintrust.dev/) | AI evaluation platform with CI/CD quality gating, scoring, and merge-blocking workflows. | Web | Strong fit for teams that gate releases on eval scores; no per-seat pricing. |
 | [Comet Opik](https://github.com/comet-ml/opik) | LLM observability and evaluation from Comet, with trace logging and LLM-as-a-judge metrics. | Self-hosted, Web | Apache 2.0; integrates with existing Comet experiment tracking for ML teams. |
 | [Portkey](https://github.com/portkey-ai/gateway) | LLM gateway with built-in observability, caching, routing, and fallback across 100+ providers. | Self-hosted, Web | MIT license; single integration point for multi-provider setups with automatic cost tracking. |
 | [promptfoo](https://github.com/promptfoo/promptfoo) | CLI for testing prompts and agents across multiple providers; includes red-teaming and pentesting. | Cross-platform | MIT license; YAML-driven; acquired by OpenAI 2025; used by OpenAI and Anthropic internally. |
