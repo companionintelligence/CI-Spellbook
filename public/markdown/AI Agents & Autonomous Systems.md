@@ -24,6 +24,17 @@
 | [UI-TARS](https://github.com/bytedance/UI-TARS-desktop) | Multimodal agent stack for UI understanding and agent infrastructure. | Cross-platform | Good for computer-use and UI-driven automation. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language analytics and BI assistant for databases. | Web, Self-hosted | Strong when analytics is the user-facing agent. |
 
+## Agent Frameworks & Orchestration
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [AutoGen](https://github.com/microsoft/autogen) | Microsoft's multi-agent conversation framework; includes the Magentic-One multi-agent system. | Cross-platform | Mature ecosystem; Magentic-One adds a capable out-of-box multi-agent setup. |
+| [CrewAI](https://github.com/crewAIInc/crewAI) | Role-based multi-agent framework for collaborative task workflows. | Cross-platform | 44k+ stars; fast to prototype; teams often graduate to LangGraph for prod. |
+| [LangGraph](https://github.com/langchain-ai/langgraph) | Graph-based stateful agent runtime; default engine for all LangChain agents. | Cross-platform | 10k+ stars; strong audit/rollback story; preferred for production deployments. |
+| [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | Production-ready multi-agent SDK with handoffs, guardrails, and built-in tracing. | Cross-platform | Supersedes OpenAI Swarm; v0.17+ adds sandbox execution and subagent primitives. |
+| [PydanticAI](https://github.com/pydantic/pydantic-ai) | Type-safe Python agent framework built on Pydantic with concise, validated tool calls. | Cross-platform | Hit v1 in late 2025; ~16k stars; less boilerplate than LangGraph for simple flows. |
+| [smolagents](https://github.com/huggingface/smolagents) | Minimal code-first agent library from Hugging Face; agents express actions as Python code. | Cross-platform | 26k+ stars; ~1k-line core; model-agnostic; excellent for teaching and rapid prototyping. |
+
 ## All-in-One AI Workspaces
 
 | Tool | Description | Platforms | Notes |
@@ -40,15 +51,24 @@
 | [Agntcy Directory](https://github.com/agntcy/dir) | Distributed directory for publishing, storing, and discovering AI agent records across a peer-to-peer network. | Self-hosted | Strong fit for capability-based agent discovery and knowledge exchange. |
 | [Agent Directory Protocol](https://github.com/agntcy/dir-spec) | Technical specification for the Agntcy directory service and interoperable agent record exchange. | Cross-platform | Helpful when implementing compatible directory tooling and integrations. |
 | [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | Privacy-focused assistant for documents, retrieval, and workspace-based chat. | Cross-platform | Easy entry point for local RAG. |
+| [DeepSearcher](https://github.com/zilliztech/deep-searcher) | Open-source deep research assistant for private data using agentic search loops. | Cross-platform | Best for search-heavy investigation flows over internal corpora. |
 | [DocsGPT](https://github.com/arc53/DocsGPT) | Private AI platform for search, documents, and built-in agent tools. | Cross-platform, Self-hosted | Useful for internal documentation assistants. |
+| [GPT Researcher](https://github.com/assafelovic/gpt-researcher) | Autonomous research agent that gathers, analyzes, and structures sources. | Cross-platform, Self-hosted | Strong report-generation workflow; widely used for deep-research pipelines. |
 | [kotaemon](https://github.com/Cinnamon/kotaemon) | Document-centric RAG workspace for chatting with files and reports. | Self-hosted | Good for knowledge-heavy teams. |
 | [PaperQA2](https://github.com/Future-House/paper-qa) | Retrieval stack for high-accuracy answers over research papers. | Cross-platform | Strong fit for scientific work. |
-| [R2R](https://github.com/SciPhi-AI/R2R) | Production retrieval system with agentic RAG APIs. | Web, Self-hosted | Suitable for app backends. |
+| [R2R](https://github.com/SciPhi-AI/R2R) | Production retrieval system with agentic RAG APIs. | Web, Self-hosted | Suitable for app backends needing a complete retrieval layer. |
 | [RAGFlow](https://github.com/infiniflow/ragflow) | Full RAG engine that pairs retrieval with agent workflows. | Self-hosted | Strong when you need a complete context layer. |
-| [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Good for teams already using Weaviate. |
-| [DeepSearcher](https://github.com/zilliztech/deep-searcher) | Open-source deep research assistant for private data. | Cross-platform | Best for search-heavy investigation flows. |
-| [GPT Researcher](https://github.com/assafelovic/gpt-researcher) | Autonomous research agent that gathers, analyzes, and structures sources. | Cross-platform, Self-hosted | Strong report-generation workflow. |
 | [STORM](https://github.com/stanford-oval/storm) | Research system for topic exploration and report synthesis with citations. | Cross-platform | Good for long-form knowledge curation. |
+| [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Good for teams already using Weaviate. |
+
+## Agent Memory & Context
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Airweave](https://github.com/airweave-ai/airweave) | Context retrieval layer that syncs fragmented data sources for AI agents. | Cross-platform | Good for connecting fragmented sources into a unified agent context. |
+| [mem0](https://github.com/mem0ai/mem0) | Persistent memory layer for agents and assistants with user-level recall. | Self-hosted | Strong fit for user-specific memory across sessions. |
+| [omi](https://github.com/BasedHardware/omi) | Wearable capture device for continuous speech transcription and passive context. | Mobile | Best for passive lifelog-style context capture. |
+| [screenpipe](https://github.com/mediar-ai/screenpipe) | Local activity capture layer for search, recall, and automation triggers. | macOS, Windows | A strong base for personal context systems. |
 
 ## Model, Eval & Prompt Infrastructure
 
@@ -56,19 +76,40 @@
 | --- | --- | --- | --- |
 | [Agno](https://github.com/agno-agi/agno) | CLI framework for building and operating agentic software at scale. | Cross-platform | Good for app and agent backends. |
 | [Kiln](https://github.com/Kiln-AI/Kiln) | Toolkit for evals, fine-tuning, synthetic data, and MCP-aware systems. | Cross-platform | Useful when teams need a full iteration loop. |
-| [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | Fine-tuning workstation for many LLMs and VLMs. | Self-hosted | One of the most complete open tuning stacks. |
-| [Ludwig](https://github.com/ludwig-ai/ludwig) | Low-code framework for custom model building. | Cross-platform | Good when teams want lower-friction experimentation. |
+| [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | Fine-tuning workstation supporting many LLMs and VLMs with a unified interface. | Self-hosted | One of the most complete open tuning stacks. |
+| [Ludwig](https://github.com/ludwig-ai/ludwig) | Low-code framework for custom model building and experimentation. | Cross-platform | Good when teams want lower-friction experimentation. |
 | [Opik](https://github.com/comet-ml/opik) | Tracing, evaluation, and monitoring for LLM and agent workflows. | Self-hosted, Web | Strong observability layer for production AI. |
 | [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) | Training framework for large-scale model development. | Cross-platform | A solid foundation for serious model work. |
 | [Second Me](https://github.com/mindverse/Second-Me) | Platform for training a personalized AI identity and interaction layer. | Self-hosted, Web | Useful for persistent persona experiments. |
 
-## AI Utilities & Context Tools
+## AI Utilities & Desktop Context
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Airweave](https://github.com/airweave-ai/airweave) | Context retrieval layer for AI agents. | Cross-platform | Good for connecting fragmented sources. |
-| [mem0](https://github.com/mem0ai/mem0) | Memory layer for agents and assistants. | Self-hosted | Strong fit for user-specific recall. |
-| [Netron](https://github.com/lutzroeder/netron) | Visualizer for neural network models and artifacts. | Cross-platform | Useful for inspecting model internals. |
 | [Everywhere](https://github.com/DearVa/Everywhere) | Context-aware desktop assistant with MCP-style tool integrations. | Windows | Good for desktop-level context workflows. |
-| [omi](https://github.com/BasedHardware/omi) | Wearable capture device for continuous speech and transcription. | Mobile | Best for passive context capture. |
-| [screenpipe](https://github.com/mediar-ai/screenpipe) | Local activity capture layer for search, recall, and automation. | macOS, Windows | A strong base for personal context systems. |
+| [Netron](https://github.com/lutzroeder/netron) | Visualizer for neural network models and artifacts. | Cross-platform | Useful for inspecting model internals. |
+
+## Notable Models
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Claude Fable 5 / Opus 4.8](https://www.anthropic.com/news/claude-4) | Anthropic's flagship tier: Fable 5 is the widest-release Mythos-class model; Opus 4.8 leads the Opus tier for agentic coding. | Hosted API | Fable 5 tops SWE-Bench Pro at 80.3%; Opus 4.8 strong for long-horizon autonomy. |
+| [DeepSeek V4](https://github.com/deepseek-ai/DeepSeek-V3) | DeepSeek's latest open-weight all-rounder; ranks #1 on agentic leaderboards among open models. | Open weights, Hosted API | 80.6% SWE-Bench Verified; MIT-licensed; strong coding and tool-call accuracy. |
+| [Gemini 3.5 Flash](https://ai.google.dev/gemini-api/docs/models) | Google's current GA frontier model; optimized for agentic and coding tasks at scale. | Hosted API | Generally available on Gemini API and Vertex AI as of mid-2026. |
+| [GLM-5](https://github.com/THUDM/GLM-4) | Zhipu AI's flagship open-weight model with strong agentic coding scores. | Open weights, Hosted API | 77.8% SWE-bench Verified; MIT license is a differentiator for enterprise fine-tuning. |
+| [GPT-5.5](https://openai.com/index/introducing-gpt-5-5/) | OpenAI's current flagship; iterative release atop the GPT-5 base with enhanced reasoning. | Hosted API | Available to Plus/Pro users; 58.6% SWE-Bench Pro; strong at professional knowledge work. |
+| [Grok 4.3](https://x.ai/news) | xAI's production flagship model balancing reasoning density with API throughput. | Hosted API | Strong tool-calling; API access live from May 2026; complement is Grok Build for agentic coding. |
+| [Kimi K2](https://github.com/MoonshotAI/Kimi-K2) | Moonshot AI's open-weight MoE model; 1T params / 32B active; coding-focused. | Open weights, Hosted API | 58.6% SWE-Bench Pro; 256K context; one of the strongest Chinese open-weight releases. |
+| [Llama 4 Scout / Maverick](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) | Meta's multimodal MoE family: Scout (17B active, 10M context) and Maverick (full quality). | Open weights | Apache 2.0; Scout fits on a single H100; broad community adoption for fine-tuning. |
+| [Mistral Small 4](https://mistral.ai/news/mistral-small-4/) | Mistral's latest small model unifying reasoning, multimodal, and agentic coding capabilities. | Open weights, Hosted API | 119B total / 6B active MoE; Apache 2.0; good efficiency-to-quality ratio. |
+| [Qwen 3.6 Plus](https://github.com/QwenLM/Qwen3) | Alibaba's top open-weight choice for demanding agentic coding; 1M token context. | Open weights, Hosted API | Frontier-competitive benchmarks; strong multilingual and coding performance under Apache 2.0. |
+
+## Tutorials & Learning
+
+| Tool | Description | Platforms | Notes |
+| --- | --- | --- | --- |
+| [Anthropic: Building Effective AI Agents](https://www.anthropic.com/research/building-effective-agents) | Anthropic's canonical guide to agent design patterns, workflows, and production considerations. | Web | The primary reference for Claude-based agent architecture; updated regularly. |
+| [DeepLearning.AI: Agent Skills with Anthropic](https://www.deeplearning.ai/courses/agent-skills-with-anthropic/) | Short course on building Claude agents, covering MCP, Claude Code, and the Agent SDK. | Web | Up to date with the 2026 Claude platform; good on-ramp for new developers. |
+| [Hugging Face Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction) | Free multi-unit course on building agents with smolagents, LangGraph, and tool use. | Web | Covers code agents, multi-agent systems, and tool integration; actively maintained. |
+| [OpenAI: Practical Guide to Building Agents](https://openai.com/index/new-tools-for-building-agents/) | OpenAI's practical reference for the Agents SDK, handoffs, guardrails, and tracing. | Web | Essential reading for teams using the OpenAI Agents SDK in production. |
+| [Awesome AI Agents (Shroominic)](https://github.com/e2b-dev/awesome-ai-agents) | Curated list of AI agents, frameworks, and tools with categorised links. | Web | Broadly maintained community list; good for discovery across the ecosystem. |
