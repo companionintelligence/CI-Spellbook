@@ -28,6 +28,26 @@ const CARD_CONFIGS = [
     containerId: 'card-ai-agents'
   },
   {
+    id: 'mcp-servers',
+    title: 'MCP Servers & Connectors',
+    backgroundImage: '/background/background11.png',
+    borderColor: '#60d9ff',
+    hoverColor: '96, 217, 255',
+    baseColor: '9, 67, 109',
+    markdownPath: '/markdown/MCP Servers & Connectors.md',
+    containerId: 'card-mcp-servers'
+  },
+  {
+    id: 'eval-observability',
+    title: 'Evals, Observability & Tracing',
+    backgroundImage: '/background/background12.png',
+    borderColor: '#bea9ff',
+    hoverColor: '190, 169, 255',
+    baseColor: '58, 63, 108',
+    markdownPath: '/markdown/Evaluation, Observability & Tracing.md',
+    containerId: 'card-eval-observability'
+  },
+  {
     id: 'local-first-ai-tools',
     title: 'Local AI Apps & Model Managers',
     backgroundImage: '/background/background1.jpg',
@@ -46,6 +66,16 @@ const CARD_CONFIGS = [
     baseColor: '52, 52, 78',
     markdownPath: '/markdown/Cutting Edge Databases.md',
     containerId: 'card-cutting-edge-databases'
+  },
+  {
+    id: 'embeddings-vector',
+    title: 'Embeddings & Vector Pipelines',
+    backgroundImage: '/background/background13.png',
+    borderColor: '#82ffff',
+    hoverColor: '130, 255, 255',
+    baseColor: '15, 113, 122',
+    markdownPath: '/markdown/Embeddings & Vector Pipelines.md',
+    containerId: 'card-embeddings-vector'
   },
   {
     id: 'top-public-data-sources',
