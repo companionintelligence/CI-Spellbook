@@ -7,7 +7,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [MCP Official Registry](https://registry.modelcontextprotocol.io/) | Community-driven metadata registry for public MCP servers; backed by Anthropic, GitHub, PulseMCP, and Microsoft. | Web | Launched Sept 2025; 9,600+ server records; the canonical discovery endpoint. |
-| [Awesome MCP Servers](https://github.com/appcypher/awesome-mcp-servers) | Curated GitHub list of MCP servers organised by category with descriptions and links. | Web | Good breadth; community-maintained; useful for browsing before committing to a registry. |
+| [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers) | Curated collection of MCP servers by category — the highest-starred community awesome list for MCP. | Web | MIT; 89k stars; associated registry at glama.ai/mcp/servers; the dominant community list for MCP discovery. |
 | [PulseMCP](https://www.pulsemcp.com/servers) | Daily-updated MCP server directory with 17,000+ listings and LLM compatibility notes. | Web | Largest independent directory; good for discovering niche or new servers quickly. |
 | [Smithery](https://smithery.ai/) | MCP server marketplace with hosted remote servers and a CLI install path. | Web | 7,000+ servers; can run servers on Smithery's infra or install locally; OAuth modal support. |
 
@@ -25,9 +25,12 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Cloudflare MCP](https://github.com/cloudflare/mcp) | Token-efficient MCP server covering the Cloudflare API; uses server-side code execution to compress a 2M-token spec to ~1k tokens. | Cross-platform | Apache 2.0; covers Workers, KV, R2, D1, Pages, and DNS; novel 'Code Mode' pattern worth adapting for large APIs. |
 | [Context7](https://github.com/upstash/context7) | Injects up-to-date library documentation and code examples directly into LLM context. | Cross-platform | Reduces hallucinated APIs; requires a Context7 API key; actively maintained by Upstash. |
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub server for repos, issues, pull requests, code search, and Actions. | Cross-platform | Ships with Claude Code by default; the reference integration for developer workflows. |
+| [MCP Inspector](https://github.com/modelcontextprotocol/inspector) | Visual web UI and CLI for testing and debugging MCP servers; supports stdio, SSE, and streamable HTTP transports. | Cross-platform | Official MCP tooling; 10k stars; run via npx or Docker; the standard first stop when building or debugging a server. |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation via Playwright: navigation, screenshots, form fill, and DOM inspection. | Cross-platform | Official Microsoft server; preferred over Puppeteer for headful browser tasks. |
+| [Stripe Agent Toolkit](https://github.com/stripe/agent-toolkit) | Official Stripe library exposing payment and business tools to AI agents via MCP, LangChain, CrewAI, and the OpenAI SDK. | Cross-platform | MIT; 1.6k stars; remote server at mcp.stripe.com; supports Restricted API Keys for granular permission scoping. |
 
 ## Data, Search & Web
 
@@ -51,6 +54,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Docker MCP Gateway](https://github.com/docker/mcp-gateway) | Docker CLI plugin that runs MCP servers as containers with OAuth, secrets management, server catalog, and dynamic discovery. | Cross-platform | MIT; 1.5k stars; tight Docker Desktop integration for secrets; best for teams already containerising their toolchain. |
 | [FastMCP Horizon](https://gofastmcp.com/) | Enterprise MCP gateway from the FastMCP team with SSO, RBAC, audit logs, and observability. | Self-hosted | Adds production governance on top of the dominant OSS framework. |
 | [MCP Auth Proxy](https://github.com/sigbit/mcp-auth-proxy) | Drop-in OAuth 2.1/OIDC proxy for MCP servers; no server code changes required. | Self-hosted | Verified with Claude, Cursor, GitHub Copilot; supports Google, GitHub, Okta, Auth0. |
 | [MCP Gateway & Registry](https://github.com/agentic-community/mcp-gateway-registry) | Enterprise gateway combining OAuth auth, dynamic tool discovery, and Keycloak/Entra integration. | Self-hosted | Good for teams centralising many MCP servers under one governed access layer. |
