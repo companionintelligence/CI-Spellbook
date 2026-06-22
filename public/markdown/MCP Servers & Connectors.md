@@ -6,8 +6,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [MCP Official Registry](https://registry.modelcontextprotocol.io/) | Community-driven metadata registry for public MCP servers; backed by Anthropic, GitHub, PulseMCP, and Microsoft. | Web | Launched Sept 2025; 9,600+ server records; the canonical discovery endpoint. |
 | [Awesome MCP Servers](https://github.com/appcypher/awesome-mcp-servers) | Curated GitHub list of MCP servers organised by category with descriptions and links. | Web | Good breadth; community-maintained; useful for browsing before committing to a registry. |
+| [Docker MCP Registry](https://github.com/docker/mcp-registry) | Official Docker-curated catalog of containerized MCP servers with versioning, provenance, and security scanning. | Cross-platform | MIT; Docker-packaged server images compatible with any MCP client; official from Docker. |
+| [MCP Official Registry](https://registry.modelcontextprotocol.io/) | Community-driven metadata registry for public MCP servers; backed by Anthropic, GitHub, PulseMCP, and Microsoft. | Web | Launched Sept 2025; 9,600+ server records; the canonical discovery endpoint. |
 | [PulseMCP](https://www.pulsemcp.com/servers) | Daily-updated MCP server directory with 17,000+ listings and LLM compatibility notes. | Web | Largest independent directory; good for discovering niche or new servers quickly. |
 | [Smithery](https://smithery.ai/) | MCP server marketplace with hosted remote servers and a CLI install path. | Web | 7,000+ servers; can run servers on Smithery's infra or install locally; OAuth modal support. |
 
@@ -25,7 +26,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare) | Collection of official Cloudflare MCP servers for managing DNS, Workers, R2, Zero Trust, KV, and AI Gateway. | Cross-platform | Apache 2.0; official from Cloudflare; covers the full Cloudflare API surface. |
 | [Context7](https://github.com/upstash/context7) | Injects up-to-date library documentation and code examples directly into LLM context. | Cross-platform | Reduces hallucinated APIs; requires a Context7 API key; actively maintained by Upstash. |
+| [Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP) | Fetches Figma design layouts and component data to give AI coding agents accurate design context. | Cross-platform | 15k+ stars; most-starred community MCP; pairs with Cursor and Claude Code for design-to-code. |
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub server for repos, issues, pull requests, code search, and Actions. | Cross-platform | Ships with Claude Code by default; the reference integration for developer workflows. |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation via Playwright: navigation, screenshots, form fill, and DOM inspection. | Cross-platform | Official Microsoft server; preferred over Puppeteer for headful browser tasks. |
 
@@ -37,6 +40,7 @@
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server) | Semantic and similarity-based web search from Exa AI for research-oriented queries. | Cross-platform | Strong for "find content like this" queries; complements keyword search tools. |
 | [Postgres MCP Pro](https://github.com/crystaldba/postgres-mcp) | PostgreSQL server with health checks, index tuning, EXPLAIN, and safe SQL execution. | Cross-platform | Community successor to the archived reference server; configurable read/write access. |
 | [Supabase MCP](https://github.com/supabase/mcp-server-supabase) | Manages Supabase projects: databases, auth, storage, edge functions, and SQL workflows. | Cross-platform | Official Supabase server; best for teams already on the Supabase platform. |
+| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Production-ready MCP server for real-time web search, page extraction, site mapping, and crawling via Tavily. | Cross-platform | Official Tavily server; preferred for research-heavy agents; requires a Tavily API key. |
 
 ## Productivity & Communications
 

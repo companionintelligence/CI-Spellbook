@@ -10,8 +10,10 @@
 | [Helicone](https://github.com/Helicone/helicone) | Proxy-based LLM observability tool; logs every request by changing a base URL. | Self-hosted, Web | Simplest integration of any platform; no SDK changes required. |
 | [Langfuse](https://github.com/langfuse/langfuse) | Open-source LLM engineering platform with tracing, prompt management, evals, and datasets. | Self-hosted, Web | MIT license; ClickHouse backend for high-volume storage; broad SDK support. |
 | [LangSmith](https://github.com/langchain-ai/langsmith-sdk) | LangChain's observability and evaluation platform with deep LangGraph agent visualization. | Web | Strongest fit for LangChain/LangGraph stacks; CI/CD eval support via custom scripting. |
+| [LangWatch](https://github.com/langwatch/langwatch) | Open-source LLMOps platform for tracing, evaluating, simulating, and monitoring LLM-powered agents. | Self-hosted, Web | Apache 2.0 core (MIT SDKs); agent simulations, inline guardrails, and AI gateway; OTEL/OTLP-native. |
 | [MLflow](https://github.com/mlflow/mlflow) | Unified ML platform with LLM tracing, prompt versioning, and multi-provider auto-instrumentation. | Self-hosted, Web | Apache 2.0; auto-traces OpenAI, LangChain, LlamaIndex, DSPy, AutoGen. |
 | [OpenLLMetry](https://github.com/traceloop/openllmetry) | OpenTelemetry-based instrumentation for LLM calls to OpenAI, Anthropic, vector DBs, and more. | Cross-platform | Apache 2.0; plug into any existing OTel stack; Python/TS/Go/Ruby. |
+| [Pydantic Logfire](https://github.com/pydantic/logfire) | OpenTelemetry-based Python SDK and hosted platform for tracing LLM calls, agents, and general apps. | Web | MIT SDK; closed-source dashboard; purpose-built LLM panels, token tracking, and cost monitoring. |
 | [W&B Weave](https://github.com/wandb/weave) | W&B's LLM tracing and evaluation layer with decorator-based instrumentation. | Web | Best fit for teams already on W&B for training; @weave.op() makes tracing trivial. |
 
 ## Evaluation Frameworks & Benchmarks
@@ -19,6 +21,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [DeepEval](https://github.com/confident-ai/deepeval) | Pytest-style LLM unit testing framework with built-in metrics for RAG and agents. | Cross-platform | Apache 2.0; closest to a standard pytest workflow for LLM outputs. |
+| [Evidently](https://github.com/evidentlyai/evidently) | Open-source framework for evaluating, testing, and monitoring ML and LLM systems; 100+ built-in metrics. | Self-hosted, Web | Apache 2.0; 7.6k stars; CI-friendly HTML/JSON reports; covers tabular data, text, and GenAI. |
 | [Giskard](https://github.com/Giskard-AI/giskard) | Open-source testing library for LLMs with automated vulnerability scanning and CI integration. | Cross-platform | Apache 2.0; covers bias, hallucination, prompt injection, and sensitive data detection. |
 | [Inspect (UK AISI)](https://github.com/UKGovernmentBEIS/inspect_ai) | UK AI Safety Institute's open framework for rigorous LLM evaluations with 200+ pre-built evals. | Cross-platform | MIT license; used for frontier model safety evals; composable scorers and agents. |
 | [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) | EleutherAI's evaluation suite; official integration point for most public LLM benchmarks. | Cross-platform | MIT license; de facto standard for comparing open-weight model releases. |
