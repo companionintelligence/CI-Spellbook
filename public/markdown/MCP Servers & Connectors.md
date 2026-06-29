@@ -27,15 +27,19 @@
 | --- | --- | --- | --- |
 | [Context7](https://github.com/upstash/context7) | Injects up-to-date library documentation and code examples directly into LLM context. | Cross-platform | Reduces hallucinated APIs; requires a Context7 API key; actively maintained by Upstash. |
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub server for repos, issues, pull requests, code search, and Actions. | Cross-platform | Ships with Claude Code by default; the reference integration for developer workflows. |
+| [MCP Inspector](https://github.com/modelcontextprotocol/inspector) | Interactive web UI for testing and debugging MCP servers locally; proxy relays requests and shows protocol-level responses. | Cross-platform | Official MCP dev tool; first thing to reach for when building or troubleshooting any MCP server. |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation via Playwright: navigation, screenshots, form fill, and DOM inspection. | Cross-platform | Official Microsoft server; preferred over Puppeteer for headful browser tasks. |
+| [Sentry MCP](https://github.com/getsentry/sentry-mcp) | Official Sentry server for querying issues, errors, stack traces, and releases via LLM-assisted debugging. | Cross-platform | Best for on-call and incident-investigation workflows; supports remote and stdio transports. |
 
 ## Data, Search & Web
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Web, image, video, news, and local search via the Brave Search API. | Cross-platform | Official Brave server (the old reference server is archived); requires API key. |
+| [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare) | Suite of 13+ MCP servers for Cloudflare Workers, DNS analytics, KV, R2, browser rendering, and AI Gateway. | Cross-platform | Official Cloudflare server; best fit for teams already on Cloudflare's developer platform. |
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server) | Semantic and similarity-based web search from Exa AI for research-oriented queries. | Cross-platform | Strong for "find content like this" queries; complements keyword search tools. |
 | [Postgres MCP Pro](https://github.com/crystaldba/postgres-mcp) | PostgreSQL server with health checks, index tuning, EXPLAIN, and safe SQL execution. | Cross-platform | Community successor to the archived reference server; configurable read/write access. |
+| [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis MCP server for natural-language read/write of strings, hashes, lists, sets, sorted sets, streams, and JSON. | Cross-platform | MIT license; pairs well with agent memory, caching, and session-persistence workflows. |
 | [Supabase MCP](https://github.com/supabase/mcp-server-supabase) | Manages Supabase projects: databases, auth, storage, edge functions, and SQL workflows. | Cross-platform | Official Supabase server; best for teams already on the Supabase platform. |
 
 ## Productivity & Communications
@@ -60,7 +64,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [FastMCP](https://github.com/jlowin/fastmcp) | High-level Python framework for building MCP servers and clients with minimal boilerplate. | Cross-platform | The dominant Python MCP framework; wraps and extends the official SDK. |
+| [FastMCP](https://github.com/PrefectHQ/fastmcp) | High-level Python framework for building MCP servers and clients with minimal boilerplate. | Cross-platform | The dominant Python MCP framework; wraps and extends the official SDK. |
 | [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Official low-level Python SDK for building MCP servers and clients. | Cross-platform | Use when you need full protocol control; FastMCP wraps this for everyday use. |
 | [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) | Official TypeScript SDK for MCP servers and clients; published as @modelcontextprotocol/sdk. | Cross-platform | Ideal when your stack is Node/TypeScript; well-maintained by the core MCP team. |
 

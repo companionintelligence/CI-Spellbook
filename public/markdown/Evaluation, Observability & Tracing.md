@@ -11,7 +11,9 @@
 | [Langfuse](https://github.com/langfuse/langfuse) | Open-source LLM engineering platform with tracing, prompt management, evals, and datasets. | Self-hosted, Web | MIT license; ClickHouse backend for high-volume storage; broad SDK support. |
 | [LangSmith](https://github.com/langchain-ai/langsmith-sdk) | LangChain's observability and evaluation platform with deep LangGraph agent visualization. | Web | Strongest fit for LangChain/LangGraph stacks; CI/CD eval support via custom scripting. |
 | [MLflow](https://github.com/mlflow/mlflow) | Unified ML platform with LLM tracing, prompt versioning, and multi-provider auto-instrumentation. | Self-hosted, Web | Apache 2.0; auto-traces OpenAI, LangChain, LlamaIndex, DSPy, AutoGen. |
+| [OpenLIT](https://github.com/openlit/openlit) | OpenTelemetry-native LLM observability with GPU monitoring, cost tracking, prompt vault, evals, and 50+ provider integrations. | Self-hosted, Web | Apache 2.0; GPU monitoring is a standout for teams running self-hosted models; single-line instrumentation. |
 | [OpenLLMetry](https://github.com/traceloop/openllmetry) | OpenTelemetry-based instrumentation for LLM calls to OpenAI, Anthropic, vector DBs, and more. | Cross-platform | Apache 2.0; plug into any existing OTel stack; Python/TS/Go/Ruby. |
+| [Pydantic Logfire](https://github.com/pydantic/logfire) | OpenTelemetry-based AI observability platform from the Pydantic team with Python-centric insights and SQL-queried traces. | Self-hosted, Web | MIT license; SQL-queried trace store is unique; natural fit for Pydantic AI and FastAPI stacks. |
 | [W&B Weave](https://github.com/wandb/weave) | W&B's LLM tracing and evaluation layer with decorator-based instrumentation. | Web | Best fit for teams already on W&B for training; @weave.op() makes tracing trivial. |
 
 ## Evaluation Frameworks & Benchmarks
