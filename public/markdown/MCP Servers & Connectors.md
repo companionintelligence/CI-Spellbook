@@ -6,8 +6,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers) | Curated collection of MCP servers by category — the highest-starred community awesome list for MCP. | Web | MIT; 89k stars; associated registry at glama.ai/mcp/servers; the dominant community list for MCP discovery. |
+| [Docker MCP Registry](https://github.com/docker/mcp-registry) | Official Docker-curated catalog of containerized MCP servers with versioning, provenance, and security scanning. | Cross-platform | MIT; Docker-packaged server images compatible with any MCP client; official from Docker. |
 | [MCP Official Registry](https://registry.modelcontextprotocol.io/) | Community-driven metadata registry for public MCP servers; backed by Anthropic, GitHub, PulseMCP, and Microsoft. | Web | Launched Sept 2025; 9,600+ server records; the canonical discovery endpoint. |
-| [Awesome MCP Servers](https://github.com/appcypher/awesome-mcp-servers) | Curated GitHub list of MCP servers organised by category with descriptions and links. | Web | Good breadth; community-maintained; useful for browsing before committing to a registry. |
 | [PulseMCP](https://www.pulsemcp.com/servers) | Daily-updated MCP server directory with 17,000+ listings and LLM compatibility notes. | Web | Largest independent directory; good for discovering niche or new servers quickly. |
 | [Smithery](https://smithery.ai/) | MCP server marketplace with hosted remote servers and a CLI install path. | Web | 7,000+ servers; can run servers on Smithery's infra or install locally; OAuth modal support. |
 
@@ -26,10 +27,12 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Context7](https://github.com/upstash/context7) | Injects up-to-date library documentation and code examples directly into LLM context. | Cross-platform | Reduces hallucinated APIs; requires a Context7 API key; actively maintained by Upstash. |
+| [Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP) | Fetches Figma design layouts and component data to give AI coding agents accurate design context. | Cross-platform | 15k+ stars; most-starred community MCP; pairs with Cursor and Claude Code for design-to-code. |
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub server for repos, issues, pull requests, code search, and Actions. | Cross-platform | Ships with Claude Code by default; the reference integration for developer workflows. |
 | [MCP Inspector](https://github.com/modelcontextprotocol/inspector) | Interactive web UI for testing and debugging MCP servers locally; proxy relays requests and shows protocol-level responses. | Cross-platform | Official MCP dev tool; first thing to reach for when building or troubleshooting any MCP server. |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation via Playwright: navigation, screenshots, form fill, and DOM inspection. | Cross-platform | Official Microsoft server; preferred over Puppeteer for headful browser tasks. |
 | [Sentry MCP](https://github.com/getsentry/sentry-mcp) | Official Sentry server for querying issues, errors, stack traces, and releases via LLM-assisted debugging. | Cross-platform | Best for on-call and incident-investigation workflows; supports remote and stdio transports. |
+| [Stripe Agent Toolkit](https://github.com/stripe/agent-toolkit) | Official Stripe library exposing payment and business tools to AI agents via MCP, LangChain, CrewAI, and the OpenAI SDK. | Cross-platform | MIT; 1.6k stars; remote server at mcp.stripe.com; supports Restricted API Keys for granular permission scoping. |
 
 ## Data, Search & Web
 
@@ -41,6 +44,7 @@
 | [Postgres MCP Pro](https://github.com/crystaldba/postgres-mcp) | PostgreSQL server with health checks, index tuning, EXPLAIN, and safe SQL execution. | Cross-platform | Community successor to the archived reference server; configurable read/write access. |
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis MCP server for natural-language read/write of strings, hashes, lists, sets, sorted sets, streams, and JSON. | Cross-platform | MIT license; pairs well with agent memory, caching, and session-persistence workflows. |
 | [Supabase MCP](https://github.com/supabase/mcp-server-supabase) | Manages Supabase projects: databases, auth, storage, edge functions, and SQL workflows. | Cross-platform | Official Supabase server; best for teams already on the Supabase platform. |
+| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Production-ready MCP server for real-time web search, page extraction, site mapping, and crawling via Tavily. | Cross-platform | Official Tavily server; preferred for research-heavy agents; requires a Tavily API key. |
 
 ## Productivity & Communications
 
@@ -55,6 +59,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
+| [Docker MCP Gateway](https://github.com/docker/mcp-gateway) | Docker CLI plugin that runs MCP servers as containers with OAuth, secrets management, server catalog, and dynamic discovery. | Cross-platform | MIT; 1.5k stars; tight Docker Desktop integration for secrets; best for teams already containerising their toolchain. |
 | [FastMCP Horizon](https://gofastmcp.com/) | Enterprise MCP gateway from the FastMCP team with SSO, RBAC, audit logs, and observability. | Self-hosted | Adds production governance on top of the dominant OSS framework. |
 | [MCP Auth Proxy](https://github.com/sigbit/mcp-auth-proxy) | Drop-in OAuth 2.1/OIDC proxy for MCP servers; no server code changes required. | Self-hosted | Verified with Claude, Cursor, GitHub Copilot; supports Google, GitHub, Okta, Auth0. |
 | [MCP Gateway & Registry](https://github.com/agentic-community/mcp-gateway-registry) | Enterprise gateway combining OAuth auth, dynamic tool discovery, and Keycloak/Entra integration. | Self-hosted | Good for teams centralising many MCP servers under one governed access layer. |
