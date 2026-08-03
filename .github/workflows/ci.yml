@@ -31,8 +31,9 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm run test:unit
-      # Error reporting is opt-in: with no VITE_SENTRY_DSN the Sentry SDK must
-      # be tree-shaken out of the bundle entirely, not merely inert. That holds
+      # Reporting is opt-out, but an unconfigured build is a separate thing:
+      # with no VITE_SENTRY_DSN the Sentry SDK must be tree-shaken out of the
+      # bundle entirely, not merely inert. That holds
       # only while src/lib/telemetry.js keeps its module-scope
       # `const DSN = import.meta.env.VITE_SENTRY_DSN` shape (no optional
       # chaining), which is one innocent-looking refactor away from breaking —

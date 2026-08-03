@@ -9,12 +9,14 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 
-# Error reporting is opt-in and BUILD-TIME: Vite bakes VITE_* into the bundle,
-# so an unset VITE_SENTRY_DSN means the Sentry SDK is tree-shaken out entirely
-# and the image can make no outbound call to Sentry at all. Leave these empty
-# for the public image; pass --build-arg VITE_SENTRY_DSN=... to build a
-# reporting image. Runtime consent (CI_TELEMETRY / CI_LOCAL_ONLY) is handled
-# separately by 40-telemetry-config.sh below.
+# Error reporting is opt-OUT, and its DSN is BUILD-TIME: Vite bakes VITE_* into
+# the bundle, so an image built WITH --build-arg VITE_SENTRY_DSN=... reports by
+# default, and an unset VITE_SENTRY_DSN means the Sentry SDK is tree-shaken out
+# entirely and the image can make no outbound call to Sentry at all. The empty
+# defaults below are "not configured", not "opted out" — a release image is
+# expected to pass the build arg. Runtime consent (CI_TELEMETRY /
+# CI_LOCAL_ONLY), which is how a user turns reporting off, is handled separately
+# by 40-telemetry-config.sh below.
 ARG VITE_SENTRY_DSN=""
 ARG VITE_SENTRY_RELEASE=""
 ARG VITE_CI_ENVIRONMENT=""
