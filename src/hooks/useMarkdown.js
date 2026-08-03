@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import marked from '../lib/markdown';
+import { captureException } from '../lib/telemetry.js';
 
 // highlight.js CSS is bundled via src/main.jsx (import 'highlight.js/styles/github.min.css')
 
@@ -33,6 +34,10 @@ const useMarkdown = (markdownPath, containerId, onMarkdownLoad) => {
         })
         .catch(err => {
           console.error(`Error processing markdown ${markdownPath}:`, err);
+          // The app's main failure mode, and one the browser's global error
+          // handlers never see because it is caught here. A no-op unless
+          // reporting is switched on; the path is scrubbed before it is sent.
+          captureException(err, { markdownPath });
           const errorMsg = `Error loading content: ${err.message}`;
           setContent('');
           setError(errorMsg);

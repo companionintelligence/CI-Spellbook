@@ -18,6 +18,17 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit
+      # Error reporting is opt-in: with no VITE_SENTRY_DSN the Sentry SDK must
+      # be tree-shaken out of the bundle entirely, not merely inert. That holds
+      # only while src/lib/telemetry.js keeps its module-scope
+      # `const DSN = import.meta.env.VITE_SENTRY_DSN` shape (no optional
+      # chaining), which is one innocent-looking refactor away from breaking —
+      # and under rolldown it would break silently. See
+      # docs/operations/error-reporting.md.
+      - name: Assert no Sentry code in a DSN-less bundle
+        run: npm run assert:no-sentry-without-dsn
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run tests

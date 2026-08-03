@@ -29,6 +29,11 @@ npm run build   # build
 
 Playwright runs against the dev server via webServer config. First run on a new machine: `npx playwright install`.
 
+`npm run test:unit` runs the Vitest unit suite (telemetry gate + scrubber). Error
+reporting is opt-in and the Sentry SDK must stay tree-shaken out of a DSN-less
+build — `npm run assert:no-sentry-without-dsn` enforces that. See
+`docs/operations/error-reporting.md`.
+
 ## Git discipline
 
 - Never `git reset --hard` or `git clean -f` without user confirmation.
