@@ -289,6 +289,114 @@ describe('scrubBrowserEvent — leaks confirmed by adversarial review', () => {
   });
 });
 
+/**
+ * Every value in this block is innocuous on its own — no `SECRET_PATTERNS` rule
+ * matches any of them — so the KEY is the only signal there is. That is the
+ * point: `scrubBreadcrumb` used to hand `scrubValue` each crumb *value* rather
+ * than the crumb's `data` object, and `scrubValue` only consults the key while
+ * walking an object's own entries. Top-level crumb keys were therefore never
+ * checked at all.
+ *
+ * `authorization` is deliberately absent from these cases. A `Bearer …` value is
+ * caught by `SECRET_PATTERNS` no matter how the walk is shaped, so an
+ * Authorization spot check looked clean while every other key leaked — which is
+ * exactly how this survived review.
+ */
+describe('scrubBrowserEvent — breadcrumb data is filtered by KEY, not only by value', () => {
+  const crumbWith = (key, value) =>
+    scrubBrowserEvent({ message: 'boom', breadcrumbs: [{ category: 'console', data: { [key]: value } }] })
+      .breadcrumbs[0].data;
+
+  it.each([
+    ['token', 'a1b2c3d4e5'],
+    ['password', 'correcthorsebattery'],
+    ['secret', 'shhh'],
+    ['cookie', 'sid=9f3a'],
+    ['jwt', 'header.payload.sig'],
+    ['x-api-key', 'k-42'],
+    ['api_key', 'k-42'],
+    ['SENTRY_DSN', 'https://k@o1.ingest.us.sentry.io/2'],
+    ['pepper', 'nacl'],
+    ['private_key', 'MIIEvQIBADAN'],
+  ])('filters breadcrumb data.%s, whose value alone matches nothing', (key, value) => {
+    // Guard against a vacuous pass: if the value were self-redacting the crumb
+    // would be clean for the wrong reason.
+    expect(scrubString(value)).toBe(value);
+    expect(crumbWith(key, value)[key]).toBe('[Filtered]');
+  });
+
+  it('still filters a nested sensitive key under an innocuous crumb key', () => {
+    expect(crumbWith('response', { token: 'a1b2c3d4e5' }).response.token).toBe('[Filtered]');
+  });
+
+  it('leaves an ordinary crumb key alone', () => {
+    expect(crumbWith('status_code', 500).status_code).toBe(500);
+  });
+});
+
+describe('scrubValue — the fleet key contract', () => {
+  it.each([
+    ['signature', 'd34db33f'],
+    ['x-ci-hub-signature', 'd34db33f'],
+  ])('filters the credential key %s', (key, value) => {
+    expect(scrubString(value)).toBe(value);
+    expect(scrubValue({ [key]: value })[key]).toBe('[Filtered]');
+  });
+
+  it.each([
+    ['x-ci-hub-user', 'liam'],
+    ['user', 'liam'],
+    ['hub_user', 'liam'],
+    ['owner', 'liam'],
+    ['account_owner', 'liam'],
+    ['username', 'liam'],
+    ['email', 'liam@example.com'],
+    ['x-forwarded-for', '192.168.0.5'],
+    ['x-forwarded-user', 'liam'],
+    ['remote-addr', '192.168.0.5'],
+  ])('filters the identity key %s — a name is a word, so no value rule can catch it', (key, value) => {
+    expect(scrubString(value)).toBe(value);
+    expect(scrubValue({ [key]: value })[key]).toBe('[Filtered]');
+  });
+
+  it.each([
+    ['user-agent', 'Mozilla/5.0'],
+    ['user_id', 'u-7'],
+    ['userId', 'u-7'],
+    ['owner_id', 'o-3'],
+  ])('keeps the diagnostic key %s — the identity rules are anchored on purpose', (key, value) => {
+    expect(scrubValue({ [key]: value })[key]).toBe(value);
+  });
+
+  it('filters identity keys inside breadcrumb data too', () => {
+    const scrubbed = scrubBrowserEvent({
+      message: 'boom',
+      breadcrumbs: [{ category: 'fetch', data: { url: '/a', username: 'liam', status_code: 401 } }],
+    });
+
+    expect(scrubbed.breadcrumbs[0].data.username).toBe('[Filtered]');
+    expect(scrubbed.breadcrumbs[0].data.status_code).toBe(401);
+  });
+
+  it('filters the signature header the Hub forward-auth injects', () => {
+    const scrubbed = scrubBrowserEvent({
+      message: 'boom',
+      request: {
+        headers: {
+          'X-CI-Hub-User': 'liam',
+          'X-CI-Hub-Signature': 'd34db33f',
+          'X-CI-Hub-Timestamp': '1754179200',
+          'User-Agent': 'Mozilla/5.0',
+        },
+      },
+    });
+
+    expect(scrubbed.request.headers['X-CI-Hub-User']).toBe('[Filtered]');
+    expect(scrubbed.request.headers['X-CI-Hub-Signature']).toBe('[Filtered]');
+    expect(scrubbed.request.headers['User-Agent']).toBe('Mozilla/5.0');
+  });
+});
+
 describe('initTelemetry — the runtime gate', () => {
   /**
    * The module reads its DSN at import time (deliberately: that is what makes

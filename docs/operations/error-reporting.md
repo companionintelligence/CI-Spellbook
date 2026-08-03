@@ -88,12 +88,22 @@ assert that automatically across repos.
   macOS one, or `/Users/<name>` matches inside `C:/Users/<name>` and leaves a
   stranded `C:~/…`
 - Object and header keys matching
-  `password|secret|token|authorization|cookie|jwt|api[-_ ]?key|dsn|pepper|private_key|hub[-_]user`
+  `password|secret|token|authorization|cookie|jwt|api[-_ ]?key|dsn|pepper|private_key|signature`
   → `[Filtered]`. The hyphenated form matters: `x-api-key` is a real header
   name, and the SDK ships request headers even with PII disabled — resolving
   `sendDefaultPii: false` gives an IP-oriented deny list applied to *span
   attributes*, not to `event.request.headers`. The regex is the only guard
   there is
+- Object and header keys matching the anchored identity set
+  `(?:^|[-_])user$|(?:^|[-_])owner$|username|email|forwarded|^remote-` →
+  `[Filtered]`. These name a *person* rather than carrying a credential, so no
+  value-level rule can ever catch them — a username is just a word. Behind
+  CI-Hub's Traefik forward-auth the proxy injects `X-CI-Hub-User`,
+  `-Timestamp` and `-Signature` on every authenticated request, and the SDK
+  captures the headers that *arrived*, so they reach the event with no
+  reference in our code at all. Anchored on purpose: `user-agent`, `user_id`
+  and `owner_id` are diagnostics worth keeping, and a naive `/user|owner/`
+  would eat all three
 - Request cookies and body dropped; **query strings removed from
   `request.query_string`, from `request.url`, and from the
   `referer`/`referrer`/`location` headers**. `httpContextIntegration` fills
@@ -102,8 +112,10 @@ assert that automatically across repos.
 - **Breadcrumbs**, which are the biggest leak surface in a browser: the default
   `breadcrumbsIntegration` records fetch/xhr crumbs carrying `data.url` **with
   the query string**, and console crumbs carrying the joined `message` plus the
-  raw `data.arguments`. Every crumb's `message` and every `data` value is
-  scrubbed, with `url`/`from`/`to` treated as URLs
+  raw `data.arguments`. Every crumb's `message` is scrubbed and the whole `data`
+  **object** goes through the value walk — not each value in turn, or the crumb's
+  own keys are never key-checked and a bare `data.token` ships intact — with
+  `url`/`from`/`to` then treated as URLs
 - Stack frame `vars` (captured locals) dropped, and home directories collapsed
   in `filename` / `abs_path`. Paths are **only** home-collapsed and never
   redacted further — Sentry groups issues on `filename`, so redacting the body
