@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@sentry/react": "^10.69.0",
     "@tailwindcss/vite": "^4.1.7",
     "classnames": "^2.3.2",
     "highlight.js": "^11.9.0",
@@ -18,7 +19,9 @@
   "devDependencies": {
     "@playwright/test": "^1.58.1",
     "@vitejs/plugin-react": "^4.0.3",
-    "vite": "^5.4.19"
+    "jsdom": "^30.0.1",
+    "vite": "^5.4.19",
+    "vitest": "^4.1.10"
   },
   "scripts": {
     "dev": "vite",
@@ -27,6 +30,9 @@
     "build-css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
     "serve": "python3 -m http.server 8080",
     "test": "playwright test",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "assert:no-sentry-without-dsn": "node scripts/assert-bundle-without-dsn.mjs",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report"

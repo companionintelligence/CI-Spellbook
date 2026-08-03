@@ -33,10 +33,20 @@ docker run -d -p 5500:5500 ci-spellbook
 ## Tests
 
 ```bash
+npm run test:unit                    # vitest unit tests (telemetry gate + scrubber)
 npx playwright test                  # smoke tests (starts the dev server itself)
 APP_URL=http://localhost:5500 \
   npx playwright test --config=tests/container/playwright.config.ts   # against a running container
 ```
+
+## Error reporting
+
+Crash reporting is **opt-in and off by default**. With no `VITE_SENTRY_DSN` set
+at build time the Sentry SDK is tree-shaken out of the bundle entirely, so the
+app cannot phone home. When a DSN *is* baked in, `CI_TELEMETRY=off` or
+`CI_LOCAL_ONLY=true` on the container still turn it off without a rebuild.
+
+See [`docs/operations/error-reporting.md`](docs/operations/error-reporting.md).
 
 ## Content
 

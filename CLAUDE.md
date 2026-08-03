@@ -17,7 +17,7 @@ Vite + React card-driven markdown explorer — a front-end for browsing and inte
 ## Stack
 
 - Vite + React
-- Playwright (e2e)
+- Playwright (e2e), Vitest (units)
 - npm
 
 ## Key commands
@@ -30,11 +30,19 @@ npm install
 npm run dev
 
 # Run tests
-npm test
+npm run test:unit   # vitest units
+npm test            # Playwright smoke
 
 # Build for production
 npm run build
 ```
+
+## Error reporting
+
+Opt-in Sentry, off by default; the SDK is tree-shaken out of a DSN-less build.
+Do not change the module-scope `const DSN = import.meta.env.VITE_SENTRY_DSN` in
+`src/lib/telemetry.js` — `npm run assert:no-sentry-without-dsn` (and CI) will
+fail if you do. See `docs/operations/error-reporting.md`.
 
 ## Package manager
 

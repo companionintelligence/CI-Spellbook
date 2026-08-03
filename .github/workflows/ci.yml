@@ -12,12 +12,26 @@ jobs:
     name: Test
     steps:
       - uses: actions/checkout@v4
+      # 22, matching the Dockerfile's node:22-bookworm-slim — CI was pinned to
+      # Node 20, which is EOL and which no longer satisfies jsdom's engines, so
+      # it was testing a runtime nothing ships on.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit
+      # Error reporting is opt-in: with no VITE_SENTRY_DSN the Sentry SDK must
+      # be tree-shaken out of the bundle entirely, not merely inert. That holds
+      # only while src/lib/telemetry.js keeps its module-scope
+      # `const DSN = import.meta.env.VITE_SENTRY_DSN` shape (no optional
+      # chaining), which is one innocent-looking refactor away from breaking —
+      # and under rolldown it would break silently. See
+      # docs/operations/error-reporting.md.
+      - name: Assert no Sentry code in a DSN-less bundle
+        run: npm run assert:no-sentry-without-dsn
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run tests
@@ -34,7 +48,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - name: Install dependencies
         run: npm ci
