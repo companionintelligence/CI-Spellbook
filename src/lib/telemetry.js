@@ -84,10 +84,25 @@ const HOME_PATH_PATTERNS = [
 ];
 
 // `api[-_ ]?key` rather than `apikey|api_key`, so `x-api-key` matches too.
-// `hub[-_]user` catches CI-Hub's `X-CI-Hub-User`, which carries the household
-// username.
 const SENSITIVE_KEY_PATTERN =
-  /password|secret|token|authorization|cookie|jwt|api[-_ ]?key|dsn|pepper|private[-_]?key|hub[-_]user/i;
+  /password|secret|token|authorization|cookie|jwt|api[-_ ]?key|dsn|pepper|private[-_]?key|signature/i;
+
+// Keys that name a PERSON rather than carrying a credential. No value pattern
+// can ever match these — a username is just a word — so the key is the only
+// signal, the same reason we drop `server_name`. This matters behind CI-Hub's
+// Traefik forward-auth: the SDK captures headers that ARRIVED, so a
+// proxy-injected `x-ci-hub-user` reaches the event with no reference in our
+// code at all. (`x-ci-hub-user` used to be covered by a `hub[-_]user` alternate
+// here; `(?:^|[-_])user$` subsumes it and generalises to the rest of the fleet.)
+//
+// Anchored on purpose: `user-agent`, `user_id` and `owner_id` are diagnostic
+// signal worth keeping, and a naive /user|owner/ would eat all three.
+const IDENTITY_KEY_PATTERN = /(?:^|[-_])user$|(?:^|[-_])owner$|username|email|forwarded|^remote-/i;
+
+/** Single predicate so credential and identity coverage cannot diverge. */
+function isSensitiveKey(key) {
+  return SENSITIVE_KEY_PATTERN.test(key) || IDENTITY_KEY_PATTERN.test(key);
+}
 
 const MAX_STRING_LENGTH = 8000;
 
@@ -128,7 +143,7 @@ export function scrubValue(value, depth = 0) {
     const result = {};
 
     for (const [key, nested] of Object.entries(value)) {
-      result[key] = SENSITIVE_KEY_PATTERN.test(key) ? '[Filtered]' : scrubValue(nested, depth + 1);
+      result[key] = isSensitiveKey(key) ? '[Filtered]' : scrubValue(nested, depth + 1);
     }
 
     return result;
@@ -161,13 +176,21 @@ function scrubBreadcrumb(breadcrumb) {
     return;
   }
 
-  for (const [key, value] of Object.entries(breadcrumb.data)) {
+  // The WHOLE `data` object goes through `scrubValue`, not each value in turn:
+  // `scrubValue` only consults `isSensitiveKey` while walking an object's own
+  // entries, so handing it the values one at a time never checks the crumb's
+  // own keys and a bare `data.token` ships intact. (The value alone matches no
+  // secret pattern — `authorization` was the one key that looked fine, because
+  // `Bearer …` is caught by the value rules whatever the walk does.)
+  const data = scrubValue(breadcrumb.data);
+
+  for (const [key, value] of Object.entries(data)) {
     if (typeof value === 'string' && URL_VALUED_KEYS.has(key)) {
-      breadcrumb.data[key] = scrubUrl(scrubString(value));
-    } else {
-      breadcrumb.data[key] = scrubValue(value);
+      data[key] = scrubUrl(value);
     }
   }
+
+  breadcrumb.data = data;
 }
 
 export function scrubBrowserEvent(event) {
