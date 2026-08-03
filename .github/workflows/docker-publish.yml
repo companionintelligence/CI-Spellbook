@@ -55,17 +55,42 @@ jobs:
           fi
           echo "tags=${tags}" >> "$GITHUB_OUTPUT"
 
+      # Advisory only — a missing secret must never fail the publish. Without it
+      # the build arg below expands to empty, the Dockerfile ARG default wins,
+      # and we ship the same DSN-less bundle we always did (SDK tree-shaken out).
+      - name: Check Sentry DSN availability
+        shell: bash
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          if [ -z "${SENTRY_DSN}" ]; then
+            echo "::notice::SENTRY_DSN secret is not set — publishing a bundle with no DSN compiled in. The Sentry SDK is tree-shaken out entirely and the image cannot report."
+          else
+            echo "SENTRY_DSN is set — baking it into the published bundle."
+          fi
+
+      # Built WITH the DSN so the screenshot gate exercises the bundle that
+      # actually ships: a configured build keeps the ~88 kB SDK and takes the
+      # Sentry.init path, neither of which a DSN-less build has.
       - name: Build image (load for testing)
         uses: docker/build-push-action@v6
         with:
           context: .
           load: true
           tags: ${{ steps.meta.outputs.sha_tag }}
+          build-args: |
+            VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+            VITE_SENTRY_RELEASE=ci-spellbook@${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Start container
-        run: docker run -d --name app -p 8080:${INTERNAL_PORT} ${{ steps.meta.outputs.sha_tag }}
+        # CI_TELEMETRY=off because the bundle now has a real DSN baked in and this
+        # is a throwaway CI container: without it every screenshot run would file
+        # its errors into the production Sentry project. 40-telemetry-config.sh
+        # resolves this into /api/config/telemetry, which the bundle consults
+        # before initialising — that is how a build-time DSN stays switchable.
+        run: docker run -d --name app -e CI_TELEMETRY=off -p 8080:${INTERNAL_PORT} ${{ steps.meta.outputs.sha_tag }}
 
       - name: Wait for HTTP
         run: |
@@ -117,5 +142,12 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
+          # This app is browser-only: nginx serves a static bundle and there is no
+          # server process, so there is no runtime SENTRY_DSN to read. Vite inlines
+          # import.meta.env.* at build time, which makes this the only moment a DSN
+          # can enter the artifact at all.
+          build-args: |
+            VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+            VITE_SENTRY_RELEASE=ci-spellbook@${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
