@@ -143,10 +143,13 @@ is treated exactly like a "no", so those deployments report nothing. Reporting
 "because we could not ask" would mean sending crashes an operator has no way to
 switch off, which is worse than the default being wrong in one direction.
 
-In practice the Cloudflare Pages deploy is also built without a DSN, so today it
-has no Sentry code in it either way and the distinction is theoretical. If that
-ever changes, the Pages build needs a Function at `/api/config/telemetry` before
-it may carry a DSN — otherwise it would ship an unswitchable reporter.
+The Cloudflare Pages deploy is still built without a DSN, so it has no Sentry
+code in it either way and the distinction remains theoretical. Note that wiring
+the DSN into `docker-publish.yml` did **not** change this: Pages builds are run
+by the Cloudflare GitHub App from the dashboard, not by any workflow in this
+repo, so the GHCR image and the Pages deploy are now deliberately different in
+this one respect. Before the Pages build may carry a DSN it needs a Function at
+`/api/config/telemetry` — otherwise it would ship an unswitchable reporter.
 
 The shell script and the Vite middleware are two implementations of one rule.
 `src/lib/telemetryConsentEndpoint.test.js` runs both over the same env matrix
@@ -250,15 +253,12 @@ set, there is no request at all.
 
 ## Not wired up yet
 
-- **The `ci-spellbook` Sentry project does not exist**, and no DSN is set
-  anywhere. Until an owner creates it and the publish workflow passes
-  `--build-arg VITE_SENTRY_DSN`, the shipped image contains no Sentry code at
-  all — so the opt-out default has nothing to act on yet. This is unconfigured,
-  not a privacy choice; wiring the DSN into `docker-publish.yml` is what turns
-  the documented posture into the shipped one.
-- **Source map upload.** `docker-publish.yml` does not run
-  `sentry sourcemaps upload`, so browser stack traces would be minified.
-  CI-Hub's `desktop-release.yml` has the pattern to copy.
+- **Source map upload.** `docker-publish.yml` now passes
+  `--build-arg VITE_SENTRY_DSN` from the repository `SENTRY_DSN` secret, so the
+  GHCR image finally carries a DSN and the opt-out default has something to act
+  on. It still does not run `sentry sourcemaps upload`, so browser stack traces
+  arrive minified. CI-Hub's `desktop-release.yml` has the pattern to copy; it
+  needs a `SENTRY_AUTH_TOKEN` secret, which this repo does not have yet.
 - **Cloudflare Pages consent.** See the table above: the Pages deploy has no
   endpoint, so it must stay DSN-less until it grows a Function. This is the one
   place the opt-out default does not reach, and it is the reason it must stay
