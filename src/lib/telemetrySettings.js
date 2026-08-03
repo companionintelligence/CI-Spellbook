@@ -1,9 +1,15 @@
 /**
  * Telemetry (Sentry) gate resolution for CI-Spellbook.
  *
- * Error reporting is **opt-in and off by default**: with no `VITE_SENTRY_DSN`
- * baked in at build time, no Sentry code initialises, no network call is ever
- * made, and the SDK is tree-shaken out of the bundle entirely.
+ * Error reporting is **opt-out**: a build configured with a `VITE_SENTRY_DSN`
+ * reports by default, and the user turns it off with the app-store "Share crash
+ * reports" toggle (`CI_TELEMETRY`) or `CI_LOCAL_ONLY`.
+ *
+ * With no `VITE_SENTRY_DSN` baked in at build time, no Sentry code initialises,
+ * no network call is ever made, and the SDK is tree-shaken out of the bundle
+ * entirely. That is the absence of configuration — a source checkout or a local
+ * `npm run dev` — not a privacy setting, which is why `resolveTelemetryState`
+ * below still requires a DSN before it will report.
  *
  * Spellbook is a *static* bundle — nginx (or Cloudflare Pages) serves files and
  * nothing else, so there is no server process that could read `CI_TELEMETRY` on

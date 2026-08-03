@@ -39,7 +39,8 @@ npm run build
 
 ## Error reporting
 
-Opt-in Sentry, off by default; the SDK is tree-shaken out of a DSN-less build.
+Opt-out Sentry: on by default once a DSN is baked in, off via `CI_TELEMETRY=off`
+/ `CI_LOCAL_ONLY=true`. A DSN-less build has the SDK tree-shaken out entirely.
 Do not change the module-scope `const DSN = import.meta.env.VITE_SENTRY_DSN` in
 `src/lib/telemetry.js` — `npm run assert:no-sentry-without-dsn` (and CI) will
 fail if you do. See `docs/operations/error-reporting.md`.

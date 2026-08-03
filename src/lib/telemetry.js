@@ -1,10 +1,12 @@
 /**
  * Browser error reporting for CI-Spellbook.
  *
- * Opt-in and off by default: without `VITE_SENTRY_DSN` baked in at build time
- * nothing initialises, the bundle makes no request to Sentry, and the SDK is
- * tree-shaken out of the build entirely. `initTelemetry` is safe to call more
- * than once and safe to call when reporting is disabled.
+ * Opt-out: a build with `VITE_SENTRY_DSN` baked in reports by default, until
+ * `CI_TELEMETRY=off` or `CI_LOCAL_ONLY=true` on whatever serves the bundle says
+ * otherwise. Without a DSN nothing initialises, the bundle makes no request to
+ * Sentry, and the SDK is tree-shaken out of the build entirely — that is an
+ * unconfigured build, not an opted-out one. `initTelemetry` is safe to call
+ * more than once and safe to call when reporting is disabled.
  *
  * Nothing user-identifying is sent — `sendDefaultPii` is off, there is no
  * session replay and no tracing, and every payload goes through `beforeSend`

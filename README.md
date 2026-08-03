@@ -41,10 +41,16 @@ APP_URL=http://localhost:5500 \
 
 ## Error reporting
 
-Crash reporting is **opt-in and off by default**. With no `VITE_SENTRY_DSN` set
-at build time the Sentry SDK is tree-shaken out of the bundle entirely, so the
-app cannot phone home. When a DSN *is* baked in, `CI_TELEMETRY=off` or
-`CI_LOCAL_ONLY=true` on the container still turn it off without a rebuild.
+Crash reporting is **opt-out**: on a build configured with a DSN it is **on by
+default**, and `CI_TELEMETRY=off` or `CI_LOCAL_ONLY=true` on the container turn
+it off without a rebuild (the app-store **Share crash reports** toggle sets the
+former). With no `VITE_SENTRY_DSN` set at build time — a source checkout, `npm
+run dev`, or any unconfigured build — the Sentry SDK is tree-shaken out of the
+bundle entirely, so there is nothing to switch off and the app cannot phone
+home.
+
+Spellbook serves no API of its own, so on a bare static host (Cloudflare Pages,
+`npm run serve`) the consent check 404s and reporting stays off regardless.
 
 See [`docs/operations/error-reporting.md`](docs/operations/error-reporting.md).
 
