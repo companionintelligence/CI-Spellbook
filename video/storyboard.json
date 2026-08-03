@@ -86,7 +86,7 @@
       "chapter": "read",
       "seconds": 7.5,
       "caption": "Click a card. It flips to rendered markdown.",
-      "narration": "Click one and it flips. The back is a markdown file from this repo, rendered in place.",
+      "narration": "Click one and it flips. The back is a markdown file that ships inside the app.",
       "shots": [
         {
           "id": "card-ai-agents-open",
@@ -188,9 +188,9 @@
       "id": "close",
       "kind": "outro",
       "seconds": 5,
-      "cta": "Own your AI.",
+      "cta": "UnCloud your life.",
       "url": "ci.computer",
-      "narration": "Spellbook, from Companion Intelligence. Own your AI."
+      "narration": "Spellbook, from Companion Intelligence. UnCloud your life."
     }
   ]
 }

@@ -30,6 +30,11 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com
+          # Without `scope`, setup-node writes a BARE
+          # `registry=https://npm.pkg.github.com/` into ~/.npmrc and every
+          # package — playwright, vite, react — resolves there and 404s. With
+          # it, only @companionintelligence/* (the private video-kit) does.
+          scope: "@companionintelligence"
 
       - name: Install video project
         working-directory: video
@@ -48,14 +53,9 @@ jobs:
       # that webServer. Boot the exact same command here rather than invent a
       # second way to stand the app up; reuseExistingServer means the repo's own
       # e2e suite attaches to this server instead of racing it on port 5500.
-      #
-      # --registry is deliberate: setup-node's `registry-url` above (needed for
-      # the private @companionintelligence video-kit package) writes a BARE
-      # `registry=https://npm.pkg.github.com/` into ~/.npmrc, which would
-      # otherwise send react/vite/tailwind there and 404.
       - name: Start app
         run: |
-          npm ci --registry=https://registry.npmjs.org
+          npm ci
           npm run dev > /tmp/spellbook-dev.log 2>&1 &
           for _ in $(seq 1 60); do
             curl -sfo /dev/null http://localhost:5500 && break
