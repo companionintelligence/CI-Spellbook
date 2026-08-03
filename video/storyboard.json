@@ -1,0 +1,196 @@
+{
+  "$schema": "https://raw.githubusercontent.com/companionintelligence/CI-Common/main/packages/video-kit/schema/storyboard.schema.json",
+  "app": {
+    "id": "ci-spellbook",
+    "name": "Spellbook",
+    "repo": "companionintelligence/CI-Spellbook",
+    "marketplaceId": "ci-spellbook",
+    "website": "ci.computer"
+  },
+  "meta": { "fps": 30, "transitionSeconds": 0.5 },
+  "chapters": {
+    "first-run": "First run",
+    "read": "Read a card",
+    "search": "Search"
+  },
+  "media": { "music": null, "musicVolume": 0.14 },
+  "scenes": [
+    {
+      "id": "open",
+      "kind": "intro",
+      "seconds": 4.5,
+      "title": "Spellbook",
+      "caption": "A shelf of tools, rendered from markdown.",
+      "narration": "This is Spellbook, from Companion Intelligence."
+    },
+    {
+      "id": "first-run",
+      "kind": "screen",
+      "chapter": "first-run",
+      "seconds": 7,
+      "caption": "No login, no setup. Sixteen cards on first load.",
+      "narration": "Open it and it's already full. Sixteen cards, one per category. No account, no setup.",
+      "shots": [
+        {
+          "id": "library-first-run",
+          "url": "spellbook.local",
+          "alt": "The Spellbook shelf on first load: logo, search bar, and the grid of category cards.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 600,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "browse-shelf",
+      "kind": "screen",
+      "chapter": "first-run",
+      "seconds": 5,
+      "caption": "Scroll the shelf. Every card is a curated list.",
+      "narration": "Scroll down and the rest of the shelf is there.",
+      "shots": [
+        {
+          "id": "library-scrolled",
+          "url": "spellbook.local",
+          "alt": "Further down the Spellbook shelf, showing later rows of category cards.",
+          "motion": "drift-down",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 600,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "scroll": 900 }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "open-card",
+      "kind": "screen",
+      "chapter": "read",
+      "seconds": 7.5,
+      "caption": "Click a card. It flips to rendered markdown.",
+      "narration": "Click one and it flips. The back is a markdown file that ships inside the app.",
+      "shots": [
+        {
+          "id": "card-ai-agents-open",
+          "url": "spellbook.local",
+          "alt": "The AI Agents card expanded and flipped, showing its rendered markdown contents.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 1200,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "click": ".group:has(#card-ai-agents) .card-front" },
+              { "waitFor": ".group.expanded .markdown-body" }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "search-hits",
+      "kind": "screen",
+      "chapter": "search",
+      "seconds": 6.5,
+      "caption": "Type a term. Matching lines come back highlighted.",
+      "narration": "Search runs locally over every card. Matching lines come back highlighted, in context.",
+      "shots": [
+        {
+          "id": "search-ollama",
+          "url": "spellbook.local",
+          "alt": "Searching for ollama: the shelf filters to matching cards, each showing a highlighted snippet.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 600,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "fill": ["input[placeholder='Search the Spellbook...']", "ollama"] },
+              { "waitFor": ".group.search-result .search-snippet-body mark" }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "search-empty",
+      "kind": "screen",
+      "chapter": "search",
+      "seconds": 5,
+      "caption": "No match? It says so, and suggests a broader term.",
+      "narration": "When nothing matches, it says so, and suggests a broader term.",
+      "shots": [
+        {
+          "id": "search-no-results",
+          "url": "spellbook.local",
+          "alt": "A search with no matches, showing the No results panel in place of the card grid.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 500,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "fill": ["input[placeholder='Search the Spellbook...']", "zzzzqqqq"] },
+              { "waitFor": "#cards-container .max-w-3xl" }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "feature",
+      "seconds": 6,
+      "title": "What Spellbook is",
+      "caption": "A static build. The whole catalog ships inside it.",
+      "narration": "It's a static build. The catalog ships inside it, so it works offline.",
+      "items": [
+        { "label": "Cards", "value": "16" },
+        { "label": "Search", "value": "In-browser" },
+        { "label": "Backend", "value": "None" },
+        { "label": "Source", "value": "Markdown" }
+      ]
+    },
+    {
+      "id": "close",
+      "kind": "outro",
+      "seconds": 5,
+      "cta": "UnCloud your life.",
+      "url": "ci.computer",
+      "narration": "Spellbook, from Companion Intelligence. UnCloud your life."
+    }
+  ]
+}
