@@ -28,8 +28,8 @@
       "kind": "screen",
       "chapter": "first-run",
       "seconds": 7,
-      "caption": "No login, no setup. Sixteen cards on first load.",
-      "narration": "Open it and it's already full. Sixteen cards, one per category. No account, no setup.",
+      "caption": "No login, no setup. The shelf is already full.",
+      "narration": "Open it and it's already full. No account, no setup, nothing to configure.",
       "shots": [
         {
           "id": "library-first-run",
@@ -44,6 +44,12 @@
             "before": [
               {
                 "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "var n = document.querySelectorAll('#cards-container .group').length; if (n !== 16) throw new Error('stale stage: expected 16 cards, got ' + n);"
+              },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -73,7 +79,68 @@
               {
                 "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              },
               { "scroll": 900 }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "shelf-breadth",
+      "kind": "screen",
+      "chapter": "first-run",
+      "seconds": 7,
+      "caption": "The shelf runs past AI tooling into self-hosting and hardware.",
+      "narration": "Past the AI tooling it keeps going. Self-hosting, home servers, hardware you own.",
+      "shots": [
+        {
+          "id": "shelf-self-hosting",
+          "url": "spellbook.local",
+          "alt": "The bottom of the Spellbook shelf: Browsers and Automation, Security and Privacy, and Self-Hosting and Smart Home cards.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 600,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              },
+              {
+                "eval": "document.querySelector('#card-home-automation').closest('.group').scrollIntoView({ block: 'start' });"
+              }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        },
+        {
+          "id": "shelf-hardware",
+          "url": "spellbook.local",
+          "alt": "The last card on the Spellbook shelf: Hardware, STEM and Edge Labs.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 600,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              },
+              {
+                "eval": "document.querySelector('#card-maker-hardware').closest('.group').scrollIntoView({ block: 'start' });"
+              }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
           }
@@ -103,7 +170,81 @@
                 "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               { "click": ".group:has(#card-ai-agents) .card-front" },
-              { "waitFor": ".group.expanded .markdown-body" }
+              { "waitFor": ".group.expanded .markdown-body" },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "card-depth",
+      "kind": "screen",
+      "chapter": "read",
+      "seconds": 6,
+      "caption": "Deeper in the card: every tool named, described, linked.",
+      "narration": "Every tool gets a row. What it does, and a link straight to it.",
+      "shots": [
+        {
+          "id": "card-ai-agents-deep",
+          "url": "spellbook.local",
+          "alt": "Further down the expanded AI Agents card, at the RAG and Knowledge section: a table of tools with descriptions, platforms and links.",
+          "motion": "drift-down",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 1200,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "click": ".group:has(#card-ai-agents) .card-front" },
+              { "waitFor": ".group.expanded .markdown-body" },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              },
+              { "wait": 400 },
+              {
+                "eval": "document.querySelectorAll('.group.expanded .markdown-body h2')[3].scrollIntoView({ block: 'start' });"
+              }
+            ],
+            "mask": ["aside[aria-label='Debug panel']"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "card-second-category",
+      "kind": "screen",
+      "chapter": "read",
+      "seconds": 7,
+      "caption": "Every card is built the same way. This one is MCP.",
+      "narration": "The MCP catalog reads the same way. Every connector named, described, and linked.",
+      "shots": [
+        {
+          "id": "card-mcp-servers-open",
+          "url": "spellbook.local",
+          "alt": "The MCP Servers and Connectors card expanded, showing the Registries and Catalogs table of linked MCP servers.",
+          "motion": "push-in",
+          "capture": {
+            "path": "/",
+            "waitFor": "[id^='card-']",
+            "waitUntil": "networkidle",
+            "settle": 1200,
+            "before": [
+              {
+                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              { "click": ".group:has(#card-mcp-servers) .card-front" },
+              { "waitFor": ".group.expanded #card-mcp-servers .markdown-body" },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+              },
+              { "wait": 400 }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
           }
@@ -131,6 +272,9 @@
             "before": [
               {
                 "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
               },
               { "fill": ["input[placeholder='Search the Spellbook...']", "ollama"] },
               { "waitFor": ".group.search-result .search-snippet-body mark" }
@@ -161,6 +305,9 @@
             "before": [
               {
                 "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
               },
               { "fill": ["input[placeholder='Search the Spellbook...']", "zzzzqqqq"] },
               { "waitFor": "#cards-container .max-w-3xl" }

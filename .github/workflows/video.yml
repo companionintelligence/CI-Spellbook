@@ -36,6 +36,34 @@ jobs:
           # it, only @companionintelligence/* (the private video-kit) does.
           scope: "@companionintelligence"
 
+      # ⚠️ THIS STEP IS THE REASON NO CAPTURE HAS EVER RUN IN THIS REPO.
+      #
+      # Run 30868089948 died here after 13s:
+      #   npm error code E403
+      #   npm error 403 Forbidden - GET
+      #     https://npm.pkg.github.com/@companionintelligence%2fvideo-kit
+      #     - Permission permission_denied: read_package
+      #
+      # @companionintelligence/video-kit (org package id 14206518) is private and
+      # LINKED TO REPOSITORY CI-Common. A private GitHub Packages npm package
+      # denies the calling repo's GITHUB_TOKEN unless that repo is explicitly
+      # granted access, whatever the token's scope. This is NOT a workflow-
+      # permissions problem: /actions/permissions/workflow already returns
+      # default_workflow_permissions: "write".
+      #
+      # THE FIX (one action, unblocks all 12 product repos at once) —
+      #   https://github.com/orgs/companionintelligence/packages/npm/package/video-kit
+      #   -> Package settings -> Manage Actions access -> Add repository
+      #   -> companionintelligence/CI-Spellbook, role: Read
+      # Package-access changes of this class are web-UI only; `gh api PATCH`
+      # 404s, so do not try to script it.
+      #
+      # A PAT fallback exists (repo secret with read:packages, swapped in for
+      # NODE_AUTH_TOKEN below) but is deliberately NOT wired up here: no such
+      # secret exists on this repo today — `gh secret list` shows only
+      # SENTRY_DSN — and referencing a missing secret would resolve to an empty
+      # string and fail with the same 403, one step later and less legibly.
+      # Grant the package access instead.
       - name: Install video project
         working-directory: video
         run: npm install
@@ -112,5 +140,14 @@ jobs:
 
             Review the image diff, update `video/storyboard.json` captions if a screen's meaning
             changed, then merge to re-render the product video from the current UI.
+
+            **Read this before calling the FIRST such PR "drift".** The shots committed today
+            were taken against a stale 13-card build (`library-first-run.png` shows
+            *Local AI Apps & Model Managers* as the third card; current source renders
+            *MCP Servers & Connectors* there). The first PR this job opens will therefore
+            rewrite every PNG, and that diff is two one-time corrections stacked together —
+            the wrong-build fix, plus the ubuntu-latest font baseline described in
+            `video/capture.config.mjs` hazard 6. It is a content correction, not drift.
+            Subsequent PRs are real drift and should be read as such.
           add-paths: video/assets/shots
           commit-message: "chore(video): refresh product-video captures"
