@@ -42,9 +42,22 @@
  *    expanded body (src/styles.css:367). The kit's FREEZE_CSS zeroes both and
  *    `page.screenshot({ animations: "disabled" })` finishes them, but Card.jsx
  *    also calls `scrollIntoView({ behavior: "smooth" })` on a 100ms setTimeout
- *    (Card.jsx:30) — a real timer that no CSS override touches. The
- *    `card-ai-agents-open` shot therefore settles for 1200ms so the scroll has
- *    landed before the shutter.
+ *    (Card.jsx:30-35) — a real timer that no CSS override touches. An explicit
+ *    `behavior: "smooth"` argument beats FREEZE_CSS's `scroll-behavior: auto`,
+ *    and Playwright's `reducedMotion: "reduce"` does not veto it either.
+ *
+ *    Measured, it does NOT mis-frame the deep shot: a later instant
+ *    `scrollIntoView` aborts the in-flight smooth scroll (CSSOM-View: a scroll
+ *    on a scrolling box cancels any ongoing smooth scroll of that box), so
+ *    `card-ai-agents-deep` lands on the RAG heading either way. What it DOES
+ *    cost is byte-determinism: over six runs at 1280x720 the smooth scroll was
+ *    still unwinding when the instant one fired and nudged the final position
+ *    by 2-3px, which is a dirty PNG diff on a UI nobody touched.
+ *
+ *    So the three clicking shots monkey-patch `Element.prototype.scrollIntoView`
+ *    to force `behavior: "instant"` BEFORE the click that triggers it. Same
+ *    resting frame, reached in one paint: measured drift is then exactly 0px at
+ *    both viewports. The generous settles (1200ms) stay as belt-and-braces.
  *
  * 4. HOVER-STATE BLEED — `.group:not(.expanded):hover` lifts a card 4px
  *    (styles.css:386) and Card.jsx:134 fades in a bright `hoverColor` overlay
@@ -61,14 +74,36 @@
  *    version of `shelf-self-hosting` came back with the leftmost card lit in its
  *    hover colour, at both viewports.
  *
- *    The rule that actually holds: every shot ends its `before` list with
- *      { eval: "...<style>#cards-container{pointer-events:none!important}</style>..." }
- *    An element with `pointer-events: none` is not a hit-test target, so `:hover`
- *    cannot match it no matter where the mouse is. That makes every shot
- *    order-independent, and it photographs the resting state a user sees when
- *    they are not pointing at a card — not a synthetic one. On the three shots
- *    that click, the step goes AFTER the click (a card with pointer-events:none
- *    cannot be clicked). `fill` and `scroll` never move the mouse.
+ *    The rule that actually holds — stated precisely, because the earlier
+ *    wording here ("every shot ENDS its `before` list with it") was never what
+ *    the storyboard implemented and a contributor following it literally would
+ *    reorder eight of the nine shots. Every shot contains
+ *      { eval: "() => { ...<style>#cards-container{pointer-events:none!important}</style>... }" }
+ *    and it must sit BEFORE the first step that changes what is under the mouse
+ *    — i.e. before any `scroll` / `scrollIntoView` / `fill` — and AFTER any
+ *    `click` (a card with pointer-events:none cannot be clicked). Steps that
+ *    only reframe or type may follow it; it is a precedence rule, not a
+ *    last-line rule. An element with `pointer-events: none` is not a hit-test
+ *    target, so `:hover` cannot match it no matter where the mouse is. That
+ *    makes every shot order-independent, and it photographs the resting state a
+ *    user sees when they are not pointing at a card — not a synthetic one.
+ *
+ *    Verified rather than assumed: driving all nine shots through the real
+ *    0.1.2 capture loop at both viewports, `document.querySelectorAll('.group')`
+ *    matching `:hover` was 0 in all 18 frames.
+ *
+ * 4b. EVERY `eval` MUST BE AN ARROW FUNCTION, never a bare statement.
+ *    video-kit 0.1.2 stopped passing the source to `page.evaluate` verbatim and
+ *    now wraps it (capture.mjs `evalSource`):
+ *      (async () => { const __r = (<src>); if (typeof __r === "function") await __r(); })()
+ *    Two consequences bit every shot in this file:
+ *      - a statement — `foo();` or `var n = ...; if (...) throw ...` — is not a
+ *        valid parenthesised expression, so the whole shot dies with
+ *        "SyntaxError: Unexpected token ';'" / "Unexpected token 'var'";
+ *      - a bare `new Promise(...)` parses, but a Promise is not a function, so
+ *        the wrapper never awaits it and the step becomes a silent no-op.
+ *    `() => { ... }` and `() => new Promise(...)` are correct under the wrapper
+ *    in both cases: the value IS a function, so it is called and awaited.
  *
  * 5. THE DEBUG PANEL is the only surface in the app carrying wall-clock
  *    timestamps, live FPS and JS heap size (`useDebugPanel.js` — FPS on a rAF
