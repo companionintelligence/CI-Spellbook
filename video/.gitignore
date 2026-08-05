@@ -18,3 +18,8 @@ build/
 .auth/
 
 node_modules/
+
+# npm install writes this when the toolchain is installed; the project has never
+# had one and both make.sh and the workflow use `npm install`, so committing it
+# now would quietly change how the video toolchain resolves.
+package-lock.json

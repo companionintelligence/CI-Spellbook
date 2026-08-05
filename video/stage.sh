@@ -12,22 +12,21 @@
 # with reuseExistingServer: true, so the e2e suite attaches to a running server
 # rather than starting a rival on :5500.
 
-STAGE_PORT=5500
-STAGE_URL="http://localhost:$STAGE_PORT"
 STAGE_PID=""
 
 stage_up() {
-  # Refuse rather than film the wrong thing. A capture against somebody else's
-  # server on :5500 succeeds, produces plausible screenshots and is completely
-  # wrong — the failure mode this whole pipeline exists to avoid.
-  if curl -sfo /dev/null "$STAGE_URL"; then
-    echo "something is already serving $STAGE_URL — stop it first" >&2
-    return 1
-  fi
+  # Never reuse a port somebody else holds: a capture against another server
+  # succeeds, produces plausible screenshots and is completely wrong — the
+  # failure mode this pipeline exists to avoid. Relocate instead of failing;
+  # capture.config.mjs reads APP_URL, so the kit follows.
+  STAGE_PORT="$(pick_port 5500)"
+  STAGE_URL="http://localhost:$STAGE_PORT"
+  export APP_URL="$STAGE_URL"
+  [ "$STAGE_PORT" = 5500 ] || echo "note: :5500 was busy, using :$STAGE_PORT"
 
   ( cd "$REPO_ROOT" && npm ci --silent )
 
-  ( cd "$REPO_ROOT" && npm run dev ) > "$STAGE_LOG" 2>&1 &
+  ( cd "$REPO_ROOT" && npm run dev -- --port "$STAGE_PORT" ) > "$STAGE_LOG" 2>&1 &
   STAGE_PID=$!
 
   for _ in $(seq 1 60); do

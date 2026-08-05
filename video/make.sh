@@ -37,6 +37,28 @@ say()  { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
 warn() { printf '\033[1;33m ! %s\033[0m\n' "$*" >&2; }
 die()  { printf '\n\033[1;31m x %s\033[0m\n' "$*" >&2; exit 1; }
 
+# ── ports ────────────────────────────────────────────────────────────────────
+# A developer's machine is not a fresh CI runner: Docker, tunnels and other
+# projects are already holding ports. "Is something answering HTTP 200 here?" is
+# the wrong question — the first thing tried, :8080, was held by Docker and
+# answered nothing, so the check passed and the server then died on EADDRINUSE.
+# Ask whether the port is BOUND.
+port_is_free() {
+  ! lsof -nP -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1
+}
+
+# Return the preferred port if free, else the next free one above it. Stages
+# export their own base-URL variable from this, so a busy port relocates the
+# stage instead of failing the run.
+pick_port() {
+  local want="$1" p="$1"
+  for _ in $(seq 1 50); do
+    port_is_free "$p" && { echo "$p"; return 0; }
+    p=$((p + 1))
+  done
+  die "no free port found near $want"
+}
+
 # ── prerequisites ────────────────────────────────────────────────────────────
 # Checked up front, with the fix in the message. Discovering that ffmpeg is
 # missing after a four-minute capture wastes four minutes.
