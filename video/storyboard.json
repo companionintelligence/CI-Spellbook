@@ -43,13 +43,13 @@
             "settle": 600,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "var n = document.querySelectorAll('#cards-container .group').length; if (n !== 16) throw new Error('stale stage: expected 16 cards, got ' + n);"
+                "eval": "() => { var n = document.querySelectorAll('#cards-container .group').length; if (n !== 16) throw new Error('stale stage: expected 16 cards, got ' + n); }"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -77,10 +77,10 @@
             "settle": 600,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               { "scroll": 900 }
             ],
@@ -100,7 +100,7 @@
         {
           "id": "shelf-self-hosting",
           "url": "spellbook.local",
-          "alt": "The bottom of the Spellbook shelf: Browsers and Automation, Security and Privacy, and Self-Hosting and Smart Home cards.",
+          "alt": "The self-hosting end of the Spellbook shelf, with the Self-Hosting, Home Server and Smart Home card at the top of the frame.",
           "motion": "push-in",
           "capture": {
             "path": "/",
@@ -109,13 +109,13 @@
             "settle": 600,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               {
-                "eval": "document.querySelector('#card-home-automation').closest('.group').scrollIntoView({ block: 'start' });"
+                "eval": "() => { document.querySelector('#card-home-automation').closest('.group').scrollIntoView({ block: 'start' }); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -133,13 +133,13 @@
             "settle": 600,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               {
-                "eval": "document.querySelector('#card-maker-hardware').closest('.group').scrollIntoView({ block: 'start' });"
+                "eval": "() => { document.querySelector('#card-maker-hardware').closest('.group').scrollIntoView({ block: 'start' }); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -167,12 +167,15 @@
             "settle": 1200,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
               { "click": ".group:has(#card-ai-agents) .card-front" },
               { "waitFor": ".group.expanded .markdown-body" },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -200,16 +203,19 @@
             "settle": 1200,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
               { "click": ".group:has(#card-ai-agents) .card-front" },
               { "waitFor": ".group.expanded .markdown-body" },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               { "wait": 400 },
               {
-                "eval": "document.querySelectorAll('.group.expanded .markdown-body h2')[3].scrollIntoView({ block: 'start' });"
+                "eval": "() => { var h = document.querySelectorAll('.group.expanded .markdown-body h2')[3]; if (!h) throw new Error('deep shot: fewer than 4 h2 sections in the open card'); if (!/RAG/.test(h.textContent)) throw new Error('deep shot: h2[3] is ' + JSON.stringify(h.textContent) + ', not the RAG section'); h.scrollIntoView({ block: 'start' }); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -237,12 +243,15 @@
             "settle": 1200,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+              },
+              {
+                "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
               { "click": ".group:has(#card-mcp-servers) .card-front" },
               { "waitFor": ".group.expanded #card-mcp-servers .markdown-body" },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               { "wait": 400 }
             ],
@@ -271,10 +280,10 @@
             "settle": 600,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               { "fill": ["input[placeholder='Search the Spellbook...']", "ollama"] },
               { "waitFor": ".group.search-result .search-snippet-body mark" }
@@ -304,10 +313,10 @@
             "settle": 500,
             "before": [
               {
-                "eval": "new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
+                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
               },
               {
-                "eval": "document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>');"
+                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
               { "fill": ["input[placeholder='Search the Spellbook...']", "zzzzqqqq"] },
               { "waitFor": "#cards-container .max-w-3xl" }
@@ -325,10 +334,22 @@
       "caption": "A static build. The whole catalog ships inside it.",
       "narration": "It's a static build. The catalog ships inside it, so it works offline.",
       "items": [
-        { "label": "Cards", "value": "16" },
-        { "label": "Search", "value": "In-browser" },
-        { "label": "Backend", "value": "None" },
-        { "label": "Source", "value": "Markdown" }
+        {
+          "label": "Cards",
+          "value": "16"
+        },
+        {
+          "label": "Search",
+          "value": "In-browser"
+        },
+        {
+          "label": "Backend",
+          "value": "None"
+        },
+        {
+          "label": "Source",
+          "value": "Markdown"
+        }
       ]
     },
     {
