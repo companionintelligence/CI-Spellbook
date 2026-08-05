@@ -4,7 +4,7 @@ out/
 # generated compositions — regenerate with `ci-video build`. Not in the kit's
 # template, but build/ holds a symlink (assets -> ../../assets) and a 19 KB
 # generated index.html per format that is rewritten on every kit upgrade.
-# The workflow runs `npm run build` before `npm run check`, so nothing needs it
+# The local runner rebuilds it before every check/render, so nothing needs it
 # committed.
 build/
 
