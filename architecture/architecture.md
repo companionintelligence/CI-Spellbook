@@ -104,7 +104,7 @@ flowchart TB
     subgraph Memory["Personal memory plane"]
         Server["CI-Server<br/>Digital Memory Server /<br/>Personal Digital Twin"]
         BrowserExt["CI-Browser-Extension<br/>History capture"]
-        Applet["CI-Applet<br/>Desktop monitoring"]
+        Applet["Companion Capture<br/>Desktop monitoring"]
     end
 
     subgraph Spatial["Spatial / mobile"]
@@ -137,7 +137,7 @@ flowchart TB
 | [CI-Gateway](https://github.com/companionintelligence/CI-Gateway) | `*.ci.localhost` reverse proxy for local dev | Dev-time front door for Portal + sibling services |
 | [CI-Docs](https://github.com/companionintelligence/CI-Docs) | Public docs | Sister public surface to Spellbook; Spellbook is "what to use", Docs is "how to use it" |
 | [CI-Browser-Extension](https://github.com/companionintelligence/CI-Browser-Extension) | Browsing history capture | Feeds Server; surfaces in Spellbook's "Browser Automation" category |
-| [CI-Applet](https://github.com/companionintelligence/CI-Applet) | Desktop monitor | Feeds Server |
+| [CI-Capture](https://github.com/companionintelligence/CI-Capture) | Companion Capture — desktop monitor | Feeds Server |
 | [CI-Marketing](https://github.com/companionintelligence/CI-Marketing) | Social automation via Metricool/Reddit | Could auto-syndicate Spellbook updates to social channels |
 | [JustInCase](https://github.com/companionintelligence/JustInCase) | Offline emergency knowledge | Sibling content product (offline-first counterpart to Spellbook) |
 
