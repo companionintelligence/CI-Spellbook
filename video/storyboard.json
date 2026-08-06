@@ -7,13 +7,20 @@
     "marketplaceId": "ci-spellbook",
     "website": "ci.computer"
   },
-  "meta": { "fps": 30, "transitionSeconds": 0.5 },
+  "meta": {
+    "fps": 30,
+    "transitionSeconds": 0.5,
+    "pacing": "fit"
+  },
   "chapters": {
     "first-run": "The shelf",
     "read": "Read a card",
     "search": "Search"
   },
-  "media": { "music": null, "musicVolume": 0.14 },
+  "media": {
+    "music": null,
+    "musicVolume": 0.14
+  },
   "scenes": [
     {
       "id": "open",
@@ -52,7 +59,9 @@
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -82,9 +91,13 @@
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "scroll": 900 }
+              {
+                "scroll": 900
+              }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -118,7 +131,9 @@
                 "eval": "() => { document.querySelector('#card-home-automation').closest('.group').scrollIntoView({ block: 'start' }); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -152,7 +167,9 @@
                 "eval": "() => { var g = document.querySelector('#card-ai-agents').closest('.group'); if (g.classList.contains('expanded')) throw new Error('closed shot: the AI Agents card is already expanded'); g.scrollIntoView({ block: 'start' }); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         },
         {
@@ -172,13 +189,19 @@
               {
                 "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
-              { "click": ".group:has(#card-ai-agents) .card-front" },
-              { "waitFor": ".group.expanded .markdown-body" },
+              {
+                "click": ".group:has(#card-ai-agents) .card-front"
+              },
+              {
+                "waitFor": ".group.expanded .markdown-body"
+              },
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -208,17 +231,25 @@
               {
                 "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
-              { "click": ".group:has(#card-ai-agents) .card-front" },
-              { "waitFor": ".group.expanded .markdown-body" },
+              {
+                "click": ".group:has(#card-ai-agents) .card-front"
+              },
+              {
+                "waitFor": ".group.expanded .markdown-body"
+              },
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "wait": 400 },
+              {
+                "wait": 400
+              },
               {
                 "eval": "() => { var h = document.querySelectorAll('.group.expanded .markdown-body h2')[3]; if (!h) throw new Error('deep shot: fewer than 4 h2 sections in the open card'); if (!/RAG/.test(h.textContent)) throw new Error('deep shot: h2[3] is ' + JSON.stringify(h.textContent) + ', not the RAG section'); h.scrollIntoView({ block: 'start' }); if (window.innerWidth <= 768) window.scrollBy({ top: -48, left: 0, behavior: 'instant' }); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         },
         {
@@ -238,17 +269,25 @@
               {
                 "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
-              { "click": ".group:has(#card-ai-agents) .card-front" },
-              { "waitFor": ".group.expanded .markdown-body" },
+              {
+                "click": ".group:has(#card-ai-agents) .card-front"
+              },
+              {
+                "waitFor": ".group.expanded .markdown-body"
+              },
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "wait": 400 },
+              {
+                "wait": 400
+              },
               {
                 "eval": "() => { var hs = document.querySelectorAll('.group.expanded .markdown-body h2'); var h = null; for (var i = 0; i < hs.length; i++) { if (/Notable Models/.test(hs[i].textContent)) { h = hs[i]; break; } } if (!h) throw new Error('models shot: no Notable Models section in the open AI Agents card'); h.scrollIntoView({ block: 'start' }); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -278,14 +317,22 @@
               {
                 "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
-              { "click": ".group:has(#card-mcp-servers) .card-front" },
-              { "waitFor": ".group.expanded #card-mcp-servers .markdown-body" },
+              {
+                "click": ".group:has(#card-mcp-servers) .card-front"
+              },
+              {
+                "waitFor": ".group.expanded #card-mcp-servers .markdown-body"
+              },
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "wait": 400 }
+              {
+                "wait": 400
+              }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         },
         {
@@ -305,17 +352,25 @@
               {
                 "eval": "() => { var orig = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (arg) { var o = (arg && typeof arg === 'object') ? Object.assign({}, arg, { behavior: 'instant' }) : { block: arg === false ? 'end' : 'start', behavior: 'instant' }; return orig.call(this, o); }; }"
               },
-              { "click": ".group:has(#card-mcp-servers) .card-front" },
-              { "waitFor": ".group.expanded #card-mcp-servers .markdown-body" },
+              {
+                "click": ".group:has(#card-mcp-servers) .card-front"
+              },
+              {
+                "waitFor": ".group.expanded #card-mcp-servers .markdown-body"
+              },
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "wait": 400 },
+              {
+                "wait": 400
+              },
               {
                 "eval": "() => { var hs = document.querySelectorAll('.group.expanded #card-mcp-servers .markdown-body h2'); var h = null; for (var i = 0; i < hs.length; i++) { if (/Gateways/.test(hs[i].textContent)) { h = hs[i]; break; } } if (!h) throw new Error('mcp deep shot: no Gateways section in the open MCP card'); h.scrollIntoView({ block: 'start' }); if (window.innerWidth <= 768) window.scrollBy({ top: -48, left: 0, behavior: 'instant' }); }"
               }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -345,10 +400,19 @@
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "fill": ["input[placeholder='Search the Spellbook...']", "mcp server"] },
-              { "waitFor": ".group.search-result .search-snippet-body mark" }
+              {
+                "fill": [
+                  "input[placeholder='Search the Spellbook...']",
+                  "mcp server"
+                ]
+              },
+              {
+                "waitFor": ".group.search-result .search-snippet-body mark"
+              }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
@@ -378,10 +442,19 @@
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "fill": ["input[placeholder='Search the Spellbook...']", "sharepoint"] },
-              { "waitFor": "#cards-container .max-w-3xl" }
+              {
+                "fill": [
+                  "input[placeholder='Search the Spellbook...']",
+                  "sharepoint"
+                ]
+              },
+              {
+                "waitFor": "#cards-container .max-w-3xl"
+              }
             ],
-            "mask": ["aside[aria-label='Debug panel']"]
+            "mask": [
+              "aside[aria-label='Debug panel']"
+            ]
           }
         }
       ]
