@@ -13,10 +13,58 @@ it, then delete it.
 
 From a [CI-Engineering](https://github.com/companionintelligence/CI-Engineering) checkout:
 
+The video is built **on your own machine**. One command does the lot — starts the
+app, captures the UI, checks the composition, renders both cuts, and stops the
+app again:
+
+```bash
+./video/make.sh
+```
+
+Needs `node`, `ffmpeg` (`brew install ffmpeg`) and `gh` logged in (the video-kit
+package is private, so the install needs a token; `make.sh` takes it from
+`gh auth token` and never writes it to disk). Chromium is installed on first run
+and cached afterwards.
+
+```bash
+./video/make.sh --no-render                 # capture + check only, much faster
+./video/make.sh --only library-first-run    # re-shoot one shot by id
+```
+
+Where things end up:
+
+| path | what | in git? |
+|---|---|---|
+| `out/*.mp4` | the rendered cuts | no — rebuild with `make.sh` |
+| `assets/shots/*.png` | captured screenshots | no — inputs to the render |
+| `assets/audio/*.mp3` | narration | **yes** — expensive to regenerate |
+
+Nothing is uploaded and neither the video nor the screenshots are stored: both
+are build artifacts. A committed screenshot that nothing refreshes goes on
+looking current long after the UI has moved, which is worse than having none.
+
+### Running the steps by hand
+
+`make.sh` is a thin wrapper. With the dev server already up you can drive the kit
+directly from `video/`:
+
 ```bash
 node tools/make-videos.mjs spellbook              # both cuts, from the committed screenshots
 node tools/make-videos.mjs spellbook --capture    # boot the app first and re-shoot every screen
 node tools/make-videos.mjs --list                 # every product, and how many screens each has
+```
+
+The runner lives in CI-Engineering and wraps the per-repo steps below, which
+still work if you would rather drive them directly from this repo:
+
+```bash
+npm install
+npx playwright install chromium
+npm run doctor        # verify node / ffmpeg / playwright / hyperframes / fonts
+npm run capture       # drive the real UI -> assets/shots/*.png (both viewports)
+npm run build         # storyboard.json -> build/{landscape,portrait}/index.html
+npm run check         # HyperFrames gate: lint, runtime, layout, motion, contrast
+npm run render        # -> out/ci-spellbook-landscape.mp4 and out/ci-spellbook-portrait.mp4
 ```
 
 The runner resolves `ci-video` straight from the CI-Common checkout on disk, so there is no npm
