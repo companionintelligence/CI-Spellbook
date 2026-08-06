@@ -95,6 +95,75 @@ export function labelTableCells(html) {
   return touched ? doc.body.innerHTML : html;
 }
 
+export function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+/**
+ * The terms a snippet should mark, longest first.
+ *
+ * The index searches with `prefix: true, fuzzy: 0.2`, so a hit does not have to
+ * contain what was typed — "kuberentes" matches "Kubernetes", "sqllite" matches
+ * "SQLite". Highlighting only the literal query left those rows with no mark on
+ * them at all, so the reader had to take the result on faith. MiniSearch
+ * already reports the DOCUMENT terms a result matched on (`SearchResult.terms`:
+ * "if a prefix search for 'moto' matches 'motorcycle', terms will contain
+ * 'motorcycle'"), so mark those, keeping the raw query as a fallback for the
+ * pre-index render.
+ */
+export function snippetTerms(query, matchedTerms) {
+  return Array.from(
+    new Set(
+      [
+        ...(Array.isArray(matchedTerms) ? matchedTerms : []),
+        ...String(query || '').trim().split(/\s+/)
+      ].filter(Boolean)
+    )
+  )
+    // Longest first so "motorcycle" wins over "moto" and the shorter term
+    // cannot claim a fragment inside the span the longer one already owns.
+    .sort((a, b) => b.length - a.length)
+    .slice(0, 12);
+}
+
+/**
+ * Escape `line` and wrap every occurrence of `terms` in <mark>.
+ *
+ * Two things this deliberately does not do the obvious way:
+ *  · It scans the RAW line and escapes each piece as it emits it. Matching
+ *    against already-escaped text would let a term like "amp" or "quot" mark
+ *    the inside of an entity and split it.
+ *  · A match must start at a word boundary. An index term is a whole token, so
+ *    "ai" should mark the start of "Aider" but not the middle of "maintain".
+ */
+export function markMatches(line, terms) {
+  const text = String(line ?? '');
+  const list = (terms || []).filter(Boolean);
+  if (!list.length) return escapeHtml(text);
+
+  const pattern = new RegExp(
+    `(^|[^A-Za-z0-9])(${list.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
+    'gi'
+  );
+
+  let out = '';
+  let last = 0;
+  let m;
+  while ((m = pattern.exec(text)) !== null) {
+    const hitStart = m.index + m[1].length;
+    out += escapeHtml(text.slice(last, hitStart));
+    out += `<mark>${escapeHtml(m[2])}</mark>`;
+    last = hitStart + m[2].length;
+    if (pattern.lastIndex <= m.index) pattern.lastIndex = m.index + 1;
+  }
+  return out + escapeHtml(text.slice(last));
+}
+
 /**
  * What a shelf is worth, for the closed card face: how many tools it lists,
  * how many sections they are grouped into, and the first few names. All three
