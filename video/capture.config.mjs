@@ -77,7 +77,7 @@
  *    The rule that actually holds — stated precisely, because the earlier
  *    wording here ("every shot ENDS its `before` list with it") was never what
  *    the storyboard implemented and a contributor following it literally would
- *    reorder eight of the nine shots. Every shot contains
+ *    reorder almost every shot in the file. Every shot contains
  *      { eval: "() => { ...<style>#cards-container{pointer-events:none!important}</style>... }" }
  *    and it must sit BEFORE the first step that changes what is under the mouse
  *    — i.e. before any `scroll` / `scrollIntoView` / `fill` — and AFTER any
@@ -88,9 +88,10 @@
  *    makes every shot order-independent, and it photographs the resting state a
  *    user sees when they are not pointing at a card — not a synthetic one.
  *
- *    Verified rather than assumed: driving all nine shots through the real
+ *    Verified rather than assumed: driving the whole shot list through the real
  *    0.1.2 capture loop at both viewports, `document.querySelectorAll('.group')`
- *    matching `:hover` was 0 in all 18 frames.
+ *    matching `:hover` was 0 in all 18 frames of that run (the storyboard had
+ *    nine shots then; it has 11 now).
  *
  * 4b. EVERY `eval` MUST BE AN ARROW FUNCTION, never a bare statement.
  *    video-kit 0.1.2 stopped passing the source to `page.evaluate` verbatim and
@@ -135,17 +136,17 @@
  *    tree-shakes the SDK out entirely, so capture makes no outbound calls. If
  *    you ever film a DSN-carrying build, set CI_TELEMETRY=off on the stage.
  *
- * 9. THE STALE-STAGE TRIPWIRE, and why it is there. The committed PNGs were
- *    once of the wrong build: `library-first-run.png` showed row 1 as Developer
- *    Tooling / AI Agents / **Local AI Apps & Model Managers**, which is the
- *    13-card layout from before the catalog rebuild (`git show
+ * 9. THE STALE-STAGE TRIPWIRE, and why it is there. Back when the PNGs were
+ *    committed they were once of the wrong build: `library-first-run.png` showed
+ *    row 1 as Developer Tooling / AI Agents / **Local AI Apps & Model Managers**,
+ *    which is the 13-card layout from before the catalog rebuild (`git show
  *    3c82950^:src/App.jsx`). Those captures had come from a stale `dist/` or a
  *    published container via APP_URL, not from `npm run dev` on current source.
  *
- *    That is FIXED — the committed PNGs now match current `CARD_CONFIGS`: row 1
- *    reads Developer Tooling & Code Assistants / AI Agents, Research & Models /
- *    MCP Servers & Connectors, and `search-ollama.png` shows the current card
- *    titles too. Do not "correct" them back.
+ *    The shots are no longer committed at all (#37): every render re-shoots from
+ *    `npm run dev` on current source, so a stale `dist/` cannot reach the cut.
+ *    Row 1 of a correct capture reads Developer Tooling & Code Assistants /
+ *    AI Agents, Research & Models / MCP Servers & Connectors.
  *
  *    The tripwire is permanent, because the failure was silent: `library-first-run`
  *    asserts `#cards-container .group` count === 16 in a `before` eval. capture.mjs
@@ -154,15 +155,17 @@
  *    quietly writing a wrong PNG. Re-capture ONLY against `npm run dev` at the
  *    repo root on current main — never `dist/`, never a container APP_URL.
  *
- *    Per hazard 6, re-shooting on a different OS than the last capture rewrites
- *    every PNG on font rendering alone. That is a one-time baseline shift, not
- *    drift; review it as such.
+ *    Per hazard 6, re-shooting on a different OS than the last capture changes
+ *    every PNG on font rendering alone. That is a baseline shift, not drift.
  *
  * 10. NOTHING CAPTURES IN CI, BY DESIGN — and a missing PNG never fails a build.
  *    video-kit renders a branded "capture pending" slate for any shot whose PNG
  *    is missing (scenes.mjs `slateUri`), so `build` and `check` pass with no
- *    captures at all. A newly declared shot is therefore invisible in the gate:
- *    the only thing that proves it captures is running it.
+ *    captures at all. Since #37 stopped committing the shots, that is not an
+ *    edge case here: a clean clone has ZERO PNGs, so a render without a capture
+ *    pass silently produces a cut made entirely of slates that passes the gate.
+ *    Never render this product without `--capture` (or via `./video/make.sh`,
+ *    which always captures first).
  *
  *    There is no video workflow in this repo any more — `.github/workflows/`
  *    holds only ci.yml and docker-publish.yml. The old one could never have
@@ -171,8 +174,8 @@
  *      permission_denied: read_package
  *    because the package is private and linked to repo CI-Common, so this
  *    repo's GITHUB_TOKEN was denied regardless of scope. The video is now built
- *    on a laptop instead: `./video/make.sh` takes the token from `gh auth token`
- *    and never writes it to disk. See video/README.md.
+ *    on a laptop instead, and no token is needed at all: make.sh runs the kit's
+ *    bin straight out of the CI-Common checkout on disk. See video/README.md.
  */
 export default {
   baseURL: process.env.APP_URL ?? "http://localhost:5500",
