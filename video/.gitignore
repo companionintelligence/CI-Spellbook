@@ -18,13 +18,14 @@ node_modules/
 # now would quietly change how the video toolchain resolves.
 package-lock.json
 
-# Captured screenshots. These were re-committed in #35, on the reasoning that a
-# clone with no way to re-capture cannot render at all — which is right for a
-# product whose UI cannot be staged locally. It does not apply here: this repo
-# has a verified ./video/make.sh that boots the app and re-shoots every screen,
-# so the shots are reproducible on demand.
+# Captured screenshots ARE committed — fleet-wide policy, decided 2026-08-05.
 #
-# So they are inputs to the render, not artefacts worth keeping — and a
-# committed screenshot that nothing refreshes goes on looking current long after
-# the UI has moved, which is worse than having none.
-assets/shots/
+# The argument for treating them as build output is that a stale screenshot goes
+# on looking current after the UI has moved. True, but it assumes everyone can
+# re-shoot, and only three of the twelve product videos have a working stage. A
+# gitignored shot set means nobody but the stage's author can render the cut at
+# all, and eleven of twelve cuts were rendering as "capture pending" slates.
+#
+# Committed shots make the render reproducible from a clean clone, and a UI
+# change lands as a reviewable image diff instead of a silent slate. Re-shoot
+# with ./video/make.sh when you move a screen the video covers.
