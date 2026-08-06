@@ -4,6 +4,7 @@ import DebugPanel from './components/DebugPanel';
 import { useDebugPanel } from './hooks/useDebugPanel';
 import MiniSearch from 'minisearch';
 import marked from './lib/markdown';
+import { htmlToSearchLines } from './lib/cardContent';
 
 // Card configuration
 const CARD_CONFIGS = [
@@ -197,7 +198,10 @@ const App = () => {
   }, []);
 
   const buildSnippetHtml = useCallback((lines, matchLineIndex, query) => {
-    const windowSize = 10;
+    // A "line" is now a whole table row rather than one cell (see
+    // lib/cardContent.js), so a window of ten buried the hit under nine
+    // unrelated records. Three shows the match with one neighbour either side.
+    const windowSize = 3;
     const half = Math.floor(windowSize / 2);
     const start = Math.max(0, matchLineIndex - half);
     const end = Math.min(lines.length - 1, start + windowSize - 1);
@@ -251,12 +255,7 @@ const App = () => {
 
         const parseMdToTextLines = (markdownText) => {
           try {
-            const html = marked.parse(markdownText);
-            const doc = new DOMParser().parseFromString(html, 'text/html');
-            const text = doc.body?.innerText || doc.body?.textContent || '';
-            return text
-              .split(/\r?\n/)
-              .map((l) => l.replace(/\s+$/g, ''));
+            return htmlToSearchLines(marked.parse(markdownText));
           } catch {
             return String(markdownText)
               .split(/\r?\n/)
@@ -315,16 +314,24 @@ const App = () => {
     if (!query) return new Map();
     if (!miniSearchRef.current) return new Map();
 
-    const results = miniSearchRef.current.search(query, { limit: 200 });
+    // No `limit`. It used to be 200 ACROSS ALL SHELVES, which meant the per
+    // shelf "N hits" the cards print was really "N of the global top 200" —
+    // a number that shrank as other shelves matched harder. A count on screen
+    // has to be the true count.
+    const results = miniSearchRef.current.search(query);
     const grouped = new Map();
 
     for (const r of results) {
       const existing = grouped.get(r.cardId);
-      if (!existing || r.score > existing.best.score) {
+      if (!existing) {
         grouped.set(r.cardId, { best: r, all: [r] });
-      } else {
-        existing.all.push(r);
+        continue;
       }
+      existing.all.push(r);
+      // Results arrive score-descending today, but don't rely on it: the old
+      // code reset `all` to [r] whenever a better hit turned up, silently
+      // discarding every match counted so far.
+      if (r.score > existing.best.score) existing.best = r;
     }
 
     return grouped;
@@ -353,23 +360,26 @@ const App = () => {
     <div className="min-h-screen">
       {/* Header */}
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-        <header className="py-1 flex justify-between items-center relative z-[100]">
-          {/* Logo */}
+        <header className="app-header py-1 flex justify-between items-center relative z-[100]">
+          {/* Logo — h-36 (144px) ate a third of a 360px viewport and squeezed
+              the search field until its own placeholder was cut to "Search the
+              Spell". Scales down with the viewport now. */}
           <div className="flex items-center">
-            <img 
-              src="/logo/2024_CI__LogoMark_light.png" 
-              alt="Companion Intelligence Logo" 
-              className="w-auto h-36" 
+            <img
+              src="/logo/2024_CI__LogoMark_light.png"
+              alt="Companion Intelligence Logo"
+              className="app-logo w-auto"
             />
           </div>
-          
+
           {/* Search Bar */}
-          <form className="grow ml-8" onSubmit={(e) => e.preventDefault()}>
+          <form className="grow ml-8 app-search" onSubmit={(e) => e.preventDefault()}>
             <div className="relative flex items-center">
-              <input 
-                type="text" 
-                placeholder="Search the Spellbook..." 
-                className="w-full h-12 pl-4 pr-12 text-white transition rounded-lg shadow-md focus:outline-none focus:ring-2" 
+              <input
+                type="text"
+                placeholder="Search the Spellbook..."
+                aria-label="Search the Spellbook"
+                className="w-full h-12 pl-4 pr-12 text-white transition rounded-lg shadow-md focus:outline-none focus:ring-2"
                 style={{
                   background: 'rgba(52, 52, 78, 0.8)',
                   border: '1px solid #3784ff',
