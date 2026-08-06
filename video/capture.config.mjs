@@ -135,37 +135,44 @@
  *    tree-shakes the SDK out entirely, so capture makes no outbound calls. If
  *    you ever film a DSN-carrying build, set CI_TELEMETRY=off on the stage.
  *
- * 9. THE COMMITTED PNGs ARE OF THE WRONG BUILD, and the workflow has never
- *    corrected them because it has never run (see 10). `library-first-run.png`
- *    shows row 1 as Developer Tooling / AI Agents / **Local AI Apps & Model
- *    Managers**. On current source the third card is **MCP Servers &
- *    Connectors** — that row matches `git show 3c82950^:src/App.jsx`, the
- *    13-card build from before the catalog rebuild. So those captures came from
- *    a stale `dist/` or a published container via APP_URL, not from `npm run
- *    dev` on current source.
+ * 9. THE STALE-STAGE TRIPWIRE, and why it is there. The committed PNGs were
+ *    once of the wrong build: `library-first-run.png` showed row 1 as Developer
+ *    Tooling / AI Agents / **Local AI Apps & Model Managers**, which is the
+ *    13-card layout from before the catalog rebuild (`git show
+ *    3c82950^:src/App.jsx`). Those captures had come from a stale `dist/` or a
+ *    published container via APP_URL, not from `npm run dev` on current source.
  *
- *    The tripwire is now permanent: `library-first-run` asserts
- *    `#cards-container .group` count === 16 in a `before` eval. capture.mjs runs
- *    `before` steps through `page.evaluate` and records a throw as a per-shot
+ *    That is FIXED — the committed PNGs now match current `CARD_CONFIGS`: row 1
+ *    reads Developer Tooling & Code Assistants / AI Agents, Research & Models /
+ *    MCP Servers & Connectors, and `search-ollama.png` shows the current card
+ *    titles too. Do not "correct" them back.
+ *
+ *    The tripwire is permanent, because the failure was silent: `library-first-run`
+ *    asserts `#cards-container .group` count === 16 in a `before` eval. capture.mjs
+ *    runs `before` steps through `page.evaluate` and records a throw as a per-shot
  *    failure, so a stale stage aborts that shot with a visible ✗ instead of
  *    quietly writing a wrong PNG. Re-capture ONLY against `npm run dev` at the
  *    repo root on current main — never `dist/`, never a container APP_URL.
  *
- *    Expect the first green run to rewrite all shot PNGs. That diff is the
- *    wrong-build correction plus the one-time ubuntu-latest font baseline from
- *    hazard 6 — it is NOT drift, and it should be reviewed as a content fix.
+ *    Per hazard 6, re-shooting on a different OS than the last capture rewrites
+ *    every PNG on font rendering alone. That is a one-time baseline shift, not
+ *    drift; review it as such.
  *
- * 10. CAPTURE IS BLOCKED IN CI and this is why the pipeline looks green while
- *    never having executed: video-kit renders a branded "capture pending" slate
- *    for any shot whose PNG is missing (scenes.mjs `slateUri`), so `build` and
- *    `check` pass with no captures at all. Run 30868089948 died after 13s at
- *    `Install video project`:
+ * 10. NOTHING CAPTURES IN CI, BY DESIGN — and a missing PNG never fails a build.
+ *    video-kit renders a branded "capture pending" slate for any shot whose PNG
+ *    is missing (scenes.mjs `slateUri`), so `build` and `check` pass with no
+ *    captures at all. A newly declared shot is therefore invisible in the gate:
+ *    the only thing that proves it captures is running it.
+ *
+ *    There is no video workflow in this repo any more — `.github/workflows/`
+ *    holds only ci.yml and docker-publish.yml. The old one could never have
+ *    worked anyway: it died at `Install video project` with
  *      403 Forbidden - GET .../@companionintelligence%2fvideo-kit
  *      permission_denied: read_package
- *    The package is private and linked to repo CI-Common, so CI-Spellbook's
- *    GITHUB_TOKEN is denied regardless of scope. Not a workflow-permissions
- *    problem — the repo already has default_workflow_permissions: "write".
- *    The fix is a package-access grant; see .github/workflows/video.yml.
+ *    because the package is private and linked to repo CI-Common, so this
+ *    repo's GITHUB_TOKEN was denied regardless of scope. The video is now built
+ *    on a laptop instead: `./video/make.sh` takes the token from `gh auth token`
+ *    and never writes it to disk. See video/README.md.
  */
 export default {
   baseURL: process.env.APP_URL ?? "http://localhost:5500",
