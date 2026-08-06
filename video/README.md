@@ -7,11 +7,10 @@ screens, from this repo's own UI. Both are produced from [`storyboard.json`](sto
 
 The video is **built locally, on demand, and never stored** — no GitHub Actions run, no
 artifact, no committed `.mp4`, no release asset. It is a build output: make one when you need
-it, then delete it.
+it, then delete it. Its *inputs* — the screenshots and the narration — are committed; see
+[What is committed](#what-is-committed).
 
 ## Making one
-
-From a [CI-Engineering](https://github.com/companionintelligence/CI-Engineering) checkout:
 
 The video is built **on your own machine**. One command does the lot — starts the
 app, captures the UI, checks the composition, renders both cuts, and stops the
@@ -36,12 +35,16 @@ Where things end up:
 | path | what | in git? |
 |---|---|---|
 | `out/*.mp4` | the rendered cuts | no — rebuild with `make.sh` |
-| `assets/shots/*.png` | captured screenshots | no — inputs to the render |
+| `build/` | generated compositions | no — rebuilt by every `check`/`render` |
+| `assets/shots/*.png` | captured screenshots | **yes** — inputs to the render |
 | `assets/audio/*.mp3` | narration | **yes** — expensive to regenerate |
 
-Nothing is uploaded and neither the video nor the screenshots are stored: both
-are build artifacts. A committed screenshot that nothing refreshes goes on
-looking current long after the UI has moved, which is worse than having none.
+Nothing is uploaded. The finished video is never stored; its inputs are. The
+argument against committing screenshots is real — one that nothing refreshes
+goes on looking current long after the UI has moved — so this repo answers it
+with a tripwire instead of a `.gitignore`: `library-first-run` asserts the live
+card count in a `before` eval, and a stale stage fails that shot rather than
+quietly rewriting it. See hazard 9 in [`capture.config.mjs`](capture.config.mjs).
 
 ### Running the steps by hand
 
@@ -115,6 +118,7 @@ picked up automatically from `assets/audio/<sceneId>.mp3`; regenerate it from th
 `narration` fields with `npm run narrate`.
 
 ## What is committed
+<a id="what-is-committed"></a>
 
 `assets/shots/*.png` and `assets/audio/*.mp3` **are** committed — they are inputs, not output.
 Keeping them means anyone can render a cut without booting the app, and a moved UI shows up as a
