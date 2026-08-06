@@ -42,17 +42,68 @@
  *    expanded body (src/styles.css:367). The kit's FREEZE_CSS zeroes both and
  *    `page.screenshot({ animations: "disabled" })` finishes them, but Card.jsx
  *    also calls `scrollIntoView({ behavior: "smooth" })` on a 100ms setTimeout
- *    (Card.jsx:30) — a real timer that no CSS override touches. The
- *    `card-ai-agents-open` shot therefore settles for 1200ms so the scroll has
- *    landed before the shutter.
+ *    (Card.jsx:30-35) — a real timer that no CSS override touches. An explicit
+ *    `behavior: "smooth"` argument beats FREEZE_CSS's `scroll-behavior: auto`,
+ *    and Playwright's `reducedMotion: "reduce"` does not veto it either.
  *
- * 4. HOVER-STATE BLEED — `.group:not(.expanded):hover` lifts a card 4px and
- *    swaps in a coloured overlay (Card.jsx:134). Playwright leaves the mouse
- *    wherever the last `click` put it, so a shot that clicks a card and then
- *    photographs the grid would capture a hover state. The only shot that
- *    clicks is `card-ai-agents-open`, where the clicked card ends up
- *    `.expanded` (hover rules excluded) and its front face is
- *    `visibility: hidden`. `fill` does not move the mouse. Keep it that way.
+ *    Measured, it does NOT mis-frame the deep shot: a later instant
+ *    `scrollIntoView` aborts the in-flight smooth scroll (CSSOM-View: a scroll
+ *    on a scrolling box cancels any ongoing smooth scroll of that box), so
+ *    `card-ai-agents-deep` lands on the RAG heading either way. What it DOES
+ *    cost is byte-determinism: over six runs at 1280x720 the smooth scroll was
+ *    still unwinding when the instant one fired and nudged the final position
+ *    by 2-3px, which is a dirty PNG diff on a UI nobody touched.
+ *
+ *    So the three clicking shots monkey-patch `Element.prototype.scrollIntoView`
+ *    to force `behavior: "instant"` BEFORE the click that triggers it. Same
+ *    resting frame, reached in one paint: measured drift is then exactly 0px at
+ *    both viewports. The generous settles (1200ms) stay as belt-and-braces.
+ *
+ * 4. HOVER-STATE BLEED — `.group:not(.expanded):hover` lifts a card 4px
+ *    (styles.css:386) and Card.jsx:134 fades in a bright `hoverColor` overlay
+ *    via Tailwind's `group-hover:opacity-100`. capture.mjs creates ONE Playwright
+ *    `page` per viewport and loops every shot on it, so the mouse stays wherever
+ *    the previous shot's `click` left it — `page.goto` resets the DOM but NOT the
+ *    cursor. Shot order is therefore load-bearing, and adding a clicking shot
+ *    silently repaints grid PNGs that nobody edited.
+ *
+ *    Parking the cursor with `{ hover: <logo> }` does NOT fix this, and the
+ *    obvious version of that fix is actively wrong: `page.hover` scrolls its
+ *    target into view, so any shot that scrolls AFTERWARDS drags a fresh card
+ *    under the stationary cursor. Measured on the real stage, the logo-park
+ *    version of `shelf-self-hosting` came back with the leftmost card lit in its
+ *    hover colour, at both viewports.
+ *
+ *    The rule that actually holds — stated precisely, because the earlier
+ *    wording here ("every shot ENDS its `before` list with it") was never what
+ *    the storyboard implemented and a contributor following it literally would
+ *    reorder eight of the nine shots. Every shot contains
+ *      { eval: "() => { ...<style>#cards-container{pointer-events:none!important}</style>... }" }
+ *    and it must sit BEFORE the first step that changes what is under the mouse
+ *    — i.e. before any `scroll` / `scrollIntoView` / `fill` — and AFTER any
+ *    `click` (a card with pointer-events:none cannot be clicked). Steps that
+ *    only reframe or type may follow it; it is a precedence rule, not a
+ *    last-line rule. An element with `pointer-events: none` is not a hit-test
+ *    target, so `:hover` cannot match it no matter where the mouse is. That
+ *    makes every shot order-independent, and it photographs the resting state a
+ *    user sees when they are not pointing at a card — not a synthetic one.
+ *
+ *    Verified rather than assumed: driving all nine shots through the real
+ *    0.1.2 capture loop at both viewports, `document.querySelectorAll('.group')`
+ *    matching `:hover` was 0 in all 18 frames.
+ *
+ * 4b. EVERY `eval` MUST BE AN ARROW FUNCTION, never a bare statement.
+ *    video-kit 0.1.2 stopped passing the source to `page.evaluate` verbatim and
+ *    now wraps it (capture.mjs `evalSource`):
+ *      (async () => { const __r = (<src>); if (typeof __r === "function") await __r(); })()
+ *    Two consequences bit every shot in this file:
+ *      - a statement — `foo();` or `var n = ...; if (...) throw ...` — is not a
+ *        valid parenthesised expression, so the whole shot dies with
+ *        "SyntaxError: Unexpected token ';'" / "Unexpected token 'var'";
+ *      - a bare `new Promise(...)` parses, but a Promise is not a function, so
+ *        the wrapper never awaits it and the step becomes a silent no-op.
+ *    `() => { ... }` and `() => new Promise(...)` are correct under the wrapper
+ *    in both cases: the value IS a function, so it is called and awaited.
  *
  * 5. THE DEBUG PANEL is the only surface in the app carrying wall-clock
  *    timestamps, live FPS and JS heap size (`useDebugPanel.js` — FPS on a rAF
@@ -60,7 +111,7 @@
  *    hidden by default and toggled with the ` / ~ key, so it should never be in
  *    frame — but every shot masks `aside[aria-label='Debug panel']` anyway. A
  *    zero-match mask costs nothing and stops a future default-on change from
- *    silently poisoning all six PNGs.
+ *    silently poisoning every PNG.
  *
  * 6. SYSTEM FONTS — this app ships NO webfont. index.html uses Tailwind's
  *    `font-sans` (the system UI stack) and `src/styles.css:249` asks for
@@ -83,6 +134,38 @@
  *    VITE_SENTRY_DSN was baked in at build time. `npm run dev` with no DSN
  *    tree-shakes the SDK out entirely, so capture makes no outbound calls. If
  *    you ever film a DSN-carrying build, set CI_TELEMETRY=off on the stage.
+ *
+ * 9. THE COMMITTED PNGs ARE OF THE WRONG BUILD, and the workflow has never
+ *    corrected them because it has never run (see 10). `library-first-run.png`
+ *    shows row 1 as Developer Tooling / AI Agents / **Local AI Apps & Model
+ *    Managers**. On current source the third card is **MCP Servers &
+ *    Connectors** — that row matches `git show 3c82950^:src/App.jsx`, the
+ *    13-card build from before the catalog rebuild. So those captures came from
+ *    a stale `dist/` or a published container via APP_URL, not from `npm run
+ *    dev` on current source.
+ *
+ *    The tripwire is now permanent: `library-first-run` asserts
+ *    `#cards-container .group` count === 16 in a `before` eval. capture.mjs runs
+ *    `before` steps through `page.evaluate` and records a throw as a per-shot
+ *    failure, so a stale stage aborts that shot with a visible ✗ instead of
+ *    quietly writing a wrong PNG. Re-capture ONLY against `npm run dev` at the
+ *    repo root on current main — never `dist/`, never a container APP_URL.
+ *
+ *    Expect the first green run to rewrite all shot PNGs. That diff is the
+ *    wrong-build correction plus the one-time ubuntu-latest font baseline from
+ *    hazard 6 — it is NOT drift, and it should be reviewed as a content fix.
+ *
+ * 10. CAPTURE IS BLOCKED IN CI and this is why the pipeline looks green while
+ *    never having executed: video-kit renders a branded "capture pending" slate
+ *    for any shot whose PNG is missing (scenes.mjs `slateUri`), so `build` and
+ *    `check` pass with no captures at all. Run 30868089948 died after 13s at
+ *    `Install video project`:
+ *      403 Forbidden - GET .../@companionintelligence%2fvideo-kit
+ *      permission_denied: read_package
+ *    The package is private and linked to repo CI-Common, so CI-Spellbook's
+ *    GITHUB_TOKEN is denied regardless of scope. Not a workflow-permissions
+ *    problem — the repo already has default_workflow_permissions: "write".
+ *    The fix is a package-access grant; see .github/workflows/video.yml.
  */
 export default {
   baseURL: process.env.APP_URL ?? "http://localhost:5500",
