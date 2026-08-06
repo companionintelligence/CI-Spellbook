@@ -9,7 +9,7 @@
   },
   "meta": { "fps": 30, "transitionSeconds": 0.5 },
   "chapters": {
-    "first-run": "First run",
+    "first-run": "The shelf",
     "read": "Read a card",
     "search": "Search"
   },
@@ -20,7 +20,7 @@
       "kind": "intro",
       "seconds": 4.5,
       "title": "Spellbook",
-      "caption": "A shelf of tools, rendered from markdown.",
+      "caption": "760+ tools, catalogued. Running on your machine, not ours.",
       "narration": "This is Spellbook, from Companion Intelligence."
     },
     {
@@ -120,30 +120,6 @@
             ],
             "mask": ["aside[aria-label='Debug panel']"]
           }
-        },
-        {
-          "id": "shelf-hardware",
-          "url": "spellbook.local",
-          "alt": "The last card on the Spellbook shelf: Hardware, STEM and Edge Labs.",
-          "motion": "push-in",
-          "capture": {
-            "path": "/",
-            "waitFor": "[id^='card-']",
-            "waitUntil": "networkidle",
-            "settle": 600,
-            "before": [
-              {
-                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
-              },
-              {
-                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
-              },
-              {
-                "eval": "() => { document.querySelector('#card-maker-hardware').closest('.group').scrollIntoView({ block: 'start' }); }"
-              }
-            ],
-            "mask": ["aside[aria-label='Debug panel']"]
-          }
         }
       ]
     },
@@ -152,8 +128,8 @@
       "kind": "screen",
       "chapter": "read",
       "seconds": 7.5,
-      "caption": "Click a card. It flips to rendered markdown.",
-      "narration": "Click one and it flips. The back is a markdown file that ships inside the app.",
+      "caption": "Click a card. The back is rendered markdown.",
+      "narration": "Click one and it opens. The back is a markdown file that ships inside the app.",
       "shots": [
         {
           "id": "card-ai-agents-closed",
@@ -239,7 +215,7 @@
               },
               { "wait": 400 },
               {
-                "eval": "() => { var h = document.querySelectorAll('.group.expanded .markdown-body h2')[3]; if (!h) throw new Error('deep shot: fewer than 4 h2 sections in the open card'); if (!/RAG/.test(h.textContent)) throw new Error('deep shot: h2[3] is ' + JSON.stringify(h.textContent) + ', not the RAG section'); h.scrollIntoView({ block: 'start' }); }"
+                "eval": "() => { var h = document.querySelectorAll('.group.expanded .markdown-body h2')[3]; if (!h) throw new Error('deep shot: fewer than 4 h2 sections in the open card'); if (!/RAG/.test(h.textContent)) throw new Error('deep shot: h2[3] is ' + JSON.stringify(h.textContent) + ', not the RAG section'); h.scrollIntoView({ block: 'start' }); if (window.innerWidth <= 768) window.scrollBy({ top: -48, left: 0, behavior: 'instant' }); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -336,7 +312,7 @@
               },
               { "wait": 400 },
               {
-                "eval": "() => { var hs = document.querySelectorAll('.group.expanded #card-mcp-servers .markdown-body h2'); var h = null; for (var i = 0; i < hs.length; i++) { if (/Gateways/.test(hs[i].textContent)) { h = hs[i]; break; } } if (!h) throw new Error('mcp deep shot: no Gateways section in the open MCP card'); h.scrollIntoView({ block: 'start' }); }"
+                "eval": "() => { var hs = document.querySelectorAll('.group.expanded #card-mcp-servers .markdown-body h2'); var h = null; for (var i = 0; i < hs.length; i++) { if (/Gateways/.test(hs[i].textContent)) { h = hs[i]; break; } } if (!h) throw new Error('mcp deep shot: no Gateways section in the open MCP card'); h.scrollIntoView({ block: 'start' }); if (window.innerWidth <= 768) window.scrollBy({ top: -48, left: 0, behavior: 'instant' }); }"
               }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -348,38 +324,14 @@
       "id": "search-hits",
       "kind": "screen",
       "chapter": "search",
-      "seconds": 8,
+      "seconds": 7,
       "caption": "Type a term. Matching lines come back highlighted.",
       "narration": "Search runs locally over every card. Matching lines come back highlighted, in context.",
       "shots": [
         {
-          "id": "library-first-run",
+          "id": "search-mcp-server",
           "url": "spellbook.local",
-          "alt": "The unfiltered shelf, immediately before a search narrows it.",
-          "motion": "push-in",
-          "capture": {
-            "path": "/",
-            "waitFor": "[id^='card-']",
-            "waitUntil": "networkidle",
-            "settle": 600,
-            "before": [
-              {
-                "eval": "() => new Promise(function (done) { var t = setInterval(function () { if (!document.body.textContent.includes('Indexing spellbook')) { clearInterval(t); done(); } }, 100); setTimeout(function () { clearInterval(t); done(); }, 10000); })"
-              },
-              {
-                "eval": "() => { var n = document.querySelectorAll('#cards-container .group').length; if (n !== 16) throw new Error('stale stage: expected 16 cards, got ' + n); }"
-              },
-              {
-                "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
-              }
-            ],
-            "mask": ["aside[aria-label='Debug panel']"]
-          }
-        },
-        {
-          "id": "search-ollama",
-          "url": "spellbook.local",
-          "alt": "Searching for ollama: the shelf filters to matching cards, each showing a highlighted snippet.",
+          "alt": "Searching for mcp server: the shelf filters to matching cards, each showing a highlighted snippet.",
           "motion": "push-in",
           "capture": {
             "path": "/",
@@ -393,7 +345,7 @@
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "fill": ["input[placeholder='Search the Spellbook...']", "ollama"] },
+              { "fill": ["input[placeholder='Search the Spellbook...']", "mcp server"] },
               { "waitFor": ".group.search-result .search-snippet-body mark" }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -426,7 +378,7 @@
               {
                 "eval": "() => { document.head.insertAdjacentHTML('beforeend', '<style>#cards-container{pointer-events:none!important}</style>'); }"
               },
-              { "fill": ["input[placeholder='Search the Spellbook...']", "zzzzqqqq"] },
+              { "fill": ["input[placeholder='Search the Spellbook...']", "sharepoint"] },
               { "waitFor": "#cards-container .max-w-3xl" }
             ],
             "mask": ["aside[aria-label='Debug panel']"]
@@ -437,10 +389,10 @@
     {
       "id": "recap",
       "kind": "feature",
-      "seconds": 6,
+      "seconds": 7,
       "title": "What Spellbook is",
       "caption": "A static build. The whole catalog ships inside it.",
-      "narration": "It's a static build. The catalog ships inside it, so it works offline.",
+      "narration": "It's a static build. The catalog ships inside it, and it runs on hardware you own.",
       "items": [
         {
           "label": "Cards",
@@ -455,8 +407,8 @@
           "value": "None"
         },
         {
-          "label": "Source",
-          "value": "Markdown"
+          "label": "Monthly fee",
+          "value": "$0"
         }
       ]
     },

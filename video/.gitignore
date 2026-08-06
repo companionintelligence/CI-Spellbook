@@ -1,12 +1,6 @@
 # rendered videos — regenerate with `./video/make.sh`
 out/
 
-# NOTE: captured screenshots are deliberately COMMITTED, not ignored. Ignoring
-# them is right in principle — they are regenerable inputs — but today only a few
-# repos have a working local stage recipe, so a fresh clone could not render this
-# video at all, and `ci-video check` fails on missing shots by design. Revisit
-# once local capture works everywhere.
-
 # generated compositions — regenerate with `ci-video build`. Not in the kit's
 # template, but build/ holds a symlink (assets -> ../../assets) and a 19 KB
 # generated index.html per format that is rewritten on every kit upgrade.

@@ -7,7 +7,8 @@ screens, from this repo's own UI. Both are produced from [`storyboard.json`](sto
 
 The video is **built locally, on demand, and never stored** — no GitHub Actions run, no
 artifact, no committed `.mp4`, no release asset. It is a build output: make one when you need
-it, then delete it. Its *inputs* — the screenshots and the narration — are committed; see
+it, then delete it. The **screenshots are not stored either** — every render re-shoots them
+from the live app. Only the narration is committed; see
 [What is committed](#what-is-committed).
 
 ## Making one
@@ -20,10 +21,10 @@ app again:
 ./video/make.sh
 ```
 
-Needs `node`, `ffmpeg` (`brew install ffmpeg`) and `gh` logged in (the video-kit
-package is private, so the install needs a token; `make.sh` takes it from
-`gh auth token` and never writes it to disk). Chromium is installed on first run
-and cached afterwards.
+Needs `node` and `ffmpeg` (`brew install ffmpeg`). No token and no registry
+login: `make.sh` runs video-kit straight out of the CI-Common checkout on disk
+(it walks up from this repo looking for `CI-Common/packages/video-kit`, or set
+`CI_WORKSPACE`). Chromium is installed on first run and cached afterwards.
 
 ```bash
 ./video/make.sh --no-render                 # capture + check only, much faster
@@ -36,15 +37,20 @@ Where things end up:
 |---|---|---|
 | `out/*.mp4` | the rendered cuts | no — rebuild with `make.sh` |
 | `build/` | generated compositions | no — rebuilt by every `check`/`render` |
-| `assets/shots/*.png` | captured screenshots | **yes** — inputs to the render |
+| `assets/shots/*.png` | captured screenshots | no — re-shoot with `./video/make.sh` |
 | `assets/audio/*.mp3` | narration | **yes** — expensive to regenerate |
 
-Nothing is uploaded. The finished video is never stored; its inputs are. The
-argument against committing screenshots is real — one that nothing refreshes
-goes on looking current long after the UI has moved — so this repo answers it
-with a tripwire instead of a `.gitignore`: `library-first-run` asserts the live
-card count in a `before` eval, and a stale stage fails that shot rather than
-quietly rewriting it. See hazard 9 in [`capture.config.mjs`](capture.config.mjs).
+Nothing is uploaded. A screenshot that nothing refreshes goes on looking current
+long after the UI has moved, and this repo can re-shoot every screen on demand,
+so the shots are treated as build inputs rather than stored ones. The capture is
+guarded instead of archived: `library-first-run` asserts the live card count in a
+`before` eval, and a stale stage fails that shot rather than quietly filming the
+wrong build. See hazard 9 in [`capture.config.mjs`](capture.config.mjs).
+
+**Because nothing is committed, a render without a capture pass is a silent
+failure**: video-kit substitutes a "capture pending" slate for every missing PNG
+and `ci-video check` still passes. `./video/make.sh` always captures first, which
+is why it is the documented entry point.
 
 ### Running the steps by hand
 
@@ -52,8 +58,8 @@ quietly rewriting it. See hazard 9 in [`capture.config.mjs`](capture.config.mjs)
 directly from `video/`:
 
 ```bash
-node tools/make-videos.mjs spellbook              # both cuts, from the committed screenshots
-node tools/make-videos.mjs spellbook --capture    # boot the app first and re-shoot every screen
+node tools/make-videos.mjs spellbook --capture    # both cuts; --capture is REQUIRED here
+node tools/make-videos.mjs spellbook              # renders 11 "capture pending" slates — no shots are committed
 node tools/make-videos.mjs --list                 # every product, and how many screens each has
 ```
 
@@ -120,10 +126,14 @@ picked up automatically from `assets/audio/<sceneId>.mp3`; regenerate it from th
 ## What is committed
 <a id="what-is-committed"></a>
 
-`assets/shots/*.png` and `assets/audio/*.mp3` **are** committed — they are inputs, not output.
-Keeping them means anyone can render a cut without booting the app, and a moved UI shows up as a
-reviewable image diff. Captures are byte-stable, so a diff in them means the UI genuinely
-changed. `out/` and `build/` are not committed, and neither is the finished video.
+`assets/audio/*.mp3` **is** committed — narration costs an edge-tts round trip per scene and
+changes only when a `narration` line does.
+
+`assets/shots/*.png` is **not** (`.gitignore`, set by #37). This repo has a verified
+`./video/make.sh` that boots the app and re-shoots every screen, so the shots are reproducible
+on demand — and a committed screenshot that nothing refreshes goes on looking current long
+after the UI has moved. `out/` and `build/` are not committed either, and neither is the
+finished video.
 
 See [CI-Engineering `projects/product-video-pipeline/`](https://github.com/companionintelligence/CI-Engineering/tree/main/projects/product-video-pipeline)
 for the full contract.
