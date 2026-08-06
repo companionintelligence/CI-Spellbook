@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import marked from '../lib/markdown';
+import { labelTableCells } from '../lib/cardContent';
 import { captureException } from '../lib/telemetry.js';
 
 // highlight.js CSS is bundled via src/main.jsx (import 'highlight.js/styles/github.min.css')
@@ -23,7 +24,7 @@ const useMarkdown = (markdownPath, containerId, onMarkdownLoad) => {
           return res.text();
         })
         .then(text => {
-          const html = marked.parse(text);
+          const html = labelTableCells(marked.parse(text));
           setContent(html);
           setLoading(false);
           

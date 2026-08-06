@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import useMarkdown from '../hooks/useMarkdown';
+import { summarizeCardHtml } from '../lib/cardContent';
 
 const Card = ({ 
   title, 
@@ -22,6 +23,11 @@ const Card = ({
 
   const isSearchResult = Boolean(searchMode);
   const isOpen = isSearchResult ? false : isExpanded;
+
+  // The closed face used to be a coloured rectangle with a title in it, on a
+  // catalog whose entire pitch is breadth. The markdown is already fetched for
+  // every card on mount, so count what is actually in there.
+  const summary = useMemo(() => summarizeCardHtml(content), [content]);
 
   // Scroll to card when expanded
   useEffect(() => {
@@ -135,9 +141,25 @@ const Card = ({
             className="absolute inset-0 rounded-xl transition-all duration-300 opacity-0 group-hover:opacity-100"
             style={{ background: `rgba(${hoverColor}, 0.8)` }}
           />
-          {/* Title */}
-          <div className="relative z-10">
+          {/* Title + what is on the shelf */}
+          <div className="relative z-10 card-front-body">
             <h2 className="text-2xl font-bold text-white">{title}</h2>
+            {summary ? (
+              <>
+                <p className="card-front-count">
+                  {summary.tools} tools
+                  {summary.sections > 0 ? ` · ${summary.sections} sections` : ''}
+                </p>
+                {summary.examples.length ? (
+                  <ul className="card-front-examples">
+                    {summary.examples.map((name) => (
+                      <li key={name}>{name}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </>
+            ) : null}
+            <p className="card-front-cue">Open shelf</p>
           </div>
         </div>
 
@@ -167,7 +189,10 @@ const Card = ({
                       <span className="opacity-90">Matches for</span>{' '}
                       <span className="font-semibold">“{searchMeta.query}”</span>
                       {typeof searchMeta.matchCount === 'number' ? (
-                        <span className="opacity-75"> · {searchMeta.matchCount} hits</span>
+                        <span className="opacity-75">
+                          {' '}· {searchMeta.matchCount}{' '}
+                          {searchMeta.matchCount === 1 ? 'hit' : 'hits'}
+                        </span>
                       ) : null}
                     </div>
                   ) : null}

@@ -25,7 +25,10 @@
   width: calc(50% - 1rem);
   max-width: 550px;
   min-width: 280px;
-  height: 38rem;
+  /* 38rem was sized for a face holding nothing but a centred title. Now that
+     the face carries a count and example names, the extra 12rem is dead
+     space that pushed the third row of shelves off every screenshot. */
+  height: 26rem;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
   flex-shrink: 0;
@@ -134,6 +137,73 @@
 }
 
 /* ===========================================
+   HEADER
+   =========================================== */
+
+/* A fixed h-36 logo left the search field ~150px on a 360px viewport, so its
+   own placeholder was cut to "Search the Spell". Scale it with the viewport. */
+.app-logo {
+  height: clamp(3.5rem, 11vw, 9rem);
+}
+
+@media (max-width: 640px) {
+  .app-search { margin-left: 0.75rem; }
+}
+
+/* ===========================================
+   CLOSED CARD FACE
+   =========================================== */
+
+.card-front-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 26rem;
+}
+
+.card-front-count {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.card-front-examples {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card-front-examples li {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-front-cue {
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.65);
+}
+
+.group:not(.expanded):hover .card-front-cue { color: #ffffff; }
+
+/* ===========================================
    MARKDOWN CONTENT STYLING
    =========================================== */
 
@@ -148,6 +218,26 @@
 
 .group.search-result .card-front {
   visibility: hidden;
+}
+
+/* A result is a list item, not a fixed tile: pinning it to the grid height
+   meant the last snippet line was sliced in half by the card's own bottom
+   edge, which reads as a rendering bug rather than as "there is more". Let
+   the card take the height its snippet needs. */
+.group.search-result {
+  height: auto;
+  min-height: 16rem;
+}
+
+.group.search-result .card-inner {
+  height: auto;
+  min-height: 16rem;
+}
+
+.group.search-result .card-back {
+  position: relative;
+  height: auto;
+  min-height: 100%;
 }
 
 .search-snippet {
@@ -168,8 +258,6 @@
   font-size: 0.9rem;
   line-height: 1.6;
   color: #e2e8f0;
-  max-height: 26rem;
-  overflow: auto;
   padding-right: 0.25rem;
 }
 
@@ -319,7 +407,7 @@
   .group {
     width: 100%;
     max-width: none;
-    height: 32rem;
+    height: 24rem;
   }
   
   .group.expanded {
@@ -348,6 +436,69 @@
     padding: 0.6rem;
     min-width: 7rem;
   }
+}
+
+/* Below 640px a four-column table cannot fit — its 7rem cell floor alone is
+   28rem. Horizontal scroll technically works, but every frame of it looks
+   like text cut off mid-word ("Pla", "Sel", "Cro"). Stack each row into a
+   labelled record instead; the labels come from the column headers, stamped
+   onto the cells by labelTableCells(). */
+@media (max-width: 640px) {
+  .markdown-body table {
+    display: block;
+    overflow-x: visible;
+    background: none;
+  }
+
+  .markdown-body thead {
+    /* visually hidden, still read out */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .markdown-body tbody,
+  .markdown-body tr,
+  .markdown-body td {
+    display: block;
+    width: auto;
+    min-width: 0;
+  }
+
+  .markdown-body tr {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    padding: 0.35rem 0.15rem;
+  }
+
+  .markdown-body td {
+    border: 0;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .markdown-body td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: rgba(226, 232, 240, 0.55);
+    margin-bottom: 0.1rem;
+  }
+
+  /* the tool name leads the record; its own label is redundant */
+  .markdown-body td:first-child {
+    font-weight: 600;
+    font-size: 0.86rem;
+    padding-top: 0.45rem;
+  }
+
+  .markdown-body td:first-child::before { display: none; }
 }
 
 @media (min-width: 1200px) {
