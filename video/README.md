@@ -7,12 +7,45 @@ screens, from this repo's own UI. Both are produced from [`storyboard.json`](sto
 
 ## Quick start
 
+The video is built **on your own machine**. One command does the lot — starts the
+app, captures the UI, checks the composition, renders both cuts, and stops the
+app again:
+
+```bash
+./video/make.sh
+```
+
+Needs `node`, `ffmpeg` (`brew install ffmpeg`) and `gh` logged in (the video-kit
+package is private, so the install needs a token; `make.sh` takes it from
+`gh auth token` and never writes it to disk). Chromium is installed on first run
+and cached afterwards.
+
+```bash
+./video/make.sh --no-render                 # capture + check only, much faster
+./video/make.sh --only library-first-run    # re-shoot one shot by id
+```
+
+Where things end up:
+
+| path | what | in git? |
+|---|---|---|
+| `out/*.mp4` | the rendered cuts | no — rebuild with `make.sh` |
+| `assets/shots/*.png` | captured screenshots | no — inputs to the render |
+| `assets/audio/*.mp3` | narration | **yes** — expensive to regenerate |
+
+Nothing is uploaded and neither the video nor the screenshots are stored: both
+are build artifacts. A committed screenshot that nothing refreshes goes on
+looking current long after the UI has moved, which is worse than having none.
+
+### Running the steps by hand
+
+`make.sh` is a thin wrapper. With the dev server already up you can drive the kit
+directly from `video/`:
+
 ```bash
 npm install
-npx playwright install --with-deps chromium
+npx playwright install chromium
 npm run doctor        # verify node / ffmpeg / playwright / hyperframes / fonts
-
-# with the app's dev server running:
 npm run capture       # drive the real UI -> assets/shots/*.png (both viewports)
 npm run build         # storyboard.json -> build/{landscape,portrait}/index.html
 npm run check         # HyperFrames gate: lint, runtime, layout, motion, contrast
