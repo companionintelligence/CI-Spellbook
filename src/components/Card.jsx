@@ -88,8 +88,12 @@ const Card = ({
   );
 
   return (
-    <div 
+    <div
       ref={cardRef}
+      // The no-results directory scrolls to a shelf by id; the card wrapper is
+      // the element that needs the anchor (containerId is on the back face,
+      // which is rotated out of the flow when the card is closed).
+      id={containerId ? `shelf-${containerId}` : undefined}
       className={classNames('group', { 'expanded': isOpen, 'search-result': isSearchResult })}
     >
       {/* Close button - only visible when expanded */}

@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { htmlToSearchLines, summarizeCardHtml, labelTableCells } from './cardContent';
+import {
+  htmlToSearchLines,
+  summarizeCardHtml,
+  labelTableCells,
+  markMatches,
+  snippetTerms
+} from './cardContent';
 
 const SHELF = `
 <h1>MCP Servers &amp; Connectors</h1>
@@ -92,5 +98,62 @@ describe('labelTableCells', () => {
   it('passes html through untouched when there are no tables', () => {
     const html = '<p>Just prose.</p>';
     expect(labelTableCells(html)).toBe(html);
+  });
+});
+
+describe('snippetTerms', () => {
+  it('prefers the document terms MiniSearch matched over the literal query', () => {
+    // A fuzzy hit: the reader typed "kuberentes", the index matched "kubernetes".
+    expect(snippetTerms('kuberentes', ['kubernetes'])).toContain('kubernetes');
+  });
+
+  it('keeps the raw query too, so an exact hit still marks before terms arrive', () => {
+    expect(snippetTerms('obsidian', undefined)).toEqual(['obsidian']);
+  });
+
+  it('orders longest first so a prefix cannot claim part of the longer term', () => {
+    expect(snippetTerms('moto', ['motorcycle', 'motor'])).toEqual([
+      'motorcycle',
+      'motor',
+      'moto'
+    ]);
+  });
+
+  it('de-duplicates and caps the list', () => {
+    expect(snippetTerms('mcp mcp', ['mcp'])).toEqual(['mcp']);
+    expect(snippetTerms(Array.from({ length: 30 }, (_, i) => `t${i}`).join(' ')).length).toBe(12);
+  });
+});
+
+describe('markMatches', () => {
+  it('marks a fuzzy-matched term the query does not literally contain', () => {
+    expect(markMatches('Portainer — UI for Docker and Kubernetes.', ['kubernetes'])).toContain(
+      '<mark>Kubernetes</mark>'
+    );
+  });
+
+  it('only marks at a word start, so a short term cannot land mid-word', () => {
+    const html = markMatches('Aider helps you maintain a chain of edits', ['ai']);
+    expect(html).toContain('<mark>Ai</mark>der');
+    expect(html).not.toContain('m<mark>ai</mark>ntain');
+    expect(html).not.toContain('ch<mark>ai</mark>n');
+  });
+
+  it('escapes the line, and never splits an entity with a term like "amp"', () => {
+    const html = markMatches('Tom & Jerry <script>', ['amp', 'quot']);
+    expect(html).toBe('Tom &amp; Jerry &lt;script&gt;');
+  });
+
+  it('escapes the marked text itself', () => {
+    expect(markMatches('<b> is a tag', ['<b>'])).toBe('<mark>&lt;b&gt;</mark> is a tag');
+  });
+
+  it('marks every occurrence in the line', () => {
+    const html = markMatches('SQLite viewer for SQLite files', ['sqlite']);
+    expect(html.match(/<mark>/g)).toHaveLength(2);
+  });
+
+  it('falls back to escaping when there is nothing to mark', () => {
+    expect(markMatches('a & b', [])).toBe('a &amp; b');
   });
 });

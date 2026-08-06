@@ -4,7 +4,12 @@ import DebugPanel from './components/DebugPanel';
 import { useDebugPanel } from './hooks/useDebugPanel';
 import MiniSearch from 'minisearch';
 import marked from './lib/markdown';
-import { htmlToSearchLines } from './lib/cardContent';
+import {
+  htmlToSearchLines,
+  markMatches,
+  snippetTerms,
+  summarizeCardHtml
+} from './lib/cardContent';
 
 // Card configuration
 const CARD_CONFIGS = [
@@ -185,19 +190,13 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isIndexing, setIsIndexing] = useState(false);
   const [indexError, setIndexError] = useState(null);
+  // Tool counts per shelf, for the no-results directory. Counted from the same
+  // markdown the index is built from, so it cannot drift from the shelves.
+  const [shelfSizes, setShelfSizes] = useState(() => new Map());
   const miniSearchRef = useRef(null);
   const cardTextLinesRef = useRef(new Map());
 
-  const escapeHtml = useCallback((value) => {
-    return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#39;');
-  }, []);
-
-  const buildSnippetHtml = useCallback((lines, matchLineIndex, query) => {
+  const buildSnippetHtml = useCallback((lines, matchLineIndex, query, matchedTerms) => {
     // A "line" is now a whole table row rather than one cell (see
     // lib/cardContent.js), so a window of ten buried the hit under nine
     // unrelated records. Three shows the match with one neighbour either side.
@@ -206,21 +205,9 @@ const App = () => {
     const start = Math.max(0, matchLineIndex - half);
     const end = Math.min(lines.length - 1, start + windowSize - 1);
 
-    const terms = String(query)
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 8);
-
-    const highlightLine = (line) => {
-      let safe = escapeHtml(line);
-      for (const term of terms) {
-        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        if (!escaped) continue;
-        safe = safe.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
-      }
-      return safe;
-    };
+    // Mark the terms MiniSearch actually matched, not the literal query — see
+    // snippetTerms() for why a fuzzy hit used to come back with nothing marked.
+    const terms = snippetTerms(query, matchedTerms);
 
     const rendered = [];
     if (start > 0) rendered.push('<div class="search-snippet-ellipsis">…</div>');
@@ -228,12 +215,12 @@ const App = () => {
       const line = lines[i] ?? '';
       if (!line.trim()) continue;
       const cls = i === matchLineIndex ? 'search-snippet-line is-hit' : 'search-snippet-line';
-      rendered.push(`<div class="${cls}">${highlightLine(line)}</div>`);
+      rendered.push(`<div class="${cls}">${markMatches(line, terms)}</div>`);
     }
     if (end < lines.length - 1) rendered.push('<div class="search-snippet-ellipsis">…</div>');
 
     return rendered.join('');
-  }, [escapeHtml]);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -265,6 +252,7 @@ const App = () => {
 
         const docs = [];
         const linesMap = new Map();
+        const sizeMap = new Map();
 
         for (const cfg of cardConfigs) {
           const res = await fetch(cfg.markdownPath);
@@ -272,6 +260,13 @@ const App = () => {
             throw new Error(`Failed to fetch ${cfg.markdownPath}: ${res.status} ${res.statusText}`);
           }
           const markdownText = await res.text();
+
+          try {
+            const summary = summarizeCardHtml(marked.parse(markdownText));
+            if (summary) sizeMap.set(cfg.id, summary.tools);
+          } catch {
+            /* a shelf with no countable table just has no number in the directory */
+          }
 
           const lines = parseMdToTextLines(markdownText);
           linesMap.set(cfg.id, lines);
@@ -294,6 +289,7 @@ const App = () => {
         miniSearch.addAll(docs);
         miniSearchRef.current = miniSearch;
         cardTextLinesRef.current = linesMap;
+        setShelfSizes(sizeMap);
       } catch (e) {
         console.error('Search index build failed:', e);
         if (!cancelled) setIndexError(e?.message || String(e));
@@ -342,6 +338,54 @@ const App = () => {
     if (!query) return cardConfigs;
     return cardConfigs.filter((cfg) => searchResultsByCard.has(cfg.id));
   }, [cardConfigs, searchQuery, searchResultsByCard]);
+
+  const noResults =
+    Boolean(searchQuery.trim()) && !isIndexing && !indexError && visibleCardConfigs.length === 0;
+
+  const shelfTotal = useMemo(
+    () => Array.from(shelfSizes.values()).reduce((sum, n) => sum + n, 0),
+    [shelfSizes]
+  );
+
+  // A miss is where a catalog is most likely to lose someone, and the old panel
+  // was a dead end: two lines of advice on an otherwise empty page. MiniSearch
+  // can already answer "did you mean" from the index it has — no new data, no
+  // authored copy — so ask it, and only show the line if it comes back with a
+  // real alternative.
+  const didYouMean = useMemo(() => {
+    const query = searchQuery.trim();
+    if (!noResults || !query || !miniSearchRef.current) return null;
+    try {
+      const [top] = miniSearchRef.current.autoSuggest(query, { fuzzy: 0.4, prefix: true });
+      const suggestion = top?.suggestion?.trim();
+      if (!suggestion || suggestion.toLowerCase() === query.toLowerCase()) return null;
+      return suggestion;
+    } catch {
+      return null;
+    }
+  }, [noResults, searchQuery]);
+
+  // Clear the query and take the reader to the shelf they picked. Without this
+  // the directory would only be a list of names, which is decoration.
+  //
+  // The scroll cannot happen in the click handler: clearing the query swaps the
+  // no-results panel for all sixteen cards, and the target does not exist until
+  // React has committed that render. So record the target and scroll from an
+  // effect, which runs after the commit.
+  const [pendingShelf, setPendingShelf] = useState(null);
+
+  useEffect(() => {
+    if (!pendingShelf) return;
+    document
+      .getElementById(`shelf-${pendingShelf}`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setPendingShelf(null);
+  }, [pendingShelf]);
+
+  const goToShelf = useCallback((containerId) => {
+    setSearchQuery('');
+    setPendingShelf(containerId);
+  }, []);
 
   const handleMarkdownLoad = useCallback((fileEntry) => {
     if (fileEntry.status === 'loading') {
@@ -418,10 +462,54 @@ const App = () => {
       {/* Main Content */}
       <div className="container p-4 mx-auto sm:p-6 lg:p-8">
         <div className="flex flex-wrap justify-center gap-8" id="cards-container">
-          {searchQuery.trim() && !isIndexing && !indexError && visibleCardConfigs.length === 0 ? (
-            <div className="w-full max-w-3xl rounded-xl border border-white/10 p-8 text-center" style={{ background: 'rgba(52, 52, 78, 0.55)', color: '#d2f6ff' }}>
-              <div className="text-xl font-semibold">No results</div>
-              <div className="mt-2 opacity-80">Try fewer words, or a broader term.</div>
+          {noResults ? (
+            <div className="no-results-panel">
+              <div className="no-results-head">
+                <div className="no-results-title">
+                  Nothing on the shelves matches “{searchQuery.trim()}”
+                </div>
+                {didYouMean ? (
+                  <div className="no-results-suggest">
+                    Did you mean{' '}
+                    <button
+                      type="button"
+                      className="no-results-didyoumean"
+                      onClick={() => setSearchQuery(didYouMean)}
+                    >
+                      {didYouMean}
+                    </button>
+                    ?
+                  </div>
+                ) : (
+                  <div className="no-results-suggest">Try fewer words, or a broader term.</div>
+                )}
+              </div>
+
+              {/* The whole pitch of the Spellbook is how much is on it. A miss is
+                  the one screen that used to say nothing about that at all. */}
+              <div className="no-results-browse">
+                Or open a shelf
+                {shelfTotal ? ` — ${shelfTotal} tools across ${cardConfigs.length} of them` : ''}:
+              </div>
+              <ul className="no-results-shelves">
+                {cardConfigs.map((cfg) => (
+                  <li key={cfg.id}>
+                    <button
+                      type="button"
+                      className="no-results-shelf"
+                      style={{ borderColor: cfg.borderColor }}
+                      onClick={() => goToShelf(cfg.containerId)}
+                    >
+                      <span className="no-results-shelf-name">{cfg.title}</span>
+                      {shelfSizes.has(cfg.id) ? (
+                        <span className="no-results-shelf-count">
+                          {shelfSizes.get(cfg.id)} tools
+                        </span>
+                      ) : null}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : null}
           {visibleCardConfigs.map((config) => {
@@ -431,7 +519,7 @@ const App = () => {
             const matchLineIndex = group?.best?.lineIndex;
             const snippetHtml =
               query && typeof matchLineIndex === 'number'
-                ? buildSnippetHtml(lines, matchLineIndex, query)
+                ? buildSnippetHtml(lines, matchLineIndex, query, group?.best?.terms)
                 : null;
 
             return (
