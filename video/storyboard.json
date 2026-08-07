@@ -421,14 +421,14 @@
       "id": "search-empty",
       "kind": "screen",
       "chapter": "search",
-      "seconds": 5,
-      "caption": "No match? It says so, and suggests a broader term.",
-      "narration": "When nothing matches, it says so, and suggests a broader term.",
+      "seconds": 7,
+      "caption": "No match. A closer spelling, and 797 tools across 16 shelves.",
+      "narration": "Nothing matched. So it names the query, suggests a closer spelling, and offers the shelves.",
       "shots": [
         {
           "id": "search-no-results",
           "url": "spellbook.local",
-          "alt": "A search with no matches: the panel names the missed query, offers a did-you-mean, and lists all 16 shelves with their tool counts.",
+          "alt": "A search with no matches: the panel names the missed query, offers a did-you-mean, and lists the shelves with their tool counts under a line reading 797 tools across 16 of them.",
           "motion": "push-in",
           "capture": {
             "path": "/",
