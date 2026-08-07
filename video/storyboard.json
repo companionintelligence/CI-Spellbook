@@ -428,7 +428,7 @@
         {
           "id": "search-no-results",
           "url": "spellbook.local",
-          "alt": "A search with no matches, showing the No results panel in place of the card grid.",
+          "alt": "A search with no matches: the panel names the missed query, offers a did-you-mean, and lists all 16 shelves with their tool counts.",
           "motion": "push-in",
           "capture": {
             "path": "/",
@@ -449,7 +449,7 @@
                 ]
               },
               {
-                "waitFor": "#cards-container .max-w-3xl"
+                "waitFor": "#cards-container .no-results-panel .no-results-shelf-count"
               }
             ],
             "mask": [
