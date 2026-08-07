@@ -27,7 +27,7 @@
       "kind": "intro",
       "seconds": 4.5,
       "title": "Spellbook",
-      "caption": "760+ tools, catalogued. Running on your machine, not ours.",
+      "caption": "RENDER-REF PROOF: this line exists only on test/verify-render-ref",
       "narration": "This is Spellbook, from Companion Intelligence.",
       "mark": "./assets/app-icon.png"
     },
