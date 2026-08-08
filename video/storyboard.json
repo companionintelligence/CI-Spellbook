@@ -23,13 +23,58 @@
   },
   "scenes": [
     {
+      "id": "no-directory",
+      "kind": "feature",
+      "seconds": 7,
+      "title": "There is no App Store for local AI",
+      "caption": "Every tool is somebody's repo. Nobody hands you a list.",
+      "narration": "Cloud AI has one address. Local AI is a thousand repositories, and nobody hands you the list.",
+      "items": [
+        {
+          "label": "Where the tools are",
+          "value": "GitHub"
+        },
+        {
+          "label": "How you hear",
+          "value": "word of mouth"
+        },
+        {
+          "label": "A directory",
+          "value": "none"
+        }
+      ],
+      "reveal": "paced"
+    },
+    {
+      "id": "where-people-quit",
+      "kind": "feature",
+      "seconds": 6,
+      "title": "Most people quit right about here",
+      "caption": "Not because the tools are bad. Because they're invisible.",
+      "narration": "So you try the one you heard of, hit a dead README, and stop looking.",
+      "items": [
+        {
+          "label": "Tools you tried",
+          "value": "one"
+        },
+        {
+          "label": "Tools you didn't",
+          "value": "hundreds"
+        }
+      ],
+      "reveal": "paced",
+      "transition": "cut"
+    },
+    {
       "id": "open",
       "kind": "intro",
       "seconds": 4.5,
       "title": "Spellbook",
-      "caption": "760+ tools, catalogued. Running on your machine, not ours.",
-      "narration": "The hard part of local AI is knowing what exists.",
-      "mark": "./assets/app-icon.png"
+      "caption": "797 tools across 16 shelves. On your machine, not ours.",
+      "narration": "Spellbook is that list. Sixteen shelves, seven hundred and ninety-seven tools, and it runs offline.",
+      "mark": "./assets/app-icon.png",
+      "reveal": "paced",
+      "transition": "hold"
     },
     {
       "id": "first-run",
@@ -72,8 +117,8 @@
       "kind": "screen",
       "chapter": "first-run",
       "seconds": 5,
-      "caption": "Scroll the shelf. Every card is a curated list.",
-      "narration": "Scroll down and the rest of the shelf is there.",
+      "caption": "Sixteen shelves, sorted by the job — not the vendor.",
+      "narration": "Sixteen shelves, sorted by the job you are doing, not by who is selling it.",
       "shots": [
         {
           "id": "library-scrolled",
@@ -240,8 +285,8 @@
       "kind": "screen",
       "chapter": "read",
       "seconds": 6,
-      "caption": "Deeper in the card: every tool named, described, linked.",
-      "narration": "Every tool gets a row. What it does, and a link straight to it.",
+      "caption": "Every tool named, described, and told what it runs on.",
+      "narration": "Every tool gets a row: what it does, what it runs on, and a link straight to it.",
       "shots": [
         {
           "id": "card-ai-agents-deep",
@@ -378,8 +423,8 @@
       "kind": "screen",
       "chapter": "search",
       "seconds": 5,
-      "caption": "No match? It says so, and suggests a broader term.",
-      "narration": "When nothing matches, it says so, and suggests a broader term.",
+      "caption": "No match? It says so — and offers all 797 anyway.",
+      "narration": "When nothing matches it says so, offers a spelling, and shows you all sixteen shelves.",
       "shots": [
         {
           "id": "search-no-results",
@@ -434,13 +479,17 @@
       "id": "recap",
       "kind": "feature",
       "seconds": 7,
-      "title": "What Spellbook is",
+      "title": "What stays yours",
       "caption": "A static build. The whole catalog ships inside it.",
-      "narration": "It's a static build. The catalog ships inside it, and it runs on hardware you own.",
+      "narration": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
       "items": [
         {
           "label": "Cards",
           "value": "16"
+        },
+        {
+          "label": "Tools",
+          "value": "797"
         },
         {
           "label": "Search",
