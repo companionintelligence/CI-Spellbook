@@ -3,8 +3,8 @@
   "voice": "en-GB-SoniaNeural",
   "scenes": {
     "open": {
-      "text": "The hard part of local AI is knowing what exists.",
-      "seconds": 3.648
+      "text": "Spellbook is that list. Sixteen shelves, seven hundred and ninety-seven tools, and it runs offline.",
+      "seconds": 7.344
     },
     "first-run": {
       "text": "Open it and it's already full. No account, no setup, nothing to configure.",
@@ -12,9 +12,8 @@
       "adopted": true
     },
     "browse-shelf": {
-      "text": "Scroll down and the rest of the shelf is there.",
-      "seconds": 3.072,
-      "adopted": true
+      "text": "Sixteen shelves, sorted by the job you are doing, not by who is selling it.",
+      "seconds": 5.112
     },
     "shelf-breadth": {
       "text": "Past the AI tooling it keeps going. Self-hosting, home servers, hardware you own.",
@@ -32,9 +31,8 @@
       "adopted": true
     },
     "card-depth": {
-      "text": "Every tool gets a row. What it does, and a link straight to it.",
-      "seconds": 4.776,
-      "adopted": true
+      "text": "Every tool gets a row: what it does, what it runs on, and a link straight to it.",
+      "seconds": 5.472
     },
     "card-second-category": {
       "text": "The MCP catalog reads the same way. Every connector named, described, and linked.",
@@ -47,19 +45,25 @@
       "adopted": true
     },
     "search-empty": {
-      "text": "When nothing matches, it says so, and suggests a broader term.",
-      "seconds": 4.416,
-      "adopted": true
+      "text": "When nothing matches it says so, offers a spelling, and shows you all sixteen shelves.",
+      "seconds": 5.52
     },
     "recap": {
-      "text": "It's a static build. The catalog ships inside it, and it runs on hardware you own.",
-      "seconds": 5.976,
-      "adopted": true
+      "text": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
+      "seconds": 6.024
     },
     "close": {
       "text": "Spellbook, from Companion Intelligence. UnCloud your life.",
       "seconds": 5.184,
       "adopted": true
+    },
+    "no-directory": {
+      "text": "Cloud AI has one address. Local AI is a thousand repositories, and nobody hands you the list.",
+      "seconds": 7.248
+    },
+    "where-people-quit": {
+      "text": "So you try the one you heard of, hit a dead README, and stop looking.",
+      "seconds": 4.464
     }
   }
 }
