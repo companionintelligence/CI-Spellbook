@@ -3,10 +3,16 @@
 # Published as ghcr.io/companionintelligence/ci-spellbook.
 
 # ---- build stage ----
-FROM node:22-bookworm-slim AS build
+# Deno (not Node) runs the build: deno.json's nodeModulesDir populates
+# node_modules from package.json/package-lock.json via Deno's npm compat, so
+# `deno task build` runs the same Vite/Rollup toolchain npm run build did.
+# `deno.json`'s `allowScripts` already lists the one npm postinstall script
+# this dependency tree needs (@tailwindcss/oxide's native binary fetch), so
+# `deno install` below runs it non-interactively instead of prompting.
+FROM denoland/deno:2.9.5 AS build
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json package-lock.json deno.json deno.lock ./
+RUN deno install --frozen
 COPY . .
 
 # Error reporting is opt-OUT, and its DSN is BUILD-TIME: Vite bakes VITE_* into
@@ -24,7 +30,7 @@ ENV VITE_SENTRY_DSN=${VITE_SENTRY_DSN} \
     VITE_SENTRY_RELEASE=${VITE_SENTRY_RELEASE} \
     VITE_CI_ENVIRONMENT=${VITE_CI_ENVIRONMENT}
 
-RUN npm run build
+RUN deno task build
 
 # ---- runtime stage ----
 FROM nginx:1.27-alpine
