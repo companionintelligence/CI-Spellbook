@@ -5,7 +5,7 @@
   "scenes": {
     "open": {
       "text": "Spellbook is that list. Sixteen shelves, seven hundred and ninety-seven tools, and it runs offline.",
-      "seconds": 7.824,
+      "seconds": 7.472,
       "prosody": {
         "rate": "-6%",
         "pitch": "-2Hz",
@@ -14,7 +14,7 @@
     },
     "first-run": {
       "text": "Open it and it's already full. No account, no setup, nothing to configure.",
-      "seconds": 6.072,
+      "seconds": 5.777,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -23,7 +23,7 @@
     },
     "browse-shelf": {
       "text": "Sixteen shelves, sorted by the job you are doing, not by who is selling it.",
-      "seconds": 5.28,
+      "seconds": 5.162,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -32,7 +32,7 @@
     },
     "shelf-breadth": {
       "text": "Past the AI tooling it keeps going. Self-hosting, home servers, hardware you own.",
-      "seconds": 6.72,
+      "seconds": 6.438,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -41,7 +41,7 @@
     },
     "open-card": {
       "text": "Click one and it opens.",
-      "seconds": 2.208,
+      "seconds": 2.105,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -50,7 +50,7 @@
     },
     "card-open": {
       "text": "The back is a markdown file that ships inside the app.",
-      "seconds": 3.744,
+      "seconds": 3.638,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -59,7 +59,7 @@
     },
     "card-depth": {
       "text": "Every tool gets a row: what it does, what it runs on, and a link straight to it.",
-      "seconds": 5.64,
+      "seconds": 5.53,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -68,7 +68,7 @@
     },
     "card-second-category": {
       "text": "The MCP catalog reads the same way. Every connector named, described, and linked.",
-      "seconds": 6.936,
+      "seconds": 6.642,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -77,7 +77,7 @@
     },
     "search-hits": {
       "text": "Search runs locally over every card. Matching lines come back highlighted, in context.",
-      "seconds": 6.936,
+      "seconds": 6.613,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -86,7 +86,7 @@
     },
     "search-empty": {
       "text": "When nothing matches it says so, offers a spelling, and shows you all sixteen shelves.",
-      "seconds": 5.688,
+      "seconds": 5.598,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -95,7 +95,7 @@
     },
     "recap": {
       "text": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
-      "seconds": 6.36,
+      "seconds": 6.023,
       "prosody": {
         "rate": "-5%",
         "pitch": "-1Hz",
@@ -104,7 +104,7 @@
     },
     "close": {
       "text": "Spellbook, from Companion Intelligence. UnCloud your life.",
-      "seconds": 5.64,
+      "seconds": 5.308,
       "prosody": {
         "rate": "-8%",
         "pitch": "-2Hz",
@@ -113,7 +113,7 @@
     },
     "no-directory": {
       "text": "Cloud AI has one address. Local AI is a thousand repositories, and nobody hands you the list.",
-      "seconds": 7.632,
+      "seconds": 7.295,
       "prosody": {
         "rate": "-5%",
         "pitch": "-1Hz",
@@ -122,7 +122,7 @@
     },
     "where-people-quit": {
       "text": "So you try the one you heard of, hit a dead README, and stop looking.",
-      "seconds": 4.704,
+      "seconds": 4.586,
       "prosody": {
         "rate": "-5%",
         "pitch": "-1Hz",
