@@ -12,6 +12,32 @@ npm install
 npm run dev   # Vite dev server on http://localhost:5500
 ```
 
+### Deno
+
+The same app also runs under [Deno](https://deno.com) via its npm compat layer
+— no source rewrite, `deno.json` mirrors the npm scripts as `deno task`s:
+
+```bash
+deno install   # populates node_modules from package.json, same deps npm would
+deno task dev  # Vite dev server on http://localhost:5500
+deno task build
+deno task test:unit   # vitest
+deno task test        # playwright (see note below)
+deno task check       # deno's built-in TypeScript checker over the JSX/JS source
+```
+
+`deno task check` is new — this repo had no type checking of any kind before.
+It runs against the plain `.js`/`.jsx` sources directly via `checkJs` +
+`allowJs` (see `deno.json`'s `compilerOptions` and the sibling
+`tsconfig.json`, kept for editors/other TS tooling that reads `tsconfig.json`
+specifically rather than `deno.json`).
+
+Known gap: `deno task test` (Playwright) currently fails to load
+`playwright.config.js` under Deno — Playwright's ESM config loader depends on
+Node's `node:module.register()` custom-loader hook, which Deno 2.9's Node
+compat does not implement yet. `npm test` / `npx playwright test` still work
+normally under real Node. See the deno-migration PR for details.
+
 ## Run with Docker
 
 A public multi-arch (amd64/arm64) image is published to GHCR. nginx serves the

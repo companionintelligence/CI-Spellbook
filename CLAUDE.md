@@ -49,6 +49,18 @@ fail if you do. See `docs/operations/error-reporting.md`.
 
 **npm** — use exclusively; do not mix with npm/yarn/pnpm/bun unless the repo explicitly requires it.
 
+## Deno
+
+As of the `deno-migration/ci-spellbook` branch/PR, the same app also runs
+under Deno: `deno.json` mirrors the npm scripts as `deno task`s (`dev`,
+`build`, `test:unit`, `test`, `check`, ...) using Deno's npm compat against
+the same `package.json` — no source fork, no rewritten imports. This is part
+of an org-wide Node-to-Deno migration initiative and is still under review;
+npm stays the primary, documented path above until that lands. See the
+README's "Deno" section for commands and known gaps (in particular,
+`deno task test` / Playwright's e2e suite does not run under Deno yet — a
+Deno `node:module.register()` compat gap, not an app bug).
+
 ## Cross-repo connections
 
 - Reads data from CI-Server
