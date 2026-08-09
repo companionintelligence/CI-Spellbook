@@ -19,6 +19,11 @@
  * Usage:
  *   node scripts/assert-bundle-without-dsn.mjs           # builds, then asserts
  *   node scripts/assert-bundle-without-dsn.mjs --no-build # asserts an existing dist/
+ *
+ * Runs fine under either `node` or `deno run -A` (both are exercised in CI —
+ * see deno.json's `assert:no-sentry-without-dsn` task). Under Deno the build
+ * step shells out to `deno task build` instead of `npm run build`, so this
+ * script has no hard dependency on an `npm` binary being on PATH.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -33,7 +38,11 @@ const distDir = join(repoRoot, 'dist');
 const FORBIDDEN = ['captureException', 'sentry.io', '@sentry/', 'ingest.us.sentry'];
 
 if (!process.argv.includes('--no-build')) {
-  execFileSync('npm', ['run', 'build'], {
+  const [buildCmd, buildArgs] = globalThis.Deno
+    ? ['deno', ['task', 'build']]
+    : ['npm', ['run', 'build']];
+
+  execFileSync(buildCmd, buildArgs, {
     cwd: repoRoot,
     stdio: 'inherit',
     // Explicitly empty, so a developer's exported DSN cannot make this pass.
