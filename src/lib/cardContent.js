@@ -84,7 +84,11 @@ export function labelTableCells(html) {
     const headers = Array.from(table.querySelectorAll('thead th')).map(clean);
     if (!headers.length) continue;
     for (const row of table.querySelectorAll('tbody tr')) {
-      Array.from(row.cells).forEach((cell, i) => {
+      // 'tbody tr' is a compound selector, so lib.dom's tag-name overload of
+      // querySelectorAll doesn't kick in and `row` types as plain `Element`.
+      // Cast only — same node, same runtime behavior.
+      const tr = /** @type {HTMLTableRowElement} */ (row);
+      Array.from(tr.cells).forEach((cell, i) => {
         if (headers[i]) {
           cell.setAttribute('data-label', headers[i]);
           touched = true;
@@ -180,7 +184,8 @@ export function summarizeCardHtml(html) {
 
   const examples = [];
   for (const row of rows) {
-    const name = clean(row.cells?.[0]);
+    // Same compound-selector caveat as labelTableCells above.
+    const name = clean(/** @type {HTMLTableRowElement} */ (row).cells?.[0]);
     if (name && !examples.includes(name)) examples.push(name);
     if (examples.length === 4) break;
   }
