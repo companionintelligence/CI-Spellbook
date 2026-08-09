@@ -227,7 +227,7 @@
       "id": "card-open",
       "kind": "screen",
       "chapter": "read",
-      "seconds": 5.0,
+      "seconds": 5,
       "transition": "cut",
       "caption": "The back is rendered markdown, shipped inside the app.",
       "narration": "The back is a markdown file that ships inside the app.",
@@ -265,14 +265,14 @@
           },
           "focus": {
             "landscape": {
-              "x": 0.05,
-              "y": 0.3,
-              "w": 0.57,
-              "h": 0.57
+              "x": 0,
+              "y": 0.199,
+              "w": 0.538,
+              "h": 0.538
             },
             "portrait": {
-              "x": 0.0,
-              "y": 0.26,
+              "x": 0,
+              "y": 0.134,
               "w": 0.738,
               "h": 0.738
             }
@@ -459,14 +459,14 @@
           },
           "focus": {
             "landscape": {
-              "x": 0.13,
-              "y": 0.2,
-              "w": 0.74,
-              "h": 0.74
+              "x": 0.104,
+              "y": 0.16,
+              "w": 0.592,
+              "h": 0.592
             },
             "portrait": {
-              "x": 0.131,
-              "y": 0.192,
+              "x": 0.031,
+              "y": 0.08,
               "w": 0.738,
               "h": 0.738
             }

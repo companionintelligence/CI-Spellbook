@@ -1,69 +1,70 @@
 {
-  "_": "Written by `ci-video narrate`. Records which line each mp3 is a read of, so a later edit to scene.narration can be detected instead of silently keeping the old recording. Commit this with the mp3s.",
+  "_": "Written by `ci-video narrate`. Records which line each mp3 is a read of, in which voice, on which engine, at what prosody — so a later edit to any of those can be detected instead of silently keeping the old recording. Commit this with the mp3s.",
+  "engine": null,
   "voice": "en-GB-SoniaNeural",
   "scenes": {
     "open": {
       "text": "Spellbook is that list. Sixteen shelves, seven hundred and ninety-seven tools, and it runs offline.",
-      "seconds": 7.344
+      "seconds": 7.061
     },
     "first-run": {
       "text": "Open it and it's already full. No account, no setup, nothing to configure.",
-      "seconds": 5.904,
+      "seconds": 5.618,
       "adopted": true
     },
     "browse-shelf": {
       "text": "Sixteen shelves, sorted by the job you are doing, not by who is selling it.",
-      "seconds": 5.112
+      "seconds": 5.018
     },
     "shelf-breadth": {
       "text": "Past the AI tooling it keeps going. Self-hosting, home servers, hardware you own.",
-      "seconds": 6.528,
+      "seconds": 6.261,
       "adopted": true
     },
     "open-card": {
       "text": "Click one and it opens.",
-      "seconds": 2.136,
+      "seconds": 2.052,
       "adopted": true
     },
     "card-open": {
       "text": "The back is a markdown file that ships inside the app.",
-      "seconds": 3.624,
+      "seconds": 3.539,
       "adopted": true
     },
     "card-depth": {
       "text": "Every tool gets a row: what it does, what it runs on, and a link straight to it.",
-      "seconds": 5.472
+      "seconds": 5.373
     },
     "card-second-category": {
       "text": "The MCP catalog reads the same way. Every connector named, described, and linked.",
-      "seconds": 6.744,
+      "seconds": 6.456,
       "adopted": true
     },
     "search-hits": {
       "text": "Search runs locally over every card. Matching lines come back highlighted, in context.",
-      "seconds": 6.72,
+      "seconds": 6.434,
       "adopted": true
     },
     "search-empty": {
       "text": "When nothing matches it says so, offers a spelling, and shows you all sixteen shelves.",
-      "seconds": 5.52
+      "seconds": 5.433
     },
     "recap": {
       "text": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
-      "seconds": 6.024
+      "seconds": 5.753
     },
     "close": {
       "text": "Spellbook, from Companion Intelligence. UnCloud your life.",
-      "seconds": 5.184,
+      "seconds": 4.912,
       "adopted": true
     },
     "no-directory": {
       "text": "Cloud AI has one address. Local AI is a thousand repositories, and nobody hands you the list.",
-      "seconds": 7.248
+      "seconds": 6.969
     },
     "where-people-quit": {
       "text": "So you try the one you heard of, hit a dead README, and stop looking.",
-      "seconds": 4.464
+      "seconds": 4.365
     }
   }
 }
