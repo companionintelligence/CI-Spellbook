@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
+  "nodeModulesDir": "auto",
+  "tasks": {
+    "dev": {
+      "description": "Vite dev server (mirrors `npm run dev`).",
+      "command": "vite"
+    },
+    "build": {
+      "description": "Production build (mirrors `npm run build`).",
+      "command": "vite build"
+    },
+    "preview": {
+      "description": "Preview a production build (mirrors `npm run preview`).",
+      "command": "vite preview"
+    },
+    "build-css": {
+      "description": "Standalone Tailwind watch build (mirrors `npm run build-css`).",
+      "command": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch"
+    },
+    "serve": {
+      "description": "Serve a built dist/ over plain HTTP without Vite (mirrors `npm run serve`).",
+      "command": "python3 -m http.server 8080"
+    },
+    "test": {
+      "description": "Playwright e2e/smoke suite (mirrors `npm test`).",
+      "command": "playwright test"
+    },
+    "test:unit": {
+      "description": "Vitest unit suite, single run (mirrors `npm run test:unit`).",
+      "command": "vitest run"
+    },
+    "test:unit:watch": {
+      "description": "Vitest unit suite, watch mode (mirrors `npm run test:unit:watch`).",
+      "command": "vitest"
+    },
+    "test:ui": {
+      "description": "Playwright UI runner (mirrors `npm run test:ui`).",
+      "command": "playwright test --ui"
+    },
+    "test:debug": {
+      "description": "Playwright debug runner (mirrors `npm run test:debug`).",
+      "command": "playwright test --debug"
+    },
+    "test:report": {
+      "description": "Open the last Playwright HTML report (mirrors `npm run test:report`).",
+      "command": "playwright show-report"
+    },
+    "assert:no-sentry-without-dsn": {
+      "description": "Prove the Sentry SDK is tree-shaken out of a DSN-less build (mirrors `npm run assert:no-sentry-without-dsn`).",
+      "command": "deno run -A scripts/assert-bundle-without-dsn.mjs"
+    },
+    "check": {
+      "description": "Type-check the JSX/JS source with Deno's built-in TypeScript checker (new — there was no type checking at all before this migration).",
+      "command": "deno check src/**/*.js src/**/*.jsx"
+    }
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "checkJs": true,
+    "lib": ["dom", "dom.iterable", "deno.ns", "esnext"],
+    "strict": false,
+    "types": ["./src/types/global.d.ts", "vite/client"]
+  },
+  "unstable": ["sloppy-imports"],
+  "exclude": ["dist", "node_modules", "tests/container", "archive", "video"],
+  "allowScripts": ["npm:@tailwindcss/oxide@4.1.7"]
+}

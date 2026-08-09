@@ -35,6 +35,15 @@ must still stay tree-shaken out of a DSN-less build; `npm run
 assert:no-sentry-without-dsn` enforces that. See
 `docs/operations/error-reporting.md`.
 
+## Deno
+
+`deno.json` mirrors these npm scripts as `deno task`s (`deno task dev`,
+`deno task build`, `deno task test:unit`, `deno task check` for Deno's
+built-in TypeScript checking, ...), running via Deno's npm compat against the
+same `package.json`. Part of an org-wide Node-to-Deno migration, still under
+review — npm remains primary. `deno task test` (Playwright) is a known gap:
+see the README's "Deno" section.
+
 ## Git discipline
 
 - Never `git reset --hard` or `git clean -f` without user confirmation.

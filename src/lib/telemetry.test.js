@@ -575,10 +575,20 @@ describe('initTelemetry — the runtime gate', () => {
 
   it('routes events through the scrubber before they leave the browser', async () => {
     const { Sentry } = await load({ dsn: FAKE_DSN, consent: { enabled: true } });
-    const scrubbed = Sentry.getClient().getOptions().beforeSend({
+    // scrubBrowserEvent (our beforeSend) only reads `.message`,
+    // `.exception.values[]` and `.extra`/`.request`, and ignores the hint
+    // arg — but @sentry/core's declared beforeSend type wants a full
+    // ErrorEvent in and returns a union that includes PromiseLike<ErrorEvent>.
+    // This fixture is deliberately a minimal fake, not a real Sentry event,
+    // so both sides of the call are cast rather than padded out with fields
+    // scrubBrowserEvent never looks at.
+    const fakeEvent = /** @type {import('@sentry/react').ErrorEvent} */ ({
       message: 'boom at /Users/liam/x',
       request: { url: 'https://x/y?q=secret' },
     });
+    const scrubbed = /** @type {{ message: string, request: { url: string } }} */ (
+      Sentry.getClient().getOptions().beforeSend(fakeEvent, {})
+    );
 
     expect(scrubbed.message).toBe('boom at ~/x');
     expect(scrubbed.request.url).toBe('https://x/y');
