@@ -88,7 +88,21 @@
           "id": "library-first-run",
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The Spellbook shelf on first load: logo, search bar, and the grid of category cards.",
-          "motion": "push-in",
+          "motion": "pull-back",
+          "focus": {
+            "landscape": {
+              "x": 0,
+              "y": 0.185,
+              "w": 0.538,
+              "h": 0.538
+            },
+            "portrait": {
+              "x": 0.131,
+              "y": 0,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -125,6 +139,20 @@
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Further down the Spellbook shelf, showing later rows of category cards.",
           "motion": "drift-down",
+          "focus": {
+            "landscape": {
+              "x": 0.231,
+              "y": 0.081,
+              "w": 0.538,
+              "h": 0.538
+            },
+            "portrait": {
+              "x": 0.131,
+              "y": 0.001,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -162,6 +190,20 @@
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The self-hosting end of the Spellbook shelf, with the Self-Hosting, Home Server and Smart Home card at the top of the frame.",
           "motion": "push-in",
+          "focus": {
+            "landscape": {
+              "x": 0.32,
+              "y": 0,
+              "w": 0.68,
+              "h": 0.68
+            },
+            "portrait": {
+              "x": 0.131,
+              "y": 0,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -199,6 +241,30 @@
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The shelf before anything is opened, framed on the closed AI Agents, Research and Models tile.",
           "motion": "push-in",
+          "focus": {
+            "landscape": {
+              "x": 0.11,
+              "y": 0,
+              "w": 0.78,
+              "h": 0.78
+            },
+            "portrait": {
+              "x": 0.131,
+              "y": 0,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
+          "pointer": {
+            "landscape": {
+              "x": 0.5,
+              "y": 0.29
+            },
+            "portrait": {
+              "x": 0.5,
+              "y": 0.325
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -236,7 +302,7 @@
           "id": "card-ai-agents-open",
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The AI Agents card expanded and flipped, showing its rendered markdown contents.",
-          "motion": "push-in",
+          "motion": "pull-back",
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -293,6 +359,30 @@
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Further down the expanded AI Agents card, at the RAG and Knowledge section: a table of tools with descriptions, platforms and links.",
           "motion": "drift-down",
+          "focus": {
+            "landscape": {
+              "x": 0.08,
+              "y": 0.06,
+              "w": 0.58,
+              "h": 0.58
+            },
+            "portrait": {
+              "x": 0.131,
+              "y": 0.02,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
+          "pointer": {
+            "landscape": {
+              "x": 0.105,
+              "y": 0.355
+            },
+            "portrait": {
+              "x": 0.25,
+              "y": 0.488
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -341,7 +431,21 @@
           "id": "card-mcp-servers-open",
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The MCP Servers and Connectors card expanded, showing the Registries and Catalogs table of linked MCP servers.",
-          "motion": "push-in",
+          "motion": "pull-back",
+          "focus": {
+            "landscape": {
+              "x": 0,
+              "y": 0.199,
+              "w": 0.538,
+              "h": 0.538
+            },
+            "portrait": {
+              "x": 0,
+              "y": 0.134,
+              "w": 0.738,
+              "h": 0.738
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -388,6 +492,24 @@
           "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Searching for mcp server: the shelf filters to matching cards, each showing a highlighted snippet.",
           "motion": "push-in",
+          "focus": {
+            "landscape": {
+              "x": 0.1,
+              "y": 0.015,
+              "w": 0.62,
+              "h": 0.62
+            }
+          },
+          "pointer": {
+            "landscape": {
+              "x": 0.26,
+              "y": 0.082
+            },
+            "portrait": {
+              "x": 0.45,
+              "y": 0.042
+            }
+          },
           "capture": {
             "path": "/",
             "waitFor": "[id^='card-']",
@@ -479,6 +601,7 @@
       "id": "recap",
       "kind": "feature",
       "seconds": 7,
+      "transition": "cut",
       "title": "What stays yours",
       "caption": "A static build. The whole catalog ships inside it.",
       "narration": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
