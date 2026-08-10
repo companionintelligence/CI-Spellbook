@@ -86,7 +86,7 @@
       "shots": [
         {
           "id": "library-first-run",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The Spellbook shelf on first load: logo, search bar, and the grid of category cards.",
           "motion": "push-in",
           "capture": {
@@ -122,7 +122,7 @@
       "shots": [
         {
           "id": "library-scrolled",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Further down the Spellbook shelf, showing later rows of category cards.",
           "motion": "drift-down",
           "capture": {
@@ -159,7 +159,7 @@
       "shots": [
         {
           "id": "shelf-self-hosting",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The self-hosting end of the Spellbook shelf, with the Self-Hosting, Home Server and Smart Home card at the top of the frame.",
           "motion": "push-in",
           "capture": {
@@ -196,7 +196,7 @@
       "shots": [
         {
           "id": "card-ai-agents-closed",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The shelf before anything is opened, framed on the closed AI Agents, Research and Models tile.",
           "motion": "push-in",
           "capture": {
@@ -234,7 +234,7 @@
       "shots": [
         {
           "id": "card-ai-agents-open",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The AI Agents card expanded and flipped, showing its rendered markdown contents.",
           "motion": "push-in",
           "capture": {
@@ -290,7 +290,7 @@
       "shots": [
         {
           "id": "card-ai-agents-deep",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Further down the expanded AI Agents card, at the RAG and Knowledge section: a table of tools with descriptions, platforms and links.",
           "motion": "drift-down",
           "capture": {
@@ -339,7 +339,7 @@
       "shots": [
         {
           "id": "card-mcp-servers-open",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "The MCP Servers and Connectors card expanded, showing the Registries and Catalogs table of linked MCP servers.",
           "motion": "push-in",
           "capture": {
@@ -385,7 +385,7 @@
       "shots": [
         {
           "id": "search-mcp-server",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "Searching for mcp server: the shelf filters to matching cards, each showing a highlighted snippet.",
           "motion": "push-in",
           "capture": {
@@ -428,7 +428,7 @@
       "shots": [
         {
           "id": "search-no-results",
-          "url": "spellbook.local",
+          "url": "spellbook-living-room-server-acme.ci.computer",
           "alt": "A search with no matches: the panel names the missed query, offers a did-you-mean, and lists all 16 shelves with their tool counts.",
           "motion": "push-in",
           "capture": {
