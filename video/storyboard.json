@@ -19,7 +19,7 @@
     "search": "Search"
   },
   "media": {
-    "music": "assets/media/ci-campaign-bed.mp3",
+    "music": "assets/media/ci-campaign-bed-110.mp3",
     "musicLufs": -22
   },
   "scenes": [
@@ -641,57 +641,34 @@
     }
   ],
   "master": [
-    {
-      "ref": "search-hits",
-      "chapter": "read",
-      "title": "Search one word. Surface the right tools.",
-      "caption": "Spellbook turns markdown into a searchable shelf.",
-      "narration": "Search one word and the relevant tools surface immediately.",
-      "minSeconds": 7
-    },
+    "no-directory",
+    "where-people-quit",
+    "open",
+    "first-run",
+    "browse-shelf",
+    "shelf-breadth",
     {
       "ref": "open-card",
-      "title": "Open a card. Get the practical answer.",
       "caption": "Less digging. More doing.",
-      "narration": "Open a card and get the practical answer without digging through a long manual.",
-      "minSeconds": 7
+      "narration": "Open a card and get the practical answer without digging through a long manual."
     },
+    "card-open",
+    "card-depth",
+    "card-second-category",
     {
-      "ref": "card-depth",
-      "title": "Steps. Commands. Caveats.",
-      "caption": "The whole tool stays together.",
-      "narration": "Steps, commands, and caveats stay together in one readable card.",
-      "minSeconds": 6.5
+      "ref": "search-hits",
+      "caption": "Every card indexed in the browser. No query is sent.",
+      "narration": "Type a term and the shelves that carry it come back, with the matching lines marked."
     },
-    {
-      "ref": "shelf-breadth",
-      "chapter": "read",
-      "title": "One shelf. Many kinds of work.",
-      "caption": "A consistent shape for practical knowledge.",
-      "narration": "The same shelf can cover many kinds of work while keeping a consistent shape.",
-      "minSeconds": 7
-    },
-    {
-      "ref": "search-empty",
-      "title": "A miss stays clear.",
-      "caption": "Reset and try the next word.",
-      "narration": "When nothing matches, the empty state is clear and the reset stays in reach.",
-      "minSeconds": 6.5
-    },
-    {
-      "ref": "recap",
-      "caption": "Markdown becomes a searchable shelf of practical tools.",
-      "narration": "Markdown files become a searchable shelf of practical tools.",
-      "minSeconds": 6.5
-    },
+    "search-empty",
+    "recap",
     {
       "ref": "close",
       "caption": "ci.computer",
       "cta": "Open Companion Spellbook",
       "tagline": "UnCloud your life.",
       "url": "ci.computer",
-      "narration": "Open Companion Spellbook at ci dot computer. UnCloud your life.",
-      "minSeconds": 7.7
+      "narration": "Open Companion Spellbook at ci dot computer. UnCloud your life."
     }
   ]
 }
