@@ -452,15 +452,15 @@ describe('initTelemetry — the runtime gate', () => {
     expect(Sentry.getClient()).toBeDefined();
   });
 
-  it('configures the client with no PII, no tracing and a scrubber', async () => {
+  it('configures the client with tracing, replay, metrics and a scrubber', async () => {
     const { Sentry } = await load({ dsn: FAKE_DSN, consent: { enabled: true } });
     const options = Sentry.getClient().getOptions();
 
     expect(options.sendDefaultPii).toBe(false);
-    expect(options.tracesSampleRate).toBe(0);
+    expect(options.tracesSampleRate).toBe(0.1);
     expect(options.beforeSend).toBeTypeOf('function');
     expect(options.beforeBreadcrumb).toBeTypeOf('function');
-    expect(options.integrations.map((integration) => integration.name)).not.toContain('Replay');
+    expect(options.integrations.map((integration) => integration.name)).toContain('Replay');
     expect(options.integrations.map((integration) => integration.name)).not.toContain(
       'BrowserProfiling',
     );

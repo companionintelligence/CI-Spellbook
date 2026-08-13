@@ -56,9 +56,9 @@ reporting is deliberately narrower than a Sentry default install:
 | Setting | Value | Why |
 |---|---|---|
 | `sendDefaultPii` | `false` | No IPs, cookies, or request bodies. |
-| `tracesSampleRate` | `0` | Errors only. Traces would ship request shapes we have no consent to collect. |
-| Session replay | not installed | Would record the user's own screen. |
-| Profiling | not installed | Not needed to fix a crash. |
+| `tracesSampleRate` | `0.1` by default | Override with `VITE_SENTRY_TRACES_SAMPLE_RATE`. |
+| Session replay | `0.1` of sessions, 100% of error sessions | Override with the `VITE_SENTRY_REPLAYS_*` variables. |
+| Profiling | not enabled in the browser | Backend profiling is controlled separately where supported. |
 | `beforeSend` | scrubber | Redacts credentials and home paths, drops cookies/body/query string. |
 | `beforeBreadcrumb` | scrubber | Scrubs at record time, so an unsent crumb never sits in the scope with a query string in it. |
 
