@@ -121,8 +121,8 @@
       }
     },
     "close": {
-      "text": "Open Companion Spellbook at ci dot computer. UnCloud your life.",
-      "seconds": 5.709,
+      "text": "Open Spellbook at ci dot computer slash download. UnCloud your life.",
+      "seconds": 6.074,
       "prosody": {
         "rate": "-8%",
         "pitch": "-2Hz",
