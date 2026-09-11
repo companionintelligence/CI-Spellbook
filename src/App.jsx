@@ -410,7 +410,7 @@ const App = () => {
               Spell". Scales down with the viewport now. */}
           <div className="flex items-center">
             <img
-              src="/logo/2024_CI__LogoMark_light.png"
+              src="/logo/mark-192.png"
               alt="Companion Intelligence Logo"
               className="app-logo w-auto"
             />
@@ -435,7 +435,7 @@ const App = () => {
               <button 
                 type="button" 
                 className="absolute transition right-3 hover:text-blue-300 focus:outline-none" 
-                style={{ color: '#abd4d8' }}
+                style={{ color: 'var(--primary)' }}
                 aria-label={searchQuery.trim() ? 'Clear search' : 'Search'}
                 onClick={() => setSearchQuery('')}
               >
@@ -451,7 +451,7 @@ const App = () => {
               </button>
             </div>
             {(isIndexing || indexError) && (
-              <div className="mt-2 text-xs" style={{ color: indexError ? '#fca5a5' : '#abd4d8' }}>
+              <div className="mt-2 text-xs" style={{ color: indexError ? '#fca5a5' : 'var(--primary)' }}>
                 {indexError ? `Search unavailable: ${indexError}` : 'Indexing spellbook for search…'}
               </div>
             )}

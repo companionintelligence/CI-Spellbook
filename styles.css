@@ -893,7 +893,7 @@
 
 /* Search bar placeholder styling */
 input[type="text"]::placeholder {
-  color: #abd4d8;
+  color: var(--primary); /* the canon dark primary (sage #c5e8dc); #abd4d8 was retired at tokens v0.3.0 */
   opacity: 0.7;
 }
 input[type="text"]:focus {
@@ -1264,7 +1264,7 @@ p, td, li, .text-sm, .text-xs {
 
 .debug-item label {
   font-size: 10px;
-  color: #abd4d8;
+  color: var(--primary); /* the canon dark primary (sage #c5e8dc); #abd4d8 was retired at tokens v0.3.0 */
   font-weight: 500;
 }
 
@@ -1417,7 +1417,7 @@ p, td, li, .text-sm, .text-xs {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 6px;
   font-size: 9px;
-  color: #abd4d8;
+  color: var(--primary); /* the canon dark primary (sage #c5e8dc); #abd4d8 was retired at tokens v0.3.0 */
 }
 
 .debug-footer {
