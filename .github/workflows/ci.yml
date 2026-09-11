@@ -29,6 +29,10 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint design canon + brand mirrors
+        run: npm run lint:canon
       - name: Run unit tests
         run: npm run test:unit
       # Reporting is opt-out, but an unconfigured build is a separate thing:
@@ -61,6 +65,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: npm run build
       # Cloudflare Pages production deploys are handled by the Cloudflare

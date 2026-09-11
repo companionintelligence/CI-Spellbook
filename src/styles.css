@@ -2,6 +2,9 @@
    (Previously the app relied on the cdn.tailwindcss.com runtime script, which
    broke offline/appliance deployments and warned in production.) */
 @import "tailwindcss";
+/* The canon token layer (@companionintelligence/tokens; CI-Common styles/tokens/src/tokens.json is
+   the one source). This is a dark-only surface: <html class="dark"> selects the .dark block. */
+@import "@companionintelligence/tokens/tokens.css";
 
 /* ===========================================
    CARD ANIMATION SYSTEM - Simplified & Clean
@@ -420,7 +423,7 @@
      Intelligence colour. The canonical light teal clears 4.5:1 on every card
      in the shelf: 8.48:1 on the purple AI Agents card, 5.89:1 on the MCP blue,
      4.79:1 against that card's brightest patch. */
-  color: #abd4d8;
+  color: var(--primary); /* the canon dark primary (sage #c5e8dc); #abd4d8 was retired at tokens v0.3.0 */
   text-decoration: underline;
   text-underline-offset: 2px;
 }
