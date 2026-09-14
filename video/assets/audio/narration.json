@@ -3,9 +3,54 @@
   "engine": "edge",
   "voice": "en-GB-SoniaNeural",
   "scenes": {
-    "search-hits": {
-      "text": "Search one word and the relevant tools surface immediately.",
-      "seconds": 4.131,
+    "no-directory": {
+      "text": "Cloud AI has one address. Local AI is a thousand repositories, and nobody hands you the list.",
+      "seconds": 7.295,
+      "prosody": {
+        "rate": "-5%",
+        "pitch": "-1Hz",
+        "volume": "+0%"
+      }
+    },
+    "where-people-quit": {
+      "text": "So you try the one you heard of, hit a dead README, and stop looking.",
+      "seconds": 4.586,
+      "prosody": {
+        "rate": "-5%",
+        "pitch": "-1Hz",
+        "volume": "+0%"
+      }
+    },
+    "open": {
+      "text": "Spellbook is that list. Sixteen shelves, seven hundred and ninety-seven tools, and it runs offline.",
+      "seconds": 7.472,
+      "prosody": {
+        "rate": "-6%",
+        "pitch": "-2Hz",
+        "volume": "+0%"
+      }
+    },
+    "first-run": {
+      "text": "Open it and it's already full. No account, no setup, nothing to configure.",
+      "seconds": 5.777,
+      "prosody": {
+        "rate": "-3%",
+        "pitch": "+0Hz",
+        "volume": "+0%"
+      }
+    },
+    "browse-shelf": {
+      "text": "Sixteen shelves, sorted by the job you are doing, not by who is selling it.",
+      "seconds": 5.162,
+      "prosody": {
+        "rate": "-3%",
+        "pitch": "+0Hz",
+        "volume": "+0%"
+      }
+    },
+    "shelf-breadth": {
+      "text": "Past the AI tooling it keeps going. Self-hosting, home servers, hardware you own.",
+      "seconds": 6.438,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -21,18 +66,36 @@
         "volume": "+0%"
       }
     },
-    "card-depth": {
-      "text": "Steps, commands, and caveats stay together in one readable card.",
-      "seconds": 5.247,
+    "card-open": {
+      "text": "The back is a markdown file that ships inside the app.",
+      "seconds": 3.638,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
         "volume": "+0%"
       }
     },
-    "shelf-breadth": {
-      "text": "The same shelf can cover many kinds of work while keeping a consistent shape.",
-      "seconds": 4.949,
+    "card-depth": {
+      "text": "Every tool gets a row: what it does, what it runs on, and a link straight to it.",
+      "seconds": 5.53,
+      "prosody": {
+        "rate": "-3%",
+        "pitch": "+0Hz",
+        "volume": "+0%"
+      }
+    },
+    "card-second-category": {
+      "text": "The MCP catalog reads the same way. Every connector named, described, and linked.",
+      "seconds": 6.642,
+      "prosody": {
+        "rate": "-3%",
+        "pitch": "+0Hz",
+        "volume": "+0%"
+      }
+    },
+    "search-hits": {
+      "text": "Type a term and the shelves that carry it come back, with the matching lines marked.",
+      "seconds": 5.102,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -40,8 +103,8 @@
       }
     },
     "search-empty": {
-      "text": "When nothing matches, the empty state is clear and the reset stays in reach.",
-      "seconds": 5.205,
+      "text": "When nothing matches it says so, offers a spelling, and shows you all sixteen shelves.",
+      "seconds": 5.598,
       "prosody": {
         "rate": "-3%",
         "pitch": "+0Hz",
@@ -49,8 +112,8 @@
       }
     },
     "recap": {
-      "text": "Markdown files become a searchable shelf of practical tools.",
-      "seconds": 4.496,
+      "text": "It's a static build. The catalog ships inside it, and nothing you type leaves the machine.",
+      "seconds": 6.023,
       "prosody": {
         "rate": "-5%",
         "pitch": "-1Hz",
@@ -58,8 +121,8 @@
       }
     },
     "close": {
-      "text": "Open Companion Spellbook at ci dot computer. UnCloud your life.",
-      "seconds": 5.709,
+      "text": "Open Spellbook at ci dot computer slash download. UnCloud your life.",
+      "seconds": 6.074,
       "prosody": {
         "rate": "-8%",
         "pitch": "-2Hz",
