@@ -25,7 +25,13 @@
 FROM --platform=$BUILDPLATFORM denoland/deno:2.9.5 AS build
 WORKDIR /app
 COPY package.json package-lock.json deno.json deno.lock ./
-RUN deno install --frozen
+# .npmrc points the @companionintelligence scope at GitHub Packages and reads
+# its token from $NODE_AUTH_TOKEN (npm-style ${VAR} substitution, which Deno's
+# npm compat also honors). Passed as a BuildKit secret, not an ARG/ENV, so the
+# token never lands in an image layer or the build cache exported via
+# `cache-to: type=gha`.
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
+    NODE_AUTH_TOKEN="$(cat /run/secrets/NODE_AUTH_TOKEN)" deno install --frozen
 COPY . .
 
 # Error reporting is opt-OUT, and its DSN is BUILD-TIME: Vite bakes VITE_* into

@@ -88,6 +88,11 @@ jobs:
           build-args: |
             VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
             VITE_SENTRY_RELEASE=ci-spellbook@${{ github.sha }}
+          # Auths `deno install --frozen`'s fetch of the @companionintelligence
+          # scope from GitHub Packages (see .npmrc). A build secret, not a
+          # build-arg, so it never lands in an image layer or the gha cache.
+          secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -160,5 +165,7 @@ jobs:
           build-args: |
             VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
             VITE_SENTRY_RELEASE=ci-spellbook@${{ github.sha }}
+          secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
