@@ -36,6 +36,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Safety net only. The arm64 leg of the image no longer executes anything
+      # on the target architecture — the Dockerfile pins its build stage to
+      # $BUILDPLATFORM and the nginx runtime stage has no RUN — so nothing here
+      # currently needs emulation. Registering QEMU keeps a later `RUN` in the
+      # runtime stage from failing outright, but read the Dockerfile's build
+      # stage comment before adding one: this dependency tree's Rust N-API
+      # binaries (@tailwindcss/oxide, lightningcss) crash under QEMU.
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -140,6 +147,10 @@ jobs:
         with:
           context: .
           push: true
+          # Both architectures the marketplace manifest declares
+          # (supported_architectures: ["amd64","arm64"]). The Vite bundle is
+          # built once, natively, by the $BUILDPLATFORM-pinned build stage and
+          # shared by both; only the nginx layer below it differs.
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           # This app is browser-only: nginx serves a static bundle and there is no
