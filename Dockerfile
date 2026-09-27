@@ -24,12 +24,15 @@
 # differs per architecture.
 FROM --platform=$BUILDPLATFORM denoland/deno:2.9.5 AS build
 WORKDIR /app
-COPY package.json package-lock.json deno.json deno.lock ./
-# .npmrc points the @companionintelligence scope at GitHub Packages and reads
-# its token from $NODE_AUTH_TOKEN (npm-style ${VAR} substitution, which Deno's
-# npm compat also honors). Passed as a BuildKit secret, not an ARG/ENV, so the
-# token never lands in an image layer or the build cache exported via
-# `cache-to: type=gha`.
+# .npmrc must be present BEFORE `deno install` runs — it points the
+# @companionintelligence scope at GitHub Packages and reads its token from
+# $NODE_AUTH_TOKEN (npm-style ${VAR} substitution, which Deno's npm compat
+# also honors). It was previously only copied in via the later `COPY . .`,
+# so `deno install` ran with no registry override at all and fell through to
+# the public npm registry, which 404s the private scope. Passed as a BuildKit
+# secret, not an ARG/ENV, so the token never lands in an image layer or the
+# build cache exported via `cache-to: type=gha`.
+COPY package.json package-lock.json deno.json deno.lock .npmrc ./
 RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
     NODE_AUTH_TOKEN="$(cat /run/secrets/NODE_AUTH_TOKEN)" deno install --frozen
 COPY . .
