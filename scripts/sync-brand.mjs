@@ -26,6 +26,12 @@ const MAP = {
   'public/logo/mark.svg': 'logos/mark.svg',            // logo.mark
   'public/logo/mark-192.png': 'icons/png/icon-192.png',
   'public/logo/favicon-32.png': 'icons/png/favicon-32.png',
+  // Search/share surfaces: the bare /favicon.ico crawlers still request, the iOS
+  // home-screen icon, and the two sizes site.webmanifest declares.
+  'public/favicon.ico': 'icons/png/favicon.ico',                          // icon.favicon-ico
+  'public/apple-touch-icon.png': 'icons/png/apple-touch-icon-180.png',    // icon.apple-touch-icon-180
+  'public/logo/icon-512.png': 'icons/png/icon-512.png',                   // icon.icon-512
+  'public/logo/icon-maskable-512.png': 'icons/png/icon-maskable-512.png', // icon.icon-maskable-512
 };
 
 const sha = (b) => createHash('sha256').update(b).digest('hex');

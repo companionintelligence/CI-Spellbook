@@ -144,3 +144,6 @@ dist
 /test-results/
 /blob-report/
 /playwright/.cache/
+
+# Cloudflare Wrangler local state (wrangler pages dev)
+.wrangler/

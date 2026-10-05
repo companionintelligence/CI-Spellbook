@@ -2,14 +2,104 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Companion Intelligence Spellbook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Companion Intelligence Spellbook — a searchable library of curated tools, agents, and resources rendered from markdown spell cards.">
+  <title>Spellbook: local-AI and self-hosting tool catalog</title>
+  <meta name="description" content="A searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://magic.ci.computer/">
+
+  <!-- Dark-only surface: the page gradient and the canon dark tokens. -->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071533">
+
   <link rel="icon" type="image/png" sizes="32x32" href="/logo/favicon-32.png">
   <link rel="icon" type="image/svg+xml" href="/logo/mark.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta property="og:site_name" content="Companion Intelligence">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://magic.ci.computer/">
+  <meta property="og:title" content="Spellbook: local-AI and self-hosting tool catalog">
+  <meta property="og:description" content="A searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware.">
+  <meta property="og:image" content="https://magic.ci.computer/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Spellbook from Companion Intelligence: a catalog of local-AI and self-hosting tools.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spellbook: local-AI and self-hosting tool catalog">
+  <meta name="twitter:description" content="A searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware.">
+  <meta name="twitter:image" content="https://magic.ci.computer/og-image.png">
+  <meta name="twitter:image:alt" content="Spellbook from Companion Intelligence: a catalog of local-AI and self-hosting tools.">
+
+  <!-- Structured data. A data block, not a script that runs, so the page CSP
+       (public/_headers) does not need to allow it. scripts/assert-site.mjs checks
+       that it parses and agrees with src/lib/site.js. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ci.computer/#organization",
+        "name": "Companion Intelligence",
+        "url": "https://ci.computer",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://magic.ci.computer/logo/icon-512.png",
+          "width": 512,
+          "height": 512
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://magic.ci.computer/#website",
+        "url": "https://magic.ci.computer/",
+        "name": "Spellbook",
+        "description": "A searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://ci.computer/#organization" }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://magic.ci.computer/#catalog",
+        "url": "https://magic.ci.computer/",
+        "name": "Spellbook: a catalog of local-AI and self-hosting tools",
+        "description": "Shelves organized by the job you are doing, from model managers and MCP connectors to home servers, networking and edge hardware.",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://magic.ci.computer/#website" },
+        "publisher": { "@id": "https://ci.computer/#organization" }
+      }
+    ]
+  }
+  </script>
 </head>
-<body class="text-white font-sans antialiased min-h-screen" style="background: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);">
+<body class="text-white font-sans antialiased min-h-screen">
   <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+
+  <!-- What a reader sees, and what a crawler or link preview that does not run
+       JavaScript gets: the page's heading, one sentence on what it is, and the
+       four links every Companion site carries. scripts/assert-site.mjs fails the
+       build if this drifts from src/lib/site.js. -->
+  <noscript>
+    <div class="noscript-page">
+      <h1>Spellbook: a catalog of local-AI and self-hosting tools</h1>
+      <p>Shelves organized by the job you are doing, from model managers and MCP connectors to home servers, networking and edge hardware. Open a shelf, or search them all.</p>
+      <p>Spellbook needs JavaScript to open its shelves and search them.</p>
+      <p class="noscript-links">
+        <a href="https://ci.computer">Companion Intelligence</a>
+        <a href="https://docs.ci.computer/docs/apps-available/first-party-apps/spellbook">Docs</a>
+        <a href="https://ci.computer/download">Download Companion</a>
+        <a href="https://ci.computer/core">Buy Companion Core</a>
+      </p>
+    </div>
+  </noscript>
+
+  <!-- data-cfasync="false": Cloudflare's Rocket Loader otherwise rewrites this
+       tag's type to "<hash>-module" and defers the app's start until its own
+       loader has run. -->
+  <script type="module" src="/src/main.jsx" data-cfasync="false"></script>
 </body>
 </html>
