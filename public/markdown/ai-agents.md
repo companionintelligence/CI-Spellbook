@@ -110,8 +110,8 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Anthropic: Building Effective AI Agents](https://www.anthropic.com/research/building-effective-agents) | Anthropic's canonical guide to agent design patterns, workflows, and production considerations. | Web | The primary reference for Claude-based agent architecture; updated regularly. |
-| [DeepLearning.AI: Agent Skills with Anthropic](https://www.deeplearning.ai/courses/agent-skills-with-anthropic/) | Short course on building Claude agents, covering MCP, Claude Code, and the Agent SDK. | Web | Up to date with the 2026 Claude platform; good on-ramp for new developers. |
+| [Anthropic: Building Effective AI Agents](https://www.anthropic.com/engineering/building-effective-agents) | Anthropic's canonical guide to agent design patterns, workflows, and production considerations. | Web | The primary reference for Claude-based agent architecture; updated regularly. |
+| [DeepLearning.AI: Agent Skills with Anthropic](https://www.deeplearning.ai/courses/agent-skills-with-anthropic) | Short course on building Claude agents, covering MCP, Claude Code, and the Agent SDK. | Web | Up to date with the 2026 Claude platform; good on-ramp for new developers. |
 | [Hugging Face Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction) | Free multi-unit course on building agents with smolagents, LangGraph, and tool use. | Web | Covers code agents, multi-agent systems, and tool integration; actively maintained. |
 | [OpenAI: Practical Guide to Building Agents](https://openai.com/index/new-tools-for-building-agents/) | OpenAI's practical reference for the Agents SDK, handoffs, guardrails, and tracing. | Web | Essential reading for teams using the OpenAI Agents SDK in production. |
 | [Awesome AI Agents (e2b)](https://github.com/e2b-dev/awesome-ai-agents) | Curated list of AI agents, frameworks, and tools with categorised links. | Web | Broadly maintained community list; good for discovery across the ecosystem. |

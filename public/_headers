@@ -8,8 +8,11 @@
 # src/styles.css, and React sets the few per-shelf colours through the CSSOM, which
 # style-src does not restrict.
 #
-#   - No analytics hosts: this site has none. If Google Analytics is ever added,
-#     script-src and connect-src must be extended to match what it loads.
+#   - No analytics hosts: this file, as committed, allows none, and the page carries no
+#     analytics. A build given GA_MEASUREMENT_ID (the Pages build) adds the tags AND
+#     rewrites this CSP line in dist/_headers to allow Google's hosts, in script-src,
+#     connect-src and img-src and nowhere else (scripts/ga4.mjs). Do not add them
+#     here: the container image shares this bundle and must stay analytics-free.
 #   - No Sentry host: crash reporting asks /api/config/telemetry first, and a static
 #     host has no such endpoint (it is a real 404 now, see public/404.html), so the
 #     bundle stays silent here. If reporting is ever enabled on Pages, add the

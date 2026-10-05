@@ -11,7 +11,9 @@ import {
   DOWNLOAD_URL,
   HEADLINE,
   HOME_URL,
-  HUB_NOTE,
+  HUB_NOTE_LEAD,
+  HUB_STORE_LABEL,
+  HUB_STORE_URL,
   LEDE,
   LICENSE_URL
 } from './lib/site';
@@ -637,7 +639,10 @@ const App = () => {
           <section className="cta-band" aria-labelledby="cta-band-title">
             <div className="cta-band-copy">
               <h2 id="cta-band-title">Get Companion</h2>
-              <p>{HUB_NOTE}</p>
+              <p>
+                {HUB_NOTE_LEAD}
+                <a href={HUB_STORE_URL}>{HUB_STORE_LABEL}</a>.
+              </p>
             </div>
             <div className="cta-band-actions">
               <a className="cta cta-secondary" href={DOWNLOAD_URL}>

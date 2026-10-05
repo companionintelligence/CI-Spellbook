@@ -8,7 +8,7 @@ import { checkLockfiles } from '../../scripts/check-lockfiles.mjs';
 const ROOT = resolve(process.cwd());
 
 describe('lockfiles', () => {
-  it('package.json, package-lock.json and deno.lock list the same direct dependencies', () => {
+  it('package.json, package-lock.json and deno.lock list the same direct dependencies, resolved to the same versions', () => {
     expect(checkLockfiles(ROOT)).toEqual([]);
   });
 
@@ -21,6 +21,16 @@ describe('lockfiles', () => {
       const pkg = JSON.parse(readFileSync(join(tmp, 'package.json'), 'utf8'));
       edit(pkg);
       writeFileSync(join(tmp, 'package.json'), JSON.stringify(pkg));
+      return checkLockfiles(tmp);
+    };
+
+    /** A copy of the lockfiles with `edit` applied to one of them, parsed. */
+    const withLock = (file, edit) => {
+      tmp = mkdtempSync(join(tmpdir(), 'spellbook-locks-'));
+      for (const f of ['package.json', 'package-lock.json', 'deno.lock']) cpSync(join(ROOT, f), join(tmp, f));
+      const lock = JSON.parse(readFileSync(join(tmp, file), 'utf8'));
+      edit(lock);
+      writeFileSync(join(tmp, file), JSON.stringify(lock));
       return checkLockfiles(tmp);
     };
 
@@ -49,6 +59,38 @@ describe('lockfiles', () => {
         pkg.dependencies.react = '^19.0.0';
       });
       expect(problems.join('\n')).toContain('package-lock.json has react@^18.2.0, package.json wants ^19.0.0');
+    });
+
+    it('a canon package the two lockfiles resolve differently, the way the PR left deno.lock vs package-lock.json', () => {
+      // Pages (npm ci) and the container (deno install --frozen) would ship different
+      // token CSS from the same commit, and both lockfiles would still be "valid".
+      const problems = withLock('deno.lock', (lock) => {
+        for (const [spec, resolved] of Object.entries(lock.specifiers)) {
+          if (spec.startsWith('npm:@companionintelligence/tokens@')) lock.specifiers[spec] = resolved.replace(/^[\d.]+/, '1.0.0');
+        }
+      });
+      expect(problems.join('\n')).toMatch(/@companionintelligence\/tokens resolves to \d+\.\d+\.\d+ in package-lock\.json but 1\.0\.0 in deno\.lock/);
+    });
+
+    it('a transitive canon package that differs, even though no direct dependency does', () => {
+      const problems = withLock('package-lock.json', (lock) => {
+        lock.packages['node_modules/@companionintelligence/content'].version = '1.0.1';
+      });
+      expect(problems.join('\n')).toContain('@companionintelligence/content is 1.0.1 in package-lock.json but 1.0.0 in deno.lock');
+    });
+
+    it('a runtime dependency that resolves differently', () => {
+      const problems = withLock('package-lock.json', (lock) => {
+        lock.packages['node_modules/react'].version = '18.0.0';
+      });
+      expect(problems.join('\n')).toContain('react resolves to 18.0.0 in package-lock.json but');
+    });
+
+    it('transitive dev tooling may differ: it never reaches the bundle', () => {
+      const problems = withLock('package-lock.json', (lock) => {
+        lock.packages['node_modules/eslint-scope'].version = '0.0.1';
+      });
+      expect(problems).toEqual([]);
     });
   });
 });

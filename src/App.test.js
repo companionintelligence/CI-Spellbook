@@ -4,7 +4,18 @@ import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { BUY_LABEL, BUY_URL, DOCS_URL, DOWNLOAD_LABEL, DOWNLOAD_URL, HEADLINE, HOME_URL } from './lib/site.js';
+import {
+  BUY_LABEL,
+  BUY_URL,
+  DOCS_URL,
+  DOWNLOAD_LABEL,
+  DOWNLOAD_URL,
+  HEADLINE,
+  HOME_URL,
+  HUB_NOTE_LEAD,
+  HUB_STORE_LABEL,
+  HUB_STORE_URL
+} from './lib/site.js';
 
 // The whole app, rendered in jsdom against the real shelves in public/markdown.
 // What this pins is the page's structure: the cross-links to ci.computer and the
@@ -98,8 +109,17 @@ describe('cross-links to the main site', () => {
     expect(docs.every((a) => a.textContent.trim() === 'Docs')).toBe(true);
   });
 
+  it("links this app's Companion Hub App Store listing from the footer sentence that mentions it", () => {
+    expect(HUB_STORE_URL).toBe('https://hub.ci.computer/store/ci-spellbook');
+    const [store, ...rest] = links(HUB_STORE_URL);
+    expect(rest).toEqual([]);
+    expect(store.closest('footer')).not.toBeNull();
+    expect(store.textContent).toBe(HUB_STORE_LABEL);
+    expect(store.parentElement.textContent).toBe(`${HUB_NOTE_LEAD}${HUB_STORE_LABEL}.`);
+  });
+
   it('opens every one of them in the same tab', () => {
-    for (const href of [HOME_URL, BUY_URL, DOWNLOAD_URL, DOCS_URL]) {
+    for (const href of [HOME_URL, BUY_URL, DOWNLOAD_URL, DOCS_URL, HUB_STORE_URL]) {
       for (const a of links(href)) expect(a.getAttribute('target'), href).toBeNull();
     }
   });

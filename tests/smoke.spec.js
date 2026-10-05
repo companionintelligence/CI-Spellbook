@@ -48,6 +48,14 @@ test.describe('links to the main site', () => {
     });
   }
 
+  test('the footer names the Companion Hub App Store and links to its Spellbook listing', async ({ page }) => {
+    await page.goto('/');
+    const link = page.locator('footer').getByRole('link', { name: 'Companion Hub App Store', exact: true });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', 'https://hub.ci.computer/store/ci-spellbook');
+    await expect(link).not.toHaveAttribute('target', /.+/);
+  });
+
   test('the calls to action are reachable at phone width without sideways scrolling', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/');

@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 import { assertSite } from './scripts/assert-site.mjs'
+import { ga4 } from './scripts/ga4.mjs'
 import {
   TELEMETRY_CONFIG_PATH,
   telemetryConsentPayload
@@ -96,7 +97,10 @@ const root = fileURLToPath(new URL('.', import.meta.url))
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), telemetryConsent(), cloudflareOptOut(), assertSiteSurface()],
+  // ga4() reads GA_MEASUREMENT_ID from the build's environment and does nothing
+  // without one (scripts/ga4.mjs). assertSiteSurface() stays last so it checks the
+  // output after every other plugin has had its say.
+  plugins: [react(), tailwindcss(), telemetryConsent(), cloudflareOptOut(), ga4(), assertSiteSurface()],
   server: {
     port: 5500,
     host: true

@@ -15,8 +15,11 @@
 // What it reports:
 //   dead      the link is gone: 404/410, or the host does not resolve. Exits 1.
 //   moved     the link works only through a redirect. A GitHub repo that was
-//             renamed or transferred, or a site that sends a permanent redirect.
-//             Update the catalog to the canonical address.
+//             renamed or transferred, or a site that sends a permanent redirect
+//             to a different page. Update the catalog to the canonical address.
+//             (A site sending its own address to a deeper landing page of itself,
+//             such as a docs home to its introduction, is not "moved": see
+//             dev-tools/link-rules.mjs.)
 //   archived  a GitHub repo its owner has archived (read-only, no longer
 //             maintained). Needs GITHUB_TOKEN or GH_TOKEN.
 //   blocked   the site answers 401/403/429 to a script. Often a bot wall that
@@ -29,6 +32,8 @@
 // Dependency-free on purpose.
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+
+import { isLandingAlias } from './link-rules.mjs';
 
 const DIR = new URL('../public/markdown', import.meta.url).pathname;
 const argv = process.argv.slice(2);
@@ -145,7 +150,9 @@ async function checkHttp(url) {
     if (res.status >= 500) return { status: 'error', detail: `HTTP ${res.status}`, finalUrl: current };
     if (res.status >= 400) return { status: 'dead', detail: `HTTP ${res.status}`, finalUrl: current };
 
-    const same = current.replace(/\/$/, '') === url.replace(/\/$/, '');
+    // Same address, or the owner's own deeper landing page for it (dev-tools/link-rules.mjs):
+    // nothing to change in the catalog.
+    const same = current.replace(/\/$/, '') === url.replace(/\/$/, '') || isLandingAlias(url, current);
     return same
       ? { status: 'ok', finalUrl: current }
       : { status: permanent ? 'moved' : 'ok', canonical: current, detail: permanent ? `permanent redirect to ${current}` : `temporary redirect to ${current}`, finalUrl: current };

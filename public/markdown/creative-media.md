@@ -89,7 +89,7 @@
 | [HunyuanImage](https://github.com/Tencent-Hunyuan/HunyuanImage-3.0) | Tencent's 80B MoE autoregressive image model for generation and editing. | Open weights | Strong multilingual prompting; good complement to FLUX for CJK languages. |
 | [Qwen-Image](https://github.com/QwenLM/Qwen-Image) | Alibaba's 20B unified generation+editing model; v2.0 is 7B, top AI Arena ranking. | Hosted API | v2.0 open weights not yet released as of June 2026; available via API. |
 | [Stable Diffusion 3.5](https://huggingface.co/stabilityai/stable-diffusion-3.5-large) | Stability AI's MMDiT-based T2I model; SD3.5 Large is 8B params. | Open weights | Strong community LoRA ecosystem; needs 18 GB VRAM for the large variant. |
-| [Imagen 4](https://deepmind.google/models/imagen/) | Google DeepMind hosted T2I model; GA in Gemini API as of Feb 2026; up to 2K output. | Hosted API | Three tiers: Ultra, Flagship, and Fast. |
+| [Nano Banana](https://ai.google.dev/gemini-api/docs/image-generation) | Google's Gemini image generation and editing, from text, images or both; models run from Lite to Pro. | Hosted API | Replaces Imagen, which Google has shut down in the Gemini API. Nano Banana 2 does 4K. |
 | [Kling 3.0](https://kling.ai/) | Kuaishou's hosted video model; 15 s clips at 4K/60fps in one pass. | Hosted API | Multiple entries in the top-10 of 2026 video leaderboards. |
 | [Midjourney](https://www.midjourney.com/) | Hosted T2I/T2V service; V8 generation current as of spring 2026. | Hosted API | Still the benchmark for aesthetic quality among hosted image generators. |
 | [Sora 2](https://openai.com/sora) | OpenAI hosted video+audio model; consumer app discontinued April 2026. | Hosted API | Deprecated — API shuts down Sept 2026; avoid new pipelines on it. |

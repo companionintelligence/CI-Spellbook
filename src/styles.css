@@ -283,6 +283,7 @@ main:focus { outline: none; }
 .cta:focus-visible,
 .footer-links a:focus-visible,
 .footer-legal a:focus-visible,
+.cta-band p a:focus-visible,
 .app-search-button:focus-visible,
 .no-results-didyoumean:focus-visible,
 .no-results-shelf:focus-visible,
@@ -474,6 +475,16 @@ main:focus { outline: none; }
   margin-top: 0.15rem;
   color: var(--ci-text-soft);
 }
+
+/* An inline link, so it carries an underline as well as the colour. */
+.cta-band p a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cta-band p a:hover { color: var(--foreground); }
 
 .cta-band-actions {
   display: flex;

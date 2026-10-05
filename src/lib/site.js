@@ -24,6 +24,13 @@ export const HEADLINE = 'Spellbook: a catalog of local-AI and self-hosting tools
 export const LEDE =
   'Shelves organized by the job you are doing, from model managers and MCP connectors to home servers, networking and edge hardware. Open a shelf, or search them all.';
 
-export const HUB_NOTE = 'Spellbook is also available in the Companion Hub App Store.';
+/**
+ * Spellbook's listing in the Companion Hub App Store, the same address
+ * ci.computer/download links to. The footer sentence is `HUB_NOTE_LEAD`, then
+ * the label as a link, then a full stop.
+ */
+export const HUB_STORE_URL = 'https://hub.ci.computer/store/ci-spellbook';
+export const HUB_STORE_LABEL = 'Companion Hub App Store';
+export const HUB_NOTE_LEAD = 'Spellbook is also available in the ';
 
 export const LICENSE_URL = 'https://polyformproject.org/licenses/noncommercial/1.0.0';

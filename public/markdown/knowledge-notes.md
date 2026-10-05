@@ -84,7 +84,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Notion](https://www.notion.so/) | Hosted workspace combining docs, databases, and AI features. | Web, Cross-platform, Mobile | Reference point the open tools above compete with; strong templates ecosystem. |
+| [Notion](https://www.notion.com/) | Hosted workspace combining docs, databases, and AI features. | Web, Cross-platform, Mobile | Reference point the open tools above compete with; strong templates ecosystem. |
 | [Obsidian](https://obsidian.md/) | Local-markdown knowledge base with a huge plugin ecosystem. | Cross-platform, Mobile | Free for personal use; files stay local; the default serious PKM choice. |
 
 ## Tutorials & Learning

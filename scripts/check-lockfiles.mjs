@@ -4,19 +4,44 @@
 // ci.yml, local dev) against package-lock.json, and with Deno (the container
 // image: Dockerfile runs `deno install --frozen`) against deno.lock. `npm ci`
 // already refuses a package.json that package-lock.json does not match. Nothing
-// did the same for deno.lock, and it drifted: #68 added three dependencies and
-// regenerated only the npm lockfile, so every container build after it would have
-// died at `deno install --frozen` with "The lockfile is out of date", whatever the
-// registry credentials. That failure only shows up in the publish workflow, which
-// is run by hand, so it sat there unnoticed.
+// did the same for deno.lock, and it drifted twice.
 //
-// This checks the part of what `deno install --frozen` checks that actually
-// drifts, which is the SET of direct dependencies (a package added to or dropped
-// from package.json but not from the lockfile), with no network, no token and no
-// Deno needed. It compares by package name, not by version range: Deno writes
-// ranges back in its own normal form (`^1.0.0` becomes `1`), and reproducing that
-// here would be a second, wrong copy of semver. A range edited alone is still
-// caught where it is cheap to: `npm ci` and `deno install --frozen` both refuse it.
+// First, #68 added three dependencies and regenerated only the npm lockfile, so
+// every container build after it would have died at `deno install --frozen` with
+// "The lockfile is out of date", whatever the registry credentials. That failure
+// only shows up in the publish workflow, which is run by hand, so it sat there
+// unnoticed.
+//
+// Second, once deno.lock was regenerated it resolved the private canon packages
+// (tokens, assets, config) to newer releases than package-lock.json did, so the
+// Pages bundle and the container shipped different design-token CSS (41,095 vs
+// 44,915 bytes, different :root and .dark blocks) from one commit. Both lockfiles
+// were internally valid, and `deno install --frozen` accepts that, because it
+// checks that the lock matches package.json, not that it matches the npm lock.
+//
+// So this checks three things, with no network, no token and no Deno needed:
+//
+//   1. the SET of direct dependencies is the same in package.json, package-lock.json
+//      and deno.lock (a package added to or dropped from one but not the others);
+//   2. package-lock.json records each direct dependency's range as package.json
+//      writes it;
+//   3. the two lockfiles RESOLVE to the same version for every direct dependency
+//      and for every @companionintelligence/* package, direct or transitive. Those
+//      are the packages whose files ship (the brand tokens and assets), and the
+//      runtime dependencies are all direct ones, so this is the set where a
+//      silent difference changes what a reader gets. Transitive dev tooling
+//      (eslint's tree, esbuild's per-platform binaries) is allowed to differ: it
+//      never reaches the bundle, and Deno and npm do not always pick the same
+//      optional packages.
+//
+// Names are compared as names, ranges are not compared across files: Deno writes
+// ranges back in its own normal form, and reproducing that here would be a second,
+// wrong copy of semver. A range edited alone is caught where it is cheap to:
+// `npm ci` and `deno install --frozen` both refuse it.
+//
+// To move the canon packages: edit package.json, run `npm install`, then
+// `deno install --frozen=false` (Deno seeds its resolution from package-lock.json,
+// so the two end up on the same versions), and commit both lockfiles.
 //
 //   node scripts/check-lockfiles.mjs
 //
@@ -60,6 +85,59 @@ export function checkLockfiles(root = ROOT) {
     }
   }
 
+  // Resolved versions. npm: node_modules/<name>.version. Deno: `specifiers` maps
+  // `npm:<name>@<range>` to `<version>[_<peer suffix>]`; `npm` keys every package it
+  // locked as `<name>@<version>[_<peer suffix>]`.
+  if (existsSync(join(root, 'package-lock.json'))) {
+    const npmPackages = read('package-lock.json').packages ?? {};
+    const denoLock = read('deno.lock');
+
+    const npmVersions = (name) =>
+      new Set(
+        Object.entries(npmPackages)
+          .filter(([path]) => path === `node_modules/${name}` || path.endsWith(`/node_modules/${name}`))
+          .map(([, entry]) => entry.version)
+      );
+    const denoVersions = (name) =>
+      new Set(
+        Object.keys(denoLock.npm ?? {})
+          .map((key) => /^(@?[^@]+)@([^_]+)/.exec(key))
+          .filter((m) => m?.[1] === name)
+          .map((m) => m[2])
+      );
+    const show = (versions) => (versions.size ? [...versions].sort().join(', ') : '(nothing)');
+    const same = (a, b) => a.size === b.size && [...a].every((v) => b.has(v));
+
+    // Every direct dependency: the one version npm hoisted to the top against the
+    // one version Deno's specifier resolved to.
+    const reported = new Set();
+    for (const name of Object.keys(direct).sort()) {
+      const npmVersion = npmPackages[`node_modules/${name}`]?.version;
+      const specifier = Object.entries(denoLock.specifiers ?? {}).find(([spec]) => spec.startsWith(`npm:${name}@`));
+      const denoVersion = specifier?.[1].split('_')[0];
+      if (npmVersion && denoVersion && npmVersion !== denoVersion) {
+        reported.add(name);
+        problems.push(`${name} resolves to ${npmVersion} in package-lock.json but ${denoVersion} in deno.lock, so the Pages bundle and the container would not ship the same code (run \`npm install\`, then \`deno install --frozen=false\`)`);
+      }
+    }
+
+    // The brand canon, whole: tokens and assets are what ship, and config and content
+    // come with them.
+    const canon = new Set(
+      [...Object.keys(npmPackages), ...Object.keys(denoLock.npm ?? {})]
+        .map((key) => /(@companionintelligence\/[^@/_]+)/.exec(key)?.[1])
+        .filter(Boolean)
+    );
+    for (const name of [...canon].sort()) {
+      if (reported.has(name)) continue;
+      const a = npmVersions(name);
+      const b = denoVersions(name);
+      if (!same(a, b)) {
+        problems.push(`${name} is ${show(a)} in package-lock.json but ${show(b)} in deno.lock: the Pages bundle and the container would ship different brand files (run \`npm install\`, then \`deno install --frozen=false\`)`);
+      }
+    }
+  }
+
   return problems;
 }
 
@@ -69,5 +147,5 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     console.error(`Lockfile check failed:\n  - ${problems.join('\n  - ')}`);
     process.exit(1);
   }
-  console.log('OK: package.json, package-lock.json and deno.lock list the same direct dependencies.');
+  console.log('OK: package.json, package-lock.json and deno.lock list the same direct dependencies and resolve them, and the canon packages, to the same versions.');
 }

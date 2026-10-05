@@ -31,13 +31,14 @@ table is what the repo needs them to be, to be checked in the dashboard:
 | Build output directory | `dist` | dashboard |
 | Node.js | 22 | [`.node-version`](../../.node-version), which Pages reads; the Dockerfile and `ci.yml` also use 22 |
 | `NODE_AUTH_TOKEN` | a GitHub token that can read GitHub Packages | dashboard, **Variables and Secrets**, for production **and** preview |
+| `GA_MEASUREMENT_ID` | optional: a GA4 measurement ID (`G-XXXXXXXX`), as a plain variable. Unset means no analytics | dashboard, **Variables**; see [Google Analytics](#google-analytics-opt-in) |
 
 ### `NODE_AUTH_TOKEN` is required, and its absence breaks every deploy
 
 `package.json` depends on three **private** packages, `@companionintelligence/tokens`,
 `config` and `assets` (the canon design layer from CI-Common). `.npmrc` points that
 scope at `npm.pkg.github.com` and reads the credential from `${NODE_AUTH_TOKEN}`.
-Without it, `npm ci` fails with `E401` on `@companionintelligence/tokens@1.0.0`
+Without it, `npm ci` fails with `E401` on `@companionintelligence/tokens`
 (reproduced from a clean clone with no token; with a token, install, build, lint and
 tests all pass). The Pages build log itself is behind the dashboard login, so that
 is the inferred cause, not a log line.
@@ -62,7 +63,7 @@ there either way; see [`error-reporting.md`](error-reporting.md).
 
 | File | Does |
 |---|---|
-| `public/_headers` | The CSP, frame/referrer/permissions policy, HSTS, and cache lifetimes. The CSP allows no inline script or style and no third-party host. |
+| `public/_headers` | The CSP, frame/referrer/permissions policy, HSTS, and cache lifetimes. The CSP allows no inline script or style and no third-party host, until a build is given `GA_MEASUREMENT_ID` (below). |
 | `404.html` | Built as a second Vite entry. Its presence in `dist/` turns off Pages' single-page-app fallback, so an unknown path is a real `404` instead of the home page. The app has no client-side routes, so nothing needs the fallback. |
 | `public/robots.txt`, `public/sitemap.xml` | Crawler files. The sitemap lists the one page. |
 | `public/site.webmanifest`, `public/og-image.png`, icons | Web manifest and the 1200x630 share image. |
@@ -81,8 +82,45 @@ Two things in the Cloudflare zone, not in this repo, interact with the page:
   2026-10-04). The CSP does not allow inline script, so a browser will refuse it and log
   a violation. That costs Cloudflare bot scoring and nothing the page needs.
 
-If Google Analytics is ever added, extend the CSP in `public/_headers` to the hosts it
-loads from. It allows none now because the page has none.
+## Google Analytics (opt-in)
+
+Analytics is a **build-time** option, driven by one variable. In the Pages project,
+add `GA_MEASUREMENT_ID` (Variables, not Secrets: the ID is public in the page anyway)
+holding the GA4 measurement ID, `G-XXXXXXXX`, then retry the deployment. That is all:
+[`scripts/ga4.mjs`](../../scripts/ga4.mjs), a Vite plugin, then
+
+- adds the gtag loader and `<script src="/ga-init.js">` to `index.html` and `404.html`,
+  both with `data-cfasync="false"` so Rocket Loader leaves them alone;
+- emits `dist/ga-init.js`, because the CSP forbids inline script (the init cannot be a
+  `<script>` body);
+- rewrites the CSP line of the built `dist/_headers`: `https://www.googletagmanager.com`
+  in `script-src`, and `https://*.google-analytics.com`, `https://*.analytics.google.com`
+  and `https://*.googletagmanager.com` in `connect-src` and `img-src`. No `unsafe-inline`,
+  no other directive touched.
+
+With the variable unset, or not shaped like `G-` plus capitals and digits (a typo prints a
+warning in the build log and leaves analytics off), the output is byte for byte what the
+repository holds: no tags, no `ga-init.js`, no Google host in the CSP. The build fails if
+the output is half-way (tags without the CSP allowance, a tag twice, an ID that differs
+between pages), and `npm run check:ga-build` proves the on, off and rebuild cases with real
+builds. The ID is never committed; `npm run build` fails if a tag or ID is found in
+`index.html` or `404.html`.
+
+Why a variable on Pages rather than a GitHub Actions variable: this site is built by
+Cloudflare's Git integration, not by a workflow (see the top of this page), so the
+dashboard is the only place its build environment exists. The container image is built by
+the Dockerfile, which does not forward `GA_MEASUREMENT_ID`, so it stays analytics-free and
+`nginx/default.conf` (which sets no CSP) never has to allow a Google host. Only the
+process environment is read, not `.env` files, because the Docker build context contains
+them.
+
+To confirm it on the live site, after setting the variable and redeploying:
+
+```bash
+curl -s https://magic.ci.computer/ | grep -c 'googletagmanager.com/gtag/js'          # 1
+curl -s https://magic.ci.computer/ga-init.js                                          # gtag('config','G-...')
+curl -sI https://magic.ci.computer/ | grep -i content-security-policy | grep -c googletagmanager   # 1
+```
 
 ## Checking a deploy
 
@@ -128,5 +166,8 @@ npm install                                          # package-lock.json
 NODE_AUTH_TOKEN=... deno install --frozen=false      # deno.lock
 ```
 
-and commit them together. The image takes the same `NODE_AUTH_TOKEN`, as a BuildKit
+and commit them together. Deno seeds its resolution from `package-lock.json`, so the two
+land on the same versions; `npm run check:lockfiles` fails if a direct dependency or any
+`@companionintelligence/*` package resolves differently in the two (before it did, the
+Pages bundle and the container shipped different design tokens from the same commit). The image takes the same `NODE_AUTH_TOKEN`, as a BuildKit
 secret (see the Dockerfile).

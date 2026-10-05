@@ -15,7 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^4.1.7",
-    "@companionintelligence/tokens": "^1.0.0"
+    "@companionintelligence/tokens": "^1.2.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.1",
@@ -25,8 +25,8 @@
     "jsdom": "^30.0.1",
     "vite": "^5.4.19",
     "vitest": "^4.1.10",
-    "@companionintelligence/config": "^1.0.0",
-    "@companionintelligence/assets": "^1.0.0"
+    "@companionintelligence/config": "^1.2.0",
+    "@companionintelligence/assets": "^1.5.1"
   },
   "scripts": {
     "dev": "vite",
@@ -39,6 +39,7 @@
     "test:unit:watch": "vitest",
     "assert:no-sentry-without-dsn": "node scripts/assert-bundle-without-dsn.mjs",
     "assert:site": "node scripts/assert-site.mjs",
+    "check:ga-build": "node scripts/check-ga-build.mjs",
     "check:lockfiles": "node scripts/check-lockfiles.mjs",
     "lint:content": "node dev-tools/lint-content.mjs",
     "check:links": "node dev-tools/check-links.mjs",

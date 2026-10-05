@@ -53,6 +53,14 @@ describe('checkSource notices drift', () => {
     tmp = undefined;
   });
 
+  it('a Google Analytics tag committed into index.html (it belongs to the build, not the source)', () => {
+    const problems = withEdit('index.html', (h) =>
+      h.replace('</head>', '<script async src="https://www.googletagmanager.com/gtag/js?id=G-ABC123456"></script></head>')
+    );
+    expect(problems.join('\n')).toContain('index.html: carries a Google Analytics tag or measurement ID');
+    expect(problems.join('\n')).toContain('GA_MEASUREMENT_ID');
+  });
+
   it('a changed Buy link', () => {
     const problems = withEdit('index.html', (h) => h.replace(/<a href="https:\/\/ci\.computer\/core">/, '<a href="https://ci.computer/store">'));
     expect(problems.join('\n')).toContain('no link to https://ci.computer/core');

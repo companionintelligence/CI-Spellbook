@@ -20,6 +20,10 @@
 //
 //   node scripts/assert-site.mjs            # check the source, then ./dist if built
 //
+// The build output is also where Google Analytics is checked (checkAnalytics): off
+// unless the build was given a GA4 measurement ID, and when it was, tags, init file
+// and CSP all present, once. The ID itself is never allowed into the source files.
+//
 // Dependency-free on purpose (no jsdom): it runs inside the Deno-based image build.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -33,10 +37,12 @@ import {
   DOWNLOAD_URL,
   HEADLINE,
   HOME_URL,
+  HUB_STORE_URL,
   LEDE,
   PRODUCT_NAME,
   SITE_URL
 } from '../src/lib/site.js';
+import { GA_CSP, GA_ENV, GA_INIT_FILE, GA_LOADER, isGaId } from './ga4.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -121,6 +127,17 @@ function checkNoInline(label, html, problems) {
   }
   if (/<style\b/i.test(html)) problems.push(`${label}: inline <style> (the CSP forbids it)`);
   if (/\sstyle\s*=/i.test(html)) problems.push(`${label}: inline style="" attribute (the CSP forbids it)`);
+}
+
+/**
+ * The measurement ID is a build-time value (scripts/ga4.mjs adds the tags to the built
+ * pages), so neither source page may carry a GA tag or an ID: a copy committed here
+ * would load analytics in the container and in dev, where it must never run.
+ */
+function checkNoAnalyticsInSource(label, html, problems) {
+  if (/googletagmanager\.com|google-analytics\.com|\bgtag\s*\(|\bG-[A-Z0-9]{6,}\b/.test(html)) {
+    problems.push(`${label}: carries a Google Analytics tag or measurement ID; it is injected at build time from ${GA_ENV} (scripts/ga4.mjs)`);
+  }
 }
 
 // ---- layer 1: the source ------------------------------------------------------
@@ -221,6 +238,7 @@ export function checkSource(root = ROOT) {
     problems.push('index.html: the entry script lacks data-cfasync="false" (Cloudflare Rocket Loader rewrites it otherwise)');
   }
   checkNoInline('index.html', html, problems);
+  checkNoAnalyticsInSource('index.html', html, problems);
 
   // -- 404 page --
   const nfPath = p('404.html');
@@ -229,6 +247,7 @@ export function checkSource(root = ROOT) {
     const nf = read(nfPath);
     checkCrossLinks('404.html', nf, problems);
     checkNoInline('404.html', nf, problems);
+    checkNoAnalyticsInSource('404.html', nf, problems);
     if (!/<h1\b/i.test(nf)) problems.push('404.html: no <h1>');
     if (metaContent(nf, 'name', 'robots') !== 'noindex') problems.push('404.html: not marked noindex');
     if (!anchors(nf).some((a) => a.href === '/')) problems.push('404.html: no link back to /');
@@ -311,7 +330,106 @@ function walk(dir) {
   return out;
 }
 
-export function checkDist(dist) {
+/** The CSP value from a built `_headers` file, as a Map of directive -> values. */
+function cspDirectives(headers) {
+  const csp = /^\s*Content-Security-Policy:\s*(.+)$/im.exec(headers)?.[1];
+  if (!csp) return null;
+  return new Map(
+    csp.split(';').map((d) => d.trim()).filter(Boolean).map((d) => {
+      const [name, ...values] = d.split(/\s+/);
+      return [name, values];
+    })
+  );
+}
+
+/**
+ * Google Analytics in the built output.
+ *
+ * Expected state comes from the environment of the build, the same place scripts/ga4.mjs
+ * reads it: a valid GA_MEASUREMENT_ID means analytics must be fully built in; a set but
+ * malformed one means it must be fully absent. With the variable unset the output is
+ * judged on what it is (a CLI run after a build made elsewhere), and must be consistent,
+ * either entirely off or entirely on.
+ *
+ * "Fully on" is: the loader and the init tag, each exactly once on every page, both
+ * opted out of Rocket Loader; /ga-init.js present with exactly one config call for that
+ * ID; and the CSP allowing exactly the hosts that needs. "Fully off" is: no Google host
+ * on any page, none in the CSP, and no init file.
+ */
+export function checkAnalytics(dist, env = process.env) {
+  const problems = [];
+  const d = (...parts) => join(dist, ...parts);
+  const pages = ['index.html', '404.html'].filter((f) => existsSync(d(f))).map((f) => [`dist/${f}`, read(d(f))]);
+  const headers = existsSync(d('_headers')) ? read(d('_headers')) : '';
+  const directives = cspDirectives(headers);
+  const initPath = d(GA_INIT_FILE);
+
+  const loaderRe = new RegExp(`<script\\b[^>]*\\bsrc="${GA_LOADER.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}\\?id=([^"&]*)"[^>]*>`, 'g');
+  const loaders = (html) => [...html.matchAll(loaderRe)];
+  const initTags = (html) => tagsOf(html, 'script').filter((t) => attr(t, 'src') === `/${GA_INIT_FILE}`);
+  const googleOnPage = (html) => /googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(html);
+  const googleInCsp = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(
+    [...(directives?.values() ?? [])].flat().join(' ')
+  );
+
+  const builtId = pages.flatMap(([, html]) => loaders(html).map((m) => m[1]))[0] ?? '';
+  const built = builtId !== '' || existsSync(initPath) || pages.some(([, html]) => initTags(html).length > 0);
+
+  const wanted = (env[GA_ENV] ?? '').trim();
+  const expectOn = wanted !== '' ? isGaId(wanted) : built;
+
+  if (!expectOn) {
+    for (const [name, html] of pages) {
+      if (googleOnPage(html)) problems.push(`${name}: a Google Analytics tag is in the page${wanted ? `, but ${GA_ENV} is not a valid G-… ID` : ''}`);
+    }
+    if (existsSync(initPath)) problems.push(`dist/${GA_INIT_FILE} was emitted without a valid ${GA_ENV}`);
+    if (googleInCsp) problems.push(`dist/_headers: the CSP allows a Google host, but analytics is off (no valid ${GA_ENV}); the container image shares this bundle and must stay analytics-free`);
+    return problems;
+  }
+
+  if (!isGaId(builtId)) problems.push(`dist/index.html: ${built ? `analytics tags are present but the measurement ID "${builtId}" is not a G-… ID` : `${GA_ENV} is set, but the page has no analytics tags`}`);
+  else if (wanted !== '' && builtId !== wanted) problems.push(`dist/index.html: ${GA_ENV} is ${wanted} but the page loads ${builtId}`);
+
+  for (const [name, html] of pages) {
+    const found = loaders(html);
+    if (found.length !== 1) problems.push(`${name}: expected exactly one gtag.js loader, found ${found.length}`);
+    for (const m of found) {
+      if (attr(m[0], 'data-cfasync') !== 'false') problems.push(`${name}: the gtag.js loader lacks data-cfasync="false" (Rocket Loader would defer it)`);
+      if (m[1] !== builtId) problems.push(`${name}: loads ${m[1]}, the other page loads ${builtId}`);
+    }
+    const inits = initTags(html);
+    if (inits.length !== 1) problems.push(`${name}: expected exactly one /${GA_INIT_FILE} tag, found ${inits.length}`);
+    for (const t of inits) {
+      if (attr(t, 'data-cfasync') !== 'false') problems.push(`${name}: the /${GA_INIT_FILE} tag lacks data-cfasync="false"`);
+    }
+  }
+
+  if (!existsSync(initPath)) problems.push(`dist/${GA_INIT_FILE} was not emitted, so the page loads gtag.js and never configures it`);
+  else {
+    const init = read(initPath);
+    const configs = [...init.matchAll(/gtag\('config','([^']*)'\)/g)].map((m) => m[1]);
+    if (configs.length !== 1 || configs[0] !== builtId) {
+      problems.push(`dist/${GA_INIT_FILE}: expected exactly one gtag('config','${builtId}'), found ${configs.length ? configs.join(', ') : 'none'}`);
+    }
+  }
+
+  if (!directives) problems.push('dist/_headers: no Content-Security-Policy to check the analytics allowance against');
+  else {
+    for (const [name, hosts] of Object.entries(GA_CSP)) {
+      const values = directives.get(name) ?? [];
+      for (const host of hosts) {
+        if (!values.includes(host)) problems.push(`dist/_headers: CSP ${name} does not allow ${host}, which Google Analytics needs (the browser would block it)`);
+      }
+    }
+    for (const name of ['script-src', 'style-src']) {
+      if ((directives.get(name) ?? []).some((v) => /^'unsafe-(inline|eval)'$/.test(v))) problems.push(`dist/_headers: CSP ${name} allows unsafe-inline/eval; analytics does not need it`);
+    }
+  }
+
+  return problems;
+}
+
+export function checkDist(dist, { env = process.env } = {}) {
   const problems = [];
   const d = (...parts) => join(dist, ...parts);
 
@@ -328,6 +446,9 @@ export function checkDist(dist) {
     if (!quoted(href).test(js)) problems.push(`the JS bundle does not contain the link ${href}`);
     if (!js.includes(name)) problems.push(`the JS bundle does not contain the label "${name}"`);
   }
+
+  // The footer's link to this app's Companion Hub App Store listing.
+  if (!quoted(HUB_STORE_URL).test(js)) problems.push(`the JS bundle does not contain the link ${HUB_STORE_URL}`);
 
   // The debug overlay is a development tool. It once shipped to production and ran a
   // requestAnimationFrame loop that multiplied itself (millions of callbacks a
@@ -366,14 +487,16 @@ export function checkDist(dist) {
     if (!existsSync(d(file))) problems.push(`dist/${file} is missing (it belongs in public/)`);
   }
 
+  problems.push(...checkAnalytics(dist, env));
+
   return problems;
 }
 
 // ---- entry point ---------------------------------------------------------------
 
 /** Throws one Error listing every problem; used by the Vite build. */
-export function assertSite({ root = ROOT, dist = null } = {}) {
-  const problems = [...checkSource(root), ...(dist ? checkDist(dist) : [])];
+export function assertSite({ root = ROOT, dist = null, env = process.env } = {}) {
+  const problems = [...checkSource(root), ...(dist ? checkDist(dist, { env }) : [])];
   if (problems.length) {
     throw new Error(`Site check failed (scripts/assert-site.mjs):\n  - ${problems.join('\n  - ')}`);
   }
