@@ -20,7 +20,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Blinko](https://github.com/blinko-space/blinko) | Self-hosted AI note tool with markdown-native storage and retrieval. | Self-hosted | Good for quick capture plus AI retrieval. |
+| [Blinko](https://github.com/blinkospace/blinko) | Self-hosted AI note tool with markdown-native storage and retrieval. | Self-hosted | Good for quick capture plus AI retrieval. |
 | [CodiMD](https://github.com/hackmdio/codimd) | Realtime collaborative markdown editor. | Self-hosted | Strong for team writing and live co-editing. |
 | [flatnotes](https://github.com/dullage/flatnotes) | Database-less web note app backed by plain markdown files. | Self-hosted | Excellent for plain-file workflows. |
 | [FSNotes](https://github.com/glushchenko/fsnotes) | Native notes manager for Apple devices. | macOS, iOS | Good lightweight local notes app. |
@@ -48,7 +48,7 @@
 | [BookStack](https://github.com/BookStackApp/BookStack) | Structured documentation wiki built around books and chapters. | Self-hosted | Excellent for manuals and internal docs. |
 | [CryptPad](https://github.com/cryptpad/cryptpad) | End-to-end encrypted collaborative office suite. | Self-hosted | Strong privacy-first office option. |
 | [Docmost](https://github.com/docmost/docmost) | Collaborative wiki and documentation platform. | Self-hosted, Web | Good modern alternative to legacy team wikis. |
-| [Etherpad](https://github.com/ether/etherpad-lite) | Realtime collaborative document editor. | Self-hosted, Web | Best for lightweight shared writing. |
+| [Etherpad](https://github.com/ether/etherpad) | Realtime collaborative document editor. | Self-hosted, Web | Best for lightweight shared writing. |
 | [LibreOffice](https://github.com/LibreOffice/core) | Open-source office suite for documents and spreadsheets. | Cross-platform | Core productivity baseline. |
 | [OnlyOffice](https://github.com/ONLYOFFICE/DesktopEditors) | Full office suite for docs, sheets, and presentations. | Cross-platform | Good for teams needing Office-style compatibility. |
 | [Wiki.js](https://github.com/requarks/wiki) | Full-featured Node-based wiki platform. | Self-hosted | Good when teams want polished docs with auth. |
@@ -71,12 +71,12 @@
 | --- | --- | --- | --- |
 | [Actual](https://github.com/actualbudget/actual) | Local-first personal finance app. | Self-hosted, Cross-platform | Excellent for private budgeting. |
 | [ActivityWatch](https://github.com/ActivityWatch/activitywatch) | Automatic privacy-focused activity and time tracking. | Cross-platform, Android | Helpful for self-audit and time awareness. |
-| [Cal](https://github.com/calcom/cal.com) | Scheduling infrastructure for bookings and calendar workflows. | Self-hosted | Strong fit for self-hosted scheduling. |
+| [Cal.diy](https://github.com/calcom/cal.diy) | Open-source scheduling platform: the MIT-licensed community edition of Cal.com. | Self-hosted | Built for self-hosting; the project advises personal, non-production use and points teams to Cal.com. |
 | [Firefly III](https://github.com/firefly-iii/firefly-iii) | Personal finance manager for detailed tracking and bookkeeping. | Self-hosted | Good for more structured bookkeeping. |
 | [Focalboard](https://github.com/mattermost-community/focalboard) | Open project management tool with boards and docs. | Cross-platform, Self-hosted | Simple and familiar kanban workflow. |
 | [Plane](https://github.com/makeplane/plane) | Modern open project platform for issues, docs, and sprints. | Self-hosted, Web | Great alternative to heavyweight SaaS PM tools. |
 | [solidtime](https://github.com/solidtime-io/solidtime) | Modern open-source time tracking app. | Self-hosted, Web | Good fit for billable work and reporting. |
-| [Super Productivity](https://github.com/johannesjo/super-productivity) | Task management with integrated timeboxing and tracking. | Cross-platform | Excellent personal productivity dashboard. |
+| [Super Productivity](https://github.com/super-productivity/super-productivity) | Task management with integrated timeboxing and tracking. | Cross-platform | Excellent personal productivity dashboard. |
 | [Vikunja](https://github.com/go-vikunja/vikunja) | To-do management app for personal or team use. | Cross-platform, Mobile, Self-hosted, Web | Good flexible open task manager. |
 | [Wallos](https://github.com/ellite/Wallos) | Subscription tracker with budgeting views. | Self-hosted | Good for recurring-expense visibility. |
 
@@ -91,7 +91,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Obsidian Help Docs](https://help.obsidian.md/) | Official docs covering Obsidian setup, plugins, and workflows. | Web | Best starting point for Obsidian beginners. |
+| [Obsidian Help Docs](https://obsidian.md/help/) | Official docs covering Obsidian setup, plugins, and workflows. | Web | Best starting point for Obsidian beginners. |
 | [Logseq Mastery Blog](https://www.logseqmastery.com/blog) | In-depth guides for Logseq workflows, queries, and daily notes. | Web | Good for getting past the basics in Logseq. |
 | [Linking Your Thinking (LYT)](https://www.linkingyourthinking.com/) | Nick Milo's PKM course and method focused on Obsidian and networked notes. | Web | Well-regarded structured introduction to PKM principles. |
 | [Zotero Quick Start Guide](https://www.zotero.org/support/quick_start_guide) | Official guide covering import, citation, and research workflows in Zotero. | Web | Essential if doing any citation-heavy academic or research work. |

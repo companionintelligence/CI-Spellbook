@@ -49,7 +49,7 @@
 | [Gladys](https://github.com/GladysAssistant/Gladys) | Privacy-first home assistant platform. | Self-hosted | Good alternative home automation stack. |
 | [Home Assistant](https://github.com/home-assistant/core) | Local-first home automation platform. | Cross-platform, Self-hosted | Center of the DIY smart-home universe. |
 | [Music Assistant](https://github.com/music-assistant/server) | Music library manager connecting streaming services and speakers via HA. | Self-hosted | Active HA add-on; official HA integration as of 2026. |
-| [wyoming-satellite](https://github.com/rhasspy/wyoming-satellite) | Remote voice satellite using the Wyoming protocol for local HA voice control. | Self-hosted, Hardware | Key piece of a fully local, private voice pipeline. |
+| [wyoming-satellite](https://github.com/rhasspy/wyoming-satellite) | Remote voice satellite using the Wyoming protocol for local HA voice control. | Self-hosted, Hardware | Archived by its owner (read-only). Key piece of a fully local, private voice pipeline. |
 
 ## Media & Library Servers
 
@@ -71,7 +71,7 @@
 | --- | --- | --- | --- |
 | [Bazarr](https://github.com/morpheus65535/bazarr) | Subtitle companion for media libraries. | Cross-platform, Self-hosted | Great alongside automation media stacks. |
 | [Frigate](https://github.com/blakeblackshear/frigate) | NVR with local object detection. | Self-hosted | Great fit for AI-enabled camera setups. |
-| [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) | Media request and discovery manager. | Self-hosted | Useful when a household shares media servers. |
+| [Seerr (formerly Jellyseerr)](https://github.com/seerr-team/seerr) | Media request and discovery manager for Jellyfin, Plex and Emby. | Self-hosted | Useful when a household shares media servers. |
 | [Radarr](https://github.com/Radarr/Radarr) | Movie management automation. | Cross-platform, Self-hosted | Core piece of many home media stacks. |
 | [Scrypted](https://github.com/koush/scrypted) | Video integration and automation platform. | Self-hosted | Strong glue layer between cameras and smart homes. |
 | [Sonarr](https://github.com/Sonarr/Sonarr) | TV management automation. | Cross-platform, Self-hosted | Common complement to Radarr. |
@@ -85,5 +85,5 @@
 | [Awesome-Selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted) | Curated list of self-hosted software alternatives. | Web | Best starting point for discovering new apps. |
 | [Jeff Geerling's Blog](https://www.jeffgeerling.com/) | Raspberry Pi, Ansible, and homelab deep-dives. | Web | Reliable technical depth, especially for ARM/SBC content. |
 | [r/selfhosted](https://www.reddit.com/r/selfhosted/) | Community forum for self-hosting questions and showcases. | Web | Large active community; good for troubleshooting and discovery. |
-| [Techno Tim](https://technotim.live/) | Homelab tutorials covering Proxmox, Docker, K3s, and self-hosted apps. | Web | Frequently updated; good entry point for homelab beginners. |
+| [Techno Tim](https://technotim.com/) | Homelab tutorials covering Proxmox, Docker, K3s, and self-hosted apps. | Web | Frequently updated; good entry point for homelab beginners. |
 | [Wolfgang's Channel](https://www.youtube.com/@WolfgangsChannel) | In-depth homelab and self-hosting video guides. | Web | Strong on privacy-focused self-hosting and hardware choices. |

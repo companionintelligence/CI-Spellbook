@@ -67,7 +67,7 @@
 | --- | --- | --- | --- |
 | [Ceph](https://github.com/ceph/ceph) | Distributed object, block, and file storage platform. | Self-hosted | Fit for serious infrastructure and homelabs. |
 | [Garage](https://git.deuxfleurs.fr/Deuxfleurs/garage) | Lightweight Rust S3-compatible object store; ~50 MB RAM, geo-distributed. | Self-hosted | Best MinIO replacement for small clusters; MinIO CE archived Feb 2026. |
-| [Maestral](https://github.com/samschott/maestral) | Open-source Dropbox client for macOS and Linux. | macOS, Linux | Nice lightweight sync client. |
+| [Maestral](https://github.com/samschott/maestral) | Open-source Dropbox client for macOS and Linux. | macOS, Linux | Archived by its owner (read-only). Nice lightweight sync client. |
 | [myDrive](https://github.com/subnub/myDrive) | Self-hosted Google Drive-style clone. | Self-hosted | Useful for simple personal cloud setups. |
 | [Nextcloud](https://github.com/nextcloud/server) | Full self-hosted file, collaboration, and app platform. | Cross-platform, Mobile, Self-hosted | Broadest self-hosted cloud stack. |
 | [OpenCloud](https://github.com/opencloud-eu/opencloud) | Modern platform for file management and sharing. | Cross-platform, Mobile, Self-hosted | Good option for sovereign cloud setups. |
@@ -92,5 +92,4 @@
 | --- | --- | --- | --- |
 | [DuckDB for AI: Vector Search & RAG](https://calmops.com/database/duckdb/duckdb-ai/) | How to use DuckDB's vss extension for ML pipelines and RAG. | Web | Good entry point for adding vector search to analytical workflows. |
 | [Local-First Web Architecture 2026](https://www.smashingmagazine.com/2026/05/architecture-local-first-web-development/) | Smashing Magazine deep-dive on sync engines, CRDTs, and local-first patterns. | Web | Best overview article for understanding the local-first stack choices. |
-| [pgvector Complete Guide 2026](https://calmops.com/database/postgresql/postgresql-vector-search-pgvector-complete-guide-2026/) | End-to-end guide to vector search in PostgreSQL with pgvector. | Web | Recommended for teams integrating vector search into an existing Postgres setup. |
 | [Vector DB for RAG — Hands-On Guide](https://learnopencv.com/vector-db-and-rag-pipeline-for-document-rag/) | LearnOpenCV walkthrough of building a full document RAG pipeline. | Web | Practical code examples covering Chroma, Qdrant, Milvus, and pgvector. |

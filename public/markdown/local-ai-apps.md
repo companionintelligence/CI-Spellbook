@@ -19,19 +19,19 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [5ire](https://github.com/nanbingxyz/5ire) | Cross-platform AI client with MCP support and local knowledge features. | Cross-platform | Good option for teams using mixed providers. |
-| [Chatbox](https://github.com/Bin-Huang/chatbox) | Polished desktop AI client for multiple providers. | Cross-platform | Clean general-purpose chat client. |
+| [Chatbox](https://github.com/chatboxai/chatbox) | Polished desktop AI client for multiple providers. | Cross-platform | Clean general-purpose chat client. |
 | [Cherry Studio](https://github.com/CherryHQ/cherry-studio) | AI productivity studio with assistants, smart chat, and local model support. | Cross-platform | Strong fit for multi-assistant setups. |
 | [DeepChat](https://github.com/ThinkInAIXYZ/deepchat) | Personal-world assistant with desktop integrations. | Cross-platform | Useful when local context matters. |
 | [GPT4ALL](https://github.com/nomic-ai/gpt4all) | Desktop app for running local models on consumer hardware. | Cross-platform | One of the simplest local-model entry points. |
 | [Jan](https://github.com/janhq/jan) | Open-source ChatGPT alternative focused on local-first usage. | Cross-platform | Good UX for experimenting with offline models. |
-| [LibreChat](https://github.com/danny-avila/LibreChat) | Flexible self-hosted chat platform with agents, tools, and model switching. | Self-hosted | Good when a team wants one shared AI hub. |
+| [LibreChat](https://github.com/LibreChat-AI/LibreChat) | Flexible self-hosted chat platform with agents, tools, and model switching. | Self-hosted | Good when a team wants one shared AI hub. |
 | [NextChat](https://github.com/ChatGPTNextWeb/NextChat) | Lightweight AI assistant spanning desktop and web-style use. | Cross-platform, Web | Good fit for simpler chat-centric workflows. |
 | [Onyx](https://github.com/onyx-dot-app/onyx) | Open-source AI platform for chat, search, and advanced workflows. | Self-hosted | Strong fit for internal AI platforms. |
 | [Open WebUI](https://github.com/open-webui/open-webui) | Friendly interface for local or hosted model backends. | Self-hosted | One of the most widely used local AI frontends. |
 | [Pinokio](https://github.com/pinokiocomputer/pinokio) | One-click browser for installing and running local AI apps without coding. | Cross-platform | Great for discovering and running community AI tools locally. |
 | [SillyTavern](https://github.com/SillyTavern/SillyTavern) | Power-user frontend for model interaction and prompt customization. | Self-hosted | Best for highly customized conversational setups. |
 | [SurfSense](https://github.com/MODSetter/SurfSense) | Team-oriented alternative to NotebookLM. | Self-hosted | Good for research and shared context. |
-| [Text generation webUI](https://github.com/oobabooga/text-generation-webui) | Feature-rich local UI for text models. | Self-hosted | One of the classic local inference frontends. |
+| [TextGen (formerly text-generation-webui)](https://github.com/oobabooga/textgen) | Desktop app for local LLMs: chat, vision, tool-calling and an OpenAI-compatible API. | Windows, macOS, Linux | Open source with no telemetry; one of the classic local inference frontends. |
 | [tgpt](https://github.com/aandrew-me/tgpt) | Simple terminal chatbot client. | CLI | Great when you want chat without GUI overhead. |
 
 ## Local Model Managers
@@ -45,11 +45,10 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Glass](https://github.com/pickle-com/glass) | Digital memory extension for desktop assistance. | macOS, Windows | Focuses on personal recall and context. |
 | [Leon](https://github.com/leon-ai/leon) | Open-source personal assistant platform. | Self-hosted | Good if you want a self-hosted assistant shell. |
-| [Meetily](https://github.com/Zackriya-Solutions/meeting-minutes) | Local meeting assistant with transcription and summarization. | Windows, macOS | Strong for offline meeting notes. |
+| [Meetily](https://github.com/Zackriya-Solutions/meetily) | Local meeting assistant with transcription and summarization. | Windows, macOS | Strong for offline meeting notes. |
 | [mem0](https://github.com/mem0ai/mem0) | Reusable memory layer for agents and apps. | Self-hosted | Good backend building block for personalization. |
-| [screenpipe](https://github.com/mediar-ai/screenpipe) | Records and indexes on-device activity for search and automation. | macOS, Windows | Powerful if you want searchable personal context. |
+| [screenpipe](https://github.com/screenpipe/screenpipe) | Records and indexes on-device activity for search and automation. | macOS, Windows | Powerful if you want searchable personal context. |
 
 ## Local-First Knowledge & Document Workflows
 
@@ -59,7 +58,7 @@
 | [DocsGPT](https://github.com/arc53/DocsGPT) | Chat with private documents and datasets. | Cross-platform, Self-hosted | Good for internal documentation portals. |
 | [kotaemon](https://github.com/Cinnamon/kotaemon) | RAG workbench for document collections. | Self-hosted | Strong fit for teams with PDFs and reports. |
 | [PaperQA2](https://github.com/Future-House/paper-qa) | Scientific retrieval and citation workflows. | Cross-platform | Good for research-heavy local pipelines. |
-| [Reor](https://github.com/reorproject/reor) | Private, local AI personal knowledge manager. | Cross-platform | Nice fit for knowledge workers who prefer offline tools. |
+| [Reor](https://github.com/reorproject/reor) | Private, local AI personal knowledge manager. | Cross-platform | Archived by its owner (read-only). Nice fit for knowledge workers who prefer offline tools. |
 
 ## Proprietary Tools Worth Knowing
 

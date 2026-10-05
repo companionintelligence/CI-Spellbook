@@ -13,7 +13,7 @@
 | [Min](https://github.com/minbrowser/min) | Minimal browser with privacy-minded defaults. | Cross-platform | Good when you want a reduced browser footprint. |
 | [Zen](https://github.com/zen-browser/desktop) | Firefox-based browser focused on calm UX and privacy; now at v1.20+ (beta). | Cross-platform | Active project; strong Arc-style alternative. |
 | [Morphic](https://github.com/miurla/morphic) | AI-powered search engine with generative interface. | Self-hosted, Web | Good for search-driven knowledge work. |
-| [Perplexica](https://github.com/ItzCrazyKns/Perplexica) | Self-hosted answering engine. | Self-hosted | Good private alternative for AI search. |
+| [Vane (formerly Perplexica)](https://github.com/ItzCrazyKns/Vane) | Self-hosted AI answering engine. | Self-hosted | Good private alternative for AI search. |
 | [Scira](https://github.com/zaidmukaddam/scira) | Minimal AI answer engine with citations. | Self-hosted, Web | Good lightweight search UI. |
 | [SearXNG](https://github.com/searxng/searxng) | Private metasearch engine. | Self-hosted | Essential if you want a self-hosted search front end. |
 
@@ -48,7 +48,7 @@
 | --- | --- | --- | --- |
 | [browser-use](https://github.com/browser-use/browser-use) | Python library giving LLMs full browser control for autonomous multi-step tasks. | Cross-platform | 50k+ stars; best for agentic open-ended workflows. |
 | [crawl4ai](https://github.com/unclecode/crawl4ai) | LLM-friendly async web crawler with markdown output and JS rendering. | Cross-platform | 50k+ stars; strong default for RAG pipelines. |
-| [Firecrawl](https://github.com/mendableai/firecrawl) | Web data API for turning websites into LLM-ready data. | Web, Self-hosted | Great for retrieval pipelines. |
+| [Firecrawl](https://github.com/firecrawl/firecrawl) | Web data API for turning websites into LLM-ready data. | Web, Self-hosted | Great for retrieval pipelines. |
 | [Playwright](https://github.com/microsoft/playwright) | Cross-browser automation framework for Chromium, Firefox, and WebKit. | Cross-platform | Industry standard for testing and scripted scraping. |
 | [Puppeteer](https://github.com/puppeteer/puppeteer) | Node.js library for headless Chrome/Chromium control. | Cross-platform | 94k+ stars; good when staying in a JS/Node stack. |
 | [Scrapling](https://github.com/D4Vinci/Scrapling) | Adaptive Python scraper that relocates elements after page changes; anti-bot bypass. | Cross-platform | Good when target sites frequently restructure. |
@@ -59,8 +59,8 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [Code2prompt](https://github.com/mufeedvh/code2prompt) | Convert a codebase into a single prompt. | Cross-platform, CLI | Good when you need a compact code snapshot. |
-| [Docling](https://github.com/DS4SD/docling) | Prepare documents for generative AI use. | Cross-platform | Useful for text extraction and normalization. |
-| [Gitingest](https://github.com/cyclotruc/gitingest) | Prompt-friendly extraction of repositories from URLs. | Web, Chromium, Firefox | Useful for summarizing external codebases. |
+| [Docling](https://github.com/docling-project/docling) | Prepare documents for generative AI use. | Cross-platform | Useful for text extraction and normalization. |
+| [Gitingest](https://github.com/coderamp-labs/gitingest) | Prompt-friendly extraction of repositories from URLs. | Web, Chromium, Firefox | Useful for summarizing external codebases. |
 | [GPT crawler](https://github.com/BuilderIO/gpt-crawler) | Crawl sites into knowledge files. | Self-hosted | Good for building internal retrieval datasets. |
 | [Repomix](https://github.com/yamadashy/repomix) | Packs a repository into a single AI-friendly file. | Web, CLI | Great for model context handoff. |
 

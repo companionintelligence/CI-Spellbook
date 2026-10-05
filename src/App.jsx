@@ -517,18 +517,22 @@ const App = () => {
                   )}
                 </button>
               </div>
-              {(isIndexing || indexError || missingShelves.length > 0) && (
-                <div
-                  className={`app-search-note${indexError ? ' is-error' : ''}`}
-                  role={indexError ? 'alert' : 'status'}
-                >
-                  {indexError
-                    ? `Search unavailable: ${indexError}`
-                    : isIndexing
-                      ? 'Indexing spellbook for search…'
-                      : `Search is missing ${missingShelves.length === 1 ? 'one shelf' : `${missingShelves.length} shelves`}: ${missingShelves.join(', ')}.`}
-                </div>
-              )}
+              {/* The slot is always there, so the note arriving (and leaving once the
+                  index is built) does not push the shelves down and back up. */}
+              <div className="app-search-slot">
+                {(isIndexing || indexError || missingShelves.length > 0) && (
+                  <div
+                    className={`app-search-note${indexError ? ' is-error' : ''}`}
+                    role={indexError ? 'alert' : 'status'}
+                  >
+                    {indexError
+                      ? `Search unavailable: ${indexError}`
+                      : isIndexing
+                        ? 'Indexing spellbook for search…'
+                        : `Search is missing ${missingShelves.length === 1 ? 'one shelf' : `${missingShelves.length} shelves`}: ${missingShelves.join(', ')}.`}
+                  </div>
+                )}
+              </div>
               <p className="sr-only" role="status" aria-live="polite">
                 {searchStatus}
               </p>

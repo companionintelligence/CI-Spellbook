@@ -12,7 +12,7 @@ export default defineConfig({
     // jsdom, because initTelemetry is a no-op without `window` and the Sentry
     // browser SDK installs global handlers on it.
     environment: 'jsdom',
-    include: ['src/**/*.test.js'],
+    include: ['src/**/*.test.js', 'dev-tools/**/*.test.js'],
     restoreMocks: true,
     unstubEnvs: true,
     unstubGlobals: true

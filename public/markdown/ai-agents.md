@@ -6,23 +6,23 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [AgentGPT](https://github.com/reworkd/AgentGPT) | Browser-based interface for assembling and running autonomous agents. | Self-hosted | Good for quick experiments and demos. |
+| [AgentGPT](https://github.com/reworkd/AgentGPT) | Browser-based interface for assembling and running autonomous agents. | Self-hosted | Archived by its owner (read-only). Good for quick experiments and demos. |
 | [AgenticSeek](https://github.com/Fosowl/agenticSeek) | Local-first autonomous agent focused on browsing, reasoning, and task execution without recurring API costs. | Cross-platform | Strong fit for private local workflows. |
 | [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) | General-purpose autonomous agent framework with long-running task execution. | Self-hosted | Best when you want a flexible agent sandbox. |
 | [Browser Use](https://github.com/browser-use/browser-use) | Browser automation stack that makes websites easier for agents to navigate. | Cross-platform | Useful for agentic web tasks and testing. |
 | [c/ua](https://github.com/trycua/cua) | Infrastructure for computer-use agents across desktop environments. | Cross-platform | Focused on sandboxes, SDKs, and evaluation. |
-| [Claudia](https://github.com/getAsterisk/claudia) | GUI and toolkit for Claude Code workflows and background agents. | Cross-platform | Helpful when you want a more visual agent workflow. |
+| [opcode (formerly Claudia)](https://github.com/winfunc/opcode) | GUI and toolkit for Claude Code workflows and background agents. | Cross-platform | Helpful when you want a more visual agent workflow. |
 | [Crush](https://github.com/charmbracelet/crush) | Terminal-first agentic coding experience with a polished TUI. | Cross-platform | Strong fit for keyboard-driven workflows. |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open-source terminal agent built around Gemini models. | Cross-platform | Good for shell-heavy development loops. |
 | [gptme](https://github.com/gptme/gptme) | Terminal-native personal agent with tools, web access, and coding support. | Cross-platform | Lightweight option for persistent local agents. |
 | [Huginn](https://github.com/huginn/huginn) | Event-driven agent platform for monitoring, scraping, and automation. | Self-hosted | More automation-oriented than chat-oriented. |
 | [Letta](https://github.com/letta-ai/letta) | Stateful agents framework (formerly MemGPT) with persistent memory, reasoning, and context management. | Self-hosted | Strong fit when long-lived agent memory is the primary requirement. |
 | [Nanobrowser](https://github.com/nanobrowser/nanobrowser) | Browser extension for AI-powered automation inside Chrome. | Chromium | Useful for quick multi-agent web flows. |
-| [Open Interpreter](https://github.com/OpenInterpreter/open-interpreter) | Natural language interface for running code and controlling a computer. | Cross-platform | Strong for terminal and desktop task execution. |
-| [opencode](https://github.com/sst/opencode) | Open-source coding agent with a focused developer workflow. | Cross-platform | Built for software tasks rather than general chat. |
-| [Refact](https://github.com/smallcloudai/refact) | Engineering agent that plans, executes, and iterates across developer tools. | VS Code | Good fit for end-to-end software tasks. |
+| [Open Interpreter](https://github.com/openinterpreter/openinterpreter) | Natural language interface for running code and controlling a computer. | Cross-platform | Strong for terminal and desktop task execution. |
+| [opencode](https://github.com/anomalyco/opencode) | Open-source coding agent with a focused developer workflow. | Cross-platform | Built for software tasks rather than general chat. |
+| [Refact](https://github.com/smallcloudai/refact) | Engineering agent that plans, executes, and iterates across developer tools. | VS Code | Archived by its owner (read-only). Good fit for end-to-end software tasks. |
 | [SWE-agent](https://github.com/SWE-agent/SWE-agent) | Takes a GitHub issue and tries to fix it with the LLM of your choice; also used for offensive security and competitive coding. | Cross-platform | Strong baseline for repo-aware autonomous fixes. |
-| [TEN Agent](https://github.com/TEN-framework/TEN-Agent) | Framework for conversational voice agents. | Self-hosted | Useful when voice is the main interface. |
+| [TEN Agent](https://github.com/TEN-framework/ten-framework) | Framework for conversational voice agents. | Self-hosted | Useful when voice is the main interface. |
 | [UI-TARS](https://github.com/bytedance/UI-TARS-desktop) | Multimodal agent stack for UI understanding and agent infrastructure. | Cross-platform | Good for computer-use and UI-driven automation. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language analytics and BI assistant for databases. | Web, Self-hosted | Strong when analytics is the user-facing agent. |
 
@@ -42,7 +42,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [AIChat](https://github.com/sigoden/aichat) | Unified CLI for chat, shell assistance, RAG, and tool use. | Cross-platform | Great one-binary option for power users. |
-| [ClaraVerse](https://github.com/badboysm890/ClaraVerse) | Privacy-focused ecosystem combining chat, workflow automation, and media generation. | Cross-platform, Self-hosted | Ambitious all-in-one open stack. |
+| [ClaraVerse](https://github.com/claraverse-space/ClaraVerse) | Privacy-focused ecosystem combining chat, workflow automation, and media generation. | Cross-platform, Self-hosted | Ambitious all-in-one open stack. |
 | [Khoj AI](https://github.com/khoj-ai/khoj) | Personal AI workspace with agents, automation, web search, and local or hosted models. | Web, Self-hosted | Strong fit for knowledge-heavy workflows. |
 | [LobeHub](https://github.com/lobehub/lobehub) | Agent-centric workspace for building and collaborating with AI teammates. | Web, Self-hosted | Good for team-oriented agent experiences. |
 
@@ -61,16 +61,16 @@
 | [R2R](https://github.com/SciPhi-AI/R2R) | Production retrieval system with agentic RAG APIs. | Web, Self-hosted | Suitable for app backends needing a complete retrieval layer. |
 | [RAGFlow](https://github.com/infiniflow/ragflow) | Full RAG engine that pairs retrieval with agent workflows. | Self-hosted | Strong when you need a complete context layer. |
 | [STORM](https://github.com/stanford-oval/storm) | Research system for topic exploration and report synthesis with citations. | Cross-platform | Good for long-form knowledge curation. |
-| [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Good for teams already using Weaviate. |
+| [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Archived by its owner (read-only). Good for teams already using Weaviate. |
 
 ## Agent Memory & Context
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Airweave](https://github.com/airweave-ai/airweave) | Context retrieval layer that syncs fragmented data sources for AI agents. | Cross-platform | Good for connecting fragmented sources into a unified agent context. |
+| [Airweave](https://github.com/airweave-ai/airweave) | Context retrieval layer that syncs fragmented data sources for AI agents. | Cross-platform | Archived by its owner (read-only). Good for connecting fragmented sources into a unified agent context. |
 | [mem0](https://github.com/mem0ai/mem0) | Persistent memory layer for agents and assistants with user-level recall. | Self-hosted | Strong fit for user-specific memory across sessions. |
 | [omi](https://github.com/BasedHardware/omi) | Wearable capture device for continuous speech transcription and passive context. | Mobile | Best for passive lifelog-style context capture. |
-| [screenpipe](https://github.com/mediar-ai/screenpipe) | Local activity capture layer for search, recall, and automation triggers. | macOS, Windows | A strong base for personal context systems. |
+| [screenpipe](https://github.com/screenpipe/screenpipe) | Local activity capture layer for search, recall, and automation triggers. | macOS, Windows | A strong base for personal context systems. |
 
 ## Model, Eval & Prompt Infrastructure
 
@@ -78,7 +78,7 @@
 | --- | --- | --- | --- |
 | [Agno](https://github.com/agno-agi/agno) | CLI framework for building and operating agentic software at scale. | Cross-platform | Good for app and agent backends. |
 | [Kiln](https://github.com/Kiln-AI/Kiln) | Toolkit for evals, fine-tuning, synthetic data, and MCP-aware systems. | Cross-platform | Useful when teams need a full iteration loop. |
-| [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | Fine-tuning workstation supporting many LLMs and VLMs with a unified interface. | Self-hosted | One of the most complete open tuning stacks. |
+| [LLaMA-Factory](https://github.com/hiyouga/LlamaFactory) | Fine-tuning workstation supporting many LLMs and VLMs with a unified interface. | Self-hosted | One of the most complete open tuning stacks. |
 | [Ludwig](https://github.com/ludwig-ai/ludwig) | Low-code framework for custom model building and experimentation. | Cross-platform | Good when teams want lower-friction experimentation. |
 | [Opik](https://github.com/comet-ml/opik) | Tracing, evaluation, and monitoring for LLM and agent workflows. | Self-hosted, Web | Strong observability layer for production AI. |
 | [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) | Training framework for large-scale model development. | Cross-platform | A solid foundation for serious model work. |
@@ -88,7 +88,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Everywhere](https://github.com/DearVa/Everywhere) | Context-aware desktop assistant with MCP-style tool integrations. | Windows | Good for desktop-level context workflows. |
+| [Everywhere](https://github.com/Sylinko/Everywhere) | Context-aware desktop assistant with MCP-style tool integrations. | Windows | Good for desktop-level context workflows. |
 | [Netron](https://github.com/lutzroeder/netron) | Visualizer for neural network models and artifacts. | Cross-platform | Useful for inspecting model internals. |
 
 ## Notable Models
@@ -104,7 +104,7 @@
 | [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI's open-weight MoE family; ~1T params / 32B active; coding-focused. | Open weights, Hosted API | Leads SWE-Bench Pro among open models with GLM-5.1; 256K context; modified MIT. |
 | [Llama 4 Scout / Maverick](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) | Meta's multimodal MoE family: Scout (17B active, 10M context) and Maverick (full quality). | Open weights | Llama Community License; Scout fits on a single H100; broad fine-tuning adoption. |
 | [Mistral Small 4](https://mistral.ai/news/mistral-small-4/) | Mistral's small model unifying reasoning, multimodal, and agentic coding capabilities. | Open weights, Hosted API | ~120B total / 6B active MoE; Apache 2.0; merges the Magistral/Pixtral/Devstral trio. |
-| [Qwen3.6](https://github.com/QwenLM/Qwen3.6) | Alibaba's current open-weight family: 27B dense and 35B-A3B MoE; Max-Preview is hosted-only. | Open weights, Hosted API | Apache 2.0; the 27B dense model is frontier-competitive on agentic coding. |
+| [Qwen3.8](https://github.com/QwenLM/Qwen3.8) | Alibaba's current open-weight family: Qwen3.8 in 27B dense and 2.4T-A95B MoE; the repo also covers 3.5 and 3.6. | Open weights, Hosted API | The repo is Apache 2.0; each model card carries that model's own terms. |
 
 ## Tutorials & Learning
 

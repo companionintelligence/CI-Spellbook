@@ -2,6 +2,29 @@
 
 > Companion to [architecture.md](architecture.md) and [roadmap.md](roadmap.md). Defines what categories exist, what should be added, source quality bar, and how the weekly auto-research routine should treat each.
 
+> **File names changed (2026-10).** The snapshot below, and the sections after it, use the original file names. The shelves are now named after their titles in the UI; `CARD_CONFIGS` in `src/App.jsx` is the source of truth, and the card `id`s there are stable keys that kept their old names.
+>
+> | Original file | Now |
+> | --- | --- |
+> | AI Agents & Autonomous Systems.md | `ai-agents.md` |
+> | AI-Assisted Code Development.md | `developer-tooling.md` |
+> | Local-First AI Tools.md | `local-ai-apps.md` |
+> | AI Art Generation Images 3D and Video.md | `creative-media.md` |
+> | AI in Video Games & Virtual Beings.md | `entertainment-games.md` |
+> | Cutting Edge Databases.md | `data-platforms.md` |
+> | Home Automation & Security.md | `self-hosting.md` |
+> | Maker & Hardware Prototyping.md | `hardware-edge.md` |
+> | Networking VPN & Infrastructure Security.md | `security-network.md` |
+> | Speech-to-Text & Text-to-Speech.md | `speech-collaboration.md` |
+> | Top Public Data Sources.md | `knowledge-notes.md` |
+> | Virtual Machine and Browser Automation and Scrapers.md | `browsers-automation.md` |
+> | XR & Spatial Computing.md | `desktop-systems.md` |
+> | MCP Servers & Connectors.md | `mcp-servers.md` |
+> | Evaluation, Observability & Tracing.md | `evals-observability.md` |
+> | Embeddings & Vector Pipelines.md | `embeddings-vector.md` |
+>
+> Two checks apply to every shelf before a PR: `npm run lint:content` (table shape; no raw HTML or non-https link) and, when links were touched, `npm run check:links`.
+
 ## Current categories (snapshot 2026-06-10)
 
 | File | Coverage today | Saturation | Auto-research priority |

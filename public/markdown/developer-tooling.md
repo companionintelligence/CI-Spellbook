@@ -11,15 +11,15 @@
 | [Cline](https://github.com/cline/cline) | Autonomous coding agent inside VS Code with Plan/Act modes, browser, and terminal access. | VS Code | Good when you want approvals in the loop. |
 | [Codex](https://github.com/openai/codex) | OpenAI's lightweight terminal coding agent for focused CLI workflows. | Cross-platform | Useful for focused command-line tasks; pairs well with GPT-5 family. |
 | [Continue](https://github.com/continuedev/continue) | Open-source code assistant with customizable models and checks. | VS Code, JetBrains | Good fit for teams standardizing prompt and model behavior. |
-| [Devin](https://github.com/cognition-ai/devin) | Autonomous AI software engineer that plans, codes, tests, and opens PRs end-to-end. | Web | Hosted cloud agent; reduced to $20/mo Core plan as of 2025. |
+| [Devin](https://devin.ai/) | Autonomous AI software engineer that plans, codes, tests, and opens PRs end-to-end. | Web | Hosted cloud agent; reduced to $20/mo Core plan as of 2025. |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google's open-source terminal agent powered by Gemini with 1M-token context and MCP support. | Cross-platform | Free tier: 1,000 req/day; Apache 2.0; launched June 2025. |
-| [Goose](https://github.com/block/goose) | Extensible coding agent that can install, execute, edit, and test; fully local. | Cross-platform | Strong for tool-heavy workflows. |
+| [Goose](https://github.com/aaif-goose/goose) | Extensible coding agent that can install, execute, edit, and test; fully local. | Cross-platform | Strong for tool-heavy workflows. |
 | [GPT Pilot](https://github.com/Pythagora-io/gpt-pilot) | AI developer focused on building applications from requirements. | Cross-platform | Useful for app scaffolding and iteration. |
-| [MetaGPT](https://github.com/geekan/MetaGPT) | Multi-agent software company simulation for structured delivery. | Self-hosted, Web | Good for role-based generation pipelines. |
-| [OpenCode](https://github.com/opencode-ai/opencode) | Provider-agnostic terminal AI coding agent with polished TUI; 160k+ GitHub stars. | Cross-platform | Top open alternative to Claude Code; supports 75+ providers. |
-| [OpenHands](https://github.com/All-Hands-AI/OpenHands) | Open autonomous developer that runs tasks in a sandboxed environment. | Cross-platform, Self-hosted | One of the strongest open choices for end-to-end dev tasks. |
+| [MetaGPT](https://github.com/FoundationAgents/MetaGPT) | Multi-agent software company simulation for structured delivery. | Self-hosted, Web | Good for role-based generation pipelines. |
+| [OpenCode](https://github.com/anomalyco/opencode) | Provider-agnostic terminal AI coding agent with polished TUI; 200k+ GitHub stars. | Cross-platform | Top open alternative to Claude Code; supports 75+ providers. |
+| [OpenHands](https://github.com/OpenHands/OpenHands) | Open autonomous developer that runs tasks in a sandboxed environment. | Cross-platform, Self-hosted | One of the strongest open choices for end-to-end dev tasks. |
 | [Plandex](https://github.com/plandex-ai/plandex) | Open-source coding agent designed for larger, longer-running projects. | Cross-platform | Good when long-running plans matter. |
-| [Roo Code](https://github.com/RooVetGit/Roo-Code) | VS Code coding agent with multi-step task execution and model flexibility. | VS Code | Good for editor-native agent workflows. |
+| [Roo Code](https://github.com/RooCodeInc/Roo-Code) | VS Code coding agent with multi-step task execution and model flexibility. | VS Code | Archived by its owner (read-only). Good for editor-native agent workflows. |
 | [Tabby](https://github.com/TabbyML/tabby) | Self-hosted AI coding assistant for local or team deployment. | Self-hosted, VS Code, JetBrains | Good privacy-focused alternative. |
 | [windsurf.vim](https://github.com/Exafunction/windsurf.vim) | Vim and Neovim integration for Windsurf-style AI assistance. | Neovim, Vim | Useful when you want agent help without leaving modal editing. |
 
@@ -27,17 +27,17 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [CodeRabbit](https://github.com/coderabbitai/coderabbit) | AI-assisted PR reviewer for GitHub/GitLab with inline comments and summaries. | Web | 2M+ repos connected; most-downloaded GitHub Marketplace app. |
-| [Greptile](https://github.com/greptileai/greptile) | Context-aware code review tool that indexes the full codebase to catch deep bugs. | Web | 82% bug catch rate in benchmarks; raised $25M Series A in 2025. |
-| [Qodo](https://github.com/Codium-ai/pr-agent) | AI code quality platform combining PR review with test generation. | Web, VS Code | Rebranded from CodiumAI 2024; multi-agent review architecture. |
+| [CodeRabbit](https://www.coderabbit.ai/) | AI-assisted PR reviewer for GitHub/GitLab with inline comments and summaries. | Web | 2M+ repos connected; most-downloaded GitHub Marketplace app. |
+| [Greptile](https://www.greptile.com/) | Context-aware code review tool that indexes the full codebase to catch deep bugs. | Web | 82% bug catch rate in benchmarks; raised $25M Series A in 2025. |
+| [Qodo](https://github.com/The-PR-Agent/pr-agent) | AI code quality platform combining PR review with test generation. | Web, VS Code | Rebranded from CodiumAI 2024; multi-agent review architecture. |
 
 ## Proprietary Tools Worth Knowing
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Cursor](https://www.cursor.com/) | AI-first code editor forked from VS Code with deep inline agent capabilities. | Cross-platform | Cursor 2.0 added parallel background agents on isolated VMs (Feb 2026). |
+| [Cursor](https://cursor.com/) | AI-first code editor forked from VS Code with deep inline agent capabilities. | Cross-platform | Cursor 2.0 added parallel background agents on isolated VMs (Feb 2026). |
 | [GitHub Copilot](https://github.com/features/copilot) | Microsoft/OpenAI IDE assistant with inline completions, chat, and agent mode. | VS Code, JetBrains, CLI | Ubiquitous; agent mode added in 2025; integrated into GitHub PRs. |
-| [Windsurf](https://www.windsurf.ai/) | AI-native IDE with context-aware "Cascade" agent and multi-file awareness. | Cross-platform | Acquired by OpenAI in 2025; tight Codex integration expected. |
+| [Windsurf (now Devin Desktop)](https://devin.ai/desktop) | AI-native IDE from Cognition; the Windsurf domains now lead to its Devin Desktop page. | Cross-platform | Cognition, the maker of Devin, now runs it; Devin Desktop is its home for coding agents. |
 
 ## Editors & IDEs
 
@@ -49,7 +49,7 @@
 | [Lapce](https://github.com/lapce/lapce) | Fast Rust-based editor with built-in remote development and LSP. | Cross-platform | Good alternative to Electron-heavy editors. |
 | [LazyVim](https://github.com/LazyVim/LazyVim) | Opinionated Neovim distribution for productive defaults. | Cross-platform | Great baseline for a serious Neovim setup. |
 | [Onlook](https://github.com/onlook-dev/onlook) | Visual AI-first design and React editing tool. | Cross-platform | Helpful for design-to-code workflows. |
-| [Void](https://github.com/voideditor/void) | Open-source Cursor alternative built on VS Code. | Windows, macOS | Good option if you want an AI-first editor without lock-in. |
+| [Void](https://github.com/voideditor/void) | Open-source Cursor alternative built on VS Code. | Windows, macOS | Archived by its owner (read-only). Good option if you want an AI-first editor without lock-in. |
 | [VS Code](https://github.com/microsoft/vscode) | General-purpose developer IDE with extension ecosystem. | Cross-platform | Still the broadest extension platform. |
 | [VSCodium](https://github.com/VSCodium/vscodium) | Community build of VS Code without Microsoft branding or telemetry. | Cross-platform | Useful when you want VS Code compatibility with fewer defaults. |
 | [Zed](https://github.com/zed-industries/zed) | High-performance collaborative editor with built-in AI model access. | macOS, Linux | Great for speed-sensitive workflows. |
@@ -104,14 +104,14 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Claude Sonnet 4.6 / Opus 4.8](https://www.anthropic.com/claude) | Anthropic's coding flagship pair: Sonnet 4.6 for cost-effective work, Opus 4.8 for hard tasks. | Hosted API | Opus 4.8 leads the Claude line on SWE-bench Verified; Sonnet 4.6 is the everyday default. |
+| [Claude Sonnet 4.6 / Opus 4.8](https://claude.com/product/overview) | Anthropic's coding flagship pair: Sonnet 4.6 for cost-effective work, Opus 4.8 for hard tasks. | Hosted API | Opus 4.8 leads the Claude line on SWE-bench Verified; Sonnet 4.6 is the everyday default. |
 | [Claude Fable 5](https://www.anthropic.com/news/claude-fable-5-mythos-5) | Anthropic's top-tier Mythos-class agentic model, GA June 2026. | Hosted API | Current top published results on agentic coding benchmarks at release. |
 | [DeepSeek V4](https://huggingface.co/deepseek-ai) | DeepSeek's open-weight frontier family (V4-Pro / V4-Flash), released April 2026. | Open weights, Hosted API | 80.6% SWE-bench Verified leads the open-weight category; MIT; very competitive cost. |
-| [Gemini 3.1 Pro](https://deepmind.google/technologies/gemini/) | Google DeepMind's flagship coding model with 1M context. | Hosted API | 80.6% SWE-bench Verified; Gemini 3.5 generation rolling out mid-2026. |
+| [Gemini 3.1 Pro](https://deepmind.google/models/gemini/) | Google DeepMind's flagship coding model with 1M context. | Hosted API | 80.6% SWE-bench Verified; Gemini 3.5 generation rolling out mid-2026. |
 | [GPT-5.4 / GPT-5.5](https://openai.com/index/introducing-gpt-5-5/) | OpenAI's current flagship coding models; both power Codex workflows. | Hosted API | GPT-5.5 released April 2026; strong agentic tool use and long-task efficiency. |
 | [Kimi K2.6](https://huggingface.co/moonshotai) | Moonshot AI's ~1T-param MoE open model, 32B active, tuned for coding. | Open weights, Hosted API | Modified MIT license; released April 2026; strong agentic stability. |
 | [MiniMax M3](https://github.com/MiniMax-AI) | MiniMax's open-weight model combining frontier coding, 1M context, and multimodality. | Open weights, Hosted API | Released June 2026; exceptionally cost-effective for its benchmark tier. |
-| [Qwen3.6](https://github.com/QwenLM/Qwen3.6) | Alibaba's open-weight line tuned for agentic coding; 27B dense and 35B-A3B MoE. | Open weights, Hosted API | Apache 2.0; matches much larger models on terminal-agent benchmarks; runs on one GPU. |
+| [Qwen3.8](https://github.com/QwenLM/Qwen3.8) | Alibaba's open-weight line; Qwen3.8 is aimed at coding, research and long-horizon agent tasks. | Open weights, Hosted API | 27B dense and 2.4T-A95B MoE; the repo is Apache 2.0, and each model card carries its own terms. |
 
 ## Tutorials & Learning
 
@@ -121,4 +121,4 @@
 | [awesome-claude-code (hesreallyhim)](https://github.com/hesreallyhim/awesome-claude-code) | Curated list of skills, hooks, slash-commands, and orchestrators for Claude Code. | Web | High signal-to-noise; community-maintained. |
 | [Claude Code: A Highly Agentic Coding Assistant](https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant) | DeepLearning.AI short course on agentic coding patterns with Claude Code. | Web | Taught by Elie Schoppik, Anthropic Head of Technical Education. |
 | [Claude Code Ultimate Guide](https://github.com/FlorianBruniaux/claude-code-ultimate-guide) | Community guide covering Claude Code from beginner to power user with templates. | Web | Production-ready templates, workflow guides, and a cheatsheet. |
-| [OpenAI Codex Docs](https://platform.openai.com/docs/guides/codex) | Official Codex CLI documentation, quickstarts, and API integration guides. | Web | Useful companion when routing tasks between Claude Code and Codex CLI. |
+| [OpenAI Codex Docs](https://learn.chatgpt.com/docs/codex/cli) | Official Codex CLI documentation, quickstarts, and API integration guides. | Web | Useful companion when routing tasks between Claude Code and Codex CLI. |

@@ -13,11 +13,11 @@
 | [Fish Speech](https://github.com/fishaudio/fish-speech) | SOTA open-source multilingual TTS with zero-shot voice cloning from 3–10 s audio. | Cross-platform, Self-hosted | 26k+ stars; strong ElevenLabs alternative; v1.5 focuses on EN/ZH/JA. |
 | [GPT-SoVITS-WebUI](https://github.com/RVC-Boss/GPT-SoVITS) | Few-shot voice cloning and TTS toolkit with web interface. | Cross-platform, Self-hosted | Useful for custom voice experiments. |
 | [Handy](https://github.com/cjpais/Handy) | Offline speech-to-text application for macOS. | macOS | Good simple desktop transcription tool. |
-| [Hyprnote](https://github.com/fastrepl/hyprnote) | AI notepad for meetings and speech capture with local processing. | Cross-platform | Useful for rapid meeting summaries. |
+| [anarlog (formerly Hyprnote)](https://github.com/fastrepl/anarlog) | Privacy-first AI meeting notepad; open source and local-first. | Cross-platform | Useful for rapid meeting summaries. |
 | [Kokoro](https://github.com/hexgrad/kokoro) | Lightweight 82 M-parameter TTS model with Apache-licensed weights. | Cross-platform, Self-hosted | 54 preset voices; no cloning; 210× real-time on GPU; good for edge. |
-| [Meetily](https://github.com/Zackriya-Solutions/meeting-minutes) | Privacy-first local meeting assistant with diarization and summaries. | Windows, macOS | Strong fit for offline meeting capture. |
+| [Meetily](https://github.com/Zackriya-Solutions/meetily) | Privacy-first local meeting assistant with diarization and summaries. | Windows, macOS | Strong fit for offline meeting capture. |
 | [omi](https://github.com/BasedHardware/omi) | Wearable capture device for automatic transcription. | Mobile | Good for ambient capture workflows. |
-| [TEN Agent](https://github.com/TEN-framework/TEN-Agent) | Conversational voice agent framework for multimodal pipelines. | Self-hosted | Useful when you need voice-first agents. |
+| [TEN Agent](https://github.com/TEN-framework/ten-framework) | Conversational voice agent framework for multimodal pipelines. | Self-hosted | Useful when you need voice-first agents. |
 | [VoiceInk](https://github.com/Beingpax/VoiceInk) | Fast voice-to-text utility for macOS. | macOS | Good for dictation into any app. |
 | [whisper.cpp](https://github.com/ggml-org/whisper.cpp) | C/C++ port of OpenAI Whisper optimised for local CPU/GPU inference. | Cross-platform | Standard starting point for on-device speech recognition. |
 | [WhisperLiveKit](https://github.com/QuentinFuxa/WhisperLiveKit) | Streaming speech recognition toolkit built on Whisper. | Self-hosted | Useful for live and semi-live transcription systems. |
@@ -68,10 +68,10 @@
 | --- | --- | --- | --- |
 | [NVIDIA Parakeet-TDT](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) | NVIDIA NeMo ASR model; ~3380× real-time on GPU; v3 covers 25 languages. | Open weights | Fastest open STT available; tops the Open ASR leaderboard for speed. |
 | [Whisper Large v3](https://huggingface.co/openai/whisper-large-v3) | OpenAI's multilingual STT model; 99-language support; MIT licensed. | Open weights | Still the community reference for offline multilingual transcription. |
-| [Cartesia Sonic](https://cartesia.ai/) | Hosted low-latency TTS API; Sonic 3.5 current with ~82ms end-to-end latency. | Hosted API | Top-tier for latency-sensitive voice agent pipelines. |
+| [Cartesia Sonic](https://www.cartesia.ai/) | Hosted low-latency TTS API; Sonic 3.5 current with ~82ms end-to-end latency. | Hosted API | Top-tier for latency-sensitive voice agent pipelines. |
 | [Deepgram Nova-3](https://deepgram.com/) | Hosted STT API; conversational Flux model adds <300ms end-of-turn detection. | Hosted API | Strong for real-time transcription with EOT detection. |
 | [ElevenLabs Eleven v3](https://elevenlabs.io/) | Hosted TTS; expressive inline tags ([whispers], [laughs]); 70+ languages. | Hosted API | Still a benchmark for expressive, emotionally varied speech. |
-| [OpenAI Realtime-2](https://platform.openai.com/docs/guides/realtime) | Unified speech-to-speech model collapsing STT+TTS; GPT-5-class reasoning. | Hosted API | Released May 2026; ideal for voice agents that need reasoning mid-call. |
+| [OpenAI Realtime-2](https://developers.openai.com/api/docs/guides/realtime) | Unified speech-to-speech model collapsing STT+TTS; GPT-5-class reasoning. | Hosted API | Released May 2026; ideal for voice agents that need reasoning mid-call. |
 
 ## Tutorials & Learning
 

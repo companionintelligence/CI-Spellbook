@@ -18,16 +18,16 @@
 | --- | --- | --- | --- |
 | [DSPy](https://github.com/stanfordnlp/dspy) | Stanford framework for compiling and optimizing LLM pipelines with typed signatures. | Cross-platform | Use when you want auto-optimized prompting and pipeline reproducibility. |
 | [Haystack](https://github.com/deepset-ai/haystack) | Modular production NLP/RAG framework with hybrid search and pipeline composition. | Self-hosted | Strong hybrid keyword+semantic search; good enterprise baseline. |
-| [RAGatouille](https://github.com/bclavie/RAGatouille) | ColBERT late-interaction retrieval library; token-level matching for high precision. | Cross-platform | Often outperforms dense-only retrieval; wraps well as a LangChain tool. |
+| [RAGatouille](https://github.com/AnswerDotAI/RAGatouille) | ColBERT late-interaction retrieval library; token-level matching for high precision. | Cross-platform | Often outperforms dense-only retrieval; wraps well as a LangChain tool. |
 
 ## Document Parsing & Ingestion
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Docling](https://github.com/DS4SD/docling) | IBM document converter for PDF, DOCX, PPTX, HTML with semantic chunking output. | Cross-platform | First-class LlamaIndex/LangChain integrations; best for structured enterprise docs. |
+| [Docling](https://github.com/docling-project/docling) | IBM document converter for PDF, DOCX, PPTX, HTML with semantic chunking output. | Cross-platform | First-class LlamaIndex/LangChain integrations; best for structured enterprise docs. |
 | [Jina Reader](https://github.com/jina-ai/reader) | Converts any URL or uploaded file to clean LLM-ready Markdown via r.jina.ai prefix. | Web, Self-hosted | Stateless OSS branch re-synced with SaaS in April 2026; S3 caching optional. |
-| [Kreuzberg](https://github.com/Goldziher/kreuzberg) | Async Python document extraction library for text from PDFs, images, Office files. | Cross-platform | Lightweight alternative to Unstructured; async-native, minimal dependencies. |
-| [Marker](https://github.com/VikParuchuri/marker) | Converts PDFs, DOCX, PPTX, EPUB to Markdown/JSON using Surya OCR; GPU/CPU/MPS. | Cross-platform | Recommended general-purpose default; good accuracy/speed balance. |
+| [Xberg (formerly Kreuzberg)](https://github.com/xberg-io/xberg) | Document-intelligence engine that extracts text, tables, metadata and structured data from PDFs, images and Office files. | Cross-platform | Rebuilt and rebranded successor to Kreuzberg, with bindings for many languages. |
+| [Marker](https://github.com/datalab-to/marker) | Converts PDFs, DOCX, PPTX, EPUB to Markdown/JSON using Surya OCR; GPU/CPU/MPS. | Cross-platform | Recommended general-purpose default; good accuracy/speed balance. |
 | [MinerU](https://github.com/opendatalab/MinerU) | Shanghai AI Lab PDF-to-Markdown engine; top accuracy on complex layouts and CJK. | Cross-platform | Best choice for academic papers, scanned docs, or CJK content. |
 | [Unstructured](https://github.com/Unstructured-IO/unstructured) | Broad-format ingestion pipeline supporting PDF, email, HTML, spreadsheets, and more. | Self-hosted, Web | Best for heterogeneous source ingestion; table extraction lags Docling/MinerU. |
 
@@ -35,9 +35,9 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Chonkie](https://github.com/chonkie-ai/chonkie) | Fast, lightweight dedicated text chunking library with semantic and recursive modes. | Cross-platform | Focused and dependency-light; good when chunking is the only concern. |
-| [LangChain TextSplitters](https://python.langchain.com/docs/concepts/text_splitters/) | Recursive, character, token, and semantic splitters built into LangChain core. | Cross-platform | RecursiveCharacterTextSplitter remains a solid general-purpose default. |
-| [LlamaIndex NodeParsers](https://docs.llamaindex.ai/en/stable/module_guides/loading/node_parsers/) | Sophisticated node parsers with hierarchical, semantic, and auto-merge strategies. | Cross-platform | Best-in-class for RAG-optimized chunking within the LlamaIndex ecosystem. |
+| [Chonkie](https://github.com/feyninc/chonkie) | Fast, lightweight dedicated text chunking library with semantic and recursive modes. | Cross-platform | Focused and dependency-light; good when chunking is the only concern. |
+| [LangChain TextSplitters](https://docs.langchain.com/oss/python/integrations/splitters) | Recursive, character, token, and semantic splitters built into LangChain core. | Cross-platform | RecursiveCharacterTextSplitter remains a solid general-purpose default. |
+| [LlamaIndex NodeParsers](https://developers.llamaindex.ai/python/framework/module_guides/loading/node_parsers/) | Sophisticated node parsers with hierarchical, semantic, and auto-merge strategies. | Cross-platform | Best-in-class for RAG-optimized chunking within the LlamaIndex ecosystem. |
 | [semantic-text-splitter](https://github.com/benbrandt/text-splitter) | Rust-backed semantic splitter with Python/WASM bindings; fast and embedding-aware. | Cross-platform | Good choice when chunking throughput matters in high-volume ingestion. |
 
 ## Rerankers & Retrieval Quality

@@ -42,7 +42,7 @@
 | --- | --- | --- | --- |
 | [Open-LLM-VTuber](https://github.com/Open-LLM-VTuber/Open-LLM-VTuber) | Voice-interactive AI companion with Live2D avatar; fully offline capable. | Cross-platform | Supports Ollama, Claude, OpenAI, and local models. |
 | [SillyTavern](https://github.com/SillyTavern/SillyTavern) | Feature-rich LLM frontend for roleplay, character cards, and lorebooks. | Self-hosted | 25k+ stars; connects to virtually every AI backend. |
-| [SnekStudio](https://github.com/DmitriySalnikov/snekstudio) | Free open-source VTuber application built with Godot. | Cross-platform | Good option for Linux VTubers without proprietary deps. |
+| [SnekStudio](https://github.com/ExpiredPopsicle/SnekStudio) | Free open-source VTuber application built with Godot. | Cross-platform | Good option for Linux VTubers without proprietary deps. |
 
 ## Social & Media Platforms
 
@@ -61,7 +61,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Bevy Book](https://bevyengine.org/learn/quick-start/introduction/) | Official Bevy quick-start guide and learning resources. | Web | Start here before diving into ECS patterns. |
+| [Bevy Book](https://bevy.org/learn/quick-start/introduction/) | Official Bevy quick-start guide and learning resources. | Web | Start here before diving into ECS patterns. |
 | [GDQuest](https://www.gdquest.com/) | Community tutorials and open-source courses for Godot. | Web | High quality; covers GDScript and 2D/3D workflows. |
 | [Godot docs](https://docs.godotengine.org/en/stable/) | Official Godot engine documentation for 4.x. | Web | Comprehensive; updated for each stable release. |
 | [Lutris wiki](https://github.com/lutris/lutris/wiki) | Community wiki for configuring runners, Wine, and game sources. | Web | Useful reference for tricky game installs on Linux. |

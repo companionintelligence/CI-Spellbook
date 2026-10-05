@@ -49,7 +49,7 @@ If `architecture/routine-prompt.md` exists, follow it exactly; the rules below a
 
 # Fallback rules (if routine-prompt.md is missing)
 
-1. Pick one or two files in `public/markdown/`. Prefer High-priority files (`AI Agents & Autonomous Systems.md`, `AI-Assisted Code Development.md`, `Local-First AI Tools.md`) not touched by a `research:` PR in ≥ 14 days. Never touch more than 2 files per PR.
+1. Pick one or two files in `public/markdown/`. Prefer High-priority files (`ai-agents.md`, `developer-tooling.md`, `local-ai-apps.md`) not touched by a `research:` PR in ≥ 14 days. Never touch more than 2 files per PR.
 2. Research each chosen file:
    - Read existing entries.
    - `gh api -X GET search/repositories -f q="<category keywords> stars:>500 pushed:>2025-11-01" -f sort=stars -f order=desc`

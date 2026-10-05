@@ -7,7 +7,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui) | Stable Diffusion web interface with a large ecosystem of extensions. | Self-hosted | Reference UI for many workflows; largely superseded by Forge for performance. |
-| [ComfyUI](https://github.com/comfyanonymous/ComfyUI) | Node-based diffusion workflow builder supporting image and video generation. | Self-hosted | Default choice for modular, reusable pipelines; NVIDIA NVFP4/FP8 support in 2026. |
+| [ComfyUI](https://github.com/Comfy-Org/ComfyUI) | Node-based diffusion workflow builder supporting image and video generation. | Self-hosted | Default choice for modular, reusable pipelines; NVIDIA NVFP4/FP8 support in 2026. |
 | [Fooocus](https://github.com/lllyasviel/Fooocus) | Minimal diffusion interface emphasising prompting over configuration. | Self-hosted | Good starting point for creators wanting less setup overhead. |
 | [InvokeAI](https://github.com/invoke-ai/InvokeAI) | Creative engine for image generation with polished web UI and workflow library. | Cross-platform, Self-hosted | Strong for professional canvas-based inpainting and batch workflows. |
 | [krita-ai-diffusion](https://github.com/Acly/krita-ai-diffusion) | AI diffusion plugin for Krita: inpaint, outpaint, generate from canvas. | Cross-platform | 10k+ stars; uses ComfyUI backend; v1.51 released June 2026. |
@@ -20,7 +20,7 @@
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
 | [FramePack](https://github.com/lllyasviel/FramePack) | Next-frame prediction model for long video generation at constant VRAM usage. | Self-hosted | Works on 6 GB GPU; from the Fooocus/Forge author. |
-| [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) | Tencent's open-source video generation model; v1.5 is 8.3B params, Apache 2.0. | Self-hosted | Strong natural motion and physics; 75-second renders on RTX 4090. |
+| [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo) | Tencent's open-source video generation model; v1.5 is 8.3B params, Apache 2.0. | Self-hosted | Strong natural motion and physics; 75-second renders on RTX 4090. |
 | [LTX-Video](https://github.com/Lightricks/LTX-Video) | Lightricks' open-source video model; v2.3 supports native 4K/50fps with audio. | Self-hosted | Fastest open model for iteration; 22B params, Apache 2.0 licensed. |
 | [Wan2.2](https://github.com/Wan-Video/Wan2.2) | Alibaba's open MoE video model for text-to-video and image-to-video. | Self-hosted | Leads photorealism benchmarks; lightweight 1.3B variant runs on 8 GB VRAM. |
 
@@ -28,7 +28,7 @@
 
 | Tool | Description | Platforms | Notes |
 | --- | --- | --- | --- |
-| [Hunyuan3D](https://github.com/Tencent/Hunyuan3D-2) | Tencent's two-stage 3D generation model: shape + PBR texture synthesis. | Self-hosted | v2.1 runs shape generation on 6 GB VRAM; best consumer-friendly option. |
+| [Hunyuan3D](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) | Tencent's two-stage 3D generation model: shape + PBR texture synthesis. | Self-hosted | v2.1 runs shape generation on 6 GB VRAM; best consumer-friendly option. |
 | [TRELLIS](https://github.com/microsoft/TRELLIS) | Microsoft's structured 3D latent model (CVPR 2025); text/image to mesh/Gaussian. | Self-hosted | Production-grade PBR output; TRELLIS.2-4B is current flagship. |
 | [TripoSR](https://github.com/VAST-AI-Research/TripoSR) | Fast single-image to 3D reconstruction model; sub-second inference. | Self-hosted | MIT licensed; 6–8 GB VRAM; 117k+ monthly HuggingFace downloads. |
 
@@ -66,7 +66,7 @@
 | [OBS Studio](https://github.com/obsproject/obs-studio) | Live streaming and screen recording suite. | Cross-platform | The default open recording tool. |
 | [Olive](https://github.com/olive-editor/olive) | Open-source non-linear video editor. | Cross-platform | Worth tracking as it matures. |
 | [OpenCut](https://github.com/OpenCut-app/OpenCut) | Open-source browser-native short-form video editor. | Web | Good fit for browser-native video work. |
-| [OpenUtau](https://github.com/stakira/OpenUtau) | Open singing synthesis platform. | Cross-platform | Useful for vocal synthesis workflows. |
+| [OpenUtau](https://github.com/openutau/OpenUtau) | Open singing synthesis platform. | Cross-platform | Useful for vocal synthesis workflows. |
 | [Shotcut](https://github.com/mltframework/shotcut) | Cross-platform video editor based on MLT framework. | Cross-platform | Strong established editor. |
 
 ## Image Processing & Cleanup
@@ -90,7 +90,7 @@
 | [Qwen-Image](https://github.com/QwenLM/Qwen-Image) | Alibaba's 20B unified generation+editing model; v2.0 is 7B, top AI Arena ranking. | Hosted API | v2.0 open weights not yet released as of June 2026; available via API. |
 | [Stable Diffusion 3.5](https://huggingface.co/stabilityai/stable-diffusion-3.5-large) | Stability AI's MMDiT-based T2I model; SD3.5 Large is 8B params. | Open weights | Strong community LoRA ecosystem; needs 18 GB VRAM for the large variant. |
 | [Imagen 4](https://deepmind.google/models/imagen/) | Google DeepMind hosted T2I model; GA in Gemini API as of Feb 2026; up to 2K output. | Hosted API | Three tiers: Ultra, Flagship, and Fast. |
-| [Kling 3.0](https://kling.kuaishou.com/) | Kuaishou's hosted video model; 15 s clips at 4K/60fps in one pass. | Hosted API | Multiple entries in the top-10 of 2026 video leaderboards. |
+| [Kling 3.0](https://kling.ai/) | Kuaishou's hosted video model; 15 s clips at 4K/60fps in one pass. | Hosted API | Multiple entries in the top-10 of 2026 video leaderboards. |
 | [Midjourney](https://www.midjourney.com/) | Hosted T2I/T2V service; V8 generation current as of spring 2026. | Hosted API | Still the benchmark for aesthetic quality among hosted image generators. |
 | [Sora 2](https://openai.com/sora) | OpenAI hosted video+audio model; consumer app discontinued April 2026. | Hosted API | Deprecated — API shuts down Sept 2026; avoid new pipelines on it. |
 | [Veo 3.1](https://deepmind.google/models/veo/) | Google DeepMind hosted video model with native 48kHz audio generation. | Hosted API | Consistent top-3 on video leaderboards; available via Gemini API. |

@@ -8,7 +8,7 @@
 | --- | --- |
 | Role in product line | Public "what we recommend" surface — the discovery & vetting layer in front of CI products |
 | Stack | Vite 5 + React 18 + Tailwind 4 + `marked` + `minisearch` + `highlight.js` |
-| Content | 13 curated `.md` files in [public/markdown/](../public/markdown/) (tools grouped by category) |
+| Content | 16 curated `.md` files in [public/markdown/](../public/markdown/), one per shelf (tools grouped by the job you are doing) |
 | Deploy | GitHub Actions → Cloudflare Pages (`main` branch, post-Playwright) |
 | Tests | Playwright e2e against the dev server (`npm test`) |
 | Repo | [companionintelligence/CI-Spellbook](https://github.com/companionintelligence/CI-Spellbook) |
@@ -17,25 +17,31 @@
 
 | Path | Purpose |
 | --- | --- |
-| [src/App.jsx](../src/App.jsx) | Card configuration registry + top-level layout + search wiring |
-| [src/components/Card.jsx](../src/components/Card.jsx) | Expandable card UI; loads & renders one markdown file |
-| [src/components/DebugPanel.jsx](../src/components/DebugPanel.jsx) | Dev-only diagnostic overlay |
-| [src/hooks/useMarkdown.js](../src/hooks/useMarkdown.js) | Fetch + `marked` parse + `highlight.js` syntax highlight |
+| [src/App.jsx](../src/App.jsx) | Shelf registry (`CARD_CONFIGS`) + page layout (header, hero, shelves, footer) + search wiring |
+| [src/lib/site.js](../src/lib/site.js) | The one place the site's outbound links (ci.computer, `/core`, `/download`, the docs) and public copy are written; `index.html`, `404.html` and `public/*` carry static copies that `scripts/assert-site.mjs` keeps in step |
+| [src/components/Card.jsx](../src/components/Card.jsx) | One shelf: a closed face whose title is a button (`aria-expanded`), and an open face that renders the shelf's table. Closed back faces are `inert` |
+| [src/components/DebugPanel.jsx](../src/components/DebugPanel.jsx), [DebugHost.jsx](../src/components/DebugHost.jsx) | Dev-only diagnostic overlay; `App.jsx` loads it only behind `import.meta.env.DEV`, so it is not in the production bundle (`scripts/assert-site.mjs` fails the build if it is) |
+| [src/lib/shelves.js](../src/lib/shelves.js), [src/hooks/useShelf.js](../src/hooks/useShelf.js) | Fetch + parse each shelf **once** (memoised promise per path), shared by the cards and the search index |
+| [src/lib/markdown.js](../src/lib/markdown.js) | `marked` + `highlight.js`; raw HTML is escaped, only `http(s)`/`mailto` links render, external links open in a new tab with `rel="noopener noreferrer"` |
 | [src/hooks/useDebugPanel.js](../src/hooks/useDebugPanel.js) | Debug panel state |
-| [public/markdown/](../public/markdown/) | 13 curated topical tool lists (the actual product content) |
-| [public/markdown-legacy-20260315/](../public/markdown-legacy-20260315/) | Snapshot of prior content; kept for diffing/rollback |
-| [public/background/](../public/background/), [public/logo/](../public/logo/) | Static visual assets |
-| [tests/](../tests/) (Playwright) | E2E smoke tests; runs in CI |
-| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Test + Cloudflare Pages deploy pipeline |
+| [public/markdown/](../public/markdown/) | 16 curated topical tool lists (the actual product content). Files are named after their shelf (`ai-agents.md`, `mcp-servers.md`, ...); the card `id`s in `CARD_CONFIGS` are stable keys and keep their historical names |
+| [archive/markdown-legacy-20260315/](../archive/markdown-legacy-20260315/) | Snapshot of prior content; kept for diffing/rollback, not shipped |
+| [src/assets/background/](../src/assets/background/) | Shelf art (13 WebP files, imported so Vite fingerprints them and serves them with the immutable `/assets/` cache; lazy-loaded) |
+| [public/logo/](../public/logo/), `public/favicon.ico`, `public/apple-touch-icon.png` | Brand files, verified mirrors of `@companionintelligence/assets` (`npm run brand:sync`) |
+| [index.html](../index.html), [404.html](../404.html), `public/{_headers,robots.txt,sitemap.xml,site.webmanifest,og-image.png}` | What crawlers, link previews and the CDN see: metadata, a `<noscript>` fallback, a real 404 page (a second Vite entry), the CSP and cache headers, the crawler files |
+| [scripts/assert-site.mjs](../scripts/assert-site.mjs), [scripts/check-lockfiles.mjs](../scripts/check-lockfiles.mjs) | Build-time checks: the public surface agrees with `src/lib/site.js`; `package.json`, `package-lock.json` and `deno.lock` list the same dependencies |
+| [dev-tools/lint-content.mjs](../dev-tools/lint-content.mjs), [dev-tools/check-links.mjs](../dev-tools/check-links.mjs) | Catalog checks: table shape, no raw HTML or non-https links (offline); do the links still resolve, and which repos were archived or renamed (networked, run on purpose) |
+| [tests/](../tests/) (Playwright), `src/**/*.test.js` (Vitest) | E2E smoke tests (cross-links, keyboard access, search); unit tests (markdown safety, shelf loading, the debug-panel regression, the site assertions) |
+| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Tests and a build smoke test. It does **not** deploy: magic.ci.computer is Cloudflare's Git integration, see [docs/operations/cloudflare-pages.md](../docs/operations/cloudflare-pages.md) |
 | [vite.config.js](../vite.config.js) | Dev server on `:5500`, `publicDir: 'public'` |
 
 ## Runtime data flow
 
 ```mermaid
 flowchart LR
-    A[public/markdown/*.md<br/>13 curated lists] -->|fetch on card open| B[useMarkdown hook]
-    B -->|marked.parse + hljs| C[Card component<br/>renders HTML]
-    A -->|indexed at boot| D[MiniSearch index<br/>in App.jsx]
+    A[public/markdown/*.md<br/>16 curated lists] -->|fetched and parsed once| B[loadShelf<br/>lib/shelves.js]
+    B -->|html, search lines, summary| C[Card component<br/>renders HTML on open]
+    B -->|indexed at boot| D[MiniSearch index<br/>in App.jsx]
     D -->|search hits| E[Search overlay<br/>highlights matches]
     F[user] -->|click / type| C
     F -->|search input| D
@@ -50,11 +56,11 @@ flowchart TD
     App[App.jsx<br/>CARD_CONFIGS + MiniSearch] --> Card1[Card: AI Agents]
     App --> Card2[Card: Code Dev]
     App --> Card3[Card: Local AI]
-    App --> CardN[... 13 cards total]
-    App --> Debug[DebugPanel]
-    Card1 --> UM1[useMarkdown]
-    Card2 --> UM2[useMarkdown]
-    Card3 --> UM3[useMarkdown]
+    App --> CardN[... 16 shelves total]
+    App -. dev only .-> Debug[DebugHost]
+    Card1 --> UM1[useShelf]
+    Card2 --> UM2[useShelf]
+    Card3 --> UM3[useShelf]
     UM1 -. fetch .-> MD[(public/markdown/*.md)]
     UM2 -. fetch .-> MD
     UM3 -. fetch .-> MD
@@ -187,8 +193,8 @@ That regularity is what makes automated extraction (JSON feeds, marketplace inge
 | Area | Note |
 | --- | --- |
 | Card registry | Hard-coded array in [src/App.jsx](../src/App.jsx); adding a topic touches code, not just content |
-| Search | MiniSearch indexes at boot in the browser — fine for 13 files, will need rethinking past ~100 |
-| Markdown rendering | `marked` v5 + manual `highlight.js` plumbing in [useMarkdown.js](../src/hooks/useMarkdown.js); newer `marked` extension API would be cleaner |
+| Search | MiniSearch indexes at boot in the browser — fine for 16 files, will need rethinking past ~100 |
+| Markdown rendering | `marked` v5 + manual `highlight.js` plumbing in [markdown.js](../src/lib/markdown.js); newer `marked` extension API would be cleaner |
 | Tests | Single Playwright suite; no link-rot or markdown-lint checks yet |
 | Legacy snapshot | `public/markdown-legacy-20260315/` ships in the bundle; consider moving out of `public/` |
 | Content drift | No automation re-checks whether linked tools are still maintained / repo still exists |

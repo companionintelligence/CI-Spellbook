@@ -329,6 +329,15 @@ export function checkDist(dist) {
     if (!js.includes(name)) problems.push(`the JS bundle does not contain the label "${name}"`);
   }
 
+  // The debug overlay is a development tool. It once shipped to production and ran a
+  // requestAnimationFrame loop that multiplied itself (millions of callbacks a
+  // minute on an idle tab). App.jsx now loads it only behind import.meta.env.DEV;
+  // this is what notices if that guard is ever removed. The string is the panel's
+  // own help text.
+  if (js.includes('toggle the panel')) {
+    problems.push('the dev-only debug panel is in the production bundle (App.jsx must load DebugHost only when import.meta.env.DEV)');
+  }
+
   // The built pages kept what the CSP depends on.
   checkNoInline('dist/index.html', html, problems);
   const entry = tagsOf(html, 'script').find((t) => attr(t, 'type') === 'module');

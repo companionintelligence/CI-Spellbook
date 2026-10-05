@@ -50,6 +50,22 @@
       "description": "Prove the Sentry SDK is tree-shaken out of a DSN-less build (mirrors `npm run assert:no-sentry-without-dsn`).",
       "command": "deno run -A scripts/assert-bundle-without-dsn.mjs"
     },
+    "assert:site": {
+      "description": "Check the site's metadata, cross-links and crawler files against src/lib/site.js (mirrors `npm run assert:site`). Also runs inside every `vite build`.",
+      "command": "deno run -A scripts/assert-site.mjs"
+    },
+    "check:lockfiles": {
+      "description": "package.json, package-lock.json and deno.lock list the same direct dependencies (mirrors `npm run check:lockfiles`).",
+      "command": "deno run -A scripts/check-lockfiles.mjs"
+    },
+    "lint:content": {
+      "description": "Validate public/markdown/*.md against the catalog conventions (mirrors `npm run lint:content`).",
+      "command": "deno run -A dev-tools/lint-content.mjs"
+    },
+    "check:links": {
+      "description": "Check that the catalog's outbound links still resolve; set GITHUB_TOKEN to also catch archived and renamed repos (mirrors `npm run check:links`).",
+      "command": "deno run -A dev-tools/check-links.mjs"
+    },
     "check": {
       "description": "Type-check the JSX/JS source with Deno's built-in TypeScript checker (new — there was no type checking at all before this migration).",
       "command": "deno check src/**/*.js src/**/*.jsx"

@@ -3,6 +3,7 @@ import {
   htmlToSearchLines,
   summarizeCardHtml,
   labelTableCells,
+  prepareCardBody,
   markMatches,
   snippetTerms
 } from './cardContent';
@@ -157,3 +158,65 @@ describe('markMatches', () => {
     expect(markMatches('a & b', [])).toBe('a &amp; b');
   });
 });
+
+describe('prepareCardBody', () => {
+  const body = prepareCardBody(SHELF);
+  const doc = new DOMParser().parseFromString(body, 'text/html');
+
+  it('pushes every heading down a level, so the page keeps the only <h1>', () => {
+    // The markdown's own "# Title" and "## Section" were a second and third
+    // set of <h1>/<h2> in the same document: sixteen <h1>s in all.
+    expect(doc.querySelectorAll('h1')).toHaveLength(0);
+    expect(doc.querySelector('h2')?.textContent).toBe('MCP Servers & Connectors');
+    expect(Array.from(doc.querySelectorAll('h3')).map((h) => h.textContent)).toEqual([
+      'Registries & Catalogs',
+      'Reference Servers'
+    ]);
+  });
+
+  it('keeps heading attributes and inline content when it demotes', () => {
+    const out = prepareCardBody('<h2 id="x" class="y">A <em>b</em> &amp; c</h2>');
+    expect(out).toBe('<h3 id="x" class="y">A <em>b</em> &amp; c</h3>');
+  });
+
+  it('also labels the table cells, as labelTableCells does', () => {
+    const cells = Array.from(doc.querySelector('tbody tr').querySelectorAll('td'));
+    expect(cells.map((c) => c.getAttribute('data-label'))).toEqual([
+      'Tool',
+      'Description',
+      'Platforms',
+      'Notes'
+    ]);
+  });
+
+  it('leaves the input string alone: the search lines are computed from the raw html', () => {
+    expect(SHELF).toContain('<h1>MCP Servers');
+    expect(htmlToSearchLines(SHELF)[0]).toBe('MCP Servers & Connectors');
+  });
+
+  it('passes content with no headings or tables through unchanged', () => {
+    expect(prepareCardBody('<p>just prose</p>')).toBe('<p>just prose</p>');
+  });
+});
+
+describe('summarizeCardHtml keys', () => {
+  it('gives one key per row, so the catalog can be counted by distinct tool', () => {
+    const s = summarizeCardHtml(`
+      <table><thead><tr><th>Tool</th></tr></thead><tbody>
+        <tr><td><a href="https://example.com/a/">Alpha</a></td></tr>
+        <tr><td><a href="https://example.com/b">Beta</a></td></tr>
+        <tr><td>No link here</td></tr>
+      </tbody></table>`);
+    expect(s.tools).toBe(3);
+    // The trailing slash is not a different tool; the name stands in for a missing link.
+    expect(s.keys).toEqual(['https://example.com/a', 'https://example.com/b', 'no link here']);
+  });
+
+  it('keeps the example names capped at four while still keying every row', () => {
+    const rows = Array.from({ length: 6 }, (_, i) => `<tr><td><a href="https://e.com/${i}">T${i}</a></td></tr>`).join('');
+    const s = summarizeCardHtml(`<table><thead><tr><th>Tool</th></tr></thead><tbody>${rows}</tbody></table>`);
+    expect(s.examples).toEqual(['T0', 'T1', 'T2', 'T3']);
+    expect(s.keys).toHaveLength(6);
+  });
+});
+

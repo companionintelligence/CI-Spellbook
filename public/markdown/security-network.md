@@ -12,7 +12,7 @@
 | [Pi-hole](https://github.com/pi-hole/pi-hole) | Classic self-hosted ad-blocking DNS sinkhole. | Self-hosted | Still one of the best home-network defaults. |
 | [Technitium DNS](https://github.com/TechnitiumSoftware/DnsServer) | Self-hosted authoritative and recursive DNS server with a web UI. | Self-hosted, Cross-platform | Flexible; good for advanced DNS control including DoH/DoT. |
 | [wBlock](https://github.com/0xCUB3/wBlock) | Safari-focused ad and privacy blocker. | macOS | Good Apple-only option. |
-| [Zen Privacy](https://github.com/ZenPrivacy/zen-desktop) | Desktop ad blocker and privacy guard. | Cross-platform | Useful for endpoint-level blocking. |
+| [Zen Privacy](https://github.com/irbis-sh/zen-desktop) | Desktop ad blocker and privacy guard. | Cross-platform | Useful for endpoint-level blocking. |
 
 ## Authentication & Identity
 
@@ -68,7 +68,7 @@
 | [Algo](https://github.com/trailofbits/algo) | Scripts for provisioning a personal WireGuard/IPsec VPN. | Cross-platform | Good for cloud-hosted personal VPN setups. |
 | [Amnezia](https://github.com/amnezia-vpn/amnezia-client) | VPN client for desktop and mobile with obfuscation support. | Cross-platform, Mobile | Useful in high-censorship environments. |
 | [EasyTier](https://github.com/EasyTier/EasyTier) | Decentralized mesh VPN with WireGuard support. | Cross-platform | Good peer-to-peer secure networking option. |
-| [Gluetun](https://github.com/qdm12/gluetun) | VPN client container with optional proxy features. | Self-hosted | Great for routing other containers through a VPN. |
+| [Gluetun](https://github.com/passteque/gluetun) | VPN client container with optional proxy features. | Self-hosted | Great for routing other containers through a VPN. |
 | [Headscale](https://github.com/juanfont/headscale) | Self-hosted control plane compatible with the Tailscale client stack. | Self-hosted | Excellent for private tailnet-style deployments without cloud dependency. |
 | [NetBird](https://github.com/netbirdio/netbird) | Fully self-hosted WireGuard mesh with zero-trust policy and SSO. | Cross-platform | v0.65+ includes built-in reverse proxy; strong team-facing VPN. |
 | [Netmaker](https://github.com/gravitl/netmaker) | Distributed virtual network orchestration with WireGuard. | Self-hosted, Web | Good for larger self-hosted mesh setups. |
@@ -92,6 +92,6 @@
 | --- | --- | --- | --- |
 | [Awesome Privacy](https://github.com/pluja/awesome-privacy) | Curated list of privacy-respecting software alternatives. | Web | Good starting point for evaluating data-respecting tools. |
 | [Privacy Guides](https://www.privacyguides.org/) | Community-maintained guide to private tools and practices. | Web | Well-maintained; good for evaluating everyday privacy choices. |
-| [Techno Tim — Self-Hosting Security Guide](https://technotim.live/posts/self-hosting-security/) | Guide covering firewalls, reverse proxies, auth, and hardening. | Web | Practical and regularly updated. |
+| [Techno Tim — Self-Hosting Security Guide](https://technotim.com/posts/self-hosting-security/) | Guide covering firewalls, reverse proxies, auth, and hardening. | Web | Practical and regularly updated. |
 | [Self-Hosted.show Podcast](https://selfhosted.show/) | Weekly podcast covering self-hosting news and tools. | Web | Good for staying current on the self-hosting ecosystem. |
 | [Wolfgang's Channel](https://www.youtube.com/@WolfgangsChannel) | Video guides on VPNs, DNS, and privacy-focused self-hosting. | Web | Strong on network security topics. |

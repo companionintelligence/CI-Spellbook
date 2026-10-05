@@ -144,7 +144,7 @@ by whatever is serving the files:
 |---|---|---|
 | GHCR image (nginx) — how the Hub/marketplace runs it | `nginx/40-telemetry-config.sh` resolves the environment at container start and writes `/api/config/telemetry`; `nginx/default.conf` serves it `no-store` | **Yes** — on by default with a DSN, and both kill switches reach the browser |
 | `npm run dev` / `npm run preview` | Vite middleware in `vite.config.js`, from `process.env` | **Yes** — same rule, resolved from `process.env` |
-| Cloudflare Pages (the `main` deploy) | none | **No** — the check 404s, so reporting stays **off** even with a DSN |
+| Cloudflare Pages (the `main` deploy) | none | **No** — the check 404s (a real 404: `404.html` is in the build, which also turns off Pages' single-page-app fallback; before it was, Pages answered this path with the home page and a 200, which the bundle also rejects), so reporting stays **off** even with a DSN |
 | `npm run serve`, or any bare static host | none | **No** — same 404, same result |
 
 The last two rows are where this repo genuinely departs from the fleet's
@@ -257,7 +257,7 @@ set, there is no request at all.
 | `src/lib/telemetry.js` | Scrubber + `Sentry.init` + `captureException` |
 | `src/lib/telemetryScrubFixtures.js` | Shared redaction cases (cross-repo copy) |
 | `src/main.jsx` | Calls `initTelemetry()` before the root render |
-| `src/hooks/useMarkdown.js` | Reports spell-content load failures, which are caught and so never reach the global handler |
+| `src/hooks/useShelf.js` | Reports shelf-content load failures, which are caught and so never reach the global handler |
 | `nginx/40-telemetry-config.sh` | Writes runtime consent at container start |
 | `nginx/default.conf` | Serves `/api/config/telemetry` |
 | `vite.config.js` | Same endpoint for `dev` / `preview` |

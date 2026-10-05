@@ -337,11 +337,21 @@ main:focus { outline: none; }
 }
 
 .app-search-button {
+  /* The icon is 20px; the button around it is 36px (WCAG 2.2 target size), which
+     still fits inside the input's right padding (12px offset + 36px = its 3rem). */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
   color: var(--primary);
   border-radius: 999px;
 }
 
 .app-search-button:hover { color: var(--foreground); }
+
+/* One line tall whether or not there is a note in it (see App.jsx). */
+.app-search-slot { min-height: 1.75rem; }
 
 .app-search-note {
   margin-top: 0.5rem;

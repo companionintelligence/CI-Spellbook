@@ -45,6 +45,15 @@ jobs:
       # docs/operations/error-reporting.md.
       - name: Assert no Sentry code in a DSN-less bundle
         run: npm run assert:no-sentry-without-dsn
+      # Catalog shape: the table format, and no raw HTML or non-https link in a
+      # shelf. The networked check (`npm run check:links`) is run on purpose, not here.
+      - name: Lint catalog content
+        run: npm run lint:content
+      # `vite build` also runs scripts/assert-site.mjs: the metadata, the four
+      # cross-links to ci.computer and the docs, the 404 page and the CSP's
+      # promises are checked against src/lib/site.js, so a drift fails here.
+      - name: Build (and check the site's public surface)
+        run: npm run build
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run tests

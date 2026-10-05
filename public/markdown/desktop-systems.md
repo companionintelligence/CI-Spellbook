@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | [Bazzite](https://github.com/ublue-os/bazzite) | Gaming-focused immutable Fedora spin with Steam and gaming mode pre-configured. | Linux | Best low-friction gaming desktop on immutable Linux. |
 | [COSMIC](https://github.com/pop-os/cosmic-epoch) | Rust-based desktop environment from System76; stable since Dec 2025 (v1.0+). | Linux | Rolling release; Epoch 2 roadmap underway in 2026. |
-| [Omarchy](https://github.com/basecamp/omarchy) | Opinionated Linux distribution focused on a polished modern setup. | Linux | Worth tracking if you want a curated Linux environment. |
+| [Omarchy](https://github.com/omacom/omarchy) | Opinionated Linux distribution focused on a polished modern setup. | Linux | Worth tracking if you want a curated Linux environment. |
 | [openmediavault](https://github.com/openmediavault/openmediavault) | NAS-oriented operating system and management layer. | Linux | Good for storage-heavy home setups. |
 | [Puter](https://github.com/HeyPuter/puter) | Web-based personal cloud environment and internet OS concept. | Web | Interesting if you want app-like workflows in the browser. |
 | [SerenityOS](https://github.com/SerenityOS/serenity) | Independent hobbyist operating system with its own userland. | Linux | Best for OS exploration and systems curiosity. |
@@ -25,7 +25,7 @@
 | [Cork](https://github.com/buresdv/Cork) | Homebrew GUI for package management. | macOS | Good for managing casks visually. |
 | [Flow Launcher](https://github.com/Flow-Launcher/Flow.Launcher) | Quick app and file launcher for Windows. | Windows | Great launcher foundation on Windows. |
 | [Ice](https://github.com/jordanbaird/Ice) | Menu bar manager for macOS. | macOS | Great for decluttering the top bar. |
-| [Leader Key](https://github.com/mikker/LeaderKey.app) | Fast launcher and command surface. | macOS | Good alternative to heavier launchers. |
+| [Leader Key](https://github.com/mikker/LeaderKey) | Fast launcher and command surface. | macOS | Good alternative to heavier launchers. |
 | [Raycast](https://www.raycast.com/) | Command launcher and productivity shell. | macOS | Strong everyday command surface. |
 | [Ulauncher](https://github.com/Ulauncher/Ulauncher) | Linux app launcher with extension support. | Linux | Good daily launcher for Linux desktops. |
 
@@ -42,7 +42,7 @@
 | [Loop](https://github.com/MrKai77/Loop) | Elegant window management for macOS. | macOS | Good polished middle ground between snap and full tiling. |
 | [niri](https://github.com/niri-wm/niri) | Scrollable-tiling Wayland compositor where new windows never resize existing ones. | Linux | 10k+ stars; good modern approach for multi-app layouts. |
 | [Rectangle](https://github.com/rxhanson/Rectangle) | Keyboard-driven window snapping. | macOS | Strong low-friction upgrade for almost anyone. |
-| [yabai](https://github.com/koekeishiya/yabai) | Binary-space tiling window manager for macOS. | macOS | Power-user choice for deep automation. |
+| [yabai](https://github.com/asmvik/yabai) | Binary-space tiling window manager for macOS. | macOS | Power-user choice for deep automation. |
 
 ## Terminal Emulators
 
@@ -50,7 +50,7 @@
 | --- | --- | --- | --- |
 | [Ghostty](https://github.com/ghostty-org/ghostty) | Fast, GPU-accelerated terminal using platform-native UI; v1.3+ in 2026. | macOS, Linux | Now in Ubuntu 26.04 repos; non-profit backed. |
 | [Kitty](https://github.com/kovidgoyal/kitty) | GPU-accelerated terminal with tabs, splits, and a remote-control protocol. | Cross-platform | Strong power-user choice; scriptable via kitten API. |
-| [WezTerm](https://github.com/wez/wezterm) | GPU-accelerated terminal and multiplexer configurable with Lua. | Cross-platform | Good cross-platform pick with built-in mux. |
+| [WezTerm](https://github.com/wezterm/wezterm) | GPU-accelerated terminal and multiplexer configurable with Lua. | Cross-platform | Good cross-platform pick with built-in mux. |
 
 ## Monitoring, Input & Quality-of-Life Tools
 
