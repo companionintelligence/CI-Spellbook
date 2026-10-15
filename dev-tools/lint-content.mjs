@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 // Validates public/markdown/*.md against the catalog conventions in
 // architecture/content-expansion-plan.md. Run: node dev-tools/lint-content.mjs
+//
+// Besides the table shape, it fails on the two things the renderer
+// (src/lib/markdown.js) would otherwise have to defend against at runtime: raw
+// HTML, and a link that is not https. Whether the https links still resolve is a
+// different, networked question: see dev-tools/check-links.mjs.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const DIR = new URL('../public/markdown', import.meta.url).pathname;
+// Optional first argument: a directory of shelves to check instead of the real one
+// (dev-tools/lint-content.test.js points it at deliberately bad ones).
+const DIR = process.argv[2] ?? new URL('../public/markdown', import.meta.url).pathname;
 const HEADER = '| Tool | Description | Platforms | Notes |';
 const SEPARATOR = '| --- | --- | --- | --- |';
 const PLATFORM_TOKENS = new Set([
@@ -34,9 +41,23 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith('.md')).sort()) {
   }
 
   let prev = '';
+  let inFence = false;
   lines.forEach((raw, i) => {
     const n = i + 1;
     const line = raw.trimEnd();
+
+    if (/^\s*(```|~~~)/.test(line)) { inFence = !inFence; prev = line; return; }
+    if (!inFence) {
+      // Inline code is text, so a `<div>` or a `](http://x)` inside backticks is fine.
+      const prose = line.replace(/`[^`]*`/g, '');
+      if (/<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/.test(prose)) {
+        report('error', file, n, `raw HTML (shelves are markdown only; it is shown as text, not rendered): ${prose.trim().slice(0, 60)}`);
+      }
+      for (const m of prose.matchAll(/\]\(\s*([^)\s]*)/g)) {
+        if (!/^https:\/\//i.test(m[1])) report('error', file, n, `link is not https: ${m[1].slice(0, 60)}`);
+      }
+    }
+
     if (!line.startsWith('|')) { prev = line; return; }
 
     if (line === HEADER) {

@@ -24,3 +24,20 @@ declare global {
     };
   }
 }
+
+// React 18's types predate two things Card.jsx uses, both standard and both
+// supported at runtime by React 18 and every browser this ships to:
+//
+//   - the `inert` attribute, which takes a closed shelf's back face out of the tab
+//     order and the accessibility tree. React 18 passes the empty string through
+//     to the DOM as `inert=""`; omitted (undefined) it is absent.
+//   - CSS custom properties in a `style` object (`--shelf-hover`).
+declare module 'react' {
+  interface HTMLAttributes<T> {
+    inert?: '' | undefined;
+  }
+
+  interface CSSProperties {
+    [variable: `--${string}`]: string | number | undefined;
+  }
+}

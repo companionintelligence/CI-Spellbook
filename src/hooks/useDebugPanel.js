@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+/** True when a key press belongs to a text field, not to the page. */
+export const isEditableTarget = (target) => {
+  if (!target || typeof target.closest !== 'function') return false;
+  return Boolean(target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])'));
+};
 
 export const useDebugPanel = () => {
   const [debugState, setDebugState] = useState({
@@ -15,8 +21,6 @@ export const useDebugPanel = () => {
       totalCards: 10
     }
   });
-
-  const frameCountRef = useRef(0);
 
   const updateDebug = useCallback((stage, expanded, flipped, element) => {
     if (!debugState.isVisible) return;
@@ -79,43 +83,56 @@ export const useDebugPanel = () => {
     }));
   }, []);
 
-  // Performance monitoring
-  useEffect(() => {
-    const updateFPS = () => {
-      const now = performance.now();
-      frameCountRef.current++;
-      
-      if (now >= debugState.performanceMetrics.lastTime + 1000) {
-        const fps = Math.round(
-          (frameCountRef.current * 1000) / 
-          (now - debugState.performanceMetrics.lastTime)
-        );
-        
-        setDebugState(prev => ({
-          ...prev,
-          performanceMetrics: {
-            ...prev.performanceMetrics,
-            fps,
-            lastTime: now
-          }
-        }));
-        
-        frameCountRef.current = 0;
-      }
-      
-      requestAnimationFrame(updateFPS);
-    };
-    
-    const animationId = requestAnimationFrame(updateFPS);
-    
-    return () => cancelAnimationFrame(animationId);
-  }, [debugState.performanceMetrics.lastTime]);
+  const isVisible = debugState.isVisible;
 
-  // Memory monitoring
+  // Performance monitoring. ONE requestAnimationFrame loop, alive only while
+  // the panel is on screen.
+  //
+  // This used to depend on `performanceMetrics.lastTime` — the very value the
+  // loop wrote once a second — and the cleanup cancelled only the first frame
+  // id. Each re-run therefore started a fresh loop while every earlier loop kept
+  // rescheduling itself, and each stale loop then called setState on every
+  // frame: ~2k callbacks in the first 5 s, 1.8M in the 25-30 s window, a whole
+  // App re-render per frame, with the panel closed. Frame bookkeeping now lives
+  // in the effect's closure; nothing the loop writes is something it reads.
   useEffect(() => {
+    if (!isVisible) return undefined;
+
+    let frameId = 0;
+    let frames = 0;
+    let last = performance.now();
+
+    const tick = (now) => {
+      frames += 1;
+      const elapsed = now - last;
+
+      if (elapsed >= 1000) {
+        const fps = Math.round((frames * 1000) / elapsed);
+        frames = 0;
+        last = now;
+        setDebugState((prev) => ({
+          ...prev,
+          performanceMetrics: { ...prev.performanceMetrics, fps, lastTime: now }
+        }));
+      }
+
+      frameId = requestAnimationFrame(tick);
+    };
+
+    frameId = requestAnimationFrame(tick);
+
+    // `frameId` is reassigned every frame, so this cancels the loop's latest
+    // pending frame, not the first one.
+    return () => cancelAnimationFrame(frameId);
+  }, [isVisible]);
+
+  // Memory monitoring — same rule: only while someone is looking.
+  useEffect(() => {
+    if (!isVisible) return undefined;
+
     const updateMemory = () => {
       if (performance.memory) {
-        setDebugState(prev => ({
+        setDebugState((prev) => ({
           ...prev,
           performanceMetrics: {
             ...prev.performanceMetrics,
@@ -127,15 +144,21 @@ export const useDebugPanel = () => {
 
     const interval = setInterval(updateMemory, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts.
+  //
+  // Ctrl/Cmd + ` toggles the panel. The bare ` / ~ it used to listen for fired
+  // while typing in the search field — and called preventDefault, so a query
+  // like "~/.config" could not be entered and opened an overlay instead.
   useEffect(() => {
     const handleKeydown = (e) => {
-      if (e.key === '`' || e.key === '~') {
+      if (isEditableTarget(e.target)) return;
+
+      if ((e.key === '`' || e.key === '~') && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         toggleDebugPanel();
-      } else if (e.key === 'Escape' && debugState.isVisible) {
+      } else if (e.key === 'Escape' && isVisible) {
         e.preventDefault();
         hideDebugPanel();
       }
@@ -143,7 +166,7 @@ export const useDebugPanel = () => {
 
     document.addEventListener('keydown', handleKeydown);
     return () => document.removeEventListener('keydown', handleKeydown);
-  }, [debugState.isVisible, toggleDebugPanel, hideDebugPanel]);
+  }, [isVisible, toggleDebugPanel, hideDebugPanel]);
 
   return {
     debugState,

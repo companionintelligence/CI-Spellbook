@@ -99,6 +99,50 @@ export function labelTableCells(html) {
   return touched ? doc.body.innerHTML : html;
 }
 
+/**
+ * Everything the OPEN face of a shelf needs done to its rendered markdown, in
+ * one parse: label the table cells (see labelTableCells) and push every heading
+ * down a level.
+ *
+ * The page owns the one <h1>, and each closed shelf face owns an <h2>. The
+ * markdown's own "# Title" / "## Section" used to be a second and third set of
+ * <h1>/<h2> in the same document — sixteen <h1>s in the accessibility tree.
+ * Demoting here, on the way into the open card, leaves the summary and the
+ * search lines (computed from the raw markdown HTML) alone.
+ */
+export function prepareCardBody(html) {
+  const doc = parseCardHtml(html);
+  if (!doc) return html;
+
+  let touched = false;
+
+  for (const table of doc.querySelectorAll('table')) {
+    const headers = Array.from(table.querySelectorAll('thead th')).map(clean);
+    if (!headers.length) continue;
+    for (const row of table.querySelectorAll('tbody tr')) {
+      const tr = /** @type {HTMLTableRowElement} */ (row);
+      Array.from(tr.cells).forEach((cell, i) => {
+        if (headers[i]) {
+          cell.setAttribute('data-label', headers[i]);
+          touched = true;
+        }
+      });
+    }
+  }
+
+  // Document order, deepest last: replacing a heading never moves another one.
+  for (const heading of Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5'))) {
+    const level = Number(heading.tagName.slice(1));
+    const next = doc.createElement(`h${level + 1}`);
+    for (const attr of Array.from(heading.attributes)) next.setAttribute(attr.name, attr.value);
+    while (heading.firstChild) next.appendChild(heading.firstChild);
+    heading.replaceWith(next);
+    touched = true;
+  }
+
+  return touched ? doc.body.innerHTML : html;
+}
+
 export function escapeHtml(value) {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -183,13 +227,26 @@ export function summarizeCardHtml(html) {
   const sections = doc.querySelectorAll('h2').length;
 
   const examples = [];
+  const keys = [];
   for (const row of rows) {
     // Same compound-selector caveat as labelTableCells above.
-    const name = clean(/** @type {HTMLTableRowElement} */ (row).cells?.[0]);
-    if (name && !examples.includes(name)) examples.push(name);
-    if (examples.length === 4) break;
+    const cell = /** @type {HTMLTableRowElement} */ (row).cells?.[0];
+    const name = clean(cell);
+    if (name && examples.length < 4 && !examples.includes(name)) examples.push(name);
+    keys.push(toolKey(cell));
   }
 
   if (!rows.length) return null;
-  return { tools: rows.length, sections, examples };
+  return { tools: rows.length, sections, examples, keys };
+}
+
+/**
+ * What identifies a tool across shelves: its link, which is what the rows are
+ * keyed on in dev-tools/lint-content.mjs, or its name when a row has none.
+ * A tool that sits on two shelves has two rows and one key, so the catalog's
+ * true size is the number of distinct keys, not the number of rows.
+ */
+function toolKey(cell) {
+  const href = cell?.querySelector?.('a[href]')?.getAttribute('href');
+  return (href ? href.replace(/\/+$/, '') : clean(cell)).toLowerCase();
 }

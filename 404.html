@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | Spellbook</title>
+  <meta name="description" content="That page is not part of Spellbook, the catalog of local-AI and self-hosting tools.">
+  <!-- A real 404 page, not a copy of the app: its presence is also what turns off
+       Cloudflare Pages' single-page-app fallback, so a mistyped path (or a request
+       for a file that does not exist) gets a 404 instead of the home page. The app
+       has no client-side routes, so nothing relies on that fallback. -->
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071533">
+  <link rel="icon" type="image/png" sizes="32x32" href="/logo/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/logo/mark.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <!-- Built by Vite as a second entry, so it carries the same fingerprinted
+       stylesheet as the app and no inline style is needed. -->
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body class="text-white font-sans antialiased min-h-screen">
+  <header class="site-header">
+    <div class="container px-4 mx-auto sm:px-6 lg:px-8">
+      <div class="topbar">
+        <a class="brand-link" href="https://ci.computer">
+          <img src="/logo/mark.svg" alt="" width="40" height="40" class="brand-mark">
+          <span>Companion Intelligence</span>
+        </a>
+
+        <nav class="topnav" aria-label="Companion Intelligence">
+          <a class="topnav-link" href="https://docs.ci.computer/docs/apps-available/first-party-apps/spellbook">Docs</a>
+          <a class="cta cta-secondary" href="https://ci.computer/download">Download Companion</a>
+          <a class="cta cta-primary" href="https://ci.computer/core">Buy Companion Core</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container px-4 mx-auto sm:px-6 lg:px-8">
+    <div class="hero not-found">
+      <p class="not-found-code">404</p>
+      <h1 class="hero-title">That page is not on the shelves</h1>
+      <p class="hero-lede">Spellbook is a single page. Open it to browse the shelves or search them all.</p>
+      <p class="not-found-actions">
+        <a class="cta cta-primary" href="/">Back to Spellbook</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container px-4 mx-auto sm:px-6 lg:px-8">
+      <nav class="footer-links" aria-label="Companion Intelligence links">
+        <a href="https://ci.computer">Companion Intelligence</a>
+        <a href="https://docs.ci.computer/docs/apps-available/first-party-apps/spellbook">Docs</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

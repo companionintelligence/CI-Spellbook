@@ -4,7 +4,9 @@
 Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
 
 ## Summary
-CI-Spellbook is the front-end experience for the Companion Intelligence product line, focused on card-driven content exploration and rich markdown presentation.
+Spellbook is a searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware. It is sixteen shelves, each a markdown table, organized by the job you are doing rather than by vendor. Search runs in the browser across every shelf.
+
+It is published at <https://magic.ci.computer> and ships as a container image for the Companion Hub App Store. Every page links back to Companion Intelligence (<https://ci.computer>), to the app's page in the docs, and to the two calls to action every Companion site carries (**Buy Companion Core** at <https://ci.computer/core>, **Download Companion** at <https://ci.computer/download>). Those URLs and the page's public copy are written once, in [`src/lib/site.js`](src/lib/site.js); see [Checks](#checks).
 
 ## Quick Start
 ```bash
@@ -38,6 +40,15 @@ Node's `node:module.register()` custom-loader hook, which Deno 2.9's Node
 compat does not implement yet. `npm test` / `npx playwright test` still work
 normally under real Node. See the deno-migration PR for details.
 
+## Where it runs
+
+| Channel | What | How it is built |
+|---|---|---|
+| <https://magic.ci.computer> | The public site: a Cloudflare Pages project connected to this repository. Cloudflare builds and deploys it itself; no workflow in this repo does. | `npm run build` to `dist/`, with `NODE_AUTH_TOKEN` set in the Pages project (the canon packages are private). See [`docs/operations/cloudflare-pages.md`](docs/operations/cloudflare-pages.md). |
+| `ghcr.io/companionintelligence/ci-spellbook` | The container the Hub App Store installs (nginx on port 5500). | The `Dockerfile` (Deno), published by `docker-publish.yml`, which is started by hand. |
+
+`.github/workflows/ci.yml` tests and smoke-builds; it does not deploy. Both workflows are `workflow_dispatch`-only (see [`docs/CI.md`](docs/CI.md)).
+
 ## Run with Docker
 
 A public multi-arch (amd64/arm64) image is published to GHCR. nginx serves the
@@ -59,11 +70,23 @@ docker run -d -p 5500:5500 ci-spellbook
 ## Tests
 
 ```bash
-npm run test:unit                    # vitest unit tests (telemetry gate + scrubber)
-npx playwright test                  # smoke tests (starts the dev server itself)
+npm run test:unit                    # vitest: the app rendered in jsdom, markdown safety, shelf loading,
+                                     #   the debug-panel regression, the site and lockfile checks, telemetry
+npx playwright test                  # smoke tests in a real browser (starts the dev server itself)
 APP_URL=http://localhost:5500 \
   npx playwright test --config=tests/container/playwright.config.ts   # against a running container
 ```
+
+## Checks
+
+| Command | What it fails on |
+|---|---|
+| `npm run build` | A page whose static copy of the links or copy has drifted from [`src/lib/site.js`](src/lib/site.js): the metadata, the `<noscript>` fallback, `404.html`, `robots.txt`, `sitemap.xml`, the web manifest, the CSP in `public/_headers` (it must not allow inline script or style), and the four cross-links. It runs inside the Vite build ([`scripts/assert-site.mjs`](scripts/assert-site.mjs)), so the Pages build and the Docker build run it too. |
+| `npm run check:lockfiles` | `package.json`, `package-lock.json` and `deno.lock` listing different dependencies, or resolving a direct dependency or any `@companionintelligence/*` package to different versions (the Pages bundle is built from the first, the container image from the second, so a mismatch ships different design tokens from one commit). The Docker build runs `deno install --frozen`, which refuses a stale `deno.lock` but not one that disagrees with `package-lock.json`. After changing dependencies: `npm install`, then `NODE_AUTH_TOKEN=... deno install --frozen=false`, and commit both lockfiles together. |
+| `npm run check:ga-build` | Analytics leaking into a build that did not ask for it, or half-present in one that did. Runs real builds with `GA_MEASUREMENT_ID` unset, malformed and valid, and a repeat of the valid one. |
+| `npm run lint:content` | A shelf with the wrong table shape, raw HTML, or a link that is not `https`. |
+| `npm run check:links` | A catalog link that is gone. Networked, so run on purpose rather than on every push; with `GITHUB_TOKEN` set it also reports archived and renamed GitHub repos. |
+| `npm run lint:canon` | A brand colour off the canon, or a brand file under `public/` that differs from `@companionintelligence/assets`. |
 
 ## Error reporting
 
@@ -82,47 +105,18 @@ See [`docs/operations/error-reporting.md`](docs/operations/error-reporting.md).
 
 ## Content
 
-Spell content lives in `public/markdown/*.md`; each card in `src/App.jsx`
-(`CARD_CONFIGS`) points at one markdown file. The markdown directory is copied
-into the image at build time by Vite (`publicDir`), so new spells ship with the
-next image build. `archive/` holds retired content that is intentionally **not**
-shipped; `dev-tools/` holds manual browser debug helpers.
+Each shelf is one markdown file in `public/markdown/`, named after its title (`ai-agents.md`, `mcp-servers.md`, ...), and one entry in `CARD_CONFIGS` in `src/App.jsx`. A shelf is a title, a one-line `>` blurb, and tables of `Tool | Description | Platforms | Notes`; `npm run lint:content` holds it to that. To add a shelf, add the file and the entry.
 
-## Design Tokens
+The `id` and `containerId` in `CARD_CONFIGS` are stable keys, not descriptions: the video storyboard and the `#shelf-...` anchors address cards by them, so they keep their historical names where a shelf has since been retitled (`xr-spatial` is the Desktop Systems shelf).
 
-### Colors
-Usage guidance: define primary/secondary accents and set background/text colors via CSS variables in `src/styles.css`.
+The markdown directory is copied into the build by Vite (`publicDir`), so edits ship with the next deploy or image build. The shelf art lives in `src/assets/background/` (WebP, imported so Vite fingerprints it). `archive/` holds retired content that is intentionally **not** shipped; `dev-tools/` holds the catalog checks and some manual browser debug helpers.
 
-```
-  #3784ff
-  #4290e3
-  #071533
-  #bea9ff
-  #34344e
-  #433c59
-  #624b6d
-  #593c52
-  #6d456b
-  #3351ab
-  #495a8b
-  #3a3f6c
-  #09436d
-  #117ba0
-  #60d9ff
-  #82ffff
-  #079d99
-  #0f717a
-  #1d5f6e
-  #244859
-  #2c676d
-  #409b9b
-  #58ebbf
-  #85c3b4
-  #abd4d8
-  #d2f6ff
-```
+A tool listed on two shelves is two rows and one tool; the "N tools" the page prints counts distinct links.
 
-### Fonts
-Brand guidance (not currently wired into the UI, which uses the system font stack):
-- Miriam Mono CLM: headings and data labels
-- Lekton: body copy and long-form markdown
+## Design
+
+Colour and type come from the canon token package, [`@companionintelligence/tokens`](https://github.com/companionintelligence/CI-Common) (CI-Common): `src/styles.css` imports its `tokens.css`, and this is a dark-only surface (`<html class="dark">`). The page font is the canon stack (Manrope, then the system UI font); no webfont files are shipped, so it renders in the system font unless Manrope is installed. The one palette that is not canon is each shelf's accent, in `CARD_CONFIGS`.
+
+The logo, icons and favicons under `public/` are verified copies of `@companionintelligence/assets`, not originals: change them in CI-Common, then `npm run brand:sync`. `npm run lint:canon` fails if one has drifted. The 1200x630 share image, `public/og-image.png`, is Spellbook's own (CI-Common's `assets/og/` has no Spellbook image yet).
+
+Analytics is **opt-in at build time** and off by default. Set `GA_MEASUREMENT_ID` (a GA4 ID, `G-XXXXXXXX`) in the environment of a build and [`scripts/ga4.mjs`](scripts/ga4.mjs) adds the gtag loader and an emitted `/ga-init.js` to `index.html` and `404.html`, and extends the CSP in the built `dist/_headers` with the hosts Google Analytics needs (nothing else changes). With it unset or malformed, the pages and `_headers` come out exactly as committed: no tags, no init file, no Google host in the CSP. Only the Cloudflare Pages build sets it ([`docs/operations/cloudflare-pages.md`](docs/operations/cloudflare-pages.md)); the Dockerfile forwards nothing but the `VITE_*` crash-reporting arguments, so the container image, which runs on a person's own machine, stays analytics-free. The ID is never committed, and `npm run build` fails if a tag or ID turns up in the source HTML.

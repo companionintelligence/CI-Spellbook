@@ -117,7 +117,7 @@ const DebugPanel = ({ debugState, onClose, onTabSwitch }) => {
             <div>
               <h4 className="mb-3 border-b border-cyan-300/30 pb-1 text-[13px] font-semibold text-cyan-200">Controls</h4>
               <p className="text-[11px] leading-5 text-slate-200/80">
-                Press <span className="font-semibold text-white">`</span> or <span className="font-semibold text-white">~</span> to toggle the panel. Press <span className="font-semibold text-white">Esc</span> to close it.
+                Press <span className="font-semibold text-white">Ctrl</span> or <span className="font-semibold text-white">Cmd</span> + <span className="font-semibold text-white">`</span> to toggle the panel. Press <span className="font-semibold text-white">Esc</span> to close it.
               </p>
             </div>
           </div>

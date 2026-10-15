@@ -1,7 +1,13 @@
 /* Tailwind v4 — utilities are generated at build time by @tailwindcss/vite.
    (Previously the app relied on the cdn.tailwindcss.com runtime script, which
    broke offline/appliance deployments and warned in production.) */
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+/* Scan only what ships. Tailwind v4 otherwise walks every non-ignored file in the
+   repo, including docs/ and dev-tools/, and turned the comment "url -> [file:line]"
+   in lint-content.mjs into a junk `.[file:line]{file:line}` rule (and a build warning). */
+@source "../index.html";
+@source "../404.html";
+@source "./";
 /* The canon token layer (@companionintelligence/tokens; CI-Common styles/tokens/src/tokens.json is
    the one source). This is a dark-only surface: <html class="dark"> selects the .dark block. */
 @import "@companionintelligence/tokens/tokens.css";
@@ -140,17 +146,449 @@
 }
 
 /* ===========================================
+   PAGE
+   =========================================== */
+
+html { color-scheme: dark; }
+
+/* The gradient used to be an inline style on <body>. It lives here so the page's
+   CSP (public/_headers) does not need 'unsafe-inline' for styles. */
+body {
+  background-color: #071533;
+  background-image: linear-gradient(135deg, #071533 0%, #34344e 50%, #244859 100%);
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 20000;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus { top: 0.75rem; }
+
+/* The skip link's target takes focus programmatically; it is not a control. */
+main:focus { outline: none; }
+
+/* ===========================================
    HEADER
    =========================================== */
 
-/* A fixed h-36 logo left the search field ~150px on a 360px viewport, so its
-   own placeholder was cut to "Search the Spell". Scale it with the viewport. */
-.app-logo {
-  height: clamp(3.5rem, 11vw, 9rem);
+.site-header {
+  position: relative;
+  z-index: 100;
 }
 
+.topbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding-block: 0.75rem;
+}
+
+/* The way back to ci.computer: the mark, then the name it stands for. */
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.brand-link:hover { color: var(--primary); }
+
+.brand-mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.topnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem 0.75rem;
+}
+
+.topnav-link,
+.footer-links a,
+.footer-legal a {
+  color: var(--primary);
+  text-underline-offset: 3px;
+}
+
+.topnav-link {
+  padding: 0.5rem 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.topnav-link:hover,
+.footer-links a:hover,
+.footer-legal a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+/* The two calls to action. Same markup in the header and the footer band.
+   Primary is the canon primary filled; secondary is the same colour outlined —
+   both read against the page gradient at well over 4.5:1. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cta-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.cta-primary:hover { background: color-mix(in srgb, var(--primary) 78%, white); }
+
+.cta-secondary {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+
+.cta-secondary:hover { background: color-mix(in srgb, var(--primary) 20%, transparent); }
+
+.brand-link:focus-visible,
+.topnav-link:focus-visible,
+.cta:focus-visible,
+.footer-links a:focus-visible,
+.footer-legal a:focus-visible,
+.cta-band p a:focus-visible,
+.app-search-button:focus-visible,
+.no-results-didyoumean:focus-visible,
+.no-results-shelf:focus-visible,
+.close-btn:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* ---- hero: what this is, and the search that is the page's main action ---- */
+
+.hero {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0.75rem 0 1.5rem;
+  text-align: center;
+}
+
+.hero-title {
+  color: var(--foreground);
+  font-size: clamp(1.6rem, 4.4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.hero-lede {
+  margin: 0.75rem auto 0;
+  max-width: 40rem;
+  color: var(--ci-text-soft);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.app-search {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.app-search-input {
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  color: var(--foreground);
+}
+
+.app-search-input::placeholder { color: var(--muted-foreground); }
+
+.app-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 45%, transparent);
+}
+
+.app-search-button {
+  /* The icon is 20px; the button around it is 36px (WCAG 2.2 target size), which
+     still fits inside the input's right padding (12px offset + 36px = its 3rem). */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--primary);
+  border-radius: 999px;
+}
+
+.app-search-button:hover { color: var(--foreground); }
+
+/* One line tall whether or not there is a note in it (see App.jsx). */
+.app-search-slot { min-height: 1.75rem; }
+
+.app-search-note {
+  margin-top: 0.5rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+
+.app-search-note.is-error { color: var(--destructive); }
+
 @media (max-width: 640px) {
-  .app-search { margin-left: 0.75rem; }
+  .topbar { padding-top: 0.6rem; padding-bottom: 0.4rem; }
+
+  /* Row one: the brand, with Docs at the far end. Row two: the two calls to
+     action, side by side, full width. */
+  .topnav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .topnav-link {
+    position: absolute;
+    top: 1.05rem;
+    right: 0;
+    padding: 0.25rem 0;
+  }
+
+  .topnav .cta {
+    padding-inline: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .brand-link { font-size: 1rem; }
+  .brand-mark { width: 2.25rem; height: 2.25rem; }
+  .hero { padding-top: 0.25rem; padding-bottom: 1rem; }
+  .hero-lede { font-size: 0.95rem; }
+}
+
+/* ---- no-JS fallback (index.html <noscript>) and the 404 page ---- */
+
+.noscript-page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.noscript-page h1 {
+  color: var(--foreground);
+  font-size: clamp(1.6rem, 4.4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.noscript-page p {
+  margin-top: 0.75rem;
+  color: var(--ci-text-soft);
+  line-height: 1.55;
+}
+
+.noscript-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+}
+
+.noscript-links a {
+  color: var(--primary);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.noscript-links a:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.not-found { padding-top: 3rem; padding-bottom: 3rem; }
+
+.not-found-code {
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.not-found-actions { margin-top: 1.5rem; }
+
+/* ===========================================
+   FOOTER
+   =========================================== */
+
+.site-footer {
+  margin-top: 2rem;
+  padding: 2rem 0 2.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.cta-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.cta-band h2 {
+  color: var(--foreground);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.cta-band p {
+  margin-top: 0.15rem;
+  color: var(--ci-text-soft);
+}
+
+/* An inline link, so it carries an underline as well as the colour. */
+.cta-band p a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cta-band p a:hover { color: var(--foreground); }
+
+.cta-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+.footer-links a { padding: 0.25rem 0; }
+
+.footer-legal {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.footer-legal a { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .cta-band { padding: 1rem; }
+  .cta-band-actions { width: 100%; }
+  .cta-band-actions .cta { flex: 1 1 11rem; }
+}
+
+/* ===========================================
+   CARD FACES: ART, RING, TITLE BUTTON
+   =========================================== */
+
+/* The shelf art is an <img>, not a CSS background, so the browser can load it
+   lazily (Card.jsx). It fills the face exactly as `background-size: cover` did;
+   the flat colour on the face shows until the picture arrives. */
+.card-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Hover and keyboard focus used to fade in a bright overlay of the shelf's colour
+   under the white text, which dropped the title, count and chips to 1.6-3.7:1 on
+   13 of 16 shelves. The dark overlay stays as the thing text is measured against;
+   the shelf's colour now arrives as an edge ring and an inner glow, which sit at
+   the card's border and never behind the words. `--shelf-hover` is the
+   "r, g, b" triple Card.jsx sets on each card. */
+.card-ring {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow:
+    inset 0 0 0 3px rgb(var(--shelf-hover)),
+    inset 0 0 48px rgba(var(--shelf-hover), 0.4);
+}
+
+.group:not(.expanded):hover .card-ring,
+.group:not(.expanded):focus-within .card-ring {
+  opacity: 1;
+}
+
+/* The control a keyboard or a screen reader reaches: the title itself, as a
+   button. It looks like the heading it replaces. */
+.card-open-btn {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.card-open-btn:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 6px;
+  border-radius: 0.375rem;
+}
+
+/* A closed shelf's back face is behind the front one, but backface-visibility
+   only hides it from the eye: its links stayed in the tab order and the
+   accessibility tree (797 of them). Card.jsx marks it `inert`; this hides it from
+   rendering too, once the flip back to the front has finished, so the closing
+   animation still has a back face to turn. */
+.group:not(.expanded):not(.search-result) .card-back {
+  visibility: hidden;
+  transition: visibility 0s linear 0.7s;
+}
+
+.group.expanded .card-back,
+.group.search-result .card-back {
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 /* ===========================================

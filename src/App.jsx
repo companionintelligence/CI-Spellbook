@@ -1,198 +1,250 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Card from './components/Card';
-import DebugPanel from './components/DebugPanel';
-import { useDebugPanel } from './hooks/useDebugPanel';
 import MiniSearch from 'minisearch';
-import marked from './lib/markdown';
+import { loadShelf } from './lib/shelves';
+import { markMatches, snippetTerms } from './lib/cardContent';
 import {
-  htmlToSearchLines,
-  markMatches,
-  snippetTerms,
-  summarizeCardHtml
-} from './lib/cardContent';
+  BUY_LABEL,
+  BUY_URL,
+  DOCS_URL,
+  DOWNLOAD_LABEL,
+  DOWNLOAD_URL,
+  HEADLINE,
+  HOME_URL,
+  HUB_NOTE_LEAD,
+  HUB_STORE_LABEL,
+  HUB_STORE_URL,
+  LEDE,
+  LICENSE_URL
+} from './lib/site';
 
-// Card configuration
+import bg1 from './assets/background/background1.webp';
+import bg2 from './assets/background/background2.webp';
+import bg3 from './assets/background/background3.webp';
+import bg4 from './assets/background/background4.webp';
+import bg5 from './assets/background/background5.webp';
+import bg6 from './assets/background/background6.webp';
+import bg7 from './assets/background/background7.webp';
+import bg8 from './assets/background/background8.webp';
+import bg9 from './assets/background/background9.webp';
+import bg10 from './assets/background/background10.webp';
+import bg11 from './assets/background/background11.webp';
+import bg12 from './assets/background/background12.webp';
+import bg13 from './assets/background/background13.webp';
+
+// The debug overlay is a development tool. Behind a constant `import.meta.env.DEV`
+// the lazy import is dead code in a production build, so the panel, its
+// frame-rate and memory monitors and its global key handler are not shipped.
+const DebugHost = import.meta.env.DEV ? React.lazy(() => import('./components/DebugHost')) : null;
+
+// Shelf configuration.
+//
+// `id` and `containerId` are STABLE KEYS, not descriptions: the video
+// storyboard and the shelf anchors address cards by them, so they keep their
+// historical names even where the shelf has since been retitled (`xr-spatial` is
+// the Desktop Systems shelf). The title is what a reader sees and the file is
+// named after it; add a shelf by adding a markdown file and an entry here.
+//
+// The art is imported, not referenced from public/, so Vite fingerprints it and
+// it is served with the immutable long cache the rest of /assets/ gets.
 const CARD_CONFIGS = [
   {
     id: 'ai-assisted-code-dev',
     title: 'Developer Tooling & Code Assistants',
-    backgroundImage: '/background/background2.png',
+    backgroundImage: bg2,
     borderColor: '#58ebbf',
     hoverColor: '88, 235, 191',
     baseColor: '36, 72, 89',
-    markdownPath: '/markdown/AI-Assisted Code Development.md',
+    markdownPath: '/markdown/developer-tooling.md',
     containerId: 'card-ai-assisted-code-dev'
   },
   {
     id: 'ai-agents',
     title: 'AI Agents, Research & Models',
-    backgroundImage: '/background/background1.jpg',
+    backgroundImage: bg1,
     borderColor: '#8b5cf6',
     hoverColor: '139, 92, 246',
     baseColor: '45, 27, 78',
-    markdownPath: '/markdown/AI Agents & Autonomous Systems.md',
+    markdownPath: '/markdown/ai-agents.md',
     containerId: 'card-ai-agents'
   },
   {
     id: 'mcp-servers',
     title: 'MCP Servers & Connectors',
-    backgroundImage: '/background/background11.png',
+    backgroundImage: bg11,
     borderColor: '#60d9ff',
     hoverColor: '96, 217, 255',
     baseColor: '9, 67, 109',
-    markdownPath: '/markdown/MCP Servers & Connectors.md',
+    markdownPath: '/markdown/mcp-servers.md',
     containerId: 'card-mcp-servers'
   },
   {
     id: 'eval-observability',
     title: 'Evals, Observability & Tracing',
-    backgroundImage: '/background/background12.png',
+    backgroundImage: bg12,
     borderColor: '#bea9ff',
     hoverColor: '190, 169, 255',
     baseColor: '58, 63, 108',
-    markdownPath: '/markdown/Evaluation, Observability & Tracing.md',
+    markdownPath: '/markdown/evals-observability.md',
     containerId: 'card-eval-observability'
   },
   {
     id: 'local-first-ai-tools',
     title: 'Local AI Apps & Model Managers',
-    backgroundImage: '/background/background1.jpg',
+    backgroundImage: bg1,
     borderColor: '#3784ff',
     hoverColor: '55, 132, 255',
     baseColor: '7, 21, 51',
-    markdownPath: '/markdown/Local-First AI Tools.md',
+    markdownPath: '/markdown/local-ai-apps.md',
     containerId: 'card-local-first-ai-tools'
   },
   {
     id: 'cutting-edge-databases',
     title: 'Data Platforms, Backup & Sync',
-    backgroundImage: '/background/background3.png',
+    backgroundImage: bg3,
     borderColor: '#4290e3',
     hoverColor: '66, 144, 227',
     baseColor: '52, 52, 78',
-    markdownPath: '/markdown/Cutting Edge Databases.md',
+    markdownPath: '/markdown/data-platforms.md',
     containerId: 'card-cutting-edge-databases'
   },
   {
     id: 'embeddings-vector',
     title: 'Embeddings & Vector Pipelines',
-    backgroundImage: '/background/background13.png',
+    backgroundImage: bg13,
     borderColor: '#82ffff',
     hoverColor: '130, 255, 255',
     baseColor: '15, 113, 122',
-    markdownPath: '/markdown/Embeddings & Vector Pipelines.md',
+    markdownPath: '/markdown/embeddings-vector.md',
     containerId: 'card-embeddings-vector'
   },
   {
     id: 'top-public-data-sources',
     title: 'Knowledge, Notes & Productivity',
-    backgroundImage: '/background/background4.png',
+    backgroundImage: bg4,
     borderColor: '#ff6b6b',
     hoverColor: '255, 107, 107',
     baseColor: '89, 36, 36',
-    markdownPath: '/markdown/Top Public Data Sources.md',
+    markdownPath: '/markdown/knowledge-notes.md',
     containerId: 'card-top-public-data-sources'
   },
   {
     id: 'ai-art-gen',
     title: 'Creative Media & AI Art',
-    backgroundImage: '/background/background5.png',
+    backgroundImage: bg5,
     borderColor: '#ffd93d',
     hoverColor: '255, 217, 61',
     baseColor: '89, 76, 36',
-    markdownPath: '/markdown/AI Art Generation Images 3D and Video.md',
+    markdownPath: '/markdown/creative-media.md',
     containerId: 'card-ai-art-gen'
   },
   {
     id: 'speech-tts-stt',
     title: 'Communication, Speech & Collaboration',
-    backgroundImage: '/background/background6.png',
+    backgroundImage: bg6,
     borderColor: '#6bcf7f',
     hoverColor: '107, 207, 127',
     baseColor: '36, 89, 45',
-    markdownPath: '/markdown/Speech-to-Text & Text-to-Speech.md',
+    markdownPath: '/markdown/speech-collaboration.md',
     containerId: 'card-speech-tts-stt'
   },
   {
     id: 'ai-video-games',
     title: 'Entertainment, Games & Social',
-    backgroundImage: '/background/background9.png',
+    backgroundImage: bg9,
     borderColor: '#34d399',
     hoverColor: '52, 211, 153',
     baseColor: '36, 89, 67',
-    markdownPath: '/markdown/AI in Video Games & Virtual Beings.md',
+    markdownPath: '/markdown/entertainment-games.md',
     containerId: 'card-ai-video-games'
   },
   {
     id: 'xr-spatial',
     title: 'Desktop Systems & Windowing',
-    backgroundImage: '/background/background4.png',
+    backgroundImage: bg4,
     borderColor: '#06b6d4',
     hoverColor: '6, 182, 212',
     baseColor: '22, 67, 78',
-    markdownPath: '/markdown/XR & Spatial Computing.md',
+    markdownPath: '/markdown/desktop-systems.md',
     containerId: 'card-xr-spatial'
   },
   {
     id: 'vm-browser-automation',
     title: 'Browsers, Automation & Virtualization',
-    backgroundImage: '/background/background8.png',
+    backgroundImage: bg8,
     borderColor: '#fb7185',
     hoverColor: '251, 113, 133',
     baseColor: '89, 45, 54',
-    markdownPath: '/markdown/Virtual Machine and Browser Automation and Scrapers.md',
+    markdownPath: '/markdown/browsers-automation.md',
     containerId: 'card-vm-browser-automation'
   },
   {
     id: 'networking-vpn',
     title: 'Security, Privacy & Network Access',
-    backgroundImage: '/background/background7.png',
+    backgroundImage: bg7,
     borderColor: '#a78bfa',
     hoverColor: '167, 139, 250',
     baseColor: '67, 56, 89',
-    markdownPath: '/markdown/Networking VPN & Infrastructure Security.md',
+    markdownPath: '/markdown/security-network.md',
     containerId: 'card-networking-vpn'
   },
   {
     id: 'home-automation',
     title: 'Self-Hosting, Home Server & Smart Home',
-    backgroundImage: '/background/background10.png',
+    backgroundImage: bg10,
     borderColor: '#fbbf24',
     hoverColor: '251, 191, 36',
     baseColor: '89, 67, 36',
-    markdownPath: '/markdown/Home Automation & Security.md',
+    markdownPath: '/markdown/self-hosting.md',
     containerId: 'card-home-automation'
   },
   {
     id: 'maker-hardware',
     title: 'Hardware, STEM & Edge Labs',
-    backgroundImage: '/background/background3.png',
+    backgroundImage: bg3,
     borderColor: '#f97316',
     hoverColor: '249, 115, 22',
     baseColor: '78, 45, 22',
-    markdownPath: '/markdown/Maker & Hardware Prototyping.md',
+    markdownPath: '/markdown/hardware-edge.md',
     containerId: 'card-maker-hardware'
   }
 ];
 
-const App = () => {
-  const {
-    debugState,
-    updateDebug,
-    hideDebugPanel,
-    switchDebugTab,
-    addMarkdownFile,
-    updateMarkdownFile
-  } = useDebugPanel();
+// A hyphenated compound ("local-AI", "self-hosting") is one word to the reader, but
+// the browser will happily break the line after its hyphen and strand half of it.
+// Keep each one whole. The text itself is unchanged, so what a crawler or a screen
+// reader gets is exactly HEADLINE.
+const keepCompoundsTogether = (text) =>
+  text
+    .split(/(\b[A-Za-z0-9]+(?:-[A-Za-z0-9]+)+\b)/)
+    .map((part, i) =>
+      i % 2 ? (
+        <span key={i} className="whitespace-nowrap">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
 
+const App = () => {
   const cardConfigs = CARD_CONFIGS;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isIndexing, setIsIndexing] = useState(false);
   const [indexError, setIndexError] = useState(null);
+  // Shelves the index could not read. One bad file used to throw away the whole
+  // index ("Search unavailable" for every shelf); now only that shelf drops out.
+  const [missingShelves, setMissingShelves] = useState([]);
+  // Bumped when the index finishes, so a query typed while it was still
+  // building is searched again instead of staying empty.
+  const [indexVersion, setIndexVersion] = useState(0);
   // Tool counts per shelf, for the no-results directory. Counted from the same
   // markdown the index is built from, so it cannot drift from the shelves.
   const [shelfSizes, setShelfSizes] = useState(() => new Map());
+  // Distinct tools across all shelves. A tool listed on two shelves is two rows
+  // but one tool, so the total is the number of distinct links, not of rows.
+  const [distinctTools, setDistinctTools] = useState(0);
   const miniSearchRef = useRef(null);
   const cardTextLinesRef = useRef(new Map());
 
@@ -228,6 +280,7 @@ const App = () => {
     const buildIndex = async () => {
       setIsIndexing(true);
       setIndexError(null);
+      setMissingShelves([]);
 
       try {
         const miniSearch = new MiniSearch({
@@ -240,35 +293,33 @@ const App = () => {
           }
         });
 
-        const parseMdToTextLines = (markdownText) => {
-          try {
-            return htmlToSearchLines(marked.parse(markdownText));
-          } catch {
-            return String(markdownText)
-              .split(/\r?\n/)
-              .map((l) => l.replace(/\s+$/g, ''));
-          }
-        };
+        // Each shelf is fetched and parsed once for the whole app: the cards
+        // ask for the same promises (lib/shelves.js).
+        const settled = await Promise.allSettled(
+          cardConfigs.map((cfg) => loadShelf(cfg.markdownPath))
+        );
 
         const docs = [];
         const linesMap = new Map();
         const sizeMap = new Map();
+        const toolKeys = new Set();
+        const missing = [];
+        let firstFailure = null;
 
-        for (const cfg of cardConfigs) {
-          const res = await fetch(cfg.markdownPath);
-          if (!res.ok) {
-            throw new Error(`Failed to fetch ${cfg.markdownPath}: ${res.status} ${res.statusText}`);
-          }
-          const markdownText = await res.text();
-
-          try {
-            const summary = summarizeCardHtml(marked.parse(markdownText));
-            if (summary) sizeMap.set(cfg.id, summary.tools);
-          } catch {
-            /* a shelf with no countable table just has no number in the directory */
+        settled.forEach((result, index) => {
+          const cfg = cardConfigs[index];
+          if (result.status !== 'fulfilled') {
+            missing.push(cfg.title);
+            firstFailure ??= result.reason;
+            return;
           }
 
-          const lines = parseMdToTextLines(markdownText);
+          const { lines, summary } = result.value;
+          if (summary) {
+            sizeMap.set(cfg.id, summary.tools);
+            for (const key of summary.keys) toolKeys.add(key);
+          }
+
           linesMap.set(cfg.id, lines);
 
           for (let i = 0; i < lines.length; i++) {
@@ -282,6 +333,10 @@ const App = () => {
               text
             });
           }
+        });
+
+        if (missing.length === cardConfigs.length) {
+          throw firstFailure ?? new Error('No shelf could be loaded');
         }
 
         if (cancelled) return;
@@ -290,6 +345,9 @@ const App = () => {
         miniSearchRef.current = miniSearch;
         cardTextLinesRef.current = linesMap;
         setShelfSizes(sizeMap);
+        setDistinctTools(toolKeys.size);
+        setMissingShelves(missing);
+        setIndexVersion((v) => v + 1);
       } catch (e) {
         console.error('Search index build failed:', e);
         if (!cancelled) setIndexError(e?.message || String(e));
@@ -331,7 +389,9 @@ const App = () => {
     }
 
     return grouped;
-  }, [searchQuery]);
+    // indexVersion: the index is a ref, so nothing else says it has arrived.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery, indexVersion]);
 
   const visibleCardConfigs = useMemo(() => {
     const query = searchQuery.trim();
@@ -341,11 +401,6 @@ const App = () => {
 
   const noResults =
     Boolean(searchQuery.trim()) && !isIndexing && !indexError && visibleCardConfigs.length === 0;
-
-  const shelfTotal = useMemo(
-    () => Array.from(shelfSizes.values()).reduce((sum, n) => sum + n, 0),
-    [shelfSizes]
-  );
 
   // A miss is where a catalog is most likely to lose someone, and the old panel
   // was a dead end: two lines of advice on an otherwise empty page. MiniSearch
@@ -387,80 +442,109 @@ const App = () => {
     setPendingShelf(containerId);
   }, []);
 
-  const handleMarkdownLoad = useCallback((fileEntry) => {
-    if (fileEntry.status === 'loading') {
-      addMarkdownFile(fileEntry);
-    } else {
-      updateMarkdownFile(fileEntry.path, fileEntry);
-    }
-  }, [addMarkdownFile, updateMarkdownFile]);
-
-  const handleCardExpand = useCallback(() => {
-    // This could be used to close other cards if needed
-    // For now, the individual card hooks handle their own state
-  }, []);
+  // What a screen reader hears when the shelves change under a search: the
+  // visual result is cards appearing and disappearing, which is silent.
+  const searchStatus = (() => {
+    const query = searchQuery.trim();
+    if (!query || isIndexing || indexError) return '';
+    if (visibleCardConfigs.length === 0) return `No shelves match ${query}.`;
+    return `${visibleCardConfigs.length} ${visibleCardConfigs.length === 1 ? 'shelf matches' : 'shelves match'} ${query}.`;
+  })();
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-        <header className="app-header py-1 flex justify-between items-center relative z-[100]">
-          {/* Logo — h-36 (144px) ate a third of a 360px viewport and squeezed
-              the search field until its own placeholder was cut to "Search the
-              Spell". Scales down with the viewport now. */}
-          <div className="flex items-center">
-            <img
-              src="/logo/mark-192.png"
-              alt="Companion Intelligence Logo"
-              className="app-logo w-auto"
-            />
+      <a className="skip-link" href="#shelves">
+        Skip to the shelves
+      </a>
+
+      <header className="site-header">
+        <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+          <div className="topbar">
+            {/* The way back to the main site. The mark is decorative: the link's
+                name is the words beside it. */}
+            <a className="brand-link" href={HOME_URL}>
+              <img src="/logo/mark.svg" alt="" width="40" height="40" className="brand-mark" />
+              <span>Companion Intelligence</span>
+            </a>
+
+            <nav className="topnav" aria-label="Companion Intelligence">
+              <a className="topnav-link" href={DOCS_URL}>
+                Docs
+              </a>
+              <a className="cta cta-secondary" href={DOWNLOAD_URL}>
+                {DOWNLOAD_LABEL}
+              </a>
+              <a className="cta cta-primary" href={BUY_URL}>
+                {BUY_LABEL}
+              </a>
+            </nav>
           </div>
 
-          {/* Search Bar */}
-          <form className="grow ml-8 app-search" onSubmit={(e) => e.preventDefault()}>
-            <div className="relative flex items-center">
-              <input
-                type="text"
-                placeholder="Search the Spellbook..."
-                aria-label="Search the Spellbook"
-                className="w-full h-12 pl-4 pr-12 text-white transition rounded-lg shadow-md focus:outline-none focus:ring-2"
-                style={{
-                  background: 'rgba(52, 52, 78, 0.8)',
-                  border: '1px solid #3784ff',
-                  color: '#d2f6ff'
-                }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button 
-                type="button" 
-                className="absolute transition right-3 hover:text-blue-300 focus:outline-none" 
-                style={{ color: 'var(--primary)' }}
-                aria-label={searchQuery.trim() ? 'Clear search' : 'Search'}
-                onClick={() => setSearchQuery('')}
-              >
-                {searchQuery.trim() ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                  </svg>
-                )}
-              </button>
-            </div>
-            {(isIndexing || indexError) && (
-              <div className="mt-2 text-xs" style={{ color: indexError ? '#fca5a5' : 'var(--primary)' }}>
-                {indexError ? `Search unavailable: ${indexError}` : 'Indexing spellbook for search…'}
+          <div className="hero">
+            <h1 className="hero-title">{keepCompoundsTogether(HEADLINE)}</h1>
+            <p className="hero-lede">{LEDE}</p>
+
+            {/* Search Bar */}
+            <form
+              className="app-search"
+              role="search"
+              aria-label="Search the Spellbook"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search the Spellbook..."
+                  aria-label="Search the Spellbook"
+                  className="app-search-input w-full h-12 pl-4 pr-12 transition rounded-lg shadow-md"
+                  autoComplete="off"
+                  spellCheck="false"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="app-search-button absolute transition right-3"
+                  aria-label={searchQuery.trim() ? 'Clear search' : 'Search'}
+                  onClick={() => setSearchQuery('')}
+                >
+                  {searchQuery.trim() ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                    </svg>
+                  )}
+                </button>
               </div>
-            )}
-          </form>
-        </header>
-      </div>
+              {/* The slot is always there, so the note arriving (and leaving once the
+                  index is built) does not push the shelves down and back up. */}
+              <div className="app-search-slot">
+                {(isIndexing || indexError || missingShelves.length > 0) && (
+                  <div
+                    className={`app-search-note${indexError ? ' is-error' : ''}`}
+                    role={indexError ? 'alert' : 'status'}
+                  >
+                    {indexError
+                      ? `Search unavailable: ${indexError}`
+                      : isIndexing
+                        ? 'Indexing spellbook for search…'
+                        : `Search is missing ${missingShelves.length === 1 ? 'one shelf' : `${missingShelves.length} shelves`}: ${missingShelves.join(', ')}.`}
+                  </div>
+                )}
+              </div>
+              <p className="sr-only" role="status" aria-live="polite">
+                {searchStatus}
+              </p>
+            </form>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
-      <div className="container p-4 mx-auto sm:p-6 lg:p-8">
+      <main id="shelves" tabIndex={-1} className="container p-4 mx-auto sm:p-6 lg:p-8">
         <div className="flex flex-wrap justify-center gap-8" id="cards-container">
           {noResults ? (
             <div className="no-results-panel">
@@ -489,7 +573,7 @@ const App = () => {
                   the one screen that used to say nothing about that at all. */}
               <div className="no-results-browse">
                 Or open a shelf
-                {shelfTotal ? ` — ${shelfTotal} tools across ${cardConfigs.length} of them` : ''}:
+                {distinctTools ? ` — ${distinctTools} tools across ${cardConfigs.length} of them` : ''}:
               </div>
               <ul className="no-results-shelves">
                 {cardConfigs.map((cfg) => (
@@ -523,38 +607,73 @@ const App = () => {
                 : null;
 
             return (
-            <Card
-              key={config.id}
-              title={config.title}
-              backgroundImage={config.backgroundImage}
-              borderColor={config.borderColor}
-              hoverColor={config.hoverColor}
-              baseColor={config.baseColor}
-              markdownPath={config.markdownPath}
-              containerId={config.containerId}
-              onCardExpand={handleCardExpand}
-              searchMode={Boolean(query)}
-              searchSnippetHtml={snippetHtml}
-              searchMeta={
-                query
-                  ? {
-                      query,
-                      matchCount: group?.all?.length ?? 0
-                    }
-                  : null
-              }
-            />
+              <Card
+                key={config.id}
+                title={config.title}
+                backgroundImage={config.backgroundImage}
+                borderColor={config.borderColor}
+                hoverColor={config.hoverColor}
+                baseColor={config.baseColor}
+                markdownPath={config.markdownPath}
+                containerId={config.containerId}
+                searchMode={Boolean(query)}
+                searchSnippetHtml={snippetHtml}
+                searchMeta={
+                  query
+                    ? {
+                        query,
+                        matchCount: group?.all?.length ?? 0
+                      }
+                    : null
+                }
+              />
             );
           })}
         </div>
-      </div>
+      </main>
 
-      {/* Debug Panel */}
-      <DebugPanel
-        debugState={debugState}
-        onClose={hideDebugPanel}
-        onTabSwitch={switchDebugTab}
-      />
+      <footer className="site-footer">
+        <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+          {/* The same two calls to action as the header, where a reader who has
+              read to the bottom of sixteen shelves is looking for what to do next. */}
+          <section className="cta-band" aria-labelledby="cta-band-title">
+            <div className="cta-band-copy">
+              <h2 id="cta-band-title">Get Companion</h2>
+              <p>
+                {HUB_NOTE_LEAD}
+                <a href={HUB_STORE_URL}>{HUB_STORE_LABEL}</a>.
+              </p>
+            </div>
+            <div className="cta-band-actions">
+              <a className="cta cta-secondary" href={DOWNLOAD_URL}>
+                {DOWNLOAD_LABEL}
+              </a>
+              <a className="cta cta-primary" href={BUY_URL}>
+                {BUY_LABEL}
+              </a>
+            </div>
+          </section>
+
+          <nav className="footer-links" aria-label="Companion Intelligence links">
+            <a href={HOME_URL}>Companion Intelligence</a>
+            <a href={DOCS_URL}>Docs</a>
+          </nav>
+
+          <p className="footer-legal">
+            Copyright LifeScope INC, DBA Companion Intelligence. Licensed under the{' '}
+            <a href={LICENSE_URL} target="_blank" rel="noopener noreferrer">
+              PolyForm Noncommercial License 1.0.0
+            </a>
+            .
+          </p>
+        </div>
+      </footer>
+
+      {DebugHost ? (
+        <Suspense fallback={null}>
+          <DebugHost />
+        </Suspense>
+      ) : null}
     </div>
   );
 };
