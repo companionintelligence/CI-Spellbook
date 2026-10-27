@@ -2,7 +2,16 @@
 
 <p align="center"><strong>A curated catalog of private agents, apps, and tools.</strong></p>
 
-<p align="center"><a href="https://magic.ci.computer">Website</a> · <a href="#quick-start">Get started</a> · <a href="https://docs.ci.computer/docs/reference/open-source-systems">Systems map</a></p>
+[![release](https://img.shields.io/badge/release-not%20published-757575?style=flat-square)](https://github.com/companionintelligence/CI-Spellbook/releases)
+[![platform](https://img.shields.io/badge/platform-Web%20%C2%B7%20Docker%20%C2%B7%20Deno-0a6358?style=flat-square)](https://github.com/companionintelligence/CI-Spellbook)
+[![License](https://img.shields.io/badge/license-PolyForm%20NC%201.0-0a6358?style=flat-square)](LICENSE.md)
+[![Discord](https://img.shields.io/badge/chat-Discord-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.com/invite/yQp9hwpzAa)
+
+<p align="center"><a href="https://magic.ci.computer">Website</a> · <a href="#quick-start">Get started</a> · <a href="https://docs.ci.computer/docs/reference/open-source-systems">Systems map</a> · <a href="docs/CI.md">Documentation</a></p>
+
+<p align="center">
+  <a href="https://magic.ci.computer"><img src="https://img.shields.io/badge/Open%20Spellbook-Open%20Spellbook-0a6358?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open Spellbook" height="30"></a>
+</p>
 
 ## Confidentiality
 Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
@@ -11,6 +20,39 @@ Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
 Spellbook is a searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware. It is sixteen shelves, each a markdown table, organized by the job you are doing rather than by vendor. Search runs in the browser across every shelf.
 
 It is published at <https://magic.ci.computer> and ships as a container image for the Companion Hub App Store. Every page links back to Companion Intelligence (<https://ci.computer>), to the app's page in the docs, and to the two calls to action every Companion site carries (**Buy Companion Core** at <https://ci.computer/core>, **Download Companion** at <https://ci.computer/download>). Those URLs and the page's public copy are written once, in [`src/lib/site.js`](src/lib/site.js); see [Checks](#checks).
+
+
+## Features
+
+| Feature | What it provides |
+|---|---|
+| **Curated shelves** | Browse agent, MCP and self-hosting collections assembled from Markdown. |
+| **Client-side search** | Load and parse shelf data in the browser, then search locally. |
+| **Static deployment** | Serve the built site on Cloudflare Pages or as a Hub app container. |
+
+## Screenshots
+
+<table>
+  <tr>
+    <td valign="top"><img src="video/assets/shots/library-first-run.png" alt="Spellbook library at first run" width="420"><p align="center">Spellbook library at first run</p></td>
+    <td valign="top"><img src="video/assets/shots/search-mcp-server.png" alt="Search for an MCP server" width="420"><p align="center">Search for an MCP server</p></td>
+    <td valign="top"><img src="video/assets/shots/card-ai-agents-open.png" alt="Open an AI agent card" width="420"><p align="center">Open an AI agent card</p></td>
+  </tr>
+</table>
+
+
+## How it fits together
+
+The public site is static: the browser loads curated Markdown shelves, parses the cards and builds search locally; the container and Pages deployment serve the same assets.
+
+```mermaid
+flowchart LR
+  Shelves[Markdown shelves] --> Fetch[Browser fetch]
+  Fetch --> Parser[Card parser]
+  Parser --> Search[Client-side search index]
+  Search --> UI[React and Vite interface]
+  Build[Static build] --> Pages[Pages or Hub container]
+```
 
 ## Quick Start
 ```bash
