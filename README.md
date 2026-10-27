@@ -124,3 +124,23 @@ Colour and type come from the canon token package, [`@companionintelligence/toke
 The logo, icons and favicons under `public/` are verified copies of `@companionintelligence/assets`, not originals: change them in CI-Common, then `npm run brand:sync`. `npm run lint:canon` fails if one has drifted. The 1200x630 share image, `public/og-image.png`, is Spellbook's own (CI-Common's `assets/og/` has no Spellbook image yet).
 
 Analytics is **opt-in at build time** and off by default. Set `GA_MEASUREMENT_ID` (a GA4 ID, `G-XXXXXXXX`) in the environment of a build and [`scripts/ga4.mjs`](scripts/ga4.mjs) adds the gtag loader and an emitted `/ga-init.js` to `index.html` and `404.html`, and extends the CSP in the built `dist/_headers` with the hosts Google Analytics needs (nothing else changes). With it unset or malformed, the pages and `_headers` come out exactly as committed: no tags, no init file, no Google host in the CSP. Only the Cloudflare Pages build sets it ([`docs/operations/cloudflare-pages.md`](docs/operations/cloudflare-pages.md)); the Dockerfile forwards nothing but the `VITE_*` crash-reporting arguments, so the container image, which runs on a person's own machine, stays analytics-free. The ID is never committed, and `npm run build` fails if a tag or ID turns up in the source HTML.
+
+<!-- companion-hub-readme-deep-review -->
+
+## Runtime options
+
+| Mode | Start point | Address / behavior |
+|---|---|---|
+| Deno | Commands in the Deno section | Runs directly with the Deno runtime |
+| Docker | Compose/run instructions below | Dashboard is exposed on port `5500` |
+| Tests and checks | Existing test/check commands | Run before publishing changes |
+
+```mermaid
+flowchart LR
+  Browser[Browser] --> UI[Spellbook interface]
+  UI --> Runtime[Spellbook runtime]
+  Runtime --> Content[Configured spell/content sources]
+```
+
+The confidentiality notice at the top applies to the material and content in this repository. Do not publish private prompts or personal content through a public deployment.
+
