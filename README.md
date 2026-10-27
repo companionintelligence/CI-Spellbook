@@ -1,4 +1,8 @@
-# CI-Spellbook
+<h1 align="center">CI-Spellbook</h1>
+
+<p align="center"><strong>A curated catalog of private agents, apps, and tools.</strong></p>
+
+<p align="center"><a href="https://magic.ci.computer">Website</a> · <a href="#quick-start">Get started</a></p>
 
 ## Confidentiality
 Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
