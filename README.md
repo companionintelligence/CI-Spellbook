@@ -2,7 +2,7 @@
 
 <p align="center"><strong>A curated catalog of private agents, apps, and tools.</strong></p>
 
-<p align="center"><a href="https://magic.ci.computer">Website</a> · <a href="#quick-start">Get started</a></p>
+<p align="center"><a href="https://magic.ci.computer">Website</a> · <a href="#quick-start">Get started</a> · <a href="https://docs.ci.computer/docs/reference/open-source-systems">Systems map</a></p>
 
 ## Confidentiality
 Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
