@@ -1,6 +1,6 @@
 <h1 align="center">CI-Spellbook</h1>
 
-<p align="center"><strong>A curated catalog of private agents, apps, and tools.</strong></p>
+<p align="center"><strong>A curated catalog of local-AI agents, apps, and tools.</strong></p>
 
 [![release](https://img.shields.io/badge/release-not%20published-757575?style=flat-square)](https://github.com/companionintelligence/CI-Spellbook/releases)
 [![platform](https://img.shields.io/badge/platform-Web%20%C2%B7%20Docker%20%C2%B7%20Deno-0a6358?style=flat-square)](https://github.com/companionintelligence/CI-Spellbook)
@@ -13,8 +13,8 @@
   <a href="https://magic.ci.computer"><img src="https://img.shields.io/badge/Open%20Spellbook-Open%20Spellbook-0a6358?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open Spellbook" height="30"></a>
 </p>
 
-## Confidentiality
-Private and confidential. Copyright Companion Intelligence - Lifescope Inc.
+## License
+Free for noncommercial use under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). This repository is public. Copyright LifeScope INC, DBA Companion Intelligence. See the [License FAQ](docs/License-FAQ.md).
 
 ## Summary
 Spellbook is a searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware. It is sixteen shelves, each a markdown table, organized by the job you are doing rather than by vendor. Search runs in the browser across every shelf.
@@ -184,5 +184,5 @@ flowchart LR
   Runtime --> Content[Configured spell/content sources]
 ```
 
-The confidentiality notice at the top applies to the material and content in this repository. Do not publish private prompts or personal content through a public deployment.
+This repository is public and licensed under PolyForm Noncommercial 1.0.0 (see [License](#license)). Do not publish private prompts or personal content through a public deployment.
 
