@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Companion Intelligence Spellbook - React Version",
   "private": true,
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "dependencies": {
     "@sentry/react": "^10.69.0",
