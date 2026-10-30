@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { initTelemetry } from './lib/telemetry.js'
+import { registerServiceWorker } from './lib/serviceWorker.js'
 import './styles.css'
 import 'highlight.js/styles/github.min.css'
 
@@ -17,3 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+
+// Installable as an app, with an offline page. Production builds only; see
+// src/lib/serviceWorker.js and public/sw.js. After the render is scheduled, and it
+// never throws, so nothing about the worker can keep the app from starting.
+registerServiceWorker()

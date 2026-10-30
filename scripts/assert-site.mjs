@@ -25,6 +25,7 @@
 // and CSP all present, once. The ID itself is never allowed into the source files.
 //
 // Dependency-free on purpose (no jsdom): it runs inside the Deno-based image build.
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -138,6 +139,148 @@ function checkNoAnalyticsInSource(label, html, problems) {
   if (/googletagmanager\.com|google-analytics\.com|\bgtag\s*\(|\bG-[A-Z0-9]{6,}\b/.test(html)) {
     problems.push(`${label}: carries a Google Analytics tag or measurement ID; it is injected at build time from ${GA_ENV} (scripts/ga4.mjs)`);
   }
+}
+
+/** The prefix of every cache name public/sw.js uses: it deletes the older caches that start with it. */
+const CACHE_PREFIX = 'ci-spellbook-offline-';
+
+/**
+ * public/sw.js can be the kill switch (docs/operations/service-worker-kill-switch.js), which is how
+ * the worker is retired, and then it starts with this line. The kill switch has no offline page, no
+ * precache list and no registration in the bundle, on purpose, so none of those is required of it.
+ */
+const KILL_SWITCH_MARKER = /^\/\/ spellbook:service-worker-kill-switch\b/;
+
+/** Whether this is the text of the kill switch rather than of the real worker. */
+export const isKillSwitch = (source) => KILL_SWITCH_MARKER.test(source);
+
+/** What the service worker (public/sw.js) names: its cache, the offline page and the files it precaches. */
+function serviceWorkerFiles(source) {
+  const cache = /const CACHE = '([^']+)'/.exec(source)?.[1] ?? null;
+  const offline = /const OFFLINE_URL = '([^']+)'/.exec(source)?.[1] ?? null;
+  const listed = /const PRECACHE = \[([^\]]*)\]/.exec(source)?.[1];
+  // Each entry is a quoted path, or OFFLINE_URL by name.
+  const precache = (listed ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .map((item) => (item === 'OFFLINE_URL' ? offline : /^'([^']+)'$/.exec(item)?.[1]))
+    .filter(Boolean);
+  return { cache, offline, precache };
+}
+
+/** Where a URL the worker precaches lives in public/: a path that ends in / is that folder's index.html. */
+const publicFileFor = (url) => (url.endsWith('/') ? `${url.slice(1)}index.html` : url.slice(1));
+
+/**
+ * The 12 hex that end the worker's cache name: a sha256 over each precached URL and the bytes of its
+ * file, in PRECACHE order, with carriage returns removed so that a CRLF checkout hashes like an LF one.
+ * A browser fetches the precached files again only when sw.js itself changes, so the name has to
+ * change with them. `dir` is the folder the URLs resolve in: public/, or the build output.
+ */
+export function precacheFingerprint(dir, urls) {
+  const hash = createHash('sha256');
+  for (const url of urls) {
+    const bytes = readFileSync(join(dir, publicFileFor(url))).filter((byte) => byte !== 0x0d);
+    hash.update(url).update('\0').update(bytes).update('\0');
+  }
+  return hash.digest('hex').slice(0, 12);
+}
+
+/** The cache name those precached files call for, or null when there is nothing (or not everything) to hash. */
+function expectedCache(dir, precache) {
+  if (precache.length === 0 || !precache.every((url) => existsSync(join(dir, publicFileFor(url))))) return null;
+  return `${CACHE_PREFIX}${precacheFingerprint(dir, precache)}`;
+}
+
+/** A string literal as the bundle writes it: in single, double or backtick quotes. */
+const quoted = (s) => new RegExp(`["'\`]${s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}["'\`]`);
+
+/**
+ * Installable as an app: the manifest says so, the head points at it, and the service
+ * worker the page registers has what it serves. Chrome offers to install a site only
+ * when all of that holds, and it says nothing when it does not, so a manifest edited
+ * back to `display: browser` or an icon dropped would otherwise go unnoticed.
+ */
+function checkInstallable(root, html, problems) {
+  const p = (...parts) => join(root, ...parts);
+  const at = 'public/site.webmanifest';
+
+  let manifest;
+  try {
+    manifest = JSON.parse(read(p(at)));
+  } catch {
+    return; // missing or unparseable: reported with the manifest checks above
+  }
+
+  if (manifest.display !== 'standalone') {
+    problems.push(`${at}: display is "${manifest.display}", expected "standalone" (a browser-tab app is not installable as an app)`);
+  }
+  if (!manifest.short_name) problems.push(`${at}: no short_name (the label under the home-screen icon)`);
+  if (manifest.id !== '/') problems.push(`${at}: id is ${JSON.stringify(manifest.id)}, expected "/" (without one the install is keyed on start_url)`);
+  if (!manifest.start_url?.startsWith(manifest.scope ?? '/')) problems.push(`${at}: start_url is outside scope`);
+
+  const metaTheme = metaContent(html, 'name', 'theme-color');
+  for (const key of ['theme_color', 'background_color']) {
+    if (!/^#[0-9a-f]{6}$/i.test(manifest[key] ?? '')) problems.push(`${at}: ${key} is not a #rrggbb colour`);
+  }
+  if (manifest.theme_color !== metaTheme) {
+    problems.push(`${at}: theme_color ${manifest.theme_color} differs from the page's <meta name="theme-color"> ${metaTheme}`);
+  }
+
+  const purposes = (icon) => (icon.purpose ?? 'any').split(/\s+/);
+  const icons = manifest.icons ?? [];
+  for (const size of [192, 512]) {
+    if (!icons.some((i) => i.sizes === `${size}x${size}` && purposes(i).includes('any'))) problems.push(`${at}: no ${size}x${size} icon for purpose "any"`);
+  }
+  if (!icons.some((i) => purposes(i).includes('maskable') && i.sizes === '512x512')) problems.push(`${at}: no 512x512 icon for purpose "maskable"`);
+  for (const icon of icons) {
+    const file = p('public', icon.src.replace(/^\//, ''));
+    const size = existsSync(file) ? pngSize(file) : null;
+    if (size && `${size.width}x${size.height}` !== icon.sizes) problems.push(`${at}: icon ${icon.src} is ${size.width}x${size.height}, declared ${icon.sizes}`);
+  }
+
+  if (linkHref(html, 'manifest') !== '/site.webmanifest') problems.push('index.html: no <link rel="manifest" href="/site.webmanifest">');
+  const touch = linkHref(html, 'apple-touch-icon');
+  const touchSize = touch && existsSync(p('public', touch.replace(/^\//, ''))) ? pngSize(p('public', touch.replace(/^\//, ''))) : null;
+  if (!touchSize || touchSize.width !== 180 || touchSize.height !== 180) problems.push('index.html: <link rel="apple-touch-icon"> is not a 180x180 PNG in public/');
+  if (!metaContent(html, 'name', 'apple-mobile-web-app-title')) problems.push('index.html: no apple-mobile-web-app-title (iOS would label the icon with the long <title>)');
+
+  // The service worker: present, and everything it precaches is a real file.
+  const swPath = p('public', 'sw.js');
+  if (!existsSync(swPath)) {
+    problems.push('public/sw.js is missing (the page registers it from src/lib/serviceWorker.js)');
+    return;
+  }
+  const swSource = read(swPath);
+  // The kill switch has no offline page, precache list or cache name, on purpose: it is how the
+  // worker is retired. It is still served, so the header rule below applies to it too.
+  if (!isKillSwitch(swSource)) {
+    const { cache, offline, precache } = serviceWorkerFiles(swSource);
+    if (!offline) problems.push('public/sw.js: no OFFLINE_URL');
+    else if (!precache.includes(offline)) problems.push(`public/sw.js: PRECACHE does not include ${offline}, so the offline page would not be there offline`);
+    for (const url of precache) {
+      if (!existsSync(p('public', publicFileFor(url)))) problems.push(`public/sw.js: precaches ${url}, which is not in public/`);
+      // A cached answer is never revalidated, so the worker may hold only files the app itself
+      // never requests. A shared one (the header brand mark was once in the list) goes stale.
+      if (!url.startsWith('/offline/')) problems.push(`public/sw.js: precaches ${url}; the worker may answer only for files under /offline/, which the app never requests`);
+    }
+    if (offline && existsSync(p('public', publicFileFor(offline)))) {
+      const page = read(p('public', publicFileFor(offline)));
+      checkNoInline(`public/${publicFileFor(offline)}`, page, problems);
+      if (metaContent(page, 'name', 'robots') !== 'noindex') problems.push(`public/${publicFileFor(offline)}: not marked noindex`);
+    }
+
+    // A browser fetches the precached files again only when sw.js changes, so the cache name
+    // carries a fingerprint of them; a file edited without it would never reach returning visitors.
+    const expected = expectedCache(p('public'), precache);
+    if (!cache) problems.push('public/sw.js: no CACHE name');
+    else if (expected && cache !== expected) {
+      problems.push(`public/sw.js: CACHE is ${cache}, but the precached files hash to ${expected}: set CACHE to '${expected}' (a browser fetches them again only when sw.js changes)`);
+    }
+  }
+
+  const headers = existsSync(p('public', '_headers')) ? read(p('public', '_headers')) : '';
+  if (!/^\/sw\.js\s*\n\s+Cache-Control:\s*no-cache\b/m.test(headers)) problems.push('public/_headers: no "Cache-Control: no-cache" rule for /sw.js');
 }
 
 // ---- layer 1: the source ------------------------------------------------------
@@ -289,6 +432,9 @@ export function checkSource(root = ROOT) {
     }
   }
 
+  // -- installable as an app --
+  checkInstallable(root, html, problems);
+
   // -- response headers --
   const headersPath = p('public', '_headers');
   if (!existsSync(headersPath)) problems.push('public/_headers is missing');
@@ -429,6 +575,29 @@ export function checkAnalytics(dist, env = process.env) {
   return problems;
 }
 
+/**
+ * The worker in the build output: it is there, everything it precaches was built, its cache name
+ * matches the built files, and the bundle registers it (the page cannot: the CSP allows no inline
+ * script). `js` is the bundle's text without sw.js, or the worker's own comments could satisfy the
+ * registration check. The kill switch needs none of this.
+ */
+export function checkWorkerBuild(dist, js) {
+  const d = (...parts) => join(dist, ...parts);
+  if (!existsSync(d('sw.js'))) return ['dist/sw.js is missing (it belongs in public/)'];
+  const source = read(d('sw.js'));
+  if (isKillSwitch(source)) return [];
+
+  const problems = [];
+  const { cache, precache } = serviceWorkerFiles(source);
+  for (const url of precache) {
+    if (!existsSync(d(publicFileFor(url)))) problems.push(`dist/sw.js precaches ${url}, which was not built`);
+  }
+  const expected = expectedCache(dist, precache);
+  if (cache && expected && cache !== expected) problems.push(`dist/sw.js: CACHE is ${cache}, but the built files hash to ${expected}`);
+  if (!quoted('/sw.js').test(js)) problems.push('the JS bundle does not register /sw.js (src/lib/serviceWorker.js, called from src/main.jsx)');
+  return problems;
+}
+
 export function checkDist(dist, { env = process.env } = {}) {
   const problems = [];
   const d = (...parts) => join(dist, ...parts);
@@ -436,12 +605,12 @@ export function checkDist(dist, { env = process.env } = {}) {
   if (!existsSync(d('index.html'))) return [`${dist}/index.html is missing: nothing was built`];
   const html = read(d('index.html'));
 
-  // The links are in the bundle React renders from, exactly as written.
+  // The links are in the bundle React renders from, exactly as written. (sw.js is not part of
+  // the bundle: it is checked on its own below.)
   const js = walk(dist)
-    .filter((f) => f.endsWith('.js'))
+    .filter((f) => f.endsWith('.js') && f !== d('sw.js'))
     .map(read)
     .join('\n');
-  const quoted = (s) => new RegExp(`["'\`]${s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}["'\`]`);
   for (const [href, name] of CROSS_LINKS) {
     if (!quoted(href).test(js)) problems.push(`the JS bundle does not contain the link ${href}`);
     if (!js.includes(name)) problems.push(`the JS bundle does not contain the label "${name}"`);
@@ -486,6 +655,10 @@ export function checkDist(dist, { env = process.env } = {}) {
   for (const file of ['robots.txt', 'sitemap.xml', 'site.webmanifest', '_headers', 'og-image.png', 'favicon.ico']) {
     if (!existsSync(d(file))) problems.push(`dist/${file} is missing (it belongs in public/)`);
   }
+
+  // Installable as an app: the worker and everything it precaches were built, and the
+  // bundle registers it.
+  problems.push(...checkWorkerBuild(dist, js));
 
   problems.push(...checkAnalytics(dist, env));
 

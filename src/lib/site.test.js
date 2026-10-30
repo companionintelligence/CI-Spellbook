@@ -1,9 +1,9 @@
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { appendFileSync, cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { CROSS_LINKS, checkSource } from '../../scripts/assert-site.mjs';
+import { CROSS_LINKS, checkSource, checkWorkerBuild, isKillSwitch, precacheFingerprint } from '../../scripts/assert-site.mjs';
 import * as site from './site.js';
 
 // The static copies of the site's links and copy (index.html, 404.html, public/*)
@@ -134,5 +134,218 @@ describe('checkSource notices drift', () => {
   it('a 404 page that is indexable', () => {
     const problems = withEdit('404.html', (h) => h.replace('<meta name="robots" content="noindex">', ''));
     expect(problems.join('\n')).toContain('404.html: not marked noindex');
+  });
+});
+
+const KILL_SWITCH = readFileSync(join(ROOT, 'docs/operations/service-worker-kill-switch.js'), 'utf8');
+/** With the kill switch as public/sw.js the worker is retired on purpose (README: Rolling back), and the checks of the real worker do not apply. */
+const RETIRED = isKillSwitch(readFileSync(join(ROOT, 'public/sw.js'), 'utf8'));
+
+describe('checkSource notices an app that can no longer be installed', () => {
+  let tmp;
+
+  // Same shape as the drift tests above: a copy of what the check reads, with files rewritten.
+  const withEdits = (edits) => {
+    tmp = mkdtempSync(join(tmpdir(), 'spellbook-pwa-'));
+    cpSync(join(ROOT, 'index.html'), join(tmp, 'index.html'));
+    cpSync(join(ROOT, '404.html'), join(tmp, '404.html'));
+    cpSync(join(ROOT, 'public'), join(tmp, 'public'), {
+      recursive: true,
+      filter: (src) => !src.includes('/public/markdown')
+    });
+    for (const [file, edit] of edits) {
+      const path = join(tmp, file);
+      writeFileSync(path, edit(readFileSync(path, 'utf8')));
+    }
+    return checkSource(tmp).join('\n');
+  };
+  const withEdit = (file, edit) => withEdits([[file, edit]]);
+
+  afterEach(() => {
+    if (tmp) rmSync(tmp, { recursive: true, force: true });
+    tmp = undefined;
+  });
+
+  it('a manifest that has gone back to opening in a browser tab', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"display": "standalone"', '"display": "browser"'))).toContain(
+      'display is "browser", expected "standalone"'
+    );
+  });
+
+  it('a manifest with no id', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"id": "/",', ''))).toContain('id is undefined, expected "/"');
+  });
+
+  it('a manifest with no maskable icon', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"purpose": "maskable"', '"purpose": "any"'))).toContain('no 512x512 icon for purpose "maskable"');
+  });
+
+  it('an icon whose file is not the size the manifest declares', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"sizes": "192x192"', '"sizes": "256x256"'))).toContain('is 192x192, declared 256x256');
+  });
+
+  it('a manifest theme colour that the page does not share', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"theme_color": "#071533"', '"theme_color": "#000000"'))).toContain(
+      'theme_color #000000 differs from the page'
+    );
+  });
+
+  it('a page that no longer links the manifest', () => {
+    expect(withEdit('index.html', (h) => h.replace('<link rel="manifest" href="/site.webmanifest">', ''))).toContain('no <link rel="manifest"');
+  });
+
+  it('a page with no home-screen label', () => {
+    expect(withEdit('index.html', (h) => h.replace(/<meta name="apple-mobile-web-app-title"[^>]*>/, ''))).toContain('no apple-mobile-web-app-title');
+  });
+
+  it.skipIf(RETIRED)('a service worker that precaches a file that is not there', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace("'/offline/mark.svg']", "'/offline/gone.svg']"))).toContain('precaches /offline/gone.svg, which is not in public/');
+  });
+
+  // The header brand mark is /logo/mark.svg. The worker answered for it from the cache, which is
+  // never revalidated, so a rebrand did not reach installed browsers. The offline page has its
+  // own copy under /offline/ for that reason.
+  it.skipIf(RETIRED)('a service worker that answers for a file the app itself requests', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace("'/offline/mark.svg']", "'/logo/mark.svg']"))).toContain(
+      'precaches /logo/mark.svg; the worker may answer only for files under /offline/'
+    );
+  });
+
+  it.skipIf(RETIRED)('a service worker whose offline page is not in its precache list', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace('[OFFLINE_URL, ', '['))).toContain('PRECACHE does not include /offline/');
+  });
+
+  it.skipIf(RETIRED)('an offline page with an inline script (the CSP forbids it)', () => {
+    expect(withEdit('public/offline/index.html', (h) => h.replace('</body>', '<script>retry()</script></body>'))).toContain('inline <script>');
+  });
+
+  it.skipIf(RETIRED)('an offline page that is indexable', () => {
+    expect(withEdit('public/offline/index.html', (h) => h.replace('<meta name="robots" content="noindex">', ''))).toContain('not marked noindex');
+  });
+
+  it('a worker script that a shared cache may hold on to', () => {
+    expect(withEdit('public/_headers', (h) => h.replace('/sw.js\n  Cache-Control: no-cache', ''))).toContain('no "Cache-Control: no-cache" rule for /sw.js');
+  });
+
+  // A browser fetches the precached files again only when sw.js changes, so the cache name
+  // carries a fingerprint of them (scripts/assert-site.mjs: precacheFingerprint). The build is
+  // what has to notice an edited file, not whoever happens to run the unit tests.
+  it.skipIf(RETIRED)('a precached file edited without the cache name following it', () => {
+    expect(withEdit('public/offline/offline.css', (h) => `${h}\n/* edited */\n`)).toMatch(
+      /public\/sw\.js: CACHE is ci-spellbook-offline-[0-9a-f]{12}, but the precached files hash to ci-spellbook-offline-[0-9a-f]{12}: set CACHE to 'ci-spellbook-offline-[0-9a-f]{12}'/
+    );
+  });
+
+  it.skipIf(RETIRED)('a precached file saved with CRLF line endings, which still names the same cache', () => {
+    expect(withEdit('public/offline/offline.css', (h) => h.replace(/\n/g, '\r\n'))).toBe('');
+  });
+
+  it.skipIf(RETIRED)('a worker with no cache name', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace(/const CACHE = '[^']+';/, ''))).toContain('public/sw.js: no CACHE name');
+  });
+
+  // The README's rollback is: the kill switch replaces public/sw.js, and the registration goes.
+  // The build must accept that, or the fix for a bad worker could not be deployed.
+  it('the kill switch as public/sw.js, which has no offline page, precache list or cache name', () => {
+    expect(withEdit('public/sw.js', () => KILL_SWITCH)).toBe('');
+  });
+
+  it('the kill switch is still checked for the no-cache rule, because it is served like the worker', () => {
+    const problems = withEdits([
+      ['public/sw.js', () => KILL_SWITCH],
+      ['public/_headers', (h) => h.replace('/sw.js\n  Cache-Control: no-cache', '')]
+    ]);
+    expect(problems).toContain('no "Cache-Control: no-cache" rule for /sw.js');
+  });
+});
+
+describe('checkWorkerBuild: the worker in dist/', () => {
+  /** @type {string | undefined} */
+  let dist;
+
+  /** A build output holding the worker (the real one by default) and the offline files it precaches. */
+  const fakeDist = (sw = readFileSync(join(ROOT, 'public/sw.js'), 'utf8')) => {
+    dist = mkdtempSync(join(tmpdir(), 'spellbook-dist-'));
+    mkdirSync(join(dist, 'offline'));
+    for (const file of ['index.html', 'offline.css', 'mark.svg']) cpSync(join(ROOT, 'public/offline', file), join(dist, 'offline', file));
+    writeFileSync(join(dist, 'sw.js'), sw);
+    return dist;
+  };
+  /** The text of a bundle that registers the worker, and of one that does not. */
+  const REGISTERS = 'navigator.serviceWorker.register("/sw.js",{scope:"/"})';
+  const DOES_NOT = 'console.log("no worker")';
+
+  afterEach(() => {
+    if (dist) rmSync(dist, { recursive: true, force: true });
+    dist = undefined;
+  });
+
+  it.skipIf(RETIRED)('passes a worker that was built with its files, under the name they call for, and that the bundle registers', () => {
+    expect(checkWorkerBuild(fakeDist(), REGISTERS)).toEqual([]);
+  });
+
+  it.skipIf(RETIRED)('a bundle that no longer registers the worker', () => {
+    expect(checkWorkerBuild(fakeDist(), DOES_NOT).join('\n')).toContain('the JS bundle does not register /sw.js');
+  });
+
+  it('a build with no worker at all', () => {
+    const built = fakeDist();
+    rmSync(join(built, 'sw.js'));
+    expect(checkWorkerBuild(built, REGISTERS)).toEqual(['dist/sw.js is missing (it belongs in public/)']);
+  });
+
+  it.skipIf(RETIRED)('a precached file that was not built', () => {
+    const built = fakeDist();
+    rmSync(join(built, 'offline/offline.css'));
+    expect(checkWorkerBuild(built, REGISTERS).join('\n')).toContain('dist/sw.js precaches /offline/offline.css, which was not built');
+  });
+
+  it.skipIf(RETIRED)('a built file that is not the one the cache name was made for', () => {
+    const built = fakeDist();
+    appendFileSync(join(built, 'offline/offline.css'), '\n/* edited */\n');
+    expect(checkWorkerBuild(built, REGISTERS).join('\n')).toMatch(/dist\/sw\.js: CACHE is ci-spellbook-offline-[0-9a-f]{12}, but the built files hash to /);
+  });
+
+  it('the kill switch, which has no offline page, precache list or registration to look for', () => {
+    dist = mkdtempSync(join(tmpdir(), 'spellbook-dist-'));
+    writeFileSync(join(dist, 'sw.js'), KILL_SWITCH);
+    expect(checkWorkerBuild(dist, DOES_NOT)).toEqual([]);
+  });
+});
+
+describe('precacheFingerprint, the end of the worker\'s cache name', () => {
+  /** @type {string | undefined} */
+  let dir;
+  const URLS = ['/offline/', '/offline/a.css'];
+
+  /** Two small files at the paths URLS resolves to. */
+  const files = (index, css) => {
+    dir = mkdtempSync(join(tmpdir(), 'spellbook-fingerprint-'));
+    mkdirSync(join(dir, 'offline'));
+    writeFileSync(join(dir, 'offline/index.html'), index);
+    writeFileSync(join(dir, 'offline/a.css'), css);
+    return dir;
+  };
+
+  afterEach(() => {
+    if (dir) rmSync(dir, { recursive: true, force: true });
+    dir = undefined;
+  });
+
+  // The README gives the same thing as a shell recipe, so a known answer from `shasum` pins it:
+  //   { printf '/offline/\0'; printf '<h1>offline</h1>\n'; printf '\0'
+  //     printf '/offline/a.css\0'; printf 'body{}\n'; printf '\0'; } | shasum -a 256 | cut -c1-12
+  it('is the first 12 hex of a sha256 over each URL and its file, each followed by a NUL', () => {
+    expect(precacheFingerprint(files('<h1>offline</h1>\n', 'body{}\n'), URLS)).toBe('13f6a746b44b');
+  });
+
+  it('ignores carriage returns, so a CRLF checkout of the files names the same cache', () => {
+    expect(precacheFingerprint(files('<h1>offline</h1>\r\n', 'body{}\r\n'), URLS)).toBe('13f6a746b44b');
+  });
+
+  it('moves with a file, with the order of the list and with a URL', () => {
+    expect(precacheFingerprint(files('<h1>offline!</h1>\n', 'body{}\n'), URLS)).not.toBe('13f6a746b44b');
+    expect(precacheFingerprint(files('<h1>offline</h1>\n', 'body{}\n'), [...URLS].reverse())).not.toBe('13f6a746b44b');
+    expect(precacheFingerprint(files('<h1>offline</h1>\n', 'body{}\n'), URLS.slice(0, 1))).not.toBe('13f6a746b44b');
   });
 });
