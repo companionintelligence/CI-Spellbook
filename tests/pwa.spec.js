@@ -19,22 +19,14 @@ import { serveDist } from './support/serve-dist.mjs';
 
 const REMOTE = process.env.PWA_URL ? new URL(process.env.PWA_URL).origin : null;
 
-// With the kill switch as /sw.js the worker has been retired on purpose (README: Rolling back),
-// so there is nothing to install and these checks do not apply. It is the /sw.js of the site
-// under test that says so: a deployed one with PWA_URL, not the checkout's, because a checkout
-// that holds the kill switch must still fail against a live site that has not retired its worker.
-async function isRetired() {
-  if (!REMOTE) return isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
-  const response = await fetch(`${REMOTE}/sw.js`).catch((error) => {
-    throw new Error(`cannot read ${REMOTE}/sw.js to see whether its worker is retired: ${error.cause?.code ?? error.cause?.message ?? error.message}`);
-  });
-  return isKillSwitch(await response.text());
-}
+// With the kill switch as the /sw.js under test the worker has been retired on purpose (README:
+// Rolling back), so there is nothing to install and these checks do not apply. A local run is
+// retired when public/sw.js is the kill switch. Against PWA_URL it is the /sw.js the site serves
+// that decides, not this checkout: a checkout of a retired repo must not turn a run against a
+// site that still ships the worker into a green run that tested nothing.
+const RETIRED_LOCALLY = isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
 
 const test = base.extend({
-  /** Whether the site under test serves the kill switch as its /sw.js, read once per worker. */
-  retired: [async ({}, use) => use(await isRetired()), { scope: 'worker' }],
-
   /** The origin under test, shared by the tests of a worker. */
   origin: [
     async ({}, use) => {
@@ -44,6 +36,25 @@ const test = base.extend({
       await site.close();
     },
     { scope: 'worker' }
+  ],
+
+  /** Whether the worker under test is the kill switch. */
+  retired: [
+    async ({ origin }, use) => {
+      if (!REMOTE) return use(RETIRED_LOCALLY);
+      const response = await fetch(`${origin}/sw.js`).catch(() => null);
+      await use(response?.ok ? isKillSwitch(await response.text()) : false);
+    },
+    { scope: 'worker' }
+  ],
+
+  // Every test is skipped, with the reason, when it is.
+  _skipWhenRetired: [
+    async ({ retired }, use, testInfo) => {
+      testInfo.skip(retired, 'the /sw.js under test is the kill switch: the service worker is retired');
+      await use();
+    },
+    { auto: true }
   ],
 
   // A persistent profile, not Playwright's default context: in a default (incognito-style)
@@ -57,8 +68,6 @@ const test = base.extend({
     rmSync(profile, { recursive: true, force: true });
   }
 });
-
-test.skip(({ retired }) => retired, '/sw.js is the kill switch: the service worker is retired');
 
 /** Load the site and wait until a worker has installed, activated and is the one answering the page. */
 async function install(page, url = '/') {
