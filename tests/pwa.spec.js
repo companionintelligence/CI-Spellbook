@@ -19,11 +19,22 @@ import { serveDist } from './support/serve-dist.mjs';
 
 const REMOTE = process.env.PWA_URL ? new URL(process.env.PWA_URL).origin : null;
 
-// With the kill switch as public/sw.js the worker has been retired on purpose (README: Rolling
-// back), so there is nothing to install and these checks do not apply.
-const RETIRED = isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
+// With the kill switch as /sw.js the worker has been retired on purpose (README: Rolling back),
+// so there is nothing to install and these checks do not apply. It is the /sw.js of the site
+// under test that says so: a deployed one with PWA_URL, not the checkout's, because a checkout
+// that holds the kill switch must still fail against a live site that has not retired its worker.
+async function isRetired() {
+  if (!REMOTE) return isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
+  const response = await fetch(`${REMOTE}/sw.js`).catch((error) => {
+    throw new Error(`cannot read ${REMOTE}/sw.js to see whether its worker is retired: ${error.cause?.code ?? error.cause?.message ?? error.message}`);
+  });
+  return isKillSwitch(await response.text());
+}
 
 const test = base.extend({
+  /** Whether the site under test serves the kill switch as its /sw.js, read once per worker. */
+  retired: [async ({}, use) => use(await isRetired()), { scope: 'worker' }],
+
   /** The origin under test, shared by the tests of a worker. */
   origin: [
     async ({}, use) => {
@@ -47,7 +58,7 @@ const test = base.extend({
   }
 });
 
-test.skip(() => RETIRED, 'public/sw.js is the kill switch: the service worker is retired');
+test.skip(({ retired }) => retired, '/sw.js is the kill switch: the service worker is retired');
 
 /** Load the site and wait until a worker has installed, activated and is the one answering the page. */
 async function install(page, url = '/') {
