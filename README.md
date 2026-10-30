@@ -114,6 +114,16 @@ docker build -t ci-spellbook .
 docker run -d -p 5500:5500 ci-spellbook
 ```
 
+## Install as an app (PWA)
+
+The site installs from the browser with no store involved: the install icon in Chrome's or Edge's address bar (or "Install app" in the menu), and Share, then Add to Home Screen, on iOS. [`public/site.webmanifest`](public/site.webmanifest) makes it open in its own window (`display: standalone`), and [`public/sw.js`](public/sw.js) is its service worker, registered from the bundle by [`src/lib/serviceWorker.js`](src/lib/serviceWorker.js) (the CSP allows no inline script).
+
+The worker is deliberately small. It caches three files once, at install: the offline page [`public/offline/`](public/offline/index.html), its stylesheet and the mark. A page load that cannot reach the network gets that page instead of the browser's error screen. It never caches the app, the catalog markdown or any other response, and it does not touch any request but a page load and those three files, so a deploy is live on the next load and nothing can be served stale. It is not registered in `npm run dev`, on plain-http addresses (browsers only offer service workers on https and localhost) or inside the Capacitor shells below, which already carry the bundle.
+
+- Change a file the worker precaches (`public/offline/*`, `public/logo/mark.svg`) and bump `CACHE` in `public/sw.js`: the offline page is not fingerprinted, so installed copies update only when the worker does.
+- The offline page is `/offline/`, not `/offline.html`: Cloudflare Pages redirects `*.html` to its clean URL, and a service worker that answers a page load with a redirected response fails it.
+- To retire the worker, ship a `public/sw.js` that calls `self.registration.unregister()`, then remove `registerServiceWorker()` from `src/main.jsx`. Until then an old copy is harmless.
+
 ## Mobile apps (iOS and Android)
 
 `apps/ios` and `apps/android` are [Capacitor](https://capacitorjs.com) shells (app id `com.companionintelligence.spellbook`, name "Companion Spellbook") that put the Vite build, `dist/`, in a native WebView. The shelves are static markdown inside the bundle and are fetched from the app's own origin, so the apps work offline and need no server. Outbound links leave the app for the system browser.
@@ -154,7 +164,7 @@ APP_URL=http://localhost:5500 \
 
 | Command | What it fails on |
 |---|---|
-| `npm run build` | A page whose static copy of the links or copy has drifted from [`src/lib/site.js`](src/lib/site.js): the metadata, the `<noscript>` fallback, `404.html`, `robots.txt`, `sitemap.xml`, the web manifest, the CSP in `public/_headers` (it must not allow inline script or style), and the four cross-links. It runs inside the Vite build ([`scripts/assert-site.mjs`](scripts/assert-site.mjs)), so the Pages build and the Docker build run it too. |
+| `npm run build` | A page whose static copy of the links or copy has drifted from [`src/lib/site.js`](src/lib/site.js): the metadata, the `<noscript>` fallback, `404.html`, `robots.txt`, `sitemap.xml`, the web manifest, the CSP in `public/_headers` (it must not allow inline script or style), and the four cross-links. It also fails when the app stops being installable: a manifest that is not `display: standalone` or lacks a 192, 512 or maskable icon, a missing head tag, a service worker that precaches a file that is not there, or a bundle that no longer registers `/sw.js`. It runs inside the Vite build ([`scripts/assert-site.mjs`](scripts/assert-site.mjs)), so the Pages build and the Docker build run it too. |
 | `npm run check:lockfiles` | `package.json`, `package-lock.json` and `deno.lock` listing different dependencies, or resolving a direct dependency or any `@companionintelligence/*` package to different versions (the Pages bundle is built from the first, the container image from the second, so a mismatch ships different design tokens from one commit). The Docker build runs `deno install --frozen`, which refuses a stale `deno.lock` but not one that disagrees with `package-lock.json`. After changing dependencies: `npm install`, then `NODE_AUTH_TOKEN=... deno install --frozen=false`, and commit both lockfiles together. |
 | `npm run check:ga-build` | Analytics leaking into a build that did not ask for it, or half-present in one that did. Runs real builds with `GA_MEASUREMENT_ID` unset, malformed and valid, and a repeat of the valid one. |
 | `npm run lint:content` | A shelf with the wrong table shape, raw HTML, or a link that is not `https`. |

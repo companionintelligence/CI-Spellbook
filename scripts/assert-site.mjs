@@ -140,6 +140,94 @@ function checkNoAnalyticsInSource(label, html, problems) {
   }
 }
 
+/** What the service worker (public/sw.js) names: the offline page and the files it precaches. */
+function serviceWorkerFiles(source) {
+  const offline = /const OFFLINE_URL = '([^']+)'/.exec(source)?.[1] ?? null;
+  const listed = /const PRECACHE = \[([^\]]*)\]/.exec(source)?.[1];
+  // Each entry is a quoted path, or OFFLINE_URL by name.
+  const precache = (listed ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .map((item) => (item === 'OFFLINE_URL' ? offline : /^'([^']+)'$/.exec(item)?.[1]))
+    .filter(Boolean);
+  return { offline, precache };
+}
+
+/** Where a URL the worker precaches lives in public/: a path that ends in / is that folder's index.html. */
+const publicFileFor = (url) => (url.endsWith('/') ? `${url.slice(1)}index.html` : url.slice(1));
+
+/**
+ * Installable as an app: the manifest says so, the head points at it, and the service
+ * worker the page registers has what it serves. Chrome offers to install a site only
+ * when all of that holds, and it says nothing when it does not, so a manifest edited
+ * back to `display: browser` or an icon dropped would otherwise go unnoticed.
+ */
+function checkInstallable(root, html, problems) {
+  const p = (...parts) => join(root, ...parts);
+  const at = 'public/site.webmanifest';
+
+  let manifest;
+  try {
+    manifest = JSON.parse(read(p(at)));
+  } catch {
+    return; // missing or unparseable: reported with the manifest checks above
+  }
+
+  if (manifest.display !== 'standalone') {
+    problems.push(`${at}: display is "${manifest.display}", expected "standalone" (a browser-tab app is not installable as an app)`);
+  }
+  if (!manifest.short_name) problems.push(`${at}: no short_name (the label under the home-screen icon)`);
+  if (manifest.id !== '/') problems.push(`${at}: id is ${JSON.stringify(manifest.id)}, expected "/" (without one the install is keyed on start_url)`);
+  if (!manifest.start_url?.startsWith(manifest.scope ?? '/')) problems.push(`${at}: start_url is outside scope`);
+
+  const metaTheme = metaContent(html, 'name', 'theme-color');
+  for (const key of ['theme_color', 'background_color']) {
+    if (!/^#[0-9a-f]{6}$/i.test(manifest[key] ?? '')) problems.push(`${at}: ${key} is not a #rrggbb colour`);
+  }
+  if (manifest.theme_color !== metaTheme) {
+    problems.push(`${at}: theme_color ${manifest.theme_color} differs from the page's <meta name="theme-color"> ${metaTheme}`);
+  }
+
+  const purposes = (icon) => (icon.purpose ?? 'any').split(/\s+/);
+  const icons = manifest.icons ?? [];
+  for (const size of [192, 512]) {
+    if (!icons.some((i) => i.sizes === `${size}x${size}` && purposes(i).includes('any'))) problems.push(`${at}: no ${size}x${size} icon for purpose "any"`);
+  }
+  if (!icons.some((i) => purposes(i).includes('maskable') && i.sizes === '512x512')) problems.push(`${at}: no 512x512 icon for purpose "maskable"`);
+  for (const icon of icons) {
+    const file = p('public', icon.src.replace(/^\//, ''));
+    const size = existsSync(file) ? pngSize(file) : null;
+    if (size && `${size.width}x${size.height}` !== icon.sizes) problems.push(`${at}: icon ${icon.src} is ${size.width}x${size.height}, declared ${icon.sizes}`);
+  }
+
+  if (linkHref(html, 'manifest') !== '/site.webmanifest') problems.push('index.html: no <link rel="manifest" href="/site.webmanifest">');
+  const touch = linkHref(html, 'apple-touch-icon');
+  const touchSize = touch && existsSync(p('public', touch.replace(/^\//, ''))) ? pngSize(p('public', touch.replace(/^\//, ''))) : null;
+  if (!touchSize || touchSize.width !== 180 || touchSize.height !== 180) problems.push('index.html: <link rel="apple-touch-icon"> is not a 180x180 PNG in public/');
+  if (!metaContent(html, 'name', 'apple-mobile-web-app-title')) problems.push('index.html: no apple-mobile-web-app-title (iOS would label the icon with the long <title>)');
+
+  // The service worker: present, and everything it precaches is a real file.
+  const swPath = p('public', 'sw.js');
+  if (!existsSync(swPath)) {
+    problems.push('public/sw.js is missing (the page registers it from src/lib/serviceWorker.js)');
+    return;
+  }
+  const { offline, precache } = serviceWorkerFiles(read(swPath));
+  if (!offline) problems.push('public/sw.js: no OFFLINE_URL');
+  else if (!precache.includes(offline)) problems.push(`public/sw.js: PRECACHE does not include ${offline}, so the offline page would not be there offline`);
+  for (const url of precache) {
+    if (!existsSync(p('public', publicFileFor(url)))) problems.push(`public/sw.js: precaches ${url}, which is not in public/`);
+  }
+  if (offline && existsSync(p('public', publicFileFor(offline)))) {
+    const page = read(p('public', publicFileFor(offline)));
+    checkNoInline(`public/${publicFileFor(offline)}`, page, problems);
+    if (metaContent(page, 'name', 'robots') !== 'noindex') problems.push(`public/${publicFileFor(offline)}: not marked noindex`);
+  }
+
+  const headers = existsSync(p('public', '_headers')) ? read(p('public', '_headers')) : '';
+  if (!/^\/sw\.js\s*\n\s+Cache-Control:\s*no-cache\b/m.test(headers)) problems.push('public/_headers: no "Cache-Control: no-cache" rule for /sw.js');
+}
+
 // ---- layer 1: the source ------------------------------------------------------
 
 export function checkSource(root = ROOT) {
@@ -288,6 +376,9 @@ export function checkSource(root = ROOT) {
       if (href?.startsWith('/') && !existsSync(p('public', href.slice(1)))) problems.push(`index.html: <link rel="${rel}"> points at ${href}, which is not in public/`);
     }
   }
+
+  // -- installable as an app --
+  checkInstallable(root, html, problems);
 
   // -- response headers --
   const headersPath = p('public', '_headers');
@@ -486,6 +577,16 @@ export function checkDist(dist, { env = process.env } = {}) {
   for (const file of ['robots.txt', 'sitemap.xml', 'site.webmanifest', '_headers', 'og-image.png', 'favicon.ico']) {
     if (!existsSync(d(file))) problems.push(`dist/${file} is missing (it belongs in public/)`);
   }
+
+  // Installable as an app: the worker and everything it precaches were built, and the
+  // bundle registers it (the page cannot: the CSP allows no inline script).
+  if (!existsSync(d('sw.js'))) problems.push('dist/sw.js is missing (it belongs in public/)');
+  else {
+    for (const url of serviceWorkerFiles(read(d('sw.js'))).precache) {
+      if (!existsSync(d(publicFileFor(url)))) problems.push(`dist/sw.js precaches ${url}, which was not built`);
+    }
+  }
+  if (!quoted('/sw.js').test(js)) problems.push('the JS bundle does not register /sw.js (src/lib/serviceWorker.js, called from src/main.jsx)');
 
   problems.push(...checkAnalytics(dist, env));
 

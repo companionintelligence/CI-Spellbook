@@ -136,3 +136,78 @@ describe('checkSource notices drift', () => {
     expect(problems.join('\n')).toContain('404.html: not marked noindex');
   });
 });
+
+describe('checkSource notices an app that can no longer be installed', () => {
+  let tmp;
+
+  // Same shape as the drift tests above: a copy of what the check reads, one file rewritten.
+  const withEdit = (file, edit) => {
+    tmp = mkdtempSync(join(tmpdir(), 'spellbook-pwa-'));
+    cpSync(join(ROOT, 'index.html'), join(tmp, 'index.html'));
+    cpSync(join(ROOT, '404.html'), join(tmp, '404.html'));
+    cpSync(join(ROOT, 'public'), join(tmp, 'public'), {
+      recursive: true,
+      filter: (src) => !src.includes('/public/markdown')
+    });
+    const path = join(tmp, file);
+    writeFileSync(path, edit(readFileSync(path, 'utf8')));
+    return checkSource(tmp).join('\n');
+  };
+
+  afterEach(() => {
+    if (tmp) rmSync(tmp, { recursive: true, force: true });
+    tmp = undefined;
+  });
+
+  it('a manifest that has gone back to opening in a browser tab', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"display": "standalone"', '"display": "browser"'))).toContain(
+      'display is "browser", expected "standalone"'
+    );
+  });
+
+  it('a manifest with no id', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"id": "/",', ''))).toContain('id is undefined, expected "/"');
+  });
+
+  it('a manifest with no maskable icon', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"purpose": "maskable"', '"purpose": "any"'))).toContain('no 512x512 icon for purpose "maskable"');
+  });
+
+  it('an icon whose file is not the size the manifest declares', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"sizes": "192x192"', '"sizes": "256x256"'))).toContain('is 192x192, declared 256x256');
+  });
+
+  it('a manifest theme colour that the page does not share', () => {
+    expect(withEdit('public/site.webmanifest', (h) => h.replace('"theme_color": "#071533"', '"theme_color": "#000000"'))).toContain(
+      'theme_color #000000 differs from the page'
+    );
+  });
+
+  it('a page that no longer links the manifest', () => {
+    expect(withEdit('index.html', (h) => h.replace('<link rel="manifest" href="/site.webmanifest">', ''))).toContain('no <link rel="manifest"');
+  });
+
+  it('a page with no home-screen label', () => {
+    expect(withEdit('index.html', (h) => h.replace(/<meta name="apple-mobile-web-app-title"[^>]*>/, ''))).toContain('no apple-mobile-web-app-title');
+  });
+
+  it('a service worker that precaches a file that is not there', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace("'/logo/mark.svg']", "'/logo/gone.svg']"))).toContain('precaches /logo/gone.svg, which is not in public/');
+  });
+
+  it('a service worker whose offline page is not in its precache list', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace('[OFFLINE_URL, ', '['))).toContain('PRECACHE does not include /offline/');
+  });
+
+  it('an offline page with an inline script (the CSP forbids it)', () => {
+    expect(withEdit('public/offline/index.html', (h) => h.replace('</body>', '<script>retry()</script></body>'))).toContain('inline <script>');
+  });
+
+  it('an offline page that is indexable', () => {
+    expect(withEdit('public/offline/index.html', (h) => h.replace('<meta name="robots" content="noindex">', ''))).toContain('not marked noindex');
+  });
+
+  it('a worker script that a shared cache may hold on to', () => {
+    expect(withEdit('public/_headers', (h) => h.replace('/sw.js\n  Cache-Control: no-cache', ''))).toContain('no "Cache-Control: no-cache" rule for /sw.js');
+  });
+});
