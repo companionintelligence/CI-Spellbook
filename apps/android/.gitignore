@@ -1,0 +1,22 @@
+# Dependencies of this shell. It is its own npm project, not part of the root install.
+node_modules/
+
+# PWA icon output from `@capacitor/assets generate`, if run without --android; unused by
+# the native build (icons live in android/, the source artwork is in ../assets/).
+icons/
+
+# Generated Android native project artifacts. The android/ tree is committed; these are
+# rebuilt by `npm run build` (cap sync + gradle).
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+android/local.properties
+android/.idea/
+android/capacitor-cordova-android-plugins/
+
+*.log
+.DS_Store

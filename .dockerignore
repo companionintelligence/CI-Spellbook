@@ -3,6 +3,9 @@ dist
 .git
 .github
 tests
+# Native Capacitor shells (iOS/Android): not part of the web image, and apps/*/node_modules
+# is not caught by the root-only `node_modules` pattern above.
+apps
 playwright-report
 test-results
 *.log

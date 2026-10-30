@@ -1,0 +1,20 @@
+# Dependencies of this shell. It is its own npm project, not part of the root install.
+node_modules/
+
+# PWA icon output from `@capacitor/assets generate`, if run without --ios; unused by the
+# native build (icons live in ios/, the source artwork is in ../assets/).
+icons/
+
+# Generated iOS native project artifacts. The ios/ tree is committed; these are rebuilt
+# by `npm run build` (cap sync + pod install).
+ios/App/Pods/
+ios/App/build/
+ios/App/DerivedData/
+ios/DerivedData/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/capacitor-cordova-ios-plugins/
+
+*.log
+.DS_Store
