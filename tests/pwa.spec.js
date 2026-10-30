@@ -19,9 +19,12 @@ import { serveDist } from './support/serve-dist.mjs';
 
 const REMOTE = process.env.PWA_URL ? new URL(process.env.PWA_URL).origin : null;
 
-// With the kill switch as public/sw.js the worker has been retired on purpose (README: Rolling
-// back), so there is nothing to install and these checks do not apply.
-const RETIRED = isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
+// With the kill switch as the /sw.js under test the worker has been retired on purpose (README:
+// Rolling back), so there is nothing to install and these checks do not apply. A local run is
+// retired when public/sw.js is the kill switch. Against PWA_URL it is the /sw.js the site serves
+// that decides, not this checkout: a checkout of a retired repo must not turn a run against a
+// site that still ships the worker into a green run that tested nothing.
+const RETIRED_LOCALLY = isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
 
 const test = base.extend({
   /** The origin under test, shared by the tests of a worker. */
@@ -35,6 +38,25 @@ const test = base.extend({
     { scope: 'worker' }
   ],
 
+  /** Whether the worker under test is the kill switch. */
+  retired: [
+    async ({ origin }, use) => {
+      if (!REMOTE) return use(RETIRED_LOCALLY);
+      const response = await fetch(`${origin}/sw.js`).catch(() => null);
+      await use(response?.ok ? isKillSwitch(await response.text()) : false);
+    },
+    { scope: 'worker' }
+  ],
+
+  // Every test is skipped, with the reason, when it is.
+  _skipWhenRetired: [
+    async ({ retired }, use, testInfo) => {
+      testInfo.skip(retired, 'the /sw.js under test is the kill switch: the service worker is retired');
+      await use();
+    },
+    { auto: true }
+  ],
+
   // A persistent profile, not Playwright's default context: in a default (incognito-style)
   // context Chrome reports "in-incognito" as the only installability error and says nothing
   // about the real ones.
@@ -46,8 +68,6 @@ const test = base.extend({
     rmSync(profile, { recursive: true, force: true });
   }
 });
-
-test.skip(() => RETIRED, 'public/sw.js is the kill switch: the service worker is retired');
 
 /** Load the site and wait until a worker has installed, activated and is the one answering the page. */
 async function install(page, url = '/') {
