@@ -44,13 +44,32 @@ tests all pass). The Pages build log itself is behind the dashboard login, so th
 is the inferred cause, not a log line.
 
 That is what happened after #68 (2026-09-11) added those packages: every
-production deploy since has failed, and the live site stayed on the last build that
-succeeded (commit `3609c19`, 2026-08-13). Anything merged since, including the canon
-rebrand, the licence change and the fixes in the PR that wrote this page, is not
-live until the variable is set and the build is retried.
+production deploy from then until 2026-10-30 failed, and the live site stayed on the last
+build that succeeded (commit `3609c19`, 2026-08-13).
 
-To fix it: in the Pages project, add `NODE_AUTH_TOKEN` as a **secret** (production
-and preview) holding a GitHub token with `read:packages` for the
+**Status (2026-10-30): fixed for production.** `NODE_AUTH_TOKEN` is set as a secret on the
+Pages project's **Production** environment and the failed build of `7cb8c0b` was retried:
+`npm ci` installed 414 packages, the build passed and `magic.ci.computer` now serves the
+current `main` (the canon rebrand, the header, the new headline). The token is a *classic*
+GitHub token named `cloudflare-pages-spellbook` (scope `read:packages` only, no expiry),
+created by `mrhegemon`. The **Preview** environment has no secret yet, so preview
+deployments of other branches still fail at `npm ci` until one is added.
+
+To check or change it without the dashboard (secret values are never shown, only names):
+
+```bash
+wrangler pages secret list --project-name spellbook --env production
+wrangler pages secret put NODE_AUTH_TOKEN --project-name spellbook --env preview   # value on stdin
+```
+
+Rotating the token: **do not use GitHub's "Regenerate token"** unless the Pages secret is
+updated straight afterwards, because regenerating revokes the old value and the next build
+fails with `E401` again. Create a new token first, update the secret, retry the latest
+deployment, then delete the old token. A classic token is required: GitHub Packages (npm)
+does not accept fine-grained tokens.
+
+To set it up from scratch: in the Pages project, add `NODE_AUTH_TOKEN` as a **secret**
+(production and preview) holding a classic GitHub token with `read:packages` for the
 `companionintelligence` org, then retry the latest deployment. (Making the three
 packages public, or consuming CI-Common's `ci-brand-<v>.tar.gz` release bundle
 instead, would remove the need for a token; that is a CI-Common decision.)
