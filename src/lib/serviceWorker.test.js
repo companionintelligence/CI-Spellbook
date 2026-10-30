@@ -1,8 +1,8 @@
-import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 
+import { isKillSwitch, precacheFingerprint } from '../../scripts/assert-site.mjs';
 import { SERVICE_WORKER_URL, registerServiceWorker } from './serviceWorker.js';
 
 const ORIGIN = 'https://magic.ci.computer';
@@ -10,6 +10,11 @@ const SW_SOURCE = readFileSync(resolve(process.cwd(), 'public/sw.js'), 'utf8');
 const KILL_SWITCH_SOURCE = readFileSync(resolve(process.cwd(), 'docs/operations/service-worker-kill-switch.js'), 'utf8');
 /** The cache name public/sw.js declares. */
 const CACHE_NAME = /const CACHE = '([^']+)'/.exec(SW_SOURCE)?.[1] ?? '';
+/**
+ * With the kill switch as public/sw.js the worker has been retired on purpose (README: Rolling
+ * back), and the tests of the worker's own behaviour have nothing to run against.
+ */
+const RETIRED = isKillSwitch(SW_SOURCE);
 
 // ---- registration (src/lib/serviceWorker.js) ----------------------------------
 
@@ -242,7 +247,7 @@ const SITE = {
 
 const PRECACHED = ['/offline/', '/offline/offline.css', '/offline/mark.svg'];
 
-describe('public/sw.js: lifecycle', () => {
+describe.skipIf(RETIRED)('public/sw.js: lifecycle', () => {
   it('precaches the offline page, its stylesheet and the mark, straight from the network, and takes over at once', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
@@ -270,7 +275,7 @@ describe('public/sw.js: lifecycle', () => {
   });
 });
 
-describe('public/sw.js: page loads', () => {
+describe.skipIf(RETIRED)('public/sw.js: page loads', () => {
   it('is network first: an online page load is the network answer, and is not stored', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
@@ -327,7 +332,7 @@ describe('public/sw.js: page loads', () => {
   });
 });
 
-describe('public/sw.js: everything else is left to the browser', () => {
+describe.skipIf(RETIRED)('public/sw.js: everything else is left to the browser', () => {
   it('serves the files the offline page needs from the cache, and from the network if they are not there', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
@@ -389,7 +394,7 @@ describe('public/sw.js: everything else is left to the browser', () => {
   });
 });
 
-describe('public/sw.js: what it may hold, and when a browser fetches it again', () => {
+describe.skipIf(RETIRED)('public/sw.js: what it may hold, and when a browser fetches it again', () => {
   it('holds only files under /offline/, a path nothing in the app requests', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
@@ -400,17 +405,17 @@ describe('public/sw.js: what it may hold, and when a browser fetches it again', 
   });
 
   // A browser fetches the precached files again only when public/sw.js changes, so the cache
-  // name has to change with them. This is what makes that impossible to forget.
+  // name has to change with them. scripts/assert-site.mjs fails the build on the same thing
+  // (it is what stops a Pages deploy); this checks the name the loaded worker really installs under.
   it('names its cache after a fingerprint of the files it precaches', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
 
-    const hash = createHash('sha256');
-    for (const { path } of worker.writes) {
-      const file = path.endsWith('/') ? `${path}index.html` : path;
-      hash.update(path).update('\0').update(readFileSync(resolve(process.cwd(), 'public', file.slice(1)))).update('\0');
-    }
-    const expected = `ci-spellbook-offline-${hash.digest('hex').slice(0, 12)}`;
+    const fingerprint = precacheFingerprint(
+      resolve(process.cwd(), 'public'),
+      worker.writes.map((write) => write.path)
+    );
+    const expected = `ci-spellbook-offline-${fingerprint}`;
 
     expect(worker.writes[0].cache, `a precached file changed: set CACHE in public/sw.js to '${expected}'`).toBe(expected);
   });
@@ -460,7 +465,9 @@ describe('docs/operations/service-worker-kill-switch.js', () => {
   }
 
   it('takes over at once, deletes the offline caches and only those, then unregisters itself', async () => {
-    const { handlers, deleted, self } = loadKillSwitch([CACHE_NAME, 'ci-spellbook-offline-111111111111', 'some-other-apps-cache']);
+    // Fixed names, not the real worker's: when the kill switch IS public/sw.js there is no CACHE to read.
+    const caches = ['ci-spellbook-offline-aaaaaaaaaaaa', 'ci-spellbook-offline-111111111111'];
+    const { handlers, deleted, self } = loadKillSwitch([...caches, 'some-other-apps-cache']);
 
     handlers.install();
     expect(self.skipWaiting).toHaveBeenCalledTimes(1);
@@ -470,12 +477,19 @@ describe('docs/operations/service-worker-kill-switch.js', () => {
     handlers.activate({ waitUntil: (/** @type {Promise<unknown>} */ promise) => pending.push(promise) });
     await Promise.all(pending);
 
-    expect(deleted.sort()).toEqual([CACHE_NAME, 'ci-spellbook-offline-111111111111'].sort());
+    expect(deleted.sort()).toEqual([...caches].sort());
     expect(self.registration.unregister).toHaveBeenCalledTimes(1);
   });
 
   it('has no fetch handler, so pages load straight from the network while it is installed', () => {
     const { handlers } = loadKillSwitch([]);
     expect(Object.keys(handlers).sort()).toEqual(['activate', 'install']);
+  });
+
+  // scripts/assert-site.mjs, these tests and tests/pwa.spec.js stop requiring the real worker's
+  // offline page, precache list and registration when public/sw.js starts with this line.
+  it('starts with the line that tells the build and the tests it is the kill switch', () => {
+    expect(isKillSwitch(KILL_SWITCH_SOURCE)).toBe(true);
+    expect(KILL_SWITCH_SOURCE.split('\n')[0]).toBe('// spellbook:service-worker-kill-switch');
   });
 });

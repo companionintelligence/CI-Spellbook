@@ -1,8 +1,19 @@
+// spellbook:service-worker-kill-switch
+//
 // Spellbook's service worker kill switch.
 //
-// To retire the worker from every browser that installed it, ship this file as /sw.js:
-// copy it over public/sw.js in the same deploy that removes registerServiceWorker() from
-// src/main.jsx, and leave it in place for a few weeks.
+// To retire the worker from every browser that installed it:
+//
+//   1. copy this file over public/sw.js;
+//   2. delete the registerServiceWorker() call, and its import, from src/main.jsx;
+//   3. deploy, and leave it in place for a few weeks.
+//
+// Nothing else has to change. The first line above is how scripts/assert-site.mjs (so
+// `npm run build`, the Pages build and the image build), the unit tests and tests/pwa.spec.js
+// recognise this file: with it as public/sw.js they stop requiring what it has none of on
+// purpose (an offline page, a precache list, a cache fingerprint, a registration in the
+// bundle). They still check the manifest, the head tags and the `Cache-Control: no-cache`
+// rule for /sw.js, which this file needs as much as the worker did.
 //
 // Reverting the commit that added the worker is NOT enough. With /sw.js gone, a browser's
 // update check gets a 404, the update fails, and the old worker stays installed and keeps

@@ -21,10 +21,11 @@ export const SERVICE_WORKER_URL = '/sw.js';
  *     bundle from the app itself, which already works offline, and a worker there
  *     would sit between the WebView and its bundled files for no gain.
  *
- * It never throws. The site is an ordinary web page without the worker, and this runs
- * before the first render, so an exception here would blank the site for something
- * optional. Browsers do throw in places: reading `navigator.serviceWorker` raises a
- * SecurityError in a sandboxed frame, and some browsers do the same with site data blocked.
+ * It never throws. The site is an ordinary web page without the worker, so nothing here
+ * may be what stops the app from starting. Reading `navigator.serviceWorker` can throw
+ * (Chrome 156 raises a SecurityError for a document sandboxed, by a CSP `sandbox` header,
+ * without `allow-same-origin`; other browsers were not tried), and so can `register()`.
+ * Both are caught.
  *
  * @param {{ production?: boolean, win?: Window & typeof globalThis }} [options] injected by tests
  */

@@ -4,6 +4,7 @@ import { join } from 'node:path';
 
 import { test as base, chromium, expect } from '@playwright/test';
 
+import { isKillSwitch } from '../scripts/assert-site.mjs';
 import { serveDist } from './support/serve-dist.mjs';
 
 // The installable build in a real browser. The dev server never registers the service worker
@@ -17,6 +18,10 @@ import { serveDist } from './support/serve-dist.mjs';
 // Local runs are served with the production headers (tests/support/serve-dist.mjs).
 
 const REMOTE = process.env.PWA_URL ? new URL(process.env.PWA_URL).origin : null;
+
+// With the kill switch as public/sw.js the worker has been retired on purpose (README: Rolling
+// back), so there is nothing to install and these checks do not apply.
+const RETIRED = isKillSwitch(readFileSync(join(process.cwd(), 'public/sw.js'), 'utf8'));
 
 const test = base.extend({
   /** The origin under test, shared by the tests of a worker. */
@@ -41,6 +46,8 @@ const test = base.extend({
     rmSync(profile, { recursive: true, force: true });
   }
 });
+
+test.skip(() => RETIRED, 'public/sw.js is the kill switch: the service worker is retired');
 
 /** Load the site and wait until a worker has installed, activated and is the one answering the page. */
 async function install(page, url = '/') {
