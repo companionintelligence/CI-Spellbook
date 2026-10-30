@@ -166,18 +166,23 @@ If the favicon check returns `text/html`, the live site is still the stale build
 The service worker and the offline page, which make the site installable:
 
 ```bash
-curl -sI https://magic.ci.computer/sw.js | grep -i -E '^(HTTP|content-type|cache-control)'   # 200, a JavaScript type, no-cache
+curl -sI https://magic.ci.computer/sw.js | grep -i -E '^(HTTP|content-type|cache-control)'   # 200, a JavaScript type, max-age=14400 (see below)
+curl -sI https://spellbook-cvk.pages.dev/sw.js | grep -i -E '^(HTTP|content-type|cache-control)'   # 200, a JavaScript type, no-cache
 curl -s -o /dev/null -w '%{http_code}\n' https://magic.ci.computer/offline/                   # 200
 curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' https://magic.ci.computer/offline    # 308 https://magic.ci.computer/offline/
 ```
 
-`/sw.js` is the file no cache may hold on to: if the first command shows a `max-age` instead of `no-cache`, something in the zone is overriding `_headers`, and a changed worker will reach browsers late. Then the browser-level checks, which install the worker in Chrome, ask Chrome whether the site is installable, go offline and come back (they need a Playwright browser, `npx playwright install chromium`):
+`public/_headers` sends `/sw.js` as `no-cache`, and the Pages host shows exactly that (second command), so use it to check that the rule deployed. `magic.ci.computer` shows `max-age=14400` for the same file and ETag (measured 2026-10-30), and that is expected: the `ci.computer` zone has a 4 hour browser cache time that raises a lower `max-age` on the files Cloudflare caches, `max-age=0` and `no-cache` included (`/offline/offline.css` goes from `max-age=0` to `max-age=14400` the same way; HTML, the manifest and anything above 4 hours are left as sent). `avatar.ci.computer` and `xr.ci.computer` show the same on their `/sw.js`. The zone setting was not read, so the cause is inferred from the headers.
+
+That `max-age` does not make a changed worker reach browsers late. A browser skips the HTTP cache when it checks a worker script for changes, because `register()` is called without `updateViaCache` (`src/lib/serviceWorker.js`) and the default is `imports`: in Chrome 156 a changed `/sw.js` was installed about 2 seconds after the check with `max-age=14400` and with `no-cache` alike, and only registering with `updateViaCache: 'all'` held it back. Making the live site send `no-cache` as well would be a change in the Cloudflare dashboard, not in this repository: a Cache Rule for `magic.ci.computer/sw.js` whose Browser TTL is "Respect origin". That is the owner's to add if it is wanted; no such rule exists today, and nothing here depends on it.
+
+Then the browser-level checks, which install the worker in Chrome, ask Chrome whether the site is installable, go offline and come back (they need a Playwright browser, `npx playwright install chromium`):
 
 ```bash
 PWA_URL=https://magic.ci.computer npx playwright test --project=pwa
 ```
 
-The kill-switch test in that file skips itself against a deployed site.
+The kill-switch test in that file skips itself against a deployed site. The whole file skips when the `/sw.js` of the site under test is the kill switch (the worker was retired on purpose); the `public/sw.js` of the checkout does not matter there.
 
 ## Previewing the Pages behaviour locally
 
