@@ -313,6 +313,34 @@ describe('checkWorkerBuild: the worker in dist/', () => {
   });
 });
 
+// The marker is the whole first line of the kill switch. A looser test (a word boundary after
+// "switch") also accepted `...kill-switch-not`, so a file that merely began with the same words
+// would have switched off every check of the real worker.
+describe('isKillSwitch: the first line of public/sw.js decides', () => {
+  const MARKER = '// spellbook:service-worker-kill-switch';
+
+  it('recognises the kill switch itself', () => {
+    expect(isKillSwitch(KILL_SWITCH)).toBe(true);
+    expect(isKillSwitch(`${MARKER}\nself.addEventListener('install', () => {});\n`)).toBe(true);
+  });
+
+  it('allows trailing spaces and a CRLF line ending after the marker, and a file that is only the marker', () => {
+    expect(isKillSwitch(`${MARKER}   \n// x\n`)).toBe(true);
+    expect(isKillSwitch(`${MARKER}\r\n// x\r\n`)).toBe(true);
+    expect(isKillSwitch(MARKER)).toBe(true);
+  });
+
+  it('does not take anything else for it', () => {
+    expect(isKillSwitch(`${MARKER}-not\n// x\n`)).toBe(false);
+    expect(isKillSwitch(`${MARKER}: x\n// x\n`)).toBe(false);
+    expect(isKillSwitch(`${MARKER}.js\n`)).toBe(false);
+    expect(isKillSwitch(`\n${MARKER}\n`)).toBe(false); // not the first line
+    expect(isKillSwitch(`// Spellbook's service worker.\n${MARKER}\n`)).toBe(false);
+    expect(isKillSwitch(`/* ${MARKER} */\n`)).toBe(false);
+    expect(isKillSwitch('')).toBe(false);
+  });
+});
+
 describe('precacheFingerprint, the end of the worker\'s cache name', () => {
   /** @type {string | undefined} */
   let dir;

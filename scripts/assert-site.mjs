@@ -146,10 +146,12 @@ const CACHE_PREFIX = 'ci-spellbook-offline-';
 
 /**
  * public/sw.js can be the kill switch (docs/operations/service-worker-kill-switch.js), which is how
- * the worker is retired, and then it starts with this line. The kill switch has no offline page, no
- * precache list and no registration in the bundle, on purpose, so none of those is required of it.
+ * the worker is retired, and then its first line is this one and nothing else (trailing spaces and a
+ * CRLF are fine; `...kill-switch-not` or `...kill-switch: x` is not the marker). The kill switch has
+ * no offline page, no precache list and no registration in the bundle, on purpose, so none of those
+ * is required of it.
  */
-const KILL_SWITCH_MARKER = /^\/\/ spellbook:service-worker-kill-switch\b/;
+const KILL_SWITCH_MARKER = /^\/\/ spellbook:service-worker-kill-switch[ \t]*(?:\r?\n|$)/;
 
 /** Whether this is the text of the kill switch rather than of the real worker. */
 export const isKillSwitch = (source) => KILL_SWITCH_MARKER.test(source);
