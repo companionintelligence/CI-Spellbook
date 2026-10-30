@@ -1,0 +1,177 @@
+name: Mobile Build
+
+# Builds the native iOS and Android apps: the Capacitor shells in apps/ios and apps/android,
+# which wrap the Vite build (dist/). Modelled on Companion-Memory's mobile-build.yml.
+#
+# Runs on manual dispatch ONLY, like every other workflow in this repo (see docs/CI.md):
+#
+#   gh workflow run mobile-build.yml --repo companionintelligence/CI-Spellbook --ref <branch>
+#
+# CI silence here means "nobody dispatched it", not "everything passed".
+#
+# It produces UNSIGNED artifacts that need no secrets beyond the read-only GITHUB_TOKEN:
+#   - Android: a debug APK (sideload-installable; not for store distribution)
+#   - iOS:     a Simulator .app (runs in the iOS Simulator; not installable on a device)
+# A store build needs signing (Play upload key, Apple distribution certificate and profile).
+# None of that is configured, and this workflow does not pretend otherwise.
+#
+# Nothing here sets VITE_SENTRY_DSN or GA_MEASUREMENT_ID, on purpose: a mobile build with
+# neither has the Sentry SDK tree-shaken out and no analytics tags, so the app makes no
+# outbound requests of its own. Add either only together with the store privacy answers.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: mobile-build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # 22, matching ci.yml and the Dockerfile's runtime.
+  NODE_VERSION: '22'
+
+jobs:
+  android:
+    name: Android (debug APK)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/android/package-lock.json
+
+      # The web app's own install: the @companionintelligence/* canon packages come from
+      # GitHub Packages (see .npmrc), which is what NODE_AUTH_TOKEN is for.
+      - name: Install web dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # dist/ is the shell's webDir.
+      - name: Build web bundle
+        run: npm run build
+
+      - name: JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Android SDK
+        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3.2.2
+        with:
+          # v3 defaults `packages` to `tools platform-tools`, and Google has removed the
+          # obsolete `tools` package, so the default makes sdkmanager exit 1. Empty means
+          # "set up cmdline-tools and the environment, install nothing"; the next step
+          # installs exactly what this build needs.
+          packages: ''
+
+      # platforms;android-36 matches compileSdkVersion in apps/android/android/variables.gradle.
+      # build-tools;35.0.0 is the version AGP 8.10 picks by default (the classpath line in
+      # apps/android/android/build.gradle); keep the pair in step if either is raised.
+      - name: Install SDK components
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;35.0.0"
+
+      # The shell is its own npm project, installed on its own: it is not part of the root install.
+      - name: Install Android shell dependencies
+        working-directory: apps/android
+        run: npm ci
+
+      - name: Capacitor sync (Android)
+        working-directory: apps/android
+        run: npx cap sync android
+
+      - name: Gradle assembleDebug
+        working-directory: apps/android/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 7
+          name: spellbook-android-debug-apk
+          path: apps/android/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+  ios:
+    name: iOS (Simulator .app)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      # CocoaPods (run by `cap sync ios`) crashes on a non-UTF-8 locale.
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/ios/package-lock.json
+
+      - name: Install web dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build web bundle
+        run: npm run build
+
+      - name: Install iOS shell dependencies
+        working-directory: apps/ios
+        run: npm ci
+
+      # `cap sync ios` also runs `pod install`; CocoaPods ships on GitHub's macOS runners.
+      - name: Capacitor sync (iOS)
+        working-directory: apps/ios
+        run: npx cap sync ios
+
+      # Unsigned Simulator build: validates the project and produces a runnable .app without
+      # any Apple Developer credentials. A device-installable .ipa needs signing; see README.
+      # ARCHS=arm64 ONLY_ACTIVE_ARCH=YES builds the Apple-silicon Simulator slice only, which is
+      # what the build was verified with.
+      - name: Build (iOS Simulator, unsigned)
+        working-directory: apps/ios/ios/App
+        run: |
+          xcodebuild \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            ARCHS=arm64 \
+            ONLY_ACTIVE_ARCH=YES \
+            build
+
+      - name: Package .app
+        working-directory: apps/ios/ios/App
+        run: |
+          APP=$(find build/Build/Products -name 'App.app' -type d | head -1)
+          ditto -c -k --sequesterRsrc --keepParent "$APP" "$GITHUB_WORKSPACE/spellbook-ios-simulator.app.zip"
+
+      - name: Upload iOS app
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 7
+          name: spellbook-ios-simulator-app
+          path: spellbook-ios-simulator.app.zip
+          if-no-files-found: error

@@ -1,0 +1,22 @@
+ext {
+    // 24, not Capacitor's default 23: Play's automatic protection refuses an App Bundle whose
+    // minSdk is below 24 (same floor as Companion-Memory's Android shell).
+    minSdkVersion = 24
+    // Play requires target API 36 of new uploads (per Companion-Memory's android/variables.gradle
+    // note, dated 2026-10; confirm against Play Console before submitting). Capacitor 7's own
+    // matrix is 35, but @capacitor/android reads compileSdk/targetSdk from this file. AGP must be
+    // 8.10.0 or newer to accept compileSdk 36 (see build.gradle).
+    compileSdkVersion = 36
+    targetSdkVersion = 36
+    androidxActivityVersion = '1.9.2'
+    androidxAppCompatVersion = '1.7.0'
+    androidxCoordinatorLayoutVersion = '1.2.0'
+    androidxCoreVersion = '1.15.0'
+    androidxFragmentVersion = '1.8.4'
+    coreSplashScreenVersion = '1.0.1'
+    androidxWebkitVersion = '1.12.1'
+    junitVersion = '4.13.2'
+    androidxJunitVersion = '1.2.1'
+    androidxEspressoCoreVersion = '3.6.1'
+    cordovaAndroidVersion = '10.1.1'
+}

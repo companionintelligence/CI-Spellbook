@@ -92,8 +92,9 @@ normally under real Node. See the deno-migration PR for details.
 |---|---|---|
 | <https://magic.ci.computer> | The public site: a Cloudflare Pages project connected to this repository. Cloudflare builds and deploys it itself; no workflow in this repo does. | `npm run build` to `dist/`, with `NODE_AUTH_TOKEN` set in the Pages project (the canon packages are private). See [`docs/operations/cloudflare-pages.md`](docs/operations/cloudflare-pages.md). |
 | `ghcr.io/companionintelligence/ci-spellbook` | The container the Hub App Store installs (nginx on port 5500). | The `Dockerfile` (Deno), published by `docker-publish.yml`, which is started by hand. |
+| Android APK, iOS Simulator app | Unsigned debug builds of the Capacitor shells in `apps/`. Not published anywhere and not store builds; see [Mobile apps](#mobile-apps-ios-and-android). | `mobile-build.yml`, started by hand. |
 
-`.github/workflows/ci.yml` tests and smoke-builds; it does not deploy. Both workflows are `workflow_dispatch`-only (see [`docs/CI.md`](docs/CI.md)).
+`.github/workflows/ci.yml` tests and smoke-builds; it does not deploy. All three workflows are `workflow_dispatch`-only (see [`docs/CI.md`](docs/CI.md), which is generated and does not list `mobile-build.yml` yet).
 
 ## Run with Docker
 
@@ -112,6 +113,32 @@ To build the image locally:
 docker build -t ci-spellbook .
 docker run -d -p 5500:5500 ci-spellbook
 ```
+
+## Mobile apps (iOS and Android)
+
+`apps/ios` and `apps/android` are [Capacitor](https://capacitorjs.com) shells (app id `com.companionintelligence.spellbook`, name "Companion Spellbook") that put the Vite build, `dist/`, in a native WebView. The shelves are static markdown inside the bundle and are fetched from the app's own origin, so the apps work offline and need no server. Outbound links leave the app for the system browser.
+
+Each shell is its own npm project and is **not** part of the root install, so Capacitor stays out of the web bundle, the Docker image's `deno install --frozen` and the lockfile check. The layout follows [Companion-Memory](https://github.com/companionintelligence/Companion-Memory)'s `frontend/apps/ios` and `frontend/apps/android`, on Capacitor 7 like that app.
+
+```bash
+npm run build                                        # web bundle -> dist/ (repo root)
+
+cd apps/android && npm ci && npx cap sync android    # then `npx cap open android`
+cd android && ./gradlew assembleDebug                #   or build the debug APK directly
+
+cd apps/ios && npm ci && npx cap sync ios            # then `npx cap open ios`
+```
+
+`npm run build` inside a shell runs the web build and then the sync. Needs: JDK 21 and Android SDK platform 36 for Android; Xcode and CocoaPods for iOS (built here with Xcode 27.0). CocoaPods crashes unless the shell has a UTF-8 locale (`export LANG=en_US.UTF-8`). Set `CAP_SERVER_URL` before a sync to load a live dev server instead of the bundle; never for a build you ship.
+
+What differs from Capacitor's defaults, and why:
+
+- **iOS** deployment target 15.0 (Xcode 27's SDK refuses Capacitor 7's default 14.0), and a `SceneDelegate` with a `UIApplicationSceneManifest` (the iOS 27 SDK refused to launch the default AppDelegate-only app: "UIScene life cycle is required"). Companion-Memory made the same two changes.
+- **Android** compileSdk and targetSdk 36, AGP 8.10.0, minSdk 24, as in Companion-Memory. A dark window background so the strips behind the system bars are not white.
+- Plugins: `@capacitor/app`, `@capacitor/splash-screen` and `@capacitor/status-bar`, configured in `capacitor.config.ts`. The web app does not call them.
+- Icons and splash are generated from `apps/assets/`, which is built from `@companionintelligence/assets`' `logo.app-icon` (the company mark) on the app's navy. They are placeholders, not Spellbook-specific artwork. To regenerate: `npx @capacitor/assets@3 generate --ios --assetPath ../assets --iconBackgroundColor '#071533' --iconBackgroundColorDark '#071533' --splashBackgroundColor '#071533' --splashBackgroundColorDark '#071533'` from `apps/ios` (use `--android` in `apps/android`).
+
+`mobile-build.yml` builds an **unsigned** debug APK and an **unsigned** iOS Simulator `.app` and uploads them as artifacts. It is not a store build: there is no signing, no store listing and no privacy declaration yet.
 
 ## Tests
 

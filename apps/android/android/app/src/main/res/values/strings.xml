@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Companion Spellbook</string>
+    <string name="title_activity_main">Companion Spellbook</string>
+    <string name="package_name">com.companionintelligence.spellbook</string>
+    <string name="custom_url_scheme">com.companionintelligence.spellbook</string>
+</resources>

@@ -1,0 +1,38 @@
+require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+
+# 15.0, not Capacitor 7's default 14.0: Xcode 27's iOS SDK only accepts deployment targets
+# from 15.0 up ("range of supported deployment target versions is 15.0 to 27.0.x"), so a 14.0
+# project cannot be built with it at all. Keep in step with IPHONEOS_DEPLOYMENT_TARGET in
+# App.xcodeproj and the post_install below.
+platform :ios, '15.0'
+use_frameworks!
+
+# workaround to avoid Xcode caching of Pods that requires
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
+install! 'cocoapods', :disable_input_output_paths => true
+
+def capacitor_pods
+  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
+  pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+end
+
+target 'App' do
+  capacitor_pods
+  # Add your Pods here
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
+  # The Capacitor pods' podspecs still say iOS 14.0 and CocoaPods keeps that for each pod
+  # target, which Xcode 26+ / the iOS 26+ SDK refuse. Force every pod target up to the
+  # App's own minimum (15.0, the `platform` line above).
+  installer.pods_project.targets.each do |t|
+    t.build_configurations.each do |c|
+      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+    end
+  end
+end
