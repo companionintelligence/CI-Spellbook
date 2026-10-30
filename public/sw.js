@@ -29,14 +29,16 @@
 //
 // Updating it: a browser fetches the precached files again only when this file
 // changes, so CACHE carries a fingerprint of those files (first 12 hex of the sha256
-// of each URL and its bytes, in PRECACHE order). `npm run test:unit` fails, and prints
-// the name to use, when one of them changes without CACHE following it.
+// of each URL and its bytes, carriage returns removed, in PRECACHE order).
+// `npm run build` (scripts/assert-site.mjs) and `npm run test:unit` fail, and print the
+// name to use, when one of them changes without CACHE following it.
 //
 // Retiring it: reverting the commit that added it does not do it. Once /sw.js is gone a
-// browser's update check gets a 404, fails, and keeps the old worker. Ship
-// docs/operations/service-worker-kill-switch.js as /sw.js instead, and delete the
-// registration in src/lib/serviceWorker.js. Until then an old copy of this file is
-// harmless: it serves a static page and nothing else.
+// browser's update check gets a 404, fails, and keeps the old worker. Copy
+// docs/operations/service-worker-kill-switch.js over this file and delete the
+// registerServiceWorker() call and its import from src/main.jsx (README: Rolling back).
+// Until then an old copy of this file is harmless: it serves a static page and nothing
+// else.
 //
 // Served from the site root so its scope is the whole origin.
 

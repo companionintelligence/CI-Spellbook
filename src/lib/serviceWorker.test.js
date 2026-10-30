@@ -421,9 +421,8 @@ describe.skipIf(RETIRED)('public/sw.js: what it may hold, and when a browser fet
   });
 });
 
-// The container image is the one path no test here can run (no nginx binary in CI, and the
-// image build is a separate workflow), so the two rules the install depends on are at least
-// pinned in the config text.
+// The unit tests cannot run nginx, so they pin the two rules the install depends on in the
+// config text.
 describe('nginx/default.conf', () => {
   const NGINX = readFileSync(resolve(process.cwd(), 'nginx/default.conf'), 'utf8');
   /** The body of an exact-match `location = <path> { ... }`. */
