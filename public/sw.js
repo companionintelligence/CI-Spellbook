@@ -14,6 +14,12 @@
 //     markdown all go to the network exactly as they would without a worker, so a
 //     deploy is live on the next load and the HTTP cache rules in public/_headers
 //     stay the only cache policy.
+//   - It never answers for a path the app itself requests. Everything it serves from
+//     the cache lives under /offline/ (the offline page, its stylesheet and its own
+//     copy of the mark), which nothing in the app links to. An answer from here is
+//     never revalidated, so a shared path such as the header brand mark
+//     (/logo/mark.svg, which this list once held) would have kept showing an old file
+//     after a rebrand. assert-site.mjs and the unit tests fail if PRECACHE leaves /offline/.
 //   - It never writes to the cache after install. The only cache entries are the
 //     three files below, fetched once, so no URL a visitor opens (a deep link, a
 //     query string) is ever stored.
@@ -21,16 +27,22 @@
 //     requests and every same-origin path that is not one of the files below are
 //     left to the browser. There is no list of API paths to forget to extend.
 //
-// Retiring it: ship a sw.js that calls self.registration.unregister() and
-// delete the registration in src/lib/serviceWorker.js. Until then an old copy
-// of this file is harmless: it serves a static page and nothing else.
+// Updating it: a browser fetches the precached files again only when this file
+// changes, so CACHE carries a fingerprint of those files (first 12 hex of the sha256
+// of each URL and its bytes, in PRECACHE order). `npm run test:unit` fails, and prints
+// the name to use, when one of them changes without CACHE following it.
 //
-// Served from the site root so its scope is the whole origin. Bump CACHE when any
-// file in PRECACHE changes: the offline page is not fingerprinted.
+// Retiring it: reverting the commit that added it does not do it. Once /sw.js is gone a
+// browser's update check gets a 404, fails, and keeps the old worker. Ship
+// docs/operations/service-worker-kill-switch.js as /sw.js instead, and delete the
+// registration in src/lib/serviceWorker.js. Until then an old copy of this file is
+// harmless: it serves a static page and nothing else.
+//
+// Served from the site root so its scope is the whole origin.
 
-const CACHE = 'ci-spellbook-offline-v1';
+const CACHE = 'ci-spellbook-offline-4909cbee3b4f';
 const OFFLINE_URL = '/offline/';
-const PRECACHE = [OFFLINE_URL, '/offline/offline.css', '/logo/mark.svg'];
+const PRECACHE = [OFFLINE_URL, '/offline/offline.css', '/offline/mark.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

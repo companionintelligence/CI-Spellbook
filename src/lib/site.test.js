@@ -192,7 +192,16 @@ describe('checkSource notices an app that can no longer be installed', () => {
   });
 
   it('a service worker that precaches a file that is not there', () => {
-    expect(withEdit('public/sw.js', (h) => h.replace("'/logo/mark.svg']", "'/logo/gone.svg']"))).toContain('precaches /logo/gone.svg, which is not in public/');
+    expect(withEdit('public/sw.js', (h) => h.replace("'/offline/mark.svg']", "'/offline/gone.svg']"))).toContain('precaches /offline/gone.svg, which is not in public/');
+  });
+
+  // The header brand mark is /logo/mark.svg. The worker answered for it from the cache, which is
+  // never revalidated, so a rebrand did not reach installed browsers. The offline page has its
+  // own copy under /offline/ for that reason.
+  it('a service worker that answers for a file the app itself requests', () => {
+    expect(withEdit('public/sw.js', (h) => h.replace("'/offline/mark.svg']", "'/logo/mark.svg']"))).toContain(
+      'precaches /logo/mark.svg; the worker may answer only for files under /offline/'
+    );
   });
 
   it('a service worker whose offline page is not in its precache list', () => {

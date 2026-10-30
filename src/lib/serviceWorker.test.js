@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
@@ -6,6 +7,9 @@ import { SERVICE_WORKER_URL, registerServiceWorker } from './serviceWorker.js';
 
 const ORIGIN = 'https://magic.ci.computer';
 const SW_SOURCE = readFileSync(resolve(process.cwd(), 'public/sw.js'), 'utf8');
+const KILL_SWITCH_SOURCE = readFileSync(resolve(process.cwd(), 'docs/operations/service-worker-kill-switch.js'), 'utf8');
+/** The cache name public/sw.js declares. */
+const CACHE_NAME = /const CACHE = '([^']+)'/.exec(SW_SOURCE)?.[1] ?? '';
 
 // ---- registration (src/lib/serviceWorker.js) ----------------------------------
 
@@ -72,6 +76,53 @@ describe('registerServiceWorker', () => {
     registerServiceWorker({ production: true, win });
     await Promise.resolve();
     await Promise.resolve();
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  // This runs before the first render, so a throw here would blank the site for the sake
+  // of an optional feature.
+  it('never throws when the browser refuses to hand over navigator.serviceWorker (a SecurityError)', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const navigator = {};
+    Object.defineProperty(navigator, 'serviceWorker', {
+      enumerable: true,
+      get() {
+        throw new DOMException('The operation is insecure.', 'SecurityError');
+      }
+    });
+    const win = fakeWindow();
+    win.navigator = navigator;
+
+    expect(() => registerServiceWorker({ production: true, win })).not.toThrow();
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  it('never throws when register() throws instead of rejecting', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const win = fakeWindow({
+      serviceWorker: {
+        register: vi.fn(() => {
+          throw new DOMException('The operation is insecure.', 'SecurityError');
+        })
+      }
+    });
+
+    expect(() => registerServiceWorker({ production: true, win })).not.toThrow();
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  it('never throws when asking Capacitor whether this is a native shell throws, and then does not register', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const win = fakeWindow({
+      capacitor: {
+        isNativePlatform: () => {
+          throw new Error('bridge not ready');
+        }
+      }
+    });
+
+    expect(registerServiceWorker({ production: true, win })).toBe(false);
+    expect(win.navigator.serviceWorker.register).not.toHaveBeenCalled();
     expect(warn).toHaveBeenCalledTimes(1);
   });
 });
@@ -182,12 +233,14 @@ function loadWorker({ network = {}, offline = false } = {}) {
 const SITE = {
   '/offline/': '<h1>Spellbook is offline</h1>',
   '/offline/offline.css': 'body{}',
-  '/logo/mark.svg': '<svg/>',
+  '/offline/mark.svg': '<svg id="offline-mark"/>',
+  // The app's own header brand mark: a different file from the offline page's copy.
+  '/logo/mark.svg': '<svg id="header-mark"/>',
   '/': '<div id="root"></div>',
   '/markdown/ai-agents.md': '# agents'
 };
 
-const PRECACHED = ['/offline/', '/offline/offline.css', '/logo/mark.svg'];
+const PRECACHED = ['/offline/', '/offline/offline.css', '/offline/mark.svg'];
 
 describe('public/sw.js: lifecycle', () => {
   it('precaches the offline page, its stylesheet and the mark, straight from the network, and takes over at once', async () => {
@@ -207,12 +260,12 @@ describe('public/sw.js: lifecycle', () => {
   it('on activation deletes its own older caches, leaves every other cache alone, and claims open pages', async () => {
     const worker = loadWorker({ network: SITE });
     await worker.lifecycle('install');
-    worker.storeFor('ci-spellbook-offline-v0');
+    worker.storeFor('ci-spellbook-offline-111111111111');
     worker.storeFor('some-other-apps-cache');
 
     await worker.lifecycle('activate');
 
-    expect([...worker.stores.keys()].sort()).toEqual(['ci-spellbook-offline-v1', 'some-other-apps-cache']);
+    expect([...worker.stores.keys()].sort()).toEqual([CACHE_NAME, 'some-other-apps-cache'].sort());
     expect(worker.self.clients.claim).toHaveBeenCalledTimes(1);
   });
 });
@@ -257,7 +310,7 @@ describe('public/sw.js: page loads', () => {
 
   it('never hands a navigation a redirected response, which the browser refuses', async () => {
     const worker = loadWorker({ offline: true });
-    worker.storeFor('ci-spellbook-offline-v1').set('/offline/', {
+    worker.storeFor(CACHE_NAME).set('/offline/', {
       redirected: true,
       body: 'offline page',
       status: 200,
@@ -280,7 +333,7 @@ describe('public/sw.js: everything else is left to the browser', () => {
     await worker.lifecycle('install');
     worker.fetch.mockClear();
 
-    for (const path of ['/offline/offline.css', '/logo/mark.svg']) {
+    for (const path of ['/offline/offline.css', '/offline/mark.svg']) {
       const response = await worker.dispatch(path);
       expect(await response.text()).toBe(SITE[path]);
     }
@@ -297,6 +350,10 @@ describe('public/sw.js: everything else is left to the browser', () => {
     ['the catalog markdown', '/markdown/ai-agents.md'],
     ['the telemetry consent answer', '/api/config/telemetry'],
     ['the web manifest', '/site.webmanifest'],
+    // The header brand mark (src/App.jsx) and the page icon: the worker once cached the first
+    // of these, and an answer from the cache is never revalidated.
+    ['the header brand mark, which the app itself requests', '/logo/mark.svg'],
+    ['the app icons', '/logo/mark-192.png'],
     ['a shelf image', '/assets/background1-I_lLgND_.webp'],
     ['an API-looking path', '/api/anything?token=secret']
   ])('does not intercept %s', async (_label, path) => {
@@ -329,5 +386,96 @@ describe('public/sw.js: everything else is left to the browser', () => {
 
     expect(worker.writes).toHaveLength(afterInstall);
     expect(worker.writes.every((w) => w.via === 'addAll')).toBe(true);
+  });
+});
+
+describe('public/sw.js: what it may hold, and when a browser fetches it again', () => {
+  it('holds only files under /offline/, a path nothing in the app requests', async () => {
+    const worker = loadWorker({ network: SITE });
+    await worker.lifecycle('install');
+
+    for (const { path } of worker.writes) {
+      expect(path.startsWith('/offline/'), `${path} is outside /offline/`).toBe(true);
+    }
+  });
+
+  // A browser fetches the precached files again only when public/sw.js changes, so the cache
+  // name has to change with them. This is what makes that impossible to forget.
+  it('names its cache after a fingerprint of the files it precaches', async () => {
+    const worker = loadWorker({ network: SITE });
+    await worker.lifecycle('install');
+
+    const hash = createHash('sha256');
+    for (const { path } of worker.writes) {
+      const file = path.endsWith('/') ? `${path}index.html` : path;
+      hash.update(path).update('\0').update(readFileSync(resolve(process.cwd(), 'public', file.slice(1)))).update('\0');
+    }
+    const expected = `ci-spellbook-offline-${hash.digest('hex').slice(0, 12)}`;
+
+    expect(worker.writes[0].cache, `a precached file changed: set CACHE in public/sw.js to '${expected}'`).toBe(expected);
+  });
+});
+
+// The container image is the one path no test here can run (no nginx binary in CI, and the
+// image build is a separate workflow), so the two rules the install depends on are at least
+// pinned in the config text.
+describe('nginx/default.conf', () => {
+  const NGINX = readFileSync(resolve(process.cwd(), 'nginx/default.conf'), 'utf8');
+  /** The body of an exact-match `location = <path> { ... }`. */
+  const exactLocation = (/** @type {string} */ path) =>
+    new RegExp(`location = ${path.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')} \\{([^}]*)\\}`).exec(NGINX)?.[1] ?? '';
+
+  it('revalidates the service worker script, as public/_headers does on Pages', () => {
+    expect(exactLocation('/sw.js')).toMatch(/add_header Cache-Control "no-cache";/);
+  });
+
+  it('serves the manifest as application/manifest+json, which the stock mime.types has no entry for', () => {
+    expect(exactLocation('/site.webmanifest')).toMatch(/default_type application\/manifest\+json;/);
+  });
+});
+
+describe('docs/operations/service-worker-kill-switch.js', () => {
+  /** @param {string[]} cacheNames */
+  function loadKillSwitch(cacheNames) {
+    /** @type {Record<string, (event?: any) => void>} */
+    const handlers = {};
+    /** @type {string[]} */
+    const deleted = [];
+    const self = {
+      addEventListener: (/** @type {string} */ type, /** @type {(event?: any) => void} */ handler) => {
+        handlers[type] = handler;
+      },
+      skipWaiting: vi.fn(),
+      registration: { unregister: vi.fn(() => Promise.resolve(true)) }
+    };
+    const caches = {
+      keys: async () => cacheNames,
+      delete: async (/** @type {string} */ name) => {
+        deleted.push(name);
+        return true;
+      }
+    };
+    new Function('self', 'caches', KILL_SWITCH_SOURCE)(self, caches);
+    return { handlers, deleted, self };
+  }
+
+  it('takes over at once, deletes the offline caches and only those, then unregisters itself', async () => {
+    const { handlers, deleted, self } = loadKillSwitch([CACHE_NAME, 'ci-spellbook-offline-111111111111', 'some-other-apps-cache']);
+
+    handlers.install();
+    expect(self.skipWaiting).toHaveBeenCalledTimes(1);
+
+    /** @type {Promise<unknown>[]} */
+    const pending = [];
+    handlers.activate({ waitUntil: (/** @type {Promise<unknown>} */ promise) => pending.push(promise) });
+    await Promise.all(pending);
+
+    expect(deleted.sort()).toEqual([CACHE_NAME, 'ci-spellbook-offline-111111111111'].sort());
+    expect(self.registration.unregister).toHaveBeenCalledTimes(1);
+  });
+
+  it('has no fetch handler, so pages load straight from the network while it is installed', () => {
+    const { handlers } = loadKillSwitch([]);
+    expect(Object.keys(handlers).sort()).toEqual(['activate', 'install']);
   });
 });

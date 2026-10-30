@@ -24,6 +24,10 @@ const ORIGIN = fromIdx !== -1
 /** public path → origin path (relative to the assets package). Ids in brand.config.json. */
 const MAP = {
   'public/logo/mark.svg': 'logos/mark.svg',            // logo.mark
+  // The offline page's own copy of the mark. The service worker answers for files under
+  // /offline/ only, so it never serves a path the app itself requests (public/logo/mark.svg
+  // is the header brand mark).
+  'public/offline/mark.svg': 'logos/mark.svg',         // logo.mark
   'public/logo/mark-192.png': 'icons/png/icon-192.png',
   'public/logo/favicon-32.png': 'icons/png/favicon-32.png',
   // Search/share surfaces: the bare /favicon.ico crawlers still request, the iOS

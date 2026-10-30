@@ -13,12 +13,13 @@ import 'highlight.js/styles/github.min.css'
 // See docs/operations/error-reporting.md.
 void initTelemetry()
 
-// Installable as an app, with an offline page. Production builds only; see
-// src/lib/serviceWorker.js and public/sw.js.
-registerServiceWorker()
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
 )
+
+// Installable as an app, with an offline page. Production builds only; see
+// src/lib/serviceWorker.js and public/sw.js. After the render is scheduled, and it
+// never throws, so nothing about the worker can keep the app from starting.
+registerServiceWorker()

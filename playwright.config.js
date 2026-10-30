@@ -19,8 +19,18 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      // A project's own testIgnore replaces the one above, so the container folder is repeated.
+      // tests/pwa.spec.js has its own projects below: it needs a production build.
+      testIgnore: ['**/container/**', '**/pwa.spec.js'],
       use: { ...devices['Desktop Chrome'] },
     },
+    // tests/pwa.spec.js: the installable build in a real browser. The dev server below never
+    // registers the service worker, so pwa-build makes a production build first and the spec
+    // serves it with the production headers (tests/support/serve-dist.mjs). PWA_URL runs the
+    // same checks against a deployed site instead:
+    //   PWA_URL=https://magic.ci.computer npx playwright test --project=pwa
+    { name: 'pwa-build', testMatch: '**/pwa.build.js' },
+    { name: 'pwa', testMatch: '**/pwa.spec.js', dependencies: process.env.PWA_URL ? [] : ['pwa-build'] },
   ],
 
   webServer: {

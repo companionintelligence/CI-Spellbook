@@ -85,7 +85,8 @@ there either way; see [`error-reporting.md`](error-reporting.md).
 | `public/_headers` | The CSP, frame/referrer/permissions policy, HSTS, and cache lifetimes. The CSP allows no inline script or style and no third-party host, until a build is given `GA_MEASUREMENT_ID` (below). |
 | `404.html` | Built as a second Vite entry. Its presence in `dist/` turns off Pages' single-page-app fallback, so an unknown path is a real `404` instead of the home page. The app has no client-side routes, so nothing needs the fallback. |
 | `public/robots.txt`, `public/sitemap.xml` | Crawler files. The sitemap lists the one page. |
-| `public/site.webmanifest`, `public/og-image.png`, icons | Web manifest and the 1200x630 share image. |
+| `public/site.webmanifest`, `public/og-image.png`, icons | Web manifest (`display: standalone`, which is what lets browsers offer to install the site) and the 1200x630 share image. |
+| `public/sw.js`, `public/offline/` | The service worker, and the page it shows when a page load has no network: `/offline/` with its stylesheet and its own copy of the mark. `_headers` serves `/sw.js` with `Cache-Control: no-cache`. The page is a folder, not `offline.html`, because Pages redirects `*.html` to the clean URL and a worker cannot answer a page load with a redirected response. The worker caches nothing but those three files and answers nothing the app requests; see [the README](../../README.md#install-as-an-app-pwa), which also says how to roll it back (reverting the commit is not enough). |
 | `index.html` | Canonical, Open Graph and Twitter tags, JSON-LD, and a `<noscript>` fallback with the heading, intro and the four links, for readers and crawlers that do not run JavaScript. |
 
 `npm run build` checks all of these against [`src/lib/site.js`](../../src/lib/site.js)
@@ -162,6 +163,22 @@ curl -sI "https://magic.ci.computer$(curl -s https://magic.ci.computer/ | grep -
 
 If the favicon check returns `text/html`, the live site is still the stale build.
 
+The service worker and the offline page, which make the site installable:
+
+```bash
+curl -sI https://magic.ci.computer/sw.js | grep -i -E '^(HTTP|content-type|cache-control)'   # 200, a JavaScript type, no-cache
+curl -s -o /dev/null -w '%{http_code}\n' https://magic.ci.computer/offline/                   # 200
+curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' https://magic.ci.computer/offline    # 308 https://magic.ci.computer/offline/
+```
+
+`/sw.js` is the file no cache may hold on to: if the first command shows a `max-age` instead of `no-cache`, something in the zone is overriding `_headers`, and a changed worker will reach browsers late. Then the browser-level checks, which install the worker in Chrome, ask Chrome whether the site is installable, go offline and come back (they need a Playwright browser, `npx playwright install chromium`):
+
+```bash
+PWA_URL=https://magic.ci.computer npx playwright test --project=pwa
+```
+
+The kill-switch test in that file skips itself against a deployed site.
+
 ## Previewing the Pages behaviour locally
 
 Wrangler's Pages emulator applies `_headers` and the 404 rules to a build:
@@ -172,6 +189,8 @@ npx wrangler pages dev dist --port 8788
 ```
 
 Note that it writes `.wrangler/` into the working directory (git-ignored).
+
+`node tests/support/serve-dist.mjs` is the lighter option the PWA tests use: it serves `dist/` with the rules of `dist/_headers`, Pages' redirect of `*.html` to the clean URL, and the 404 page, and nothing else.
 
 ## The container image
 

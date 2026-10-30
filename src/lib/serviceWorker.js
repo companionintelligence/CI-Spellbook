@@ -21,22 +21,36 @@ export const SERVICE_WORKER_URL = '/sw.js';
  *     bundle from the app itself, which already works offline, and a worker there
  *     would sit between the WebView and its bundled files for no gain.
  *
+ * It never throws. The site is an ordinary web page without the worker, and this runs
+ * before the first render, so an exception here would blank the site for something
+ * optional. Browsers do throw in places: reading `navigator.serviceWorker` raises a
+ * SecurityError in a sandboxed frame, and some browsers do the same with site data blocked.
+ *
  * @param {{ production?: boolean, win?: Window & typeof globalThis }} [options] injected by tests
  */
 export function registerServiceWorker({ production = import.meta.env.PROD, win = window } = {}) {
   if (!production) return false;
-  if (!('serviceWorker' in win.navigator)) return false;
-  if (/** @type {any} */ (win).Capacitor?.isNativePlatform?.()) return false;
 
-  const register = () => {
-    win.navigator.serviceWorker.register(SERVICE_WORKER_URL, { scope: '/' }).catch((err) => {
-      // Not worth interrupting the reader or the crash-report budget for: the site is
-      // an ordinary web page without it.
-      console.warn('Spellbook: could not register the service worker', err);
-    });
-  };
+  // Not worth interrupting the reader or the crash-report budget for.
+  const skip = (/** @type {unknown} */ err) => console.warn('Spellbook: could not register the service worker', err);
 
-  if (win.document.readyState === 'complete') register();
-  else win.addEventListener('load', register, { once: true });
-  return true;
+  try {
+    if (!('serviceWorker' in win.navigator)) return false;
+    if (/** @type {any} */ (win).Capacitor?.isNativePlatform?.()) return false;
+
+    const register = () => {
+      try {
+        win.navigator.serviceWorker.register(SERVICE_WORKER_URL, { scope: '/' }).catch(skip);
+      } catch (err) {
+        skip(err);
+      }
+    };
+
+    if (win.document.readyState === 'complete') register();
+    else win.addEventListener('load', register, { once: true });
+    return true;
+  } catch (err) {
+    skip(err);
+    return false;
+  }
 }

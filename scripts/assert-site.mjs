@@ -217,6 +217,9 @@ function checkInstallable(root, html, problems) {
   else if (!precache.includes(offline)) problems.push(`public/sw.js: PRECACHE does not include ${offline}, so the offline page would not be there offline`);
   for (const url of precache) {
     if (!existsSync(p('public', publicFileFor(url)))) problems.push(`public/sw.js: precaches ${url}, which is not in public/`);
+    // A cached answer is never revalidated, so the worker may hold only files the app itself
+    // never requests. A shared one (the header brand mark was once in the list) goes stale.
+    if (!url.startsWith('/offline/')) problems.push(`public/sw.js: precaches ${url}; the worker may answer only for files under /offline/, which the app never requests`);
   }
   if (offline && existsSync(p('public', publicFileFor(offline)))) {
     const page = read(p('public', publicFileFor(offline)));
