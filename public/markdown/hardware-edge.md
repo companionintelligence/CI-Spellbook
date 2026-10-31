@@ -57,6 +57,7 @@
 | [ROS 2](https://github.com/ros2/ros2) | Robot Operating System 2 middleware and toolchain. | Cross-platform, Linux | Lyrical Luth (LTS, May 2026) is the recommended release. |
 | [Webots](https://github.com/cyberbotics/webots) | Robot simulator. | Cross-platform | Strong for robotics experimentation and teaching. |
 | [XLeRobot](https://github.com/Vector-Wangel/XLeRobot) | Practical low-cost dual-arm home robot project. | Hardware | Useful reference for ambitious maker robotics. |
+| [WebODM](https://github.com/WebODM/WebODM) | Web app that turns drone photos into maps, 3D models and point clouds. | Self-hosted | AGPL-3.0; ~4.2k stars; OpenDroneMap project. |
 
 ## Firmware, Mesh & Field Tools
 

@@ -30,6 +30,8 @@
 | [Marker](https://github.com/datalab-to/marker) | Converts PDFs, DOCX, PPTX, EPUB to Markdown/JSON using Surya OCR; GPU/CPU/MPS. | Cross-platform | Recommended general-purpose default; good accuracy/speed balance. |
 | [MinerU](https://github.com/opendatalab/MinerU) | Shanghai AI Lab PDF-to-Markdown engine; top accuracy on complex layouts and CJK. | Cross-platform | Best choice for academic papers, scanned docs, or CJK content. |
 | [Unstructured](https://github.com/Unstructured-IO/unstructured) | Broad-format ingestion pipeline supporting PDF, email, HTML, spreadsheets, and more. | Self-hosted, Web | Best for heterogeneous source ingestion; table extraction lags Docling/MinerU. |
+| [OpenDataLoader PDF](https://github.com/opendataloader-project/opendataloader-pdf) | PDF parser that produces AI-ready structured data. | Cross-platform | Apache-2.0; ~30k stars. |
+| [PixelRAG](https://github.com/StarTrail-org/PixelRAG) | Pixel-based retrieval over web pages, skipping text parsing. | Cross-platform | Apache-2.0; ~11k stars; README cites an arXiv preprint. |
 
 ## Chunking & Preprocessing
 

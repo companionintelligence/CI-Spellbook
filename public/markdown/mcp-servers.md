@@ -33,6 +33,11 @@
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation via Playwright: navigation, screenshots, form fill, and DOM inspection. | Cross-platform | Official Microsoft server; preferred over Puppeteer for headful browser tasks. |
 | [Sentry MCP](https://github.com/getsentry/toolkit) | Official Sentry server for querying issues, errors, stack traces, and releases via LLM-assisted debugging. | Cross-platform | Best for on-call and incident-investigation workflows; supports remote and stdio transports. |
 | [Stripe Agent Toolkit](https://github.com/stripe/ai) | Official Stripe library exposing payment and business tools to AI agents via MCP, LangChain, CrewAI, and the OpenAI SDK. | Cross-platform | MIT; 1.6k stars; remote server at mcp.stripe.com; supports Restricted API Keys for granular permission scoping. |
+| [mobile-mcp](https://github.com/mobile-next/mobile-mcp) | MCP server that lets agents drive iOS and Android simulators, emulators and devices. | iOS, Android | Apache-2.0; ~10k stars. |
+| [ios-simulator-mcp](https://github.com/joshuayoes/ios-simulator-mcp) | MCP server for interacting with the iOS Simulator from an agent. | macOS | MIT; ~2.2k stars. |
+| [android-remote-control-mcp](https://github.com/danielealbano/android-remote-control-mcp) | MCP server that runs on an Android phone and is tuned for low token use. | Android | ~770 stars; GitHub did not detect a license. |
+| [XcodeBuildMCP](https://github.com/getsentry/MobileBuildMCP) | MCP server and CLI that gives agents tools to build and test Xcode projects. | macOS | MIT; ~6.5k stars; upstream repo was renamed to MobileBuildMCP. |
+| [figwright](https://github.com/awdr74100/figwright) | Two-way Figma MCP server: designs to framework code, and code back to designs. | Cross-platform | MIT; ~1.2k stars. |
 
 ## Data, Search & Web
 

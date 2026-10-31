@@ -23,6 +23,8 @@
 | [Moonlight](https://github.com/moonlight-stream/moonlight-qt) | High-performance game streaming client. | Cross-platform | Good for remote desktop gaming and home streaming. |
 | [Playnite](https://github.com/JosefNemec/Playnite) | Game library manager with broad integration support. | Windows | Excellent if you want a unified games dashboard. |
 | [RPCS3](https://github.com/RPCS3/rpcs3) | PS3 emulator with a large compatibility list and active development. | Cross-platform | Best open PS3 emulation available. |
+| [windows95](https://github.com/felixrieseberg/windows95) | Windows 95 running inside a desktop app on macOS, Linux and Windows. | Cross-platform | ~24k stars; emulation-based. |
+| [OpenNOW](https://github.com/OpenCloudGaming/OpenNOW) | Third-party GeForce NOW client for streaming games. | Cross-platform | MIT; ~3.5k stars. |
 
 ## Open Games Worth Tracking
 
@@ -35,6 +37,12 @@
 | [Unciv](https://github.com/yairm210/Unciv) | Open Civilization-style strategy game. | Cross-platform, Android | Strong mobile-friendly 4X option. |
 | [Veloren](https://github.com/veloren/veloren) | Open world voxel RPG. | Cross-platform | Ambitious multiplayer worldbuilding project. |
 | [Wesnoth](https://github.com/wesnoth/wesnoth) | Classic turn-based fantasy strategy game. | Cross-platform | Long-lived open strategy staple. |
+| [2ship2harkinian](https://github.com/2ship2harkinian/2ship2harkinian) | Enhanced PC port of Ocarina of Time and Majora's Mask. | Cross-platform | CC0-1.0; ~2.4k stars; needs your own legal game ROM. |
+| [Shipwright](https://github.com/HarbourMasters/Shipwright) | PC port of Ocarina of Time built from decompiled game code. | Cross-platform | ~5.8k stars; GitHub did not detect a license; needs your own ROM. |
+| [Zelda64Recomp](https://github.com/Zelda64Recomp/Zelda64Recomp) | Static recompilation of Majora's Mask for PC; Ocarina of Time support is in progress. | Cross-platform | GPL-3.0; ~7.6k stars; needs your own ROM. |
+| [doldecomp/melee](https://github.com/doldecomp/melee) | Decompilation of Super Smash Bros. Melee into matching source code. | Cross-platform | ~2.4k stars; GitHub did not detect a license; matching needs your own disc. |
+| [OpenTTD](https://github.com/OpenTTD/OpenTTD) | Open-source reimplementation of Transport Tycoon Deluxe. | Cross-platform | ~8.4k stars; GitHub did not detect a license; check the repo. |
+| [OpenLoco](https://github.com/OpenLoco/OpenLoco) | Open-source reimplementation of Locomotion. | Cross-platform | MIT; ~2k stars. |
 
 ## AI Companions, Virtual Beings & VTubing
 
@@ -43,6 +51,7 @@
 | [Open-LLM-VTuber](https://github.com/Open-LLM-VTuber/Open-LLM-VTuber) | Voice-interactive AI companion with Live2D avatar; fully offline capable. | Cross-platform | Supports Ollama, Claude, OpenAI, and local models. |
 | [SillyTavern](https://github.com/SillyTavern/SillyTavern) | Feature-rich LLM frontend for roleplay, character cards, and lorebooks. | Self-hosted | 25k+ stars; connects to virtually every AI backend. |
 | [SnekStudio](https://github.com/ExpiredPopsicle/SnekStudio) | Free open-source VTuber application built with Godot. | Cross-platform | Good option for Linux VTubers without proprietary deps. |
+| [AI Avatar System](https://github.com/PunithVT/ai-avatar-system) | AI avatar platform: clone a voice and talk with a generated digital human. | Cross-platform | MIT; ~560 stars; last push Sept 2026. |
 
 ## Social & Media Platforms
 
@@ -66,3 +75,4 @@
 | [Godot docs](https://docs.godotengine.org/en/stable/) | Official Godot engine documentation for 4.x. | Web | Comprehensive; updated for each stable release. |
 | [Lutris wiki](https://github.com/lutris/lutris/wiki) | Community wiki for configuring runners, Wine, and game sources. | Web | Useful reference for tricky game installs on Linux. |
 | [SillyTavern docs](https://docs.sillytavern.app/) | Official SillyTavern documentation for setup and extension authoring. | Web | Covers all backends, character cards, and Extras. |
+| [Game Networking Demystified](https://ruoyusun.com/2019/03/28/game-networking-1.html) | Introduction to multiplayer game networking: latency, state sync and prediction. | Web | 2019 article; the concepts still apply. |

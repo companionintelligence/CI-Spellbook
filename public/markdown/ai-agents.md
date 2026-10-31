@@ -25,6 +25,7 @@
 | [TEN Agent](https://github.com/TEN-framework/ten-framework) | Framework for conversational voice agents. | Self-hosted | Useful when voice is the main interface. |
 | [UI-TARS](https://github.com/bytedance/UI-TARS-desktop) | Multimodal agent stack for UI understanding and agent infrastructure. | Cross-platform | Good for computer-use and UI-driven automation. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language analytics and BI assistant for databases. | Web, Self-hosted | Strong when analytics is the user-facing agent. |
+| [MetaClaw](https://github.com/aiming-lab/MetaClaw) | Agent that learns and adapts from ongoing conversations. | Cross-platform | MIT; ~3.5k stars; last push June 2026. |
 
 ## Agent Frameworks & Orchestration
 
@@ -36,6 +37,7 @@
 | [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | Production-ready multi-agent SDK with handoffs, guardrails, and built-in tracing. | Cross-platform | Supersedes OpenAI Swarm; v0.17+ adds sandbox execution and subagent primitives. |
 | [PydanticAI](https://github.com/pydantic/pydantic-ai) | Type-safe Python agent framework built on Pydantic with concise, validated tool calls. | Cross-platform | Hit v1 in late 2025; ~16k stars; less boilerplate than LangGraph for simple flows. |
 | [smolagents](https://github.com/huggingface/smolagents) | Minimal code-first agent library from Hugging Face; agents express actions as Python code. | Cross-platform | 26k+ stars; ~1k-line core; model-agnostic; excellent for teaching and rapid prototyping. |
+| [Shepherd](https://github.com/shepherd-agents/shepherd) | Runtime layer that records agent execution as a reversible, Git-like trace. | Cross-platform | MIT; ~2.5k stars; last push Sept 2026. |
 
 ## All-in-One AI Workspaces
 
@@ -45,6 +47,8 @@
 | [ClaraVerse](https://github.com/claraverse-space/ClaraVerse) | Privacy-focused ecosystem combining chat, workflow automation, and media generation. | Cross-platform, Self-hosted | Ambitious all-in-one open stack. |
 | [Khoj AI](https://github.com/khoj-ai/khoj) | Personal AI workspace with agents, automation, web search, and local or hosted models. | Web, Self-hosted | Strong fit for knowledge-heavy workflows. |
 | [LobeHub](https://github.com/lobehub/lobehub) | Agent-centric workspace for building and collaborating with AI teammates. | Web, Self-hosted | Good for team-oriented agent experiences. |
+| [Rowboat](https://github.com/rowboatlabs/rowboat) | Open-source AI coworker with memory and team collaboration features. | Cross-platform | Apache-2.0; ~18k stars. |
+| [Multica](https://github.com/multica-ai/multica) | Shared task board where people and coding agents such as Claude Code and Codex take issues. | Self-hosted | ~55k stars; GitHub did not detect a license, so read LICENSE first. |
 
 ## RAG, Knowledge & Research
 
@@ -62,6 +66,8 @@
 | [RAGFlow](https://github.com/infiniflow/ragflow) | Full RAG engine that pairs retrieval with agent workflows. | Self-hosted | Strong when you need a complete context layer. |
 | [STORM](https://github.com/stanford-oval/storm) | Research system for topic exploration and report synthesis with citations. | Cross-platform | Good for long-form knowledge curation. |
 | [Verba](https://github.com/weaviate/Verba) | Weaviate-powered retrieval chatbot framework. | Self-hosted | Archived by its owner (read-only). Good for teams already using Weaviate. |
+| [OpenResearch](https://github.com/alphaXiv/OpenResearch) | Runs coding agents as research agents for reading papers and running experiments. | CLI | MIT; ~7.7k stars; from the alphaXiv team. |
+| [LEANN](https://github.com/StarTrail-org/LEANN) | Local RAG over your own files with a compact index. | Cross-platform | MIT; ~14k stars; README cites an MLsys 2026 best paper. |
 
 ## Agent Memory & Context
 
@@ -71,6 +77,11 @@
 | [mem0](https://github.com/mem0ai/mem0) | Persistent memory layer for agents and assistants with user-level recall. | Self-hosted | Strong fit for user-specific memory across sessions. |
 | [omi](https://github.com/BasedHardware/omi) | Wearable capture device for continuous speech transcription and passive context. | Mobile | Best for passive lifelog-style context capture. |
 | [screenpipe](https://github.com/screenpipe/screenpipe) | Local activity capture layer for search, recall, and automation triggers. | macOS, Windows | A strong base for personal context systems. |
+| [Hindsight](https://github.com/vectorize-io/hindsight) | Memory layer for agents that stores and learns from past interactions. | Cross-platform | MIT; ~57k stars. |
+| [claude-mem](https://github.com/thedotmack/claude-mem) | Captures what a coding agent does and carries that context into later sessions. | CLI | Apache-2.0; ~108k stars; built around Claude Code. |
+| [deja-vu](https://github.com/vshulcz/deja-vu) | Shared memory built from session history across Claude Code, Codex, Cursor and others. | CLI | MIT; ~1.3k stars. |
+| [gbrain](https://github.com/garrytan/gbrain) | Agent memory setup for OpenClaw and Hermes agents, with opinionated defaults. | Cross-platform | MIT; ~31k stars. |
+| [iai-personal-memory-engine](https://github.com/CodeAbra/iai-personal-memory-engine) | Personal memory engine that stores and recalls details from your conversations for an AI. | Cross-platform | MIT; ~900 stars. |
 
 ## Model, Eval & Prompt Infrastructure
 
@@ -83,6 +94,7 @@
 | [Opik](https://github.com/comet-ml/opik) | Tracing, evaluation, and monitoring for LLM and agent workflows. | Self-hosted, Web | Strong observability layer for production AI. |
 | [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) | Training framework for large-scale model development. | Cross-platform | A solid foundation for serious model work. |
 | [Second Me](https://github.com/mindverse/Second-Me) | Platform for training a personalized AI identity and interaction layer. | Self-hosted, Web | Useful for persistent persona experiments. |
+| [OmniRoute](https://github.com/cheaper-inference/OmniRoute) | Open-source AI gateway that serves many model providers behind one endpoint. | Self-hosted | MIT; ~83k stars; provider counts are the project's own claims. |
 
 ## AI Utilities & Desktop Context
 
@@ -90,6 +102,7 @@
 | --- | --- | --- | --- |
 | [Everywhere](https://github.com/Sylinko/Everywhere) | Context-aware desktop assistant with MCP-style tool integrations. | Windows | Good for desktop-level context workflows. |
 | [Netron](https://github.com/lutzroeder/netron) | Visualizer for neural network models and artifacts. | Cross-platform | Useful for inspecting model internals. |
+| [phone-harness](https://github.com/ShawnPana/phone-harness) | Lets an AI agent see a phone screen and send taps and typing, via iPhone Mirroring or adb. | iOS, Android | MIT; ~4k stars; drives a real device, so keep a person in the loop. |
 
 ## Notable Models
 

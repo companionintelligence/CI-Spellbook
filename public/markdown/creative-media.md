@@ -23,6 +23,7 @@
 | [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo) | Tencent's open-source video generation model; v1.5 is 8.3B params, Apache 2.0. | Self-hosted | Strong natural motion and physics; 75-second renders on RTX 4090. |
 | [LTX-Video](https://github.com/Lightricks/LTX-Video) | Lightricks' open-source video model; v2.3 supports native 4K/50fps with audio. | Self-hosted | Fastest open model for iteration; 22B params, Apache 2.0 licensed. |
 | [Wan2.2](https://github.com/Wan-Video/Wan2.2) | Alibaba's open MoE video model for text-to-video and image-to-video. | Self-hosted | Leads photorealism benchmarks; lightweight 1.3B variant runs on 8 GB VRAM. |
+| [OpenMontage](https://github.com/calesthio/OpenMontage) | Agentic video production system with a library of production pipelines. | Cross-platform | AGPL-3.0; ~74k stars; pipeline count is the project's own claim. |
 
 ## AI 3D Generation
 
@@ -31,6 +32,7 @@
 | [Hunyuan3D](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) | Tencent's two-stage 3D generation model: shape + PBR texture synthesis. | Self-hosted | v2.1 runs shape generation on 6 GB VRAM; best consumer-friendly option. |
 | [TRELLIS](https://github.com/microsoft/TRELLIS) | Microsoft's structured 3D latent model (CVPR 2025); text/image to mesh/Gaussian. | Self-hosted | Production-grade PBR output; TRELLIS.2-4B is current flagship. |
 | [TripoSR](https://github.com/VAST-AI-Research/TripoSR) | Fast single-image to 3D reconstruction model; sub-second inference. | Self-hosted | MIT licensed; 6–8 GB VRAM; 117k+ monthly HuggingFace downloads. |
+| [blender-mcp](https://github.com/ahujasid/mcp-for-blender) | Community plugin that lets an LLM control Blender through MCP. | Cross-platform | MIT; ~33k stars; repo was renamed to mcp-for-blender. |
 
 ## Graphics, Design & Illustration
 
@@ -42,6 +44,7 @@
 | [Penpot](https://github.com/penpot/penpot) | Open design and prototyping platform. | Web | Strong self-hostable collaborative design alternative. |
 | [Pencil2D](https://github.com/pencil2d/pencil) | Hand-drawn 2D animation tool. | Cross-platform | Good for lightweight traditional animation workflows. |
 | [PixiEditor](https://github.com/PixiEditor/PixiEditor) | Universal editor for pixel art and 2D creation. | Cross-platform | Good for sprite and pixel-focused work. |
+| [Poly Haven](https://polyhaven.com/) | Library of CC0 HDRIs, textures and 3D models. | Web | CC0 assets; free to use, including commercially. |
 
 ## CAD, Whiteboards & Diagrams
 
@@ -54,6 +57,7 @@
 | [FreeCAD](https://github.com/FreeCAD/FreeCAD) | Cross-platform parametric 3D modeler. | Cross-platform | Open baseline for mechanical design. |
 | [OpenSCAD](https://github.com/openscad/openscad) | Script-driven solid modeling tool. | Cross-platform | Great for code-native fabrication work. |
 | [QCAD](https://github.com/qcad/qcad) | 2D CAD application with DXF support. | Cross-platform | Good for drafting workflows. |
+| [Pascal Editor](https://github.com/pascalorg/editor) | Open-source 3D architectural editor with a local CLI and MCP tools. | Cross-platform | MIT; ~25k stars. |
 
 ## Audio, Video & Media Processing
 
@@ -68,6 +72,9 @@
 | [OpenCut](https://github.com/OpenCut-app/OpenCut) | Open-source browser-native short-form video editor. | Web | Good fit for browser-native video work. |
 | [OpenUtau](https://github.com/openutau/OpenUtau) | Open singing synthesis platform. | Cross-platform | Useful for vocal synthesis workflows. |
 | [Shotcut](https://github.com/mltframework/shotcut) | Cross-platform video editor based on MLT framework. | Cross-platform | Strong established editor. |
+| [AudioMass](https://github.com/pkalogiros/AudioMass) | Free web-based audio and waveform editor. | Web | ~3k stars; GitHub did not detect a license. |
+| [rescript](https://github.com/wassgha/rescript) | Browser-based video and audio editor that edits by changing the transcript. | Web | ~1k stars; GitHub did not detect a license. |
+| [Concat](https://github.com/jub0t/Concat) | Local-first, open-source video editor positioned as a CapCut replacement. | Cross-platform | AGPL-3.0; ~13k stars. |
 
 ## Image Processing & Cleanup
 
@@ -79,6 +86,7 @@
 | [RapidRAW](https://github.com/CyberTimon/RapidRAW) | GPU-accelerated non-destructive RAW editor. | Cross-platform | Worth tracking for performance-focused editing. |
 | [RawTherapee](https://github.com/RawTherapee/RawTherapee) | Cross-platform raw photo processing application. | Cross-platform | Great alternative raw editor. |
 | [Upscayl](https://github.com/upscayl/upscayl) | Open-source AI image upscaler. | Cross-platform | Easy win for image restoration and enlargement. |
+| [Tesseract.js](https://github.com/naptha/tesseract.js) | Pure JavaScript OCR for 62 languages, running in the browser or Node. | Web | Apache-2.0; ~39k stars. |
 
 ## Notable Models
 
@@ -105,3 +113,4 @@
 | [Udemy — Generative AI with SD & ComfyUI](https://www.udemy.com/course/generative-ai-with-stable-diffusion-and-comfyui/) | Structured course covering SD, ComfyUI, and FLUX workflows. | Web | Good paid option for a guided curriculum. |
 | [ComfyUI YouTube Series](https://www.youtube.com/playlist?list=PL-pohOSaL8P9kLZP8tQ1K1QWdZEgwiBM0) | Video tutorial series from installation to advanced ComfyUI techniques. | Web | Useful for visual learners new to node-based generation. |
 | [Krita AI Diffusion Docs](https://github.com/Acly/krita-ai-diffusion/wiki) | Official wiki for the krita-ai-diffusion plugin covering setup and features. | Web | Essential if using AI generation inside Krita canvas. |
+| [WebGL Fundamentals](https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html) | WebGL lessons; this link is the WebGL state diagram reference. | Web | Free lessons from the WebGLFundamentals site. |

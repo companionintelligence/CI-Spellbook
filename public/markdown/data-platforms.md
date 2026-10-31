@@ -35,6 +35,7 @@
 | [libSQL](https://github.com/tursodatabase/libsql) | Open-contribution SQLite fork with native vector search and async support. | Cross-platform | Foundation of Turso's hosted offering; embedded-friendly. |
 | [Liam ERD](https://github.com/liam-hq/liam) | Generates readable ER diagrams from existing databases. | Web, Self-hosted | Best for visualizing live schema state. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language BI over databases with SQL and chart generation. | Web, Self-hosted | Useful when analytics needs a user-friendly surface. |
+| [Tile38](https://github.com/tidwall/tile38) | Real-time geospatial database with geofencing and spatial queries. | Cross-platform | MIT; ~9.7k stars. |
 
 ## Local-First Sync & CRDT Engines
 
@@ -60,6 +61,7 @@
 | [Restic](https://github.com/restic/restic) | Fast encrypted backup program. | Cross-platform | Excellent default for server and workstation backup. |
 | [rustic](https://github.com/rustic-rs/rustic) | Rust-powered backup system inspired by restic. | Cross-platform | Good when you want a newer Rust implementation. |
 | [Vorta](https://github.com/borgbase/vorta) | Desktop backup client for Borg. | Cross-platform | Simplifies Borg for GUI-oriented workflows. |
+| [zerobyte](https://github.com/nicotsx/zerobyte) | Backup automation for self-hosters, built on restic. | Self-hosted | AGPL-3.0; ~7k stars. |
 
 ## Storage Platforms
 
@@ -74,6 +76,7 @@
 | [ownCloud](https://github.com/owncloud/core) | Mature self-hosted file synchronization platform. | Cross-platform, Mobile, Self-hosted | Still relevant for classic private cloud deployments. |
 | [SeaweedFS](https://github.com/seaweedfs/seaweedfs) | High-performance distributed object store with S3-compatible API. | Self-hosted | Apache 2.0; actively maintained; good MinIO alternative at scale. |
 | [Seafile](https://github.com/haiwen/seafile) | Sync and sharing platform with strong file organization features. | Cross-platform, Mobile, Self-hosted | Great for fast sync and large libraries. |
+| [RustFS](https://github.com/rustfs/rustfs) | S3-compatible object storage written in Rust. | Self-hosted | Apache-2.0; ~36k stars. |
 
 ## Sync & Transfer
 
@@ -85,6 +88,7 @@
 | [Syncthing](https://github.com/syncthing/syncthing) | Continuous peer-to-peer file sync. | Cross-platform | Excellent for cloudless sync between devices. |
 | [Syncthing Tray](https://github.com/Martchus/syncthingtray) | Tray integration for Syncthing. | Windows, Linux | Handy for desktop-heavy workflows. |
 | [syncthing-macos](https://github.com/syncthing/syncthing-macos) | Native macOS application bundle for Syncthing. | macOS | Easier setup on Apple hardware. |
+| [WebTorrent](https://github.com/webtorrent/webtorrent) | Streaming torrent client for the browser and Node, using WebRTC peers. | Cross-platform | MIT; ~31k stars. |
 
 ## Tutorials & Learning
 
