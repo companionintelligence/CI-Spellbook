@@ -24,12 +24,25 @@ const config: CapacitorConfig = {
     ...(process.env.CAP_SERVER_URL ? { url: process.env.CAP_SERVER_URL, cleartext: true } : {}),
   },
   android: {
-    // targetSdk 36 lays the window out edge-to-edge. The page does not opt in to that
-    // (no env(safe-area-inset-*) padding), so have Capacitor inset the WebView from the
-    // system bars. Not 'force': only act when the OS enforces edge-to-edge (Android 15+).
-    adjustMarginsForEdgeToEdge: 'auto',
+    // Capacitor's default is false, which turns the WebView's built-in zoom off, so
+    // pinch-zoom does nothing. The site lets people zoom (WCAG 1.4.4, Resize Text), so
+    // the shell must not take that away.
+    zoomEnabled: true,
+    // Capacitor's default is 60. The built CSS is Tailwind CSS 4, which documents Chrome 111
+    // as its floor. Below this Capacitor logs an error, but with no server.errorPath (an error
+    // page inside webDir) it still loads the app, so this records the floor, it does not
+    // enforce it.
+    minWebViewVersion: 111,
   },
   plugins: {
+    // targetSdk 36 lays the window out edge-to-edge (Android 15+). Capacitor 8's SystemBars
+    // plugin insets the WebView from the system bars by default (`insetsHandling`), which is
+    // what this page needs: it does not set viewport-fit=cover or pad for env(safe-area-inset-*).
+    // Capacitor 8 removed `android.adjustMarginsForEdgeToEdge`, which did this in Capacitor 7.
+    SystemBars: {
+      // Capacitor DARK = light glyphs, for a dark surface.
+      style: 'DARK',
+    },
     SplashScreen: {
       launchAutoHide: true,
       launchShowDuration: 600,
@@ -37,6 +50,9 @@ const config: CapacitorConfig = {
       showSpinner: false,
     },
     StatusBar: {
+      // Android 14 and older only. From Android 15 the system draws edge-to-edge, and
+      // @capacitor/status-bar 8 ignores `backgroundColor` and `overlaysWebView` there; the
+      // strip behind the bar shows the window background (res/values/styles.xml) instead.
       // Capacitor DARK = light glyphs, for a dark surface.
       style: 'DARK',
       backgroundColor: '#071533',

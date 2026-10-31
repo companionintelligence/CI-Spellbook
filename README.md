@@ -136,7 +136,7 @@ The worker is deliberately small. It caches three files once, at install, all un
 
 `apps/ios` and `apps/android` are [Capacitor](https://capacitorjs.com) shells (app id `com.companionintelligence.spellbook`, name "Companion Spellbook") that put the Vite build, `dist/`, in a native WebView. The shelves are static markdown inside the bundle and are fetched from the app's own origin, so the apps work offline and need no server. Outbound links leave the app for the system browser.
 
-Each shell is its own npm project and is **not** part of the root install, so Capacitor stays out of the web bundle, the Docker image's `deno install --frozen` and the lockfile check. The layout follows [Companion-Memory](https://github.com/companionintelligence/Companion-Memory)'s `frontend/apps/ios` and `frontend/apps/android`, on Capacitor 7 like that app.
+Each shell is its own npm project and is **not** part of the root install, so Capacitor stays out of the web bundle, the Docker image's `deno install --frozen` and the lockfile check. The layout follows [Companion Planning](https://github.com/companionintelligence/CI-Planning)'s `mobile/ios` and `mobile/android` (Capacitor 8.6, Swift Package Manager on iOS). Companion-Memory's shells are still on Capacitor 7.
 
 ```bash
 npm run build                                        # web bundle -> dist/ (repo root)
@@ -147,12 +147,13 @@ cd android && ./gradlew assembleDebug                #   or build the debug APK 
 cd apps/ios && npm ci && npx cap sync ios            # then `npx cap open ios`
 ```
 
-`npm run build` inside a shell runs the web build and then the sync. Needs: JDK 21 and Android SDK platform 36 for Android; Xcode and CocoaPods for iOS (built here with Xcode 27.0). CocoaPods crashes unless the shell has a UTF-8 locale (`export LANG=en_US.UTF-8`). Set `CAP_SERVER_URL` before a sync to load a live dev server instead of the bundle; never for a build you ship.
+`npm run build` inside a shell runs the web build and then the sync. Needs Node 22 or later (Capacitor 8's CLI), JDK 21 and Android SDK platform 36 for Android (Android Studio Otter 2025.2.1 or later if you open it there), and Xcode 26 or later for iOS (built here with Xcode 27.0). The iOS project uses Swift Package Manager, not CocoaPods: `cap sync` rewrites `apps/ios/ios/App/CapApp-SPM/Package.swift`, and Xcode fetches `capacitor-swift-pm` from GitHub on the first build. Set `CAP_SERVER_URL` before a sync to load a live dev server instead of the bundle; never for a build you ship.
 
 What differs from Capacitor's defaults, and why:
 
-- **iOS** deployment target 15.0 (Xcode 27's SDK refuses Capacitor 7's default 14.0), and a `SceneDelegate` with a `UIApplicationSceneManifest` (the iOS 27 SDK refused to launch the default AppDelegate-only app: "UIScene life cycle is required"). Companion-Memory made the same two changes.
-- **Android** compileSdk and targetSdk 36, AGP 8.10.0, minSdk 24, as in Companion-Memory. A dark window background so the strips behind the system bars are not white.
+- **Pinch-zoom** is on in both shells (`ios.zoomEnabled` and `android.zoomEnabled`). Capacitor's default is off, which would take away the zoom the site allows (WCAG 1.4.4).
+- **iOS** deployment target 16.4, iPhone only (`TARGETED_DEVICE_FAMILY` 1) until an iPad layout has been checked, a dark interface style, and `ITSAppUsesNonExemptEncryption` false. Capacitor 8's own default target is 15.0; 16.4 is the Safari that Tailwind CSS 4 documents as its floor, and it is above the 16.0 that App Intents need. The `SceneDelegate` and the `UIApplicationSceneManifest` are Capacitor 8.5's: the UIScene life cycle is required by the iOS 26 and later SDKs.
+- **Android** compileSdk and targetSdk 36, AGP 8.13.0 on Gradle 8.14.3, minSdk 24, `minWebViewVersion` 111 (Tailwind CSS 4's Chrome floor; Capacitor's default is 60; below it Capacitor logs an error but still loads the page, since no `server.errorPath` is set) and `allowBackup` false. A dark window background so the strips behind the system bars are not white.
 - Plugins: `@capacitor/app`, `@capacitor/splash-screen` and `@capacitor/status-bar`, configured in `capacitor.config.ts`. The web app does not call them.
 - Icons and splash are generated from `apps/assets/`, which is built from `@companionintelligence/assets`' `logo.app-icon` (the company mark) on the app's navy. They are placeholders, not Spellbook-specific artwork. To regenerate: `npx @capacitor/assets@3 generate --ios --assetPath ../assets --iconBackgroundColor '#071533' --iconBackgroundColorDark '#071533' --splashBackgroundColor '#071533' --splashBackgroundColorDark '#071533'` from `apps/ios` (use `--android` in `apps/android`).
 
