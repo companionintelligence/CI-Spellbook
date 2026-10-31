@@ -12,7 +12,6 @@
 | [openmediavault](https://github.com/openmediavault/openmediavault) | NAS-oriented operating system and management layer. | Linux | Good for storage-heavy home setups. |
 | [Puter](https://github.com/HeyPuter/puter) | Web-based personal cloud environment and internet OS concept. | Web | Interesting if you want app-like workflows in the browser. |
 | [SerenityOS](https://github.com/SerenityOS/serenity) | Independent hobbyist operating system with its own userland. | Linux | Best for OS exploration and systems curiosity. |
-| [umbrelOS](https://github.com/getumbrel/umbrel) | Home server OS for running apps locally. | Linux | Smooth entry point for self-hosted services. |
 | [YunoHost](https://github.com/YunoHost/yunohost) | Friendly server administration layer for self-hosting. | Linux | Good if you want easier service management. |
 
 ## Desktop Utilities & Launchers

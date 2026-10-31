@@ -98,7 +98,6 @@
 
 | Tools | Description | Notes |
 |-------|-------------|-------|
-| **Umbrel**<br>📜 PolyForm Noncommercial 1.0.0<br>🔗 [Docs](https://community.umbrel.com/) / [Download](https://umbrel.com/) | Easy home server/cloud OS, Bitcoin focus initially | Beginners, Home users, Bitcoin enthusiasts; Appliance-like install |
 | **YunoHost**<br>📜 GNU AGPLv3<br>🔗 [Docs](https://yunohost.org/docs) / [Download](https://yunohost.org/install) | Democratize self-hosting for non-experts | Non-experts, Small orgs; Guided image install |
 | **CasaOS**<br>📜 Apache 2.0<br>🔗 [Docs](https://wiki.casaos.io) / [Download](https://get.casaos.io) | Simple personal cloud, Docker ecosystem | Beginners, Home users; One-liner script install |
 | **Dokku**<br>📜 MIT<br>🔗 [Docs](https://dokku.com/docs/) / [Download](https://dokku.com/docs/getting-started/installation/) | Lightweight PaaS, Heroku alternative | Developers; CLI-based setup |
