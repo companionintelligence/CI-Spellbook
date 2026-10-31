@@ -6,8 +6,7 @@ node_modules/
 icons/
 
 # Generated iOS native project artifacts. The ios/ tree is committed; these are rebuilt
-# by `npm run build` (cap sync + pod install).
-ios/App/Pods/
+# by `npm run build` (cap sync, which also rewrites ios/App/CapApp-SPM/Package.swift).
 ios/App/build/
 ios/App/DerivedData/
 ios/DerivedData/

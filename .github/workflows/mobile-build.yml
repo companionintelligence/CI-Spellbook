@@ -79,8 +79,9 @@ jobs:
           packages: ''
 
       # platforms;android-36 matches compileSdkVersion in apps/android/android/variables.gradle.
-      # build-tools;35.0.0 is the version AGP 8.10 picks by default (the classpath line in
-      # apps/android/android/build.gradle); keep the pair in step if either is raised.
+      # build-tools;35.0.0 is the version AGP 8.13 picks by default (the classpath line in
+      # apps/android/android/build.gradle; checked with android.buildToolsVersion); keep the
+      # pair in step if either is raised.
       - name: Install SDK components
         run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;35.0.0"
 
@@ -97,6 +98,16 @@ jobs:
         working-directory: apps/android/android
         run: ./gradlew assembleDebug --no-daemon
 
+      # An APK without the web bundle inside is a failed build that would otherwise upload
+      # green: the app would open on a blank WebView.
+      - name: Verify the APK carries the web bundle
+        run: |
+          APK=apps/android/android/app/build/outputs/apk/debug/app-debug.apk
+          test -f "$APK" || { echo "::error::No debug APK produced"; exit 1; }
+          unzip -l "$APK" | grep -q 'assets/public/index.html' \
+            || { echo "::error::APK has no assets/public/index.html - the web bundle was not synced"; exit 1; }
+          ls -lh "$APK"
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
@@ -107,12 +118,11 @@ jobs:
 
   ios:
     name: iOS (Simulator .app)
-    runs-on: macos-latest
+    # Capacitor 8 needs Xcode 26 or later. Pinned to macos-26 rather than macos-latest so the
+    # runner's Xcode cannot move under the build (Companion-Memory's mobile-release.yml: macos-15
+    # selected Xcode 16.4, built against the iOS 18.5 SDK, and App Store Connect rejected it).
+    runs-on: macos-26
     timeout-minutes: 45
-    env:
-      # CocoaPods (run by `cap sync ios`) crashes on a non-UTF-8 locale.
-      LANG: en_US.UTF-8
-      LC_ALL: en_US.UTF-8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -138,7 +148,9 @@ jobs:
         working-directory: apps/ios
         run: npm ci
 
-      # `cap sync ios` also runs `pod install`; CocoaPods ships on GitHub's macOS runners.
+      # The iOS project uses Swift Package Manager (Capacitor 8's default), so there is no
+      # `pod install`: `cap sync ios` rewrites ios/App/CapApp-SPM/Package.swift, and Xcode
+      # fetches capacitor-swift-pm from GitHub during the build below.
       - name: Capacitor sync (iOS)
         working-directory: apps/ios
         run: npx cap sync ios
@@ -151,7 +163,7 @@ jobs:
         working-directory: apps/ios/ios/App
         run: |
           xcodebuild \
-            -workspace App.xcworkspace \
+            -project App.xcodeproj \
             -scheme App \
             -configuration Debug \
             -sdk iphonesimulator \
@@ -162,10 +174,14 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             build
 
+      # Same guard as the Android job: an .app without the web bundle opens on a blank screen.
       - name: Package .app
         working-directory: apps/ios/ios/App
         run: |
           APP=$(find build/Build/Products -name 'App.app' -type d | head -1)
+          test -d "$APP" || { echo "::error::No iOS Simulator .app produced - check the build step log"; exit 1; }
+          test -f "$APP/public/index.html" \
+            || { echo "::error::App.app has no public/index.html - the web bundle was not synced"; exit 1; }
           ditto -c -k --sequesterRsrc --keepParent "$APP" "$GITHUB_WORKSPACE/spellbook-ios-simulator.app.zip"
 
       - name: Upload iOS app

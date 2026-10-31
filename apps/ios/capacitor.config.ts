@@ -27,6 +27,10 @@ const config: CapacitorConfig = {
     // env(safe-area-inset-*) padding), so let UIKit inset the scroll view by the safe area
     // instead of drawing the header under the notch or the home indicator.
     contentInset: 'always',
+    // Capacitor's default is false, and with it the web view's scroll view refuses to zoom,
+    // so pinch-zoom does nothing. The site lets people zoom (WCAG 1.4.4, Resize Text), so
+    // the shell must not take that away.
+    zoomEnabled: true,
   },
   plugins: {
     SplashScreen: {

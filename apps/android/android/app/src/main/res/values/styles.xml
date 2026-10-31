@@ -12,7 +12,7 @@
     <!-- The theme the app runs in after the splash. Dark-only: the parent is the dark AppCompat
          theme (not DayNight), so the system bars draw light glyphs whatever the phone's setting.
          From Android 15 (targetSdk 35+) the window is edge-to-edge and the system bars are
-         transparent; Capacitor insets the WebView (adjustMarginsForEdgeToEdge) and the strips
+         transparent; Capacitor insets the WebView (the SystemBars plugin) and the strips
          behind the bars show this window background. Left at the default it is near-white, which
          puts white status-bar glyphs on white. -->
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
