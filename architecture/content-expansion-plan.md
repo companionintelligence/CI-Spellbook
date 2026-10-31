@@ -54,7 +54,7 @@
 | `Evaluation, Observability & Tracing.md` | Critical for agent ops; not covered today | `langfuse`, `helicone`, `arize-phoenix`, `openllmetry`, `inspect-ai` |
 | `Embeddings & Vector Pipelines.md` | Adjacent to Databases but distinct concern | `txtai`, `instructor`, `voyage`, `chunkr` |
 | `Personal Knowledge & Notes.md` | Aligns with CI-Server (Digital Memory) audience | Obsidian/Logseq/Anytype/Reor are scattered — consolidate |
-| `Self-Hosting & Homelab.md` | Bridges Home Automation + Networking + Local AI | `Yunohost`, `CasaOS`, `Coolify` |
+| `Self-Hosting & Homelab.md` | Bridges Home Automation + Networking + Local AI | `Yunohost`, `CasaOS`, `another self-hosted platform`, `Coolify` |
 | `Privacy & Identity.md` | Aligns with CI ethos (private appliance) | `Authelia`, `Pocket ID`, `Vaultwarden`, `Bitwarden` |
 | `Calendars, Email & Contacts (Self-Hosted).md` | Common ask for personal-data appliances | `SOGo`, `Radicale`, `Stalwart`, `Snappymail` |
 
