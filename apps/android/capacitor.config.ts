@@ -29,7 +29,9 @@ const config: CapacitorConfig = {
     // the shell must not take that away.
     zoomEnabled: true,
     // Capacitor's default is 60. The built CSS is Tailwind CSS 4, which documents Chrome 111
-    // as its floor, so do not start on an older WebView than that.
+    // as its floor. Below this Capacitor logs an error, but with no server.errorPath (an error
+    // page inside webDir) it still loads the app, so this records the floor, it does not
+    // enforce it.
     minWebViewVersion: 111,
   },
   plugins: {
