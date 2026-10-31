@@ -40,6 +40,12 @@ npm run --silent build
 gh workflow run ci.yml --repo companionintelligence/CI-Spellbook --ref main
 ```
 
+**Mobile Build** — `mobile-build.yml`
+
+```bash
+gh workflow run mobile-build.yml --repo companionintelligence/CI-Spellbook --ref main
+```
+
 ### Cut a release
 
 **Publish container** — `docker-publish.yml`
