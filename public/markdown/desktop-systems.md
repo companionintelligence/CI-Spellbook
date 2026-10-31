@@ -2,23 +2,6 @@
 
 > This section now covers the day-to-day desktop stack: operating systems, launchers, window managers, system utilities, and machine-level tooling.
 
-## Operating Systems & Desktop Platforms
-
-| Tool | Description | Platforms | Notes |
-| --- | --- | --- | --- |
-| [Bazzite](https://github.com/ublue-os/bazzite) | Gaming-focused immutable Fedora spin with Steam and gaming mode pre-configured. | Linux | Best low-friction gaming desktop on immutable Linux. |
-| [COSMIC](https://github.com/pop-os/cosmic-epoch) | Rust-based desktop environment from System76; stable since Dec 2025 (v1.0+). | Linux | Rolling release; Epoch 2 roadmap underway in 2026. |
-| [Omarchy](https://github.com/omacom/omarchy) | Opinionated Linux distribution focused on a polished modern setup. | Linux | Worth tracking if you want a curated Linux environment. |
-| [openmediavault](https://github.com/openmediavault/openmediavault) | NAS-oriented operating system and management layer. | Linux | Good for storage-heavy home setups. |
-| [Puter](https://github.com/HeyPuter/puter) | Web-based personal cloud environment and internet OS concept. | Web | Interesting if you want app-like workflows in the browser. |
-| [SerenityOS](https://github.com/SerenityOS/serenity) | Independent hobbyist operating system with its own userland. | Linux | Best for OS exploration and systems curiosity. |
-| [umbrelOS](https://github.com/getumbrel/umbrel) | Home server OS for running apps locally. | Linux | Smooth entry point for self-hosted services. |
-| [YunoHost](https://github.com/YunoHost/yunohost) | Friendly server administration layer for self-hosting. | Linux | Good if you want easier service management. |
-| [Ventoy](https://github.com/ventoy/Ventoy) | Puts several ISO files on one USB drive and boots them directly. | Windows, Linux | GPL-3.0; ~80k stars. |
-| [macUSB](https://github.com/Kruszoneq/macUSB) | Creates bootable USB drives from macOS installers. | macOS | MIT; ~3.4k stars. |
-| [WinApps](https://github.com/winapps-org/winapps) | Runs Windows apps such as Microsoft Office on Linux desktops (GNOME and KDE). | Linux | ~16k stars; GitHub did not detect a license. |
-| [Sikarugir](https://github.com/Sikarugir-App/Sikarugir) | Makes Wine-wrapped app bundles that run Windows software on macOS. | macOS | ~4k stars; GitHub did not detect a license. |
-
 ## Desktop Utilities & Launchers
 
 | Tool | Description | Platforms | Notes |
