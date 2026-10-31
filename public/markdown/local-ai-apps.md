@@ -13,6 +13,14 @@
 | [mlx-lm](https://github.com/ml-explore/mlx-lm) | Apple MLX Python package for running and fine-tuning LLMs on Apple Silicon. | macOS | Fastest path for LLMs on M-series hardware. |
 | [Ollama](https://github.com/ollama/ollama) | Popular model runner for local LLMs and embeddings; OpenAI-compatible API. | Cross-platform, Self-hosted | The default starting point for most local stacks; v0.24 as of May 2026. |
 | [vLLM](https://github.com/vllm-project/vllm) | High-throughput LLM serving with PagedAttention and continuous batching. | Self-hosted, Linux | Best choice for multi-user or production GPU serving; ~20x Ollama throughput. |
+| [lucebox](https://github.com/Luce-Org/lucebox) | LLM speculative-inference server for mixed hardware and consumer GPUs. | Cross-platform | Apache-2.0; ~3k stars. |
+| [gufo](https://github.com/gufo-org/gufo) | Open-source inference engine aimed at AMD Strix Halo hardware. | Cross-platform | MIT; ~1k stars; Strix Halo focus. |
+| [halogen-flash-server](https://github.com/peonist-ai/halogen-flash-server) | Local inference server for Qwen models on AMD Strix Halo, with a hosted-style API. | Cross-platform | ~1.2k stars; GitHub did not detect a license. |
+| [mlx-dspark](https://github.com/ARahim3/mlx-dspark) | Speculative-decoding port for MLX on Apple Silicon. | macOS | MIT; ~730 stars; MLX port of a DeepSeek decoding method. |
+| [MTPLX](https://github.com/youssofal/MTPLX) | Runs Qwen and other models on a Mac with MLX, focused on speed. | macOS | Apache-2.0; ~2.7k stars; speed figures are the project's own. |
+| [amd-strix-halo-toolboxes](https://github.com/kyuz0/amd-strix-halo-toolboxes) | Container toolboxes for running llama.cpp on AMD Strix Halo hardware. | Linux | ~2k stars; GitHub did not detect a license. |
+| [amd-strix-halo-vllm-toolboxes](https://github.com/kyuz0/amd-strix-halo-vllm-toolboxes) | Container toolboxes for running vLLM on AMD Strix Halo hardware. | Linux | ~540 stars; GitHub did not detect a license. |
+| [Personal AI Router](https://github.com/NVIDIA/Personal-AI-Router) | Routes inference across devices on a home network behind one endpoint. | Self-hosted | Apache-2.0; ~1.7k stars; from NVIDIA. |
 
 ## LLM Clients & Desktop GUIs
 
@@ -33,6 +41,8 @@
 | [SurfSense](https://github.com/MODSetter/SurfSense) | Team-oriented alternative to NotebookLM. | Self-hosted | Good for research and shared context. |
 | [TextGen (formerly text-generation-webui)](https://github.com/oobabooga/textgen) | Desktop app for local LLMs: chat, vision, tool-calling and an OpenAI-compatible API. | Windows, macOS, Linux | Open source with no telemetry; one of the classic local inference frontends. |
 | [tgpt](https://github.com/aandrew-me/tgpt) | Simple terminal chatbot client. | CLI | Great when you want chat without GUI overhead. |
+| [AI Edge Gallery](https://github.com/google-ai-edge/gallery) | Showcase app for running on-device machine learning and generative AI models. | Mobile | Apache-2.0; ~25k stars; reference app from Google's AI Edge project. |
+| [OGAM](https://github.com/off-grid-ai/OGAM) | Offline AI app for phones: chat, vision, speech and image generation on device. | Mobile | MIT; ~3.3k stars. |
 
 ## Local Model Managers
 
@@ -59,6 +69,7 @@
 | [kotaemon](https://github.com/Cinnamon/kotaemon) | RAG workbench for document collections. | Self-hosted | Strong fit for teams with PDFs and reports. |
 | [PaperQA2](https://github.com/Future-House/paper-qa) | Scientific retrieval and citation workflows. | Cross-platform | Good for research-heavy local pipelines. |
 | [Reor](https://github.com/reorproject/reor) | Private, local AI personal knowledge manager. | Cross-platform | Archived by its owner (read-only). Nice fit for knowledge workers who prefer offline tools. |
+| [zvec-grep](https://github.com/zvec-ai/zvec-grep) | Local-first search across your files, built for people and AI agents. | Cross-platform | Apache-2.0; ~4.2k stars. |
 
 ## Proprietary Tools Worth Knowing
 
@@ -94,3 +105,4 @@
 | [Local LLMs 2026 — Complete Developer Guide](https://www.sitepoint.com/run-local-llms-2026-complete-developer-guide/) | SitePoint overview of hardware, tools, and model selection for 2026. | Web | Good orientation article if you're new to local LLM stacks. |
 | [MLX for Apple Silicon — WWDC25](https://developer.apple.com/videos/play/wwdc2025/298/) | Apple's official session on running LLMs on-device with MLX. | Web | Essential if you build for Apple platforms. |
 | [Ollama 11-Step Tutorial](https://tech-insider.org/ollama-tutorial-run-llm-locally-2026/) | Hands-on walkthrough covering REST API, Python, Docker, and optimization. | Web | Recommended first read for Ollama newcomers. |
+| [State of Open Source AI](https://book.premai.io/state-of-open-source-ai/models/) | Free online book on open-source AI; this link is its chapter on models. | Web | Vendor-authored guide; check the dates on the model pages. |

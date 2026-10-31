@@ -14,6 +14,10 @@
 | [SerenityOS](https://github.com/SerenityOS/serenity) | Independent hobbyist operating system with its own userland. | Linux | Best for OS exploration and systems curiosity. |
 | [umbrelOS](https://github.com/getumbrel/umbrel) | Home server OS for running apps locally. | Linux | Smooth entry point for self-hosted services. |
 | [YunoHost](https://github.com/YunoHost/yunohost) | Friendly server administration layer for self-hosting. | Linux | Good if you want easier service management. |
+| [Ventoy](https://github.com/ventoy/Ventoy) | Puts several ISO files on one USB drive and boots them directly. | Windows, Linux | GPL-3.0; ~80k stars. |
+| [macUSB](https://github.com/Kruszoneq/macUSB) | Creates bootable USB drives from macOS installers. | macOS | MIT; ~3.4k stars. |
+| [WinApps](https://github.com/winapps-org/winapps) | Runs Windows apps such as Microsoft Office on Linux desktops (GNOME and KDE). | Linux | ~16k stars; GitHub did not detect a license. |
+| [Sikarugir](https://github.com/Sikarugir-App/Sikarugir) | Makes Wine-wrapped app bundles that run Windows software on macOS. | macOS | ~4k stars; GitHub did not detect a license. |
 
 ## Desktop Utilities & Launchers
 
@@ -51,6 +55,7 @@
 | [Ghostty](https://github.com/ghostty-org/ghostty) | Fast, GPU-accelerated terminal using platform-native UI; v1.3+ in 2026. | macOS, Linux | Now in Ubuntu 26.04 repos; non-profit backed. |
 | [Kitty](https://github.com/kovidgoyal/kitty) | GPU-accelerated terminal with tabs, splits, and a remote-control protocol. | Cross-platform | Strong power-user choice; scriptable via kitten API. |
 | [WezTerm](https://github.com/wezterm/wezterm) | GPU-accelerated terminal and multiplexer configurable with Lua. | Cross-platform | Good cross-platform pick with built-in mux. |
+| [Tabby](https://github.com/Eugeny/tabby) | Modern terminal app for Windows, macOS and Linux. | Cross-platform | MIT; ~75k stars. |
 
 ## Monitoring, Input & Quality-of-Life Tools
 
@@ -65,6 +70,8 @@
 | [Maccy](https://github.com/p0deje/Maccy) | Lightweight clipboard manager. | macOS | Clean, simple, and reliable. |
 | [Pearcleaner](https://github.com/alienator88/Pearcleaner) | App cleaner for macOS. | macOS | Good for removing leftover files cleanly. |
 | [Stats](https://github.com/exelban/stats) | Menu bar system monitor. | macOS | Great lightweight monitoring. |
+| [LACT](https://github.com/ilya-zlobintsev/LACT) | Configures and monitors GPUs on Linux, including clocks and fan curves. | Linux | MIT; ~5.8k stars. |
+| [QtScrcpy](https://github.com/barry-ran/QtScrcpy) | Qt app that shows and controls an Android screen in real time, via scrcpy. | Cross-platform | Apache-2.0; ~33k stars. |
 
 ## Tutorials & Learning
 

@@ -30,6 +30,7 @@
 | [Ragas](https://github.com/vibrantlabsai/ragas) | Evaluation framework for RAG pipelines with retrieval and generation metrics. | Cross-platform | Apache 2.0; reference tool for RAG quality assessment. |
 | [SWE-bench](https://github.com/SWE-bench/SWE-bench) | Benchmark of real GitHub issues requiring code changes; standard for agent coding capability. | Cross-platform | MIT license; SWE-bench Verified and SWE-bench Pro are the current canonical variants. |
 | [Terminal-Bench](https://github.com/harbor-framework/terminal-bench-1) | Benchmark for AI agents on realistic, hard terminal-environment tasks. | Cross-platform | Used alongside SWE-bench for evaluating CLI-native agents like Claude Code. |
+| [Artificial Analysis](https://artificialanalysis.ai/trends) | Independent benchmarks and trend charts for AI models, including cost and speed. | Web | Free site; methodology is published on the site. |
 
 ## Prompt & Experiment Management
 

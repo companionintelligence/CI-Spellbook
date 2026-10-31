@@ -13,6 +13,7 @@
 | [Technitium DNS](https://github.com/TechnitiumSoftware/DnsServer) | Self-hosted authoritative and recursive DNS server with a web UI. | Self-hosted, Cross-platform | Flexible; good for advanced DNS control including DoH/DoT. |
 | [wBlock](https://github.com/0xCUB3/wBlock) | Safari-focused ad and privacy blocker. | macOS | Good Apple-only option. |
 | [Zen Privacy](https://github.com/irbis-sh/zen-desktop) | Desktop ad blocker and privacy guard. | Cross-platform | Useful for endpoint-level blocking. |
+| [HostsFileEditor](https://github.com/scottlerch/HostsFileEditor) | Edits and manages the Windows hosts file. | Windows | ~1.3k stars; GitHub did not detect a license. |
 
 ## Authentication & Identity
 

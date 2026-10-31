@@ -31,6 +31,7 @@
 | [Notesnook](https://github.com/streetwriters/notesnook) | End-to-end encrypted note-taking platform. | Cross-platform | Strong privacy-first notes option. |
 | [SilverBullet](https://github.com/silverbulletmd/silverbullet) | Markdown-first productivity platform with scripting and automation. | Cross-platform | Good when you want notes plus lightweight automation. |
 | [Zettlr](https://github.com/Zettlr/Zettlr) | Writing workbench for markdown and academic/Zettelkasten workflows. | Cross-platform | Great for long-form writing and research. |
+| [humanizer](https://github.com/blader/humanizer) | Agent skill that removes signs of AI-generated writing from text. | Cross-platform | MIT; ~63k stars; a skill for coding agents, not a standalone app. |
 
 ## Bookmarking & Read-Later
 
@@ -64,6 +65,7 @@
 | [LanguageTool](https://github.com/languagetool-org/languagetool) | Grammar and style checker for many languages. | Self-hosted, Web | Useful across docs, mail, and notes. |
 | [Readest](https://github.com/readest/readest) | Cross-platform reading app with modern UX. | Cross-platform, Mobile, Web | Good for unified reading across devices. |
 | [Zotero](https://github.com/zotero/zotero) | Reference manager for collecting and annotating research sources. | Cross-platform, iOS | Essential for citation-heavy research; browser connector for capture. |
+| [Internet Archive](https://www.archive.org/) | Free digital library of books, websites and media, including the Wayback Machine. | Web | Public archive run by a nonprofit. |
 
 ## Planning, Finance & Work Management
 
