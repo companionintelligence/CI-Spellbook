@@ -94,7 +94,7 @@ normally under real Node. See the deno-migration PR for details.
 | `ghcr.io/companionintelligence/ci-spellbook` | The container the Hub App Store installs (nginx on port 5500). | The `Dockerfile` (Deno), published by `docker-publish.yml`, which is started by hand. |
 | Android APK, iOS Simulator app | Unsigned debug builds of the Capacitor shells in `apps/`. Not published anywhere and not store builds; see [Mobile apps](#mobile-apps-ios-and-android). | `mobile-build.yml`, started by hand. |
 
-`.github/workflows/ci.yml` tests and smoke-builds; it does not deploy. All three workflows are `workflow_dispatch`-only (see [`docs/CI.md`](docs/CI.md), which is generated and does not list `mobile-build.yml` yet).
+`.github/workflows/ci.yml` tests and smoke-builds; it does not deploy. All three workflows are `workflow_dispatch`-only (see [`docs/CI.md`](docs/CI.md)).
 
 ## Run with Docker
 

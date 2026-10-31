@@ -22,6 +22,9 @@
 | [whisper.cpp](https://github.com/ggml-org/whisper.cpp) | C/C++ port of OpenAI Whisper optimised for local CPU/GPU inference. | Cross-platform | Standard starting point for on-device speech recognition. |
 | [WhisperLiveKit](https://github.com/QuentinFuxa/WhisperLiveKit) | Streaming speech recognition toolkit built on Whisper. | Self-hosted | Useful for live and semi-live transcription systems. |
 | [WhisperX](https://github.com/m-bain/whisperX) | Whisper with word-level timestamps, speaker diarization, and batch inference. | Cross-platform, Self-hosted | 60–70× real-time; adds diarization missing from base Whisper. |
+| [FluidVoice](https://github.com/altic-dev/FluidVoice) | macOS dictation app with on-device speech-to-text and optional AI text cleanup. | macOS | GPL-3.0; ~12.6k stars. |
+| [pocket-tts](https://github.com/kyutai-labs/pocket-tts) | Text-to-speech model that runs on a CPU, from Kyutai Labs. | Cross-platform | MIT; ~10k stars. |
+| [VoiceStudio](https://github.com/debpalash/VoiceStudio) | Local voice cloning and speech studio, positioned as an ElevenLabs alternative. | Cross-platform | AGPL-3.0; ~97k stars per GitHub. |
 
 ## Voice Pipelines & Real-time Agents
 
@@ -81,3 +84,4 @@
 | [LiveKit Agents Docs](https://docs.livekit.io/agents/) | Official docs for building real-time WebRTC voice agents with LiveKit. | Web | Good for WebRTC-native voice agent architectures. |
 | [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) | Live benchmark leaderboard for open-source STT models by WER. | Web | Essential reference for choosing an STT model for a given language. |
 | [Northflank STT Benchmark Guide](https://northflank.com/blog/best-open-source-speech-to-text-stt-model-in-2026-benchmarks) | In-depth 2026 comparison of open-source STT models with benchmark data. | Web | Good for a data-driven STT model selection. |
+| [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) | MDN reference for browser speech recognition and speech synthesis. | Web | Standard reference; check the browser support tables. |

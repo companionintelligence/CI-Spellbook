@@ -22,6 +22,8 @@
 | [Roo Code](https://github.com/RooCodeInc/Roo-Code) | VS Code coding agent with multi-step task execution and model flexibility. | VS Code | Archived by its owner (read-only). Good for editor-native agent workflows. |
 | [Tabby](https://github.com/TabbyML/tabby) | Self-hosted AI coding assistant for local or team deployment. | Self-hosted, VS Code, JetBrains | Good privacy-focused alternative. |
 | [windsurf.vim](https://github.com/Exafunction/windsurf.vim) | Vim and Neovim integration for Windsurf-style AI assistance. | Neovim, Vim | Useful when you want agent help without leaving modal editing. |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code) | Converts a screenshot or mockup into HTML, Tailwind, React or Vue code. | Cross-platform | MIT; ~81k stars; relies on multimodal models. |
+| [argent](https://github.com/software-mansion/argent) | Agent toolkit that controls, debugs and profiles iOS and Android apps. | iOS, Android | Apache-2.0; ~3k stars; from Software Mansion. |
 
 ## AI Code Review
 
@@ -30,6 +32,7 @@
 | [CodeRabbit](https://www.coderabbit.ai/) | AI-assisted PR reviewer for GitHub/GitLab with inline comments and summaries. | Web | 2M+ repos connected; most-downloaded GitHub Marketplace app. |
 | [Greptile](https://www.greptile.com/) | Context-aware code review tool that indexes the full codebase to catch deep bugs. | Web | 82% bug catch rate in benchmarks; raised $25M Series A in 2025. |
 | [Qodo](https://github.com/The-PR-Agent/pr-agent) | AI code quality platform combining PR review with test generation. | Web, VS Code | Rebranded from CodiumAI 2024; multi-agent review architecture. |
+| [open-code-review](https://github.com/alibaba/open-code-review) | Hybrid AI code review tool built for large codebases. | Cross-platform | Apache-2.0; ~49k stars; from Alibaba. |
 
 ## Proprietary Tools Worth Knowing
 
@@ -66,6 +69,8 @@
 | [Requestly](https://github.com/requestly/requestly) | API client and request interceptor for frontend debugging. | Cross-platform | Useful when debugging frontend and browser traffic. |
 | [Restfox](https://github.com/flawiddsouza/Restfox) | Offline-first minimal API client for web and desktop. | Cross-platform | Good for lightweight teams. |
 | [Yaak](https://github.com/mountain-loop/yaak) | Desktop API client with a simpler execution model than Postman. | Cross-platform | Nice fit when Postman-class tools feel heavy. |
+| [ReDoc](https://github.com/Redocly/redoc) | Renders OpenAPI specifications as static, responsive API reference docs. | Web | MIT; ~26k stars; now maintained under Redocly. |
+| [JSON Editor](https://github.com/josdejong/jsoneditor) | Web-based tool to view, edit, format and validate JSON. | Web | Apache-2.0; ~12k stars. |
 
 ## Dev Tools, Git & Version Control
 
@@ -84,6 +89,8 @@
 | [Soft Serve](https://github.com/charmbracelet/soft-serve) | Terminal-native self-hosted git server. | Cross-platform | Good for simpler private hosting. |
 | [typos](https://github.com/crate-ci/typos) | Fast source-code spell checker. | Cross-platform | Easy win for documentation and UI copy. |
 | [Watchexec](https://github.com/watchexec/watchexec) | File-watching task runner for local automations. | Cross-platform | Useful for small local automations. |
+| [Git](https://git-scm.com/) | Distributed version control system; the reference site for downloads and documentation. | Cross-platform | The reference site for the Git project itself. |
+| [Repowise](https://github.com/repowise-dev/repowise) | Codebase intelligence for AI and humans: health scores, generated docs and git analytics. | Cross-platform | AGPL-3.0; ~8k stars. |
 
 ## Package Managers & Terminal Workflow
 
@@ -99,6 +106,7 @@
 | [uv](https://github.com/astral-sh/uv) | Fast Python package and project manager written in Rust. | Cross-platform | One of the best upgrades for Python environments. |
 | [Yarn](https://github.com/yarnpkg/berry) | Mature Node package manager with workspace features. | Cross-platform | Strong when monorepo constraints matter. |
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter directory jumper with frecency ranking. | Cross-platform | Small utility, large workflow gain. |
+| [Chocolatey](https://chocolatey.org/) | Package manager for Windows that installs software from a community repository. | Windows | Open-source CLI; GitHub did not detect a license. |
 
 ## Notable Models
 
@@ -122,3 +130,4 @@
 | [Claude Code: A Highly Agentic Coding Assistant](https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant) | DeepLearning.AI short course on agentic coding patterns with Claude Code. | Web | Taught by Elie Schoppik, Anthropic Head of Technical Education. |
 | [Claude Code Ultimate Guide](https://github.com/FlorianBruniaux/claude-code-ultimate-guide) | Community guide covering Claude Code from beginner to power user with templates. | Web | Production-ready templates, workflow guides, and a cheatsheet. |
 | [OpenAI Codex Docs](https://learn.chatgpt.com/docs/codex/cli) | Official Codex CLI documentation, quickstarts, and API integration guides. | Web | Useful companion when routing tasks between Claude Code and Codex CLI. |
+| [Devhints](https://devhints.io/) | Concise cheat sheets for developer tools, languages and frameworks. | Web | Community-maintained; source is on GitHub under rstacruz/cheatsheets. |

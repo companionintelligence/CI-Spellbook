@@ -16,6 +16,7 @@
 | [Vane (formerly Perplexica)](https://github.com/ItzCrazyKns/Vane) | Self-hosted AI answering engine. | Self-hosted | Good private alternative for AI search. |
 | [Scira](https://github.com/zaidmukaddam/scira) | Minimal AI answer engine with citations. | Self-hosted, Web | Good lightweight search UI. |
 | [SearXNG](https://github.com/searxng/searxng) | Private metasearch engine. | Self-hosted | Essential if you want a self-hosted search front end. |
+| [Servo](https://github.com/servo/servo) | Experimental browser engine written in Rust; developer preview builds are available. | Cross-platform | MPL-2.0; ~38k stars; an engine, not a finished browser. |
 
 ## Browser Extensions
 
@@ -28,6 +29,7 @@
 | [SponsorBlock](https://github.com/ajayyy/SponsorBlock) | Skips sponsored segments in online videos. | Chromium, Firefox | Good quality-of-life add-on. |
 | [uBlock Origin](https://github.com/gorhill/uBlock) | Efficient blocker for ads and trackers. | Chromium, Firefox | Essential browsing baseline. |
 | [Web Clipper](https://github.com/webclipper/web-clipper) | Clip web content into notes platforms. | Chromium, Firefox | Useful for knowledge capture workflows. |
+| [Consent-O-Matic](https://github.com/cavi-au/Consent-O-Matic) | Browser extension that fills in cookie consent pop-ups based on your privacy settings. | Chromium, Firefox | ~4.3k stars; last commit Feb 2026; the extension is stable. |
 
 ## Download, Capture & Web Utilities
 
@@ -41,6 +43,7 @@
 | [qBittorrent](https://github.com/qbittorrent/qBittorrent) | BitTorrent client. | Cross-platform | Reliable torrent baseline. |
 | [Transmission](https://github.com/transmission/transmission) | Lightweight BitTorrent client. | Cross-platform | Great if you want minimal overhead. |
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Feature-rich command-line media downloader. | Cross-platform, CLI | Still the default CLI choice for media archival. |
+| [ShareX](https://github.com/ShareX/ShareX) | Free, open-source screenshot and screen-recording tool. | Windows | GPL-3.0; ~41k stars. |
 
 ## Browser Automation & Scraping
 
@@ -53,6 +56,7 @@
 | [Puppeteer](https://github.com/puppeteer/puppeteer) | Node.js library for headless Chrome/Chromium control. | Cross-platform | 94k+ stars; good when staying in a JS/Node stack. |
 | [Scrapling](https://github.com/D4Vinci/Scrapling) | Adaptive Python scraper that relocates elements after page changes; anti-bot bypass. | Cross-platform | Good when target sites frequently restructure. |
 | [Stagehand](https://github.com/browserbase/stagehand) | AI browser automation SDK adding act/extract/observe primitives on top of Playwright. | Cross-platform | Best for structured AI-driven scraping with typed output. |
+| [UI.Vision](https://ui.vision/) | Browser extension for test automation and RPA, formerly Selenium IDE++. | Chromium, Firefox | Check the site for license terms. |
 
 ## Packaged Context & Repo Tools
 
@@ -78,6 +82,7 @@
 | [Proxmox VE](https://github.com/proxmox/pve-manager) | Open-source server virtualization platform (KVM + LXC); now at v9.2. | Self-hosted, Linux | Industry-leading open hypervisor for homelabs and servers. |
 | [Quickemu](https://github.com/quickemu-project/quickemu) | Fast VM launcher for desktop operating systems. | macOS, Linux | Great for throwaway VM experiments. |
 | [VirtualBuddy](https://github.com/insidegui/VirtualBuddy) | macOS virtualization app for Apple Silicon. | macOS | Good for native Apple VM management. |
+| [dive](https://github.com/wagoodman/dive) | Explores each layer of a Docker image and shows what changed in it. | CLI | MIT; ~55k stars. |
 
 ## Tutorials & Learning
 
@@ -88,3 +93,4 @@
 | [Proxmox VE documentation](https://pve.proxmox.com/pve-docs/) | Official administration guide for Proxmox VE. | Web | Essential reference for homelab and production setups. |
 | [The Docker Handbook](https://www.freecodecamp.org/news/the-docker-handbook/) | Free freeCodeCamp guide covering Docker fundamentals. | Web | Good starting point for containers from scratch. |
 | [yt-dlp wiki](https://github.com/yt-dlp/yt-dlp/wiki) | Community wiki with advanced usage, plugins, and examples. | Web | Covers edge cases well beyond the README. |
+| [How browsers work](https://taligarsiel.com/Projects/howbrowserswork1.htm) | Long-form walkthrough of how browsers turn HTML into rendered pages. | Web | Older article; the rendering pipeline it describes still holds. |

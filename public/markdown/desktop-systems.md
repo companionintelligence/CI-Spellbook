@@ -38,6 +38,7 @@
 | [Ghostty](https://github.com/ghostty-org/ghostty) | Fast, GPU-accelerated terminal using platform-native UI; v1.3+ in 2026. | macOS, Linux | Now in Ubuntu 26.04 repos; non-profit backed. |
 | [Kitty](https://github.com/kovidgoyal/kitty) | GPU-accelerated terminal with tabs, splits, and a remote-control protocol. | Cross-platform | Strong power-user choice; scriptable via kitten API. |
 | [WezTerm](https://github.com/wezterm/wezterm) | GPU-accelerated terminal and multiplexer configurable with Lua. | Cross-platform | Good cross-platform pick with built-in mux. |
+| [Tabby](https://github.com/Eugeny/tabby) | Modern terminal app for Windows, macOS and Linux. | Cross-platform | MIT; ~75k stars. |
 
 ## Monitoring, Input & Quality-of-Life Tools
 
@@ -52,6 +53,8 @@
 | [Maccy](https://github.com/p0deje/Maccy) | Lightweight clipboard manager. | macOS | Clean, simple, and reliable. |
 | [Pearcleaner](https://github.com/alienator88/Pearcleaner) | App cleaner for macOS. | macOS | Good for removing leftover files cleanly. |
 | [Stats](https://github.com/exelban/stats) | Menu bar system monitor. | macOS | Great lightweight monitoring. |
+| [LACT](https://github.com/ilya-zlobintsev/LACT) | Configures and monitors GPUs on Linux, including clocks and fan curves. | Linux | MIT; ~5.8k stars. |
+| [QtScrcpy](https://github.com/barry-ran/QtScrcpy) | Qt app that shows and controls an Android screen in real time, via scrcpy. | Cross-platform | Apache-2.0; ~33k stars. |
 
 ## Tutorials & Learning
 

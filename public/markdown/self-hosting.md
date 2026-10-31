@@ -14,6 +14,8 @@
 | [Glance](https://github.com/glanceapp/glance) | Self-hosted homepage for feeds and widgets. | Self-hosted | Good minimalist dashboard. |
 | [homepage](https://github.com/gethomepage/homepage) | Application dashboard with service integrations. | Self-hosted | Strong balance of polish and utility. |
 | [Proxmox VE](https://github.com/proxmox/pve-manager) | Open-source server virtualization platform based on KVM and LXC. | Self-hosted, Linux | Industry-standard homelab hypervisor; v9.2 current. |
+| [ZimaOS](https://github.com/IceWhaleTech/ZimaOS) | Simplified NAS operating system for home servers. | Self-hosted | ~3k stars; GitHub did not detect a license. |
+| [awesome-selfhost-docker](https://github.com/hotheadhacker/awesome-selfhost-docker) | Curated list of self-hosted apps that deploy with Docker. | Self-hosted | ~4k stars; a list, so check each project before use. |
 
 ## Deploy & App Platforms
 
@@ -25,6 +27,8 @@
 | [Komodo](https://github.com/moghtech/komodo) | Server and deployment management platform with agent-based architecture. | Self-hosted | Good for multi-server setups; ~10k stars. |
 | [Runtipi](https://github.com/runtipi/runtipi) | One-command home server platform with one-click app installs. | Self-hosted | Fast path to a service-rich homelab. |
 | [Sandstorm](https://github.com/sandstorm-io/sandstorm) | Web app package platform with a security-first model. | Self-hosted | Good for sandboxed self-hosted apps. |
+| [Proxmox VE Helper-Scripts](https://github.com/community-scripts/ProxmoxVE) | Community scripts that create and configure apps and VMs on Proxmox VE. | Self-hosted | MIT; ~30k stars; read each script before running it on a host. |
+| [Easy!Appointments](https://github.com/alextselegidis/easyappointments) | Self-hosted appointment scheduler with a public booking page. | Self-hosted | GPL-3.0; ~4.5k stars. |
 
 ## Automation & Operations
 
@@ -50,6 +54,8 @@
 | [Home Assistant](https://github.com/home-assistant/core) | Local-first home automation platform. | Cross-platform, Self-hosted | Center of the DIY smart-home universe. |
 | [Music Assistant](https://github.com/music-assistant/server) | Music library manager connecting streaming services and speakers via HA. | Self-hosted | Active HA add-on; official HA integration as of 2026. |
 | [wyoming-satellite](https://github.com/rhasspy/wyoming-satellite) | Remote voice satellite using the Wyoming protocol for local HA voice control. | Self-hosted, Hardware | Archived by its owner (read-only). Key piece of a fully local, private voice pipeline. |
+| [Bubble Card](https://github.com/Clooos/Bubble-Card) | Minimalist, customizable card collection for Home Assistant dashboards. | Self-hosted | MIT; ~4.7k stars. |
+| [Awesome Home Assistant](https://github.com/frenck/awesome-home-assistant) | Curated list of Home Assistant resources, integrations and tools. | Self-hosted | CC-BY-4.0; ~8.6k stars. |
 
 ## Media & Library Servers
 
