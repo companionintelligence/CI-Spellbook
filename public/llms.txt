@@ -1,0 +1,15 @@
+# Spellbook
+
+> Spellbook is a searchable catalog of local-AI and self-hosting tools, from model managers and MCP connectors to home servers, networking and edge hardware. It has sixteen shelves, organized by the job you are doing rather than by vendor. It is part of the Companion Intelligence platform (https://ci.computer/).
+
+The shelves are Markdown files served with the site, and search runs in your browser across all of them. The catalog needs JavaScript to open its shelves. For help, write to support@ci.computer.
+
+## Pages
+
+- [Spellbook](https://magic.ci.computer/): the catalog, its shelves and search
+
+## Optional
+
+- [Docs: Spellbook](https://docs.ci.computer/docs/apps-available/first-party-apps/spellbook): the app's page in the Companion Intelligence docs
+- [Companion Hub App Store listing](https://hub.ci.computer/store/ci-spellbook): Spellbook in the Companion Hub App Store
+- [Companion Intelligence](https://ci.computer/): the platform this catalog belongs to
