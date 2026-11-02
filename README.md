@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/companionintelligence/.github/main/profile/assets/icons/spellbook.png" width="96" height="96" alt="Spellbook icon">
+</p>
+
 <h1 align="center">CI-Spellbook</h1>
 
 <p align="center"><strong>A curated catalog of local-AI agents, apps, and tools.</strong></p>
