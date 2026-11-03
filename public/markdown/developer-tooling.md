@@ -91,6 +91,8 @@
 | [Watchexec](https://github.com/watchexec/watchexec) | File-watching task runner for local automations. | Cross-platform | Useful for small local automations. |
 | [Git](https://git-scm.com/) | Distributed version control system; the reference site for downloads and documentation. | Cross-platform | The reference site for the Git project itself. |
 | [Repowise](https://github.com/repowise-dev/repowise) | Codebase intelligence for AI and humans: health scores, generated docs and git analytics. | Cross-platform | AGPL-3.0; ~8k stars. |
+| [Gradio](https://github.com/gradio-app/gradio) | Python library for building and sharing ML and LLM demo apps in a few lines of code. | Cross-platform, Web | Quickest route from a model to a shareable web demo. |
+| [Streamlit](https://github.com/streamlit/streamlit) | Python framework for building data and chat apps with a script-style API. | Cross-platform, Web | Popular for internal dashboards and AI prototypes. |
 
 ## Package Managers & Terminal Workflow
 

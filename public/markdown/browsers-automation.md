@@ -17,6 +17,7 @@
 | [Scira](https://github.com/zaidmukaddam/scira) | Minimal AI answer engine with citations. | Self-hosted, Web | Good lightweight search UI. |
 | [SearXNG](https://github.com/searxng/searxng) | Private metasearch engine. | Self-hosted | Essential if you want a self-hosted search front end. |
 | [Servo](https://github.com/servo/servo) | Experimental browser engine written in Rust; developer preview builds are available. | Cross-platform | MPL-2.0; ~38k stars; an engine, not a finished browser. |
+| [SerpApi](https://serpapi.com/) | Hosted API that returns structured results from Google and other search engines. | Hosted API | Handy for research agents; metered per request. |
 
 ## Browser Extensions
 
@@ -57,6 +58,10 @@
 | [Scrapling](https://github.com/D4Vinci/Scrapling) | Adaptive Python scraper that relocates elements after page changes; anti-bot bypass. | Cross-platform | Good when target sites frequently restructure. |
 | [Stagehand](https://github.com/browserbase/stagehand) | AI browser automation SDK adding act/extract/observe primitives on top of Playwright. | Cross-platform | Best for structured AI-driven scraping with typed output. |
 | [UI.Vision](https://ui.vision/) | Browser extension for test automation and RPA, formerly Selenium IDE++. | Chromium, Firefox | Check the site for license terms. |
+| [Scrapegraph-ai](https://github.com/ScrapeGraphAI/Scrapegraph-ai) | Python scraper that uses an LLM to turn a page into structured data from a natural-language prompt. | Cross-platform | Works with local and hosted models; good for ad-hoc extraction. |
+| [Olostep](https://www.olostep.com/) | Hosted web search, scraping and crawling API that returns clean, LLM-ready content. | Hosted API | Used by the awesome-ai-apps voice-search and web-intelligence examples. |
+| [TinyFish](https://www.tinyfish.ai/) | Hosted web-agent API for deep scraping and multi-step browser tasks. | Hosted API | Used by the awesome-ai-apps due-diligence agent. |
+| [Bright Data](https://brightdata.com/) | Web data platform with proxy networks, scrapers and ready-made datasets. | Hosted API | Used by the awesome-ai-apps job-finder agent; review site terms before scraping. |
 
 ## Packaged Context & Repo Tools
 

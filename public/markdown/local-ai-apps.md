@@ -50,6 +50,7 @@
 | --- | --- | --- | --- |
 | [KoboldCpp](https://github.com/LostRuins/koboldcpp) | Single-binary GGUF runner with UI support. | Cross-platform, Self-hosted | Good for lightweight local inference. |
 | [StabilityMatrix](https://github.com/LykosAI/StabilityMatrix) | Manager for Stable Diffusion and other generative AI tools and models. | Cross-platform | Useful when image tools sprawl across multiple apps. |
+| [Unsloth](https://github.com/unslothai/unsloth) | Local UI for running and training LLMs and diffusion models, with lower-memory fine-tuning. | Cross-platform | Good for fine-tuning on modest hardware. |
 
 ## Assistants, Memory & Context
 

@@ -38,6 +38,17 @@
 | [PydanticAI](https://github.com/pydantic/pydantic-ai) | Type-safe Python agent framework built on Pydantic with concise, validated tool calls. | Cross-platform | Hit v1 in late 2025; ~16k stars; less boilerplate than LangGraph for simple flows. |
 | [smolagents](https://github.com/huggingface/smolagents) | Minimal code-first agent library from Hugging Face; agents express actions as Python code. | Cross-platform | 26k+ stars; ~1k-line core; model-agnostic; excellent for teaching and rapid prototyping. |
 | [Shepherd](https://github.com/shepherd-agents/shepherd) | Runtime layer that records agent execution as a reversible, Git-like trace. | Cross-platform | MIT; ~2.5k stars; last push Sept 2026. |
+| [AWS Strands Agents](https://github.com/strands-agents/harness-sdk) | Open-source SDK from AWS for building production AI agents in Python and TypeScript, with any model and any cloud. | Cross-platform | Good fit if AWS is already part of your stack. |
+| [CAMEL](https://github.com/camel-ai/camel) | Multi-agent framework for role-playing agents, synthetic data generation and research. | Cross-platform | Research-oriented; useful for simulations and agent experiments. |
+| [Google Agent Development Kit](https://github.com/google/adk-python) | Code-first Python toolkit for building, evaluating and deploying agents. | Cross-platform | Gemini-first, with other models available through adapters. |
+| [Mastra](https://github.com/mastra-ai/mastra) | TypeScript framework for agents, workflows, RAG and evals. | Cross-platform | Best fit when your stack is TypeScript. |
+| [Semantic Kernel](https://github.com/microsoft/semantic-kernel) | Microsoft's SDK for adding LLM plugins and agents to C#, Python and Java apps. | Cross-platform | Enterprise-friendly, especially for .NET shops; related to the Microsoft Agent Framework above. |
+| [AG2](https://github.com/ag2ai/ag2) | Open-source agent framework that continues the AutoGen project. | Cross-platform | Pick it if you want the AutoGen lineage without moving to Microsoft's stack. |
+| [Docker Agent](https://github.com/docker/docker-agent) | Multi-agent runtime and builder from Docker, with agent teams defined in YAML and MCP tool support. | Cross-platform | Formerly published as cagent; a whole agent team in one config file. |
+| [KAOS](https://github.com/axsaucedo/kaos) | Kubernetes-native orchestration for multi-agent systems, with MCP tools and in-cluster models. | Self-hosted | Early-stage; check maturity before production use. |
+| [AgentField](https://github.com/Agent-Field/agentfield) | Runtime for building, running and scaling AI agents the way you would deploy APIs and microservices. | Self-hosted | Newer project; check maturity before relying on it. |
+| [CopilotKit](https://github.com/CopilotKit/CopilotKit) | Frontend stack for in-app copilots and agent UIs, including the AG-UI protocol. | Web | Covers the UI layer; pair it with a separate agent backend. |
+| [Temporal](https://github.com/temporalio/temporal) | Durable workflow engine that keeps long-running jobs alive through retries, restarts and crashes. | Self-hosted, Hosted API | Good for multi-step agent pipelines that must survive failures. |
 
 ## All-in-One AI Workspaces
 
@@ -82,6 +93,7 @@
 | [deja-vu](https://github.com/vshulcz/deja-vu) | Shared memory built from session history across Claude Code, Codex, Cursor and others. | CLI | MIT; ~1.3k stars. |
 | [gbrain](https://github.com/garrytan/gbrain) | Agent memory setup for OpenClaw and Hermes agents, with opinionated defaults. | Cross-platform | MIT; ~31k stars. |
 | [iai-personal-memory-engine](https://github.com/CodeAbra/iai-personal-memory-engine) | Personal memory engine that stores and recalls details from your conversations for an AI. | Cross-platform | MIT; ~900 stars. |
+| [Memori](https://github.com/MemoriLabs/Memori) | LLM-agnostic memory layer that turns agent conversations and actions into structured, persistent state. | Cross-platform, Self-hosted | SQL-native, so memory lives in a database you control. |
 
 ## Model, Eval & Prompt Infrastructure
 
@@ -95,6 +107,8 @@
 | [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) | Training framework for large-scale model development. | Cross-platform | A solid foundation for serious model work. |
 | [Second Me](https://github.com/mindverse/Second-Me) | Platform for training a personalized AI identity and interaction layer. | Self-hosted, Web | Useful for persistent persona experiments. |
 | [OmniRoute](https://github.com/cheaper-inference/OmniRoute) | Open-source AI gateway that serves many model providers behind one endpoint. | Self-hosted | MIT; ~83k stars; provider counts are the project's own claims. |
+| [Axolotl](https://github.com/axolotl-ai-cloud/axolotl) | YAML-configured fine-tuning framework for LLMs covering LoRA, QLoRA and full fine-tunes. | Cross-platform | Config-first, which suits repeatable training runs. |
+| [RouteLLM](https://github.com/lm-sys/RouteLLM) | Framework for LLM routers that send easy queries to cheaper models and hard ones to stronger models. | Cross-platform | Cuts inference cost; works well when mixing local and hosted models. |
 
 ## AI Utilities & Desktop Context
 
@@ -128,3 +142,4 @@
 | [Hugging Face Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction) | Free multi-unit course on building agents with smolagents, LangGraph, and tool use. | Web | Covers code agents, multi-agent systems, and tool integration; actively maintained. |
 | [OpenAI: Practical Guide to Building Agents](https://openai.com/index/new-tools-for-building-agents/) | OpenAI's practical reference for the Agents SDK, handoffs, guardrails, and tracing. | Web | Essential reading for teams using the OpenAI Agents SDK in production. |
 | [Awesome AI Agents (e2b)](https://github.com/e2b-dev/awesome-ai-agents) | Curated list of AI agents, frameworks, and tools with categorised links. | Web | Broadly maintained community list; good for discovery across the ecosystem. |
+| [Awesome AI Apps](https://github.com/Arindam200/awesome-ai-apps) | Collection of runnable LLM apps and agents, from starter templates to multi-agent systems. | Cross-platform | Good map of working examples; most call hosted APIs, so budget for usage. |

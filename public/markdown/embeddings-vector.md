@@ -32,6 +32,7 @@
 | [Unstructured](https://github.com/Unstructured-IO/unstructured) | Broad-format ingestion pipeline supporting PDF, email, HTML, spreadsheets, and more. | Self-hosted, Web | Best for heterogeneous source ingestion; table extraction lags Docling/MinerU. |
 | [OpenDataLoader PDF](https://github.com/opendataloader-project/opendataloader-pdf) | PDF parser that produces AI-ready structured data. | Cross-platform | Apache-2.0; ~30k stars. |
 | [PixelRAG](https://github.com/StarTrail-org/PixelRAG) | Pixel-based retrieval over web pages, skipping text parsing. | Cross-platform | Apache-2.0; ~11k stars; README cites an arXiv preprint. |
+| [LiteParse](https://github.com/run-llama/liteparse) | Fast, open-source document parser from the LlamaIndex team, with bounding-box output for OCR. | Cross-platform | Runs locally; the awesome-ai-apps invoice auditor uses it. |
 
 ## Chunking & Preprocessing
 

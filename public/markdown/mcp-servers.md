@@ -50,6 +50,7 @@
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis MCP server for natural-language read/write of strings, hashes, lists, sets, sorted sets, streams, and JSON. | Cross-platform | MIT license; pairs well with agent memory, caching, and session-persistence workflows. |
 | [Supabase MCP](https://github.com/supabase/mcp) | Manages Supabase projects: databases, auth, storage, edge functions, and SQL workflows. | Cross-platform | Official Supabase server; best for teams already on the Supabase platform. |
 | [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Production-ready MCP server for real-time web search, page extraction, site mapping, and crawling via Tavily. | Cross-platform | Official Tavily server; preferred for research-heavy agents; requires a Tavily API key. |
+| [MCP Toolbox for Databases](https://github.com/googleapis/mcp-toolbox) | Open-source MCP server that exposes databases to agents through declarative tool definitions. | Cross-platform | Google-maintained; the awesome-ai-apps secure e-commerce example shows per-user access and least-privilege roles. |
 
 ## Productivity & Communications
 
@@ -59,6 +60,7 @@
 | [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Drive, Calendar, Docs, Sheets, Slides, and Tasks access with OAuth 2.1. | Cross-platform | Most feature-complete Workspace server; scope OAuth narrowly; MIT licensed. |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion server for reading, searching, and writing pages and databases. | Web, Cross-platform | Official Notion release; supports workspace search across connected tools like Slack and Jira. |
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Fetches messages, searches conversations, posts content, and manages reactions in Slack. | Cross-platform | Leading community server (official reference archived); stdio, SSE, and HTTP transports. |
+| [Taskade](https://www.taskade.com/) | AI workspace for projects, tasks and docs, with an MCP server for agents. | Web | Hosted SaaS; the awesome-ai-apps Taskade agent drives it through MCP. |
 
 ## Gateways, Proxies & Security
 
@@ -69,6 +71,7 @@
 | [MCP Auth Proxy](https://github.com/sigbit/mcp-auth-proxy) | Drop-in OAuth 2.1/OIDC proxy for MCP servers; no server code changes required. | Self-hosted | Verified with Claude, Cursor, GitHub Copilot; supports Google, GitHub, Okta, Auth0. |
 | [MCP Gateway & Registry](https://github.com/agentic-community/mcp-gateway-registry) | Enterprise gateway combining OAuth auth, dynamic tool discovery, and Keycloak/Entra integration. | Self-hosted | Good for teams centralising many MCP servers under one governed access layer. |
 | [MCP OAuth Gateway](https://github.com/atrawog/mcp-oauth-gateway) | Adds OAuth 2.1 with dynamic client registration to any MCP server as a sidecar. | Self-hosted | Zero modification to target servers; uses GitHub as identity provider by default. |
+| [ScaleKit](https://www.scalekit.com/) | Auth stack for AI agents, handling OAuth and connector access for MCP servers. | Hosted API | Used in the awesome-ai-apps secure MCP example with Exa. |
 
 ## Frameworks & SDKs
 
