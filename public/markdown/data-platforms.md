@@ -36,6 +36,8 @@
 | [Liam ERD](https://github.com/liam-hq/liam) | Generates readable ER diagrams from existing databases. | Web, Self-hosted | Best for visualizing live schema state. |
 | [WrenAI](https://github.com/Canner/WrenAI) | Natural-language BI over databases with SQL and chart generation. | Web, Self-hosted | Useful when analytics needs a user-friendly surface. |
 | [Tile38](https://github.com/tidwall/tile38) | Real-time geospatial database with geofencing and spatial queries. | Cross-platform | MIT; ~9.7k stars. |
+| [Couchbase](https://www.couchbase.com/) | Distributed NoSQL database with SQL++ queries, full-text and vector search, and edge sync. | Cross-platform, Self-hosted, Hosted API | Several awesome-ai-apps examples use it, including an MCP server. |
+| [MongoDB](https://github.com/mongodb/mongo) | Document database with a flexible JSON-style data model, widely used for application backends. | Cross-platform, Self-hosted | Managed option through MongoDB Atlas. |
 
 ## Local-First Sync & CRDT Engines
 

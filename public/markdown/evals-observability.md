@@ -17,6 +17,8 @@
 | [OpenLLMetry](https://github.com/traceloop/openllmetry) | OpenTelemetry-based instrumentation for LLM calls to OpenAI, Anthropic, vector DBs, and more. | Cross-platform | Apache 2.0; plug into any existing OTel stack; Python/TS/Go/Ruby. |
 | [Pydantic Logfire](https://github.com/pydantic/logfire) | OpenTelemetry-based AI observability platform from the Pydantic team with Python-centric insights and SQL-queried traces. | Self-hosted, Web | MIT license; SQL-queried trace store is unique; natural fit for Pydantic AI and FastAPI stacks. |
 | [W&B Weave](https://github.com/wandb/weave) | W&B's LLM tracing and evaluation layer with decorator-based instrumentation. | Web | Best fit for teams already on W&B for training; @weave.op() makes tracing trivial. |
+| [Okahu](https://www.okahu.ai/) | Hosted AI observability platform for traces, evaluations and dashboards. | Hosted API | Pairs with Monocle; used in several awesome-ai-apps examples. |
+| [Monocle](https://github.com/monocle2ai/monocle) | Open-source tracing framework for GenAI apps written in Python. | Cross-platform | Early-stage; pairs with Okahu for hosted dashboards. |
 
 ## Evaluation Frameworks & Benchmarks
 

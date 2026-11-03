@@ -25,6 +25,9 @@
 | [FluidVoice](https://github.com/altic-dev/FluidVoice) | macOS dictation app with on-device speech-to-text and optional AI text cleanup. | macOS | GPL-3.0; ~12.6k stars. |
 | [pocket-tts](https://github.com/kyutai-labs/pocket-tts) | Text-to-speech model that runs on a CPU, from Kyutai Labs. | Cross-platform | MIT; ~10k stars. |
 | [VoiceStudio](https://github.com/debpalash/VoiceStudio) | Local voice cloning and speech studio, positioned as an ElevenLabs alternative. | Cross-platform | AGPL-3.0; ~97k stars per GitHub. |
+| [Piper (piper1-gpl)](https://github.com/OHF-Voice/piper1-gpl) | Fast, fully local neural text-to-speech engine. | Cross-platform, Self-hosted | Maintained successor to the archived rhasspy/piper; GPL-licensed, so check fit before embedding. |
+| [Gradium](https://gradium.ai/) | Hosted speech-to-text and text-to-speech API. | Hosted API | Used by the awesome-ai-apps pitch-coach voice agent; check data terms before sending audio. |
+| [Sarvam AI](https://www.sarvam.ai/) | Hosted speech and language APIs with strong coverage of Indian languages. | Hosted API | Useful for multilingual companions; used in an awesome-ai-apps Pipecat voice agent. |
 
 ## Voice Pipelines & Real-time Agents
 
@@ -42,6 +45,7 @@
 | [Signal](https://github.com/signalapp/Signal-Android) | Private messenger focused on secure end-to-end encrypted communication. | Cross-platform | Strong baseline for private messaging. |
 | [SimpleX](https://github.com/simplex-chat/simplex-chat) | Messaging network designed without global user identifiers. | Cross-platform | Good privacy-forward communication stack. |
 | [Telegram Desktop](https://github.com/telegramdesktop/tdesktop) | Desktop Telegram client. | Cross-platform | Useful when Telegram is already part of the workflow. |
+| [Twilio](https://www.twilio.com/) | Cloud communications APIs for SMS, voice calls and video. | Hosted API | Lets an agent call or text people; billed per message or minute. |
 
 ## Collaboration & Meetings
 
@@ -53,6 +57,7 @@
 | [Mumble](https://github.com/mumble-voip/mumble) | Low-latency voice chat software. | Cross-platform | Great for gaming and private voice servers. |
 | [Rocket.Chat](https://github.com/RocketChat/Rocket.Chat) | Secure comms platform for teams; Community edition up to 100 concurrent users. | Self-hosted, Web | Note: Pro plan retired April 2026; Community is free self-hosted. |
 | [Zulip](https://github.com/zulip/zulip) | Threaded team chat optimized for focused technical conversations. | Self-hosted, Web | Excellent for long-lived technical discussions. |
+| [Velt](https://velt.dev/) | Collaboration SDK for comments, presence and activity feeds inside web apps. | Web | Commercial, hosted backend; check data residency before storing user content. |
 
 ## Mail & Async Communication
 
