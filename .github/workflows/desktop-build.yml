@@ -1,0 +1,46 @@
+name: Desktop Build
+
+# Unsigned developer artifacts only. This does not publish a GitHub release or
+# submit to a store.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: desktop-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Companion Spellbook (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install web dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install desktop shell dependencies
+        run: npm install --prefix apps/desktop --no-audit --no-fund
+      - name: Check shell config
+        run: npm run test:native --prefix apps/desktop
+      - name: Build installer
+        run: npm run build --prefix apps/desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spellbook-desktop-${{ matrix.os }}
+          path: apps/desktop/src-tauri/target/release/bundle/**
+          if-no-files-found: error
+          retention-days: 14
