@@ -38,6 +38,7 @@
     "test": "playwright test",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
+    "test:native": "node --test apps/native-config.test.mjs",
     "assert:no-sentry-without-dsn": "node scripts/assert-bundle-without-dsn.mjs",
     "assert:site": "node scripts/assert-site.mjs",
     "check:ga-build": "node scripts/check-ga-build.mjs",

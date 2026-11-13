@@ -59,6 +59,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check native shell configs
+        run: npm run test:native
+
       # dist/ is the shell's webDir.
       - name: Build web bundle
         run: npm run build
@@ -140,6 +143,9 @@ jobs:
         run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check native shell configs
+        run: npm run test:native
 
       - name: Build web bundle
         run: npm run build
