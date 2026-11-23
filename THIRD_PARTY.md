@@ -5,44 +5,39 @@ Every direct dependency declared in this repository's manifests — both
 each group. Transitive dependencies are not listed; resolve them with your
 package manager's own `licenses` command.
 
-**17 direct dependencies** across 4 licence groups.
+**17 direct dependencies** across 3 licence groups.
 
-| Licence | Count |
-| --- | ---: |
-| MIT | 13 |
-| Apache-2.0 | 2 |
-| BSD-3-Clause | 1 |
-| first-party (internal) | 1 |
+| Licence      | Count |
+| ------------ | ----: |
+| MIT          |    15 |
+| Apache-2.0   |     1 |
+| BSD-3-Clause |     1 |
 
 ## MIT
 
-1. [`@sentry/react`](https://github.com/getsentry/sentry-javascript) `10.75.1` — runtime
-2. [`@tailwindcss/vite`](https://tailwindcss.com) `4.3.3` — runtime
-3. [`classnames`](https://github.com/JedWatson/classnames#readme) `2.5.1` — runtime
-4. [`marked`](https://marked.js.org) `18.0.13` — runtime
-5. [`marked-highlight`](https://github.com/markedjs/marked-highlight#readme) `2.2.4` — runtime
-6. [`minisearch`](https://lucaong.github.io/minisearch/) `7.2.0` — runtime
-7. [`react`](https://react.dev/) `19.3.0` — runtime
-8. [`react-dom`](https://react.dev/) `19.3.0` — runtime
-9. [`tailwindcss`](https://tailwindcss.com) `4.3.3` — runtime
-10. [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react) `6.1.1` — dev
-11. [`jsdom`](https://github.com/jsdom/jsdom#readme) `30.1.0` — dev
-12. [`vite`](https://vite.dev) `8.3.0` — dev
-13. [`vitest`](https://vitest.dev) `5.0.1` — dev
+1. [`@sentry/react`](https://github.com/getsentry/sentry-javascript) `11.17.0` — runtime
+2. [`@tailwindcss/vite`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
+3. [`@types/react`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
+4. [`@types/react-dom`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
+5. [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react) `6.3.0` — dev
+6. [`classnames`](https://github.com/JedWatson/classnames) `2.5.1` — runtime
+7. [`jsdom`](https://github.com/jsdom/jsdom) `31.0.1` — dev
+8. [`marked`](https://github.com/markedjs/marked) `18.2.1` — runtime
+9. [`marked-highlight`](https://github.com/markedjs/marked-highlight) `2.2.4` — runtime
+10. [`minisearch`](https://github.com/lucaong/minisearch) `7.2.0` — runtime
+11. [`react`](https://github.com/react/react) `19.3.1` — runtime
+12. [`react-dom`](https://github.com/react/react) `19.3.1` — runtime
+13. [`tailwindcss`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
+14. [`vite`](https://github.com/vitejs/vite) `8.3.8` — dev
+15. [`vitest`](https://github.com/vitest-dev/vitest) `5.1.1` — dev
 
 ## Apache-2.0
 
-1. [`@playwright/test`](https://playwright.dev) `1.63.0` — dev
-2. [`playwright`](https://playwright.dev) `1.63.0` — dev
+1. [`@playwright/test`](https://github.com/microsoft/playwright) `1.65.1` — dev
 
 ## BSD-3-Clause
 
-1. [`highlight.js`](https://highlightjs.org/) `11.12.0` — runtime
-
-## first-party (internal)
-
-1. [`@companionintelligence/video-kit`](https://github.com/companionintelligence/CI-Spellbook) `^0.1.0` — dev
-
+1. [`highlight.js`](https://github.com/highlightjs/highlight.js) `11.12.0` — runtime
 
 ---
 
