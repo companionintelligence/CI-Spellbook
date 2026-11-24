@@ -5,35 +5,50 @@ Every direct dependency declared in this repository's manifests — both
 each group. Transitive dependencies are not listed; resolve them with your
 package manager's own `licenses` command.
 
-**17 direct dependencies** across 3 licence groups.
+**28 direct dependencies** across 4 licence groups.
 
-| Licence      | Count |
-| ------------ | ----: |
-| MIT          |    15 |
-| Apache-2.0   |     1 |
-| BSD-3-Clause |     1 |
+| Licence           | Count |
+| ----------------- | ----: |
+| MIT               |    23 |
+| Apache-2.0        |     3 |
+| Apache-2.0 OR MIT |     1 |
+| BSD-3-Clause      |     1 |
 
 ## MIT
 
-1. [`@sentry/react`](https://github.com/getsentry/sentry-javascript) `11.17.0` — runtime
-2. [`@tailwindcss/vite`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
-3. [`@types/react`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
-4. [`@types/react-dom`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
-5. [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react) `6.3.0` — dev
-6. [`classnames`](https://github.com/JedWatson/classnames) `2.5.1` — runtime
-7. [`jsdom`](https://github.com/jsdom/jsdom) `31.0.1` — dev
-8. [`marked`](https://github.com/markedjs/marked) `18.2.1` — runtime
-9. [`marked-highlight`](https://github.com/markedjs/marked-highlight) `2.2.4` — runtime
-10. [`minisearch`](https://github.com/lucaong/minisearch) `7.2.0` — runtime
-11. [`react`](https://github.com/react/react) `19.3.1` — runtime
-12. [`react-dom`](https://github.com/react/react) `19.3.1` — runtime
-13. [`tailwindcss`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
-14. [`vite`](https://github.com/vitejs/vite) `8.3.8` — dev
-15. [`vitest`](https://github.com/vitest-dev/vitest) `5.1.1` — dev
+1. [`@capacitor/android`](https://github.com/ionic-team/capacitor) `8.6.2` — runtime
+2. [`@capacitor/app`](https://github.com/ionic-team/capacitor-plugins) `8.1.2` — runtime
+3. [`@capacitor/cli`](https://github.com/ionic-team/capacitor) `8.6.2` — dev
+4. [`@capacitor/core`](https://github.com/ionic-team/capacitor) `8.6.2` — runtime
+5. [`@capacitor/ios`](https://github.com/ionic-team/capacitor) `8.6.2` — runtime
+6. [`@capacitor/splash-screen`](https://github.com/ionic-team/capacitor-plugins) `8.0.2` — runtime
+7. [`@capacitor/status-bar`](https://github.com/ionic-team/capacitor-plugins) `8.0.4` — runtime
+8. [`@sentry/react`](https://github.com/getsentry/sentry-javascript) `11.17.0` — runtime
+9. [`@tailwindcss/vite`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
+10. [`@types/node`](https://github.com/DefinitelyTyped/DefinitelyTyped) `26.6.6` — dev
+11. [`@types/react`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
+12. [`@types/react-dom`](https://github.com/DefinitelyTyped/DefinitelyTyped) `19.3.0` — dev
+13. [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react) `6.3.0` — dev
+14. [`classnames`](https://github.com/JedWatson/classnames) `2.5.1` — runtime
+15. [`jsdom`](https://github.com/jsdom/jsdom) `31.0.1` — dev
+16. [`marked`](https://github.com/markedjs/marked) `18.2.1` — runtime
+17. [`marked-highlight`](https://github.com/markedjs/marked-highlight) `2.2.4` — runtime
+18. [`minisearch`](https://github.com/lucaong/minisearch) `7.2.0` — runtime
+19. [`react`](https://github.com/react/react) `19.3.1` — runtime
+20. [`react-dom`](https://github.com/react/react) `19.3.1` — runtime
+21. [`tailwindcss`](https://github.com/tailwindlabs/tailwindcss) `4.3.5` — runtime
+22. [`vite`](https://github.com/vitejs/vite) `8.3.8` — dev
+23. [`vitest`](https://github.com/vitest-dev/vitest) `5.1.1` — dev
 
 ## Apache-2.0
 
 1. [`@playwright/test`](https://github.com/microsoft/playwright) `1.65.1` — dev
+2. [`playwright`](https://github.com/microsoft/playwright) `1.65.1` — dev
+3. [`typescript`](https://github.com/microsoft/TypeScript) `7.0.2` — dev
+
+## Apache-2.0 OR MIT
+
+1. [`@tauri-apps/cli`](https://github.com/tauri-apps/tauri) `2.12.6` — dev
 
 ## BSD-3-Clause
 
